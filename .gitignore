@@ -1,0 +1,5 @@
+/src/main/webapp/resources/js/*
+/src/main/webapp/resources/stylesheets/*
+/target
+/.idea
+*.iml
