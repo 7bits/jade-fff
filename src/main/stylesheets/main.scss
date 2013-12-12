@@ -1,0 +1,211 @@
+.sign-in, .signup {
+  background: transparent url('signin-bg.png') no-repeat center top;
+  $h:2592px/2;
+  $w:1844px/2;
+  background-size: $h $w ;
+  min-height: 600px;
+  padding-top: 32px;
+  h2,& .wrapper > p {
+    display: block;
+    float: none;
+    clear: both;
+    color: #6e6e6e;
+    margin: 0 auto 0 auto;
+  }
+  h2 {
+    font-weight: 300;
+  }
+  h3 {
+    margin-top: 0;
+  }
+  & .wrapper > p {
+    margin-bottom: 8px;
+  }
+  .credit-card {
+    margin-bottom: 8px !important;
+    float: left !important;
+    width: 100% !important;
+    li {
+      margin-left: 0;
+      label {
+        width: 100%;
+        margin: 0;
+        &.security-code {
+          width:33%;
+        }
+      }
+    }
+  }
+  form {
+    padding: 0 40px;
+    padding-bottom: 30px;
+    label {
+      width: 100%;
+    }
+    button {
+      width: 100%;
+    }
+    input {
+      outline: none;
+    }
+    .uiButton {
+      margin-bottom: 20px;
+      margin-top: 10px;
+      font-size: 1.2em;
+    }
+    p {
+      text-align: left;
+      strong {
+        text-align: center;
+      }
+    }
+    ul {
+      margin-bottom: 8px !important;
+      width: 100% !important;
+      padding: 0;
+
+      div {
+        &.msa {
+          height: 200px;
+          overflow-y: scroll;
+          border: 1px solid lightgrey;
+          padding: 7px;
+          font-size: 12px;
+
+          div {
+            h5 {
+              margin-top: 10px;
+            }
+
+            margin-bottom: 10px;
+          }
+
+          li {
+            list-style-type: disc;
+          }
+        }
+      }
+    }
+
+    ul.billing {
+      margin-bottom:8px !important;
+      float: left !important;
+    }
+
+    span.i-accept-tos,.agreed-tos {
+      font-size: 10px;
+    }
+  }
+
+  &#content {
+    .content-inner {
+      padding-top: 20px;
+      width: 550px;
+    }
+    &.base_invites.please_confirm {
+      .content-inner {
+        width: 230px;
+        padding-bottom: 0;
+      }
+    }
+  }
+
+  .signin-logo {
+    display: block;
+    margin: 0 auto;
+    //width:125px;
+  }
+
+  .social-links-wrapper {
+    text-align: center;
+    margin-top: 32px;
+    margin-bottom: 15px;
+    .signin {
+      margin: 8px;
+    }
+  }
+
+
+  #error_explanation {
+    color: #e84840;
+    ul {
+      list-style: none;
+    }
+
+    li:before {
+      content: '\00f111';
+      font-family: PulseIcons;
+      padding: 0 7px;
+      vertical-align: bottom;
+      line-height: 25px;
+    }
+  }
+}
+
+.complete {
+  #content.signup > .content-inner {
+    width: 740px;
+    padding: 16px;
+  }
+  h3 {
+    margin-top: 20px;
+  }
+  ul.todo {
+    margin: 0 0;
+    padding: 0;
+
+    li {
+      display: block;
+      list-style-type: none;
+      text-align: center;
+      padding: 12px;
+    }
+
+    &.ginny li {
+      width: 33.3333333%;
+      float: left;
+    }
+    i {
+      display:block;
+      font-size: 72px;
+      width: 80px;
+      height: 80px;
+      line-height:80px;
+      margin: 0 auto 10px;
+      clear: both;
+    }
+    p {
+      text-align: left;
+    }
+    .uiButton {
+      margin:0;
+    }
+  }
+
+  span.congratulations {
+    margin: 0 auto;
+  }
+}
+
+#content {
+  &.signup, &.sessions, &.registrations, &.passwords, &.invitations.connect, &.invitations.update_user, &.public_invites.join, &.base_invites.join, &.base_invites.save_member {
+    & > section {
+      #error_explanation {
+        ul {
+          list-style: none;
+          padding: 0;
+          li {
+            background-color: #E16C5A;
+            border: 1px solid darken(#E16C5A,2%);
+            border-radius: 3px;
+            padding: 4px 0;
+            color: #fff;
+            width: 344px;
+            margin: 0 auto;
+          }
+        }
+      }
+    }
+  }
+
+}

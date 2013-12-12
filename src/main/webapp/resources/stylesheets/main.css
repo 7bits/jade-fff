@@ -1,0 +1,176 @@
+.sign-in, .signup {
+  background: transparent url("signin-bg.png") no-repeat center top;
+  background-size: 1296px 922px;
+  min-height: 600px;
+  padding-top: 32px;
+}
+.sign-in h2, .sign-in .wrapper > p, .signup h2, .signup .wrapper > p {
+  display: block;
+  float: none;
+  clear: both;
+  color: #6e6e6e;
+  margin: 0 auto 0 auto;
+}
+.sign-in h2, .signup h2 {
+  font-weight: 300;
+}
+.sign-in h3, .signup h3 {
+  margin-top: 0;
+}
+.sign-in .wrapper > p, .signup .wrapper > p {
+  margin-bottom: 8px;
+}
+.sign-in .credit-card, .signup .credit-card {
+  margin-bottom: 8px !important;
+  float: left !important;
+  width: 100% !important;
+}
+.sign-in .credit-card li, .signup .credit-card li {
+  margin-left: 0;
+}
+.sign-in .credit-card li label, .signup .credit-card li label {
+  width: 100%;
+  margin: 0;
+}
+.sign-in .credit-card li label.security-code, .signup .credit-card li label.security-code {
+  width: 33%;
+}
+.sign-in form, .signup form {
+  padding: 0 40px;
+  padding-bottom: 30px;
+}
+.sign-in form label, .signup form label {
+  width: 100%;
+}
+.sign-in form button, .signup form button {
+  width: 100%;
+}
+.sign-in form input, .signup form input {
+  outline: none;
+}
+.sign-in form .uiButton, .signup form .uiButton {
+  margin-bottom: 20px;
+  margin-top: 10px;
+  font-size: 1.2em;
+}
+.sign-in form p, .signup form p {
+  text-align: left;
+}
+.sign-in form p strong, .signup form p strong {
+  text-align: center;
+}
+.sign-in form ul, .signup form ul {
+  margin-bottom: 8px !important;
+  width: 100% !important;
+  padding: 0;
+}
+.sign-in form ul div.msa, .signup form ul div.msa {
+  height: 200px;
+  overflow-y: scroll;
+  border: 1px solid lightgrey;
+  padding: 7px;
+  font-size: 12px;
+}
+.sign-in form ul div.msa div, .signup form ul div.msa div {
+  margin-bottom: 10px;
+}
+.sign-in form ul div.msa div h5, .signup form ul div.msa div h5 {
+  margin-top: 10px;
+}
+.sign-in form ul div.msa li, .signup form ul div.msa li {
+  list-style-type: disc;
+}
+.sign-in form ul.billing, .signup form ul.billing {
+  margin-bottom: 8px !important;
+  float: left !important;
+}
+.sign-in form span.i-accept-tos, .sign-in form .agreed-tos, .signup form span.i-accept-tos, .signup form .agreed-tos {
+  font-size: 10px;
+}
+.sign-in#content .content-inner, .signup#content .content-inner {
+  padding-top: 20px;
+  width: 550px;
+}
+.sign-in#content.base_invites.please_confirm .content-inner, .signup#content.base_invites.please_confirm .content-inner {
+  width: 230px;
+  padding-bottom: 0;
+}
+.sign-in .signin-logo, .signup .signin-logo {
+  display: block;
+  margin: 0 auto;
+}
+.sign-in .social-links-wrapper, .signup .social-links-wrapper {
+  text-align: center;
+  margin-top: 32px;
+  margin-bottom: 15px;
+}
+.sign-in .social-links-wrapper .signin, .signup .social-links-wrapper .signin {
+  margin: 8px;
+}
+.sign-in #error_explanation, .signup #error_explanation {
+  color: #e84840;
+}
+.sign-in #error_explanation ul, .signup #error_explanation ul {
+  list-style: none;
+}
+.sign-in #error_explanation li:before, .signup #error_explanation li:before {
+  content: '\00f111';
+  font-family: PulseIcons;
+  padding: 0 7px;
+  vertical-align: bottom;
+  line-height: 25px;
+}
+
+.complete #content.signup > .content-inner {
+  width: 740px;
+  padding: 16px;
+}
+.complete h3 {
+  margin-top: 20px;
+}
+.complete ul.todo {
+  margin: 0 0;
+  padding: 0;
+}
+.complete ul.todo li {
+  display: block;
+  list-style-type: none;
+  text-align: center;
+  padding: 12px;
+}
+.complete ul.todo.ginny li {
+  width: 33.3333333%;
+  float: left;
+}
+.complete ul.todo i {
+  display: block;
+  font-size: 72px;
+  width: 80px;
+  height: 80px;
+  line-height: 80px;
+  margin: 0 auto 10px;
+  clear: both;
+}
+.complete ul.todo p {
+  text-align: left;
+}
+.complete ul.todo .uiButton {
+  margin: 0;
+}
+.complete span.congratulations {
+  margin: 0 auto;
+}
+
+#content.signup > section #error_explanation ul, #content.sessions > section #error_explanation ul, #content.registrations > section #error_explanation ul, #content.passwords > section #error_explanation ul, #content.invitations.connect > section #error_explanation ul, #content.invitations.update_user > section #error_explanation ul, #content.public_invites.join > section #error_explanation ul, #content.base_invites.join > section #error_explanation ul, #content.base_invites.save_member > section #error_explanation ul {
+  list-style: none;
+  padding: 0;
+}
+#content.signup > section #error_explanation ul li, #content.sessions > section #error_explanation ul li, #content.registrations > section #error_explanation ul li, #content.passwords > section #error_explanation ul li, #content.invitations.connect > section #error_explanation ul li, #content.invitations.update_user > section #error_explanation ul li, #content.public_invites.join > section #error_explanation ul li, #content.base_invites.join > section #error_explanation ul li, #content.base_invites.save_member > section #error_explanation ul li {
+  background-color: #E16C5A;
+  border: 1px solid #df6451;
+  border-radius: 3px;
+  padding: 4px 0;
+  color: #fff;
+  width: 344px;
+  margin: 0 auto;
+}
