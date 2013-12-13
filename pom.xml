@@ -44,6 +44,12 @@
         </dependency>
 
         <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
+            <version>1.4.2.RELEASE</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
             <version>${spring.version}</version>
@@ -55,6 +61,45 @@
             <artifactId>junit</artifactId>
             <version>4.8.2</version>
             <scope>test</scope>
+        </dependency>
+
+    <!--    apache-common   -->
+
+        <dependency>
+            <groupId>commons-dbcp</groupId>
+            <artifactId>commons-dbcp</artifactId>
+            <version>1.4</version>
+        </dependency>
+
+
+
+    <!--    javax   -->
+
+        <dependency>
+            <groupId>javax.persistence</groupId>
+            <artifactId>persistence-api</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject-tck</artifactId>
+            <version>1</version>
+        </dependency>
+
+    <!--    Hibernate   -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>4.2.8.Final</version>
+        </dependency>
+
+        <!-- JDBC -->
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.0.8</version>
         </dependency>
     </dependencies>
 
@@ -80,8 +125,8 @@
                 <configuration>
                     <url>http://localhost:8080/manager/text</url>
                     <server>tomcat_manager</server>
-                    <username>tomcat</username>
-                    <password>tomcat</password>
+                    <username>admin</username>
+                    <password>admin</password>
                 </configuration>
             </plugin>
             <plugin>
@@ -97,7 +142,7 @@
                 <artifactId>coffeescript-maven-plugin</artifactId>
                 <version>1.1.2</version>
                 <configuration>
-                    <srcDir>src/main/coffee</srcDir>
+                    <srcDir>src/main/resources/coffee</srcDir>
                     <outputDir>${basedir}/src/main/webapp/resources/js</outputDir>
                     <bare>false</bare>
                     <modifiedOnly>false</modifiedOnly>
@@ -131,7 +176,7 @@
                     <resources>
                         <resource>
                             <source>
-                                <directory>${basedir}/src/main/stylesheets</directory>
+                                <directory>${basedir}/src/main/resources/stylesheets</directory>
                             </source>
                             <destination>${project.basedir}/src/main/webapp/resources/stylesheets</destination>
                         </resource>
@@ -140,4 +185,65 @@
             </plugin>
         </plugins>
     </build>
+    <profiles>
+        <profile>
+            <id>prod</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>prod</value>
+                </property>
+            </activation>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>${basedir}/src/main/resources/production</directory>
+                        <includes>
+                            <include>*.*</include>
+                        </includes>
+                    </resource>
+                </resources>
+            </build>
+        </profile>
+        <profile>
+            <id>local</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+                <property>
+                    <name>env</name>
+                    <value>local</value>
+                </property>
+            </activation>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>${basedir}/src/main/resources/local</directory>
+                        <includes>
+                            <include>*.*</include>
+                        </includes>
+                    </resource>
+                </resources>
+            </build>
+        </profile>
+        <profile>
+            <id>test</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>test</value>
+                </property>
+            </activation>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>${basedir}/src/main/resources/test</directory>
+                        <includes>
+                            <include>*.*</include>
+                        </includes>
+                    </resource>
+                </resources>
+            </build>
+        </profile>
+    </profiles>
+
 </project>
