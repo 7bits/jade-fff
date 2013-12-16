@@ -94,14 +94,28 @@
             <version>4.2.8.Final</version>
         </dependency>
 
-        <!-- JDBC -->
+    <!-- JDBC -->
 
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>5.0.8</version>
         </dependency>
+
+    <!-- Haml4J-->
+        <dependency>
+            <groupId>com.github.tangzero</groupId>
+            <artifactId>haml4j</artifactId>
+            <version>1.0</version>
+        </dependency>
+
     </dependencies>
+    <repositories>
+        <repository>
+            <id>tangzero-repo</id>
+            <url>http://github.com/tangzero/repository/raw/master/</url>
+        </repository>
+    </repositories>
 
     <build>
         <finalName>recruiters</finalName>
