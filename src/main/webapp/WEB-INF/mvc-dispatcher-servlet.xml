@@ -14,9 +14,24 @@
 
     <context:component-scan base-package="com.recruiters"/>
 
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEB-INF/pages/"/>
-        <property name="suffix" value=".jsp"/>
-    </bean>
+    <!--<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
+        <!--<property name="prefix" value="/WEB-INF/pages/"/>-->
+        <!--<property name="suffix" value=".jsp"/>-->
+    <!--</bean>-->
+    <!--<bean id="templateLoader" class="de.neuland.jade4j.spring.template.SpringTemplateLoader">-->
+        <!--<property name="basePath" value="/WEB-INF/views/" />-->
+        <!--<property name="suffix" value=".jade" />-->
+    <!--</bean>-->
+
+    <!--<bean id="jadeConfiguration" class="de.neuland.jade4j.JadeConfiguration">-->
+        <!--<property name="prettyPrint" value="false" />-->
+        <!--<property name="caching" value="false" />-->
+        <!--<property name="templateLoader" ref="templateLoader" />-->
+    <!--</bean>-->
+
+    <!--<bean id="viewResolver" class="de.neuland.jade4j.spring.view.JadeViewResolver">-->
+        <!--<property name="configuration" ref="jadeConfiguration" />-->
+        <!--<property name="renderExceptions" value="true" />-->
+    <!--</bean>-->
 
 </beans>

@@ -102,20 +102,14 @@
             <version>5.0.8</version>
         </dependency>
 
-    <!-- Haml4J-->
+    <!-- Jade -->
         <dependency>
-            <groupId>com.github.tangzero</groupId>
-            <artifactId>haml4j</artifactId>
-            <version>1.0</version>
+            <groupId>de.neuland-bfi</groupId>
+            <artifactId>spring-jade4j</artifactId>
+            <version>0.4.0</version>
         </dependency>
 
     </dependencies>
-    <repositories>
-        <repository>
-            <id>tangzero-repo</id>
-            <url>http://github.com/tangzero/repository/raw/master/</url>
-        </repository>
-    </repositories>
 
     <build>
         <finalName>recruiters</finalName>

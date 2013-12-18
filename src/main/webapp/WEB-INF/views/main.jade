@@ -1,0 +1,9 @@
+extends layout
+
+block append head
+  link(rel='stylesheet', href='/main.css')
+block append content
+  include books
+
+  h1 Hello World
+  mixin books(books)

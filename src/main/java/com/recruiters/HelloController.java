@@ -1,34 +1,42 @@
 package com.recruiters;
 
-import com.github.tangzero.haml4j.Template;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
-import java.io.File;
-import java.io.IOException;
+import com.recruiters.entities.Book;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
 
 @Controller
 @RequestMapping("/")
 public class HelloController {
+
+    @ResponseBody
     @RequestMapping(method = RequestMethod.GET)
-    public String printWelcome(final ModelMap model) {
+    public ModelAndView indexPage() {
 
-        File f = new File("/home/sevenbits/projects/hello.haml");
-        Template template = null;
-        try {
-            template = new Template(f);
-        } catch (IOException e) {
+        ModelAndView mav = new ModelAndView("main");
 
-        }
+        List<Book> books = new ArrayList<Book>();
+        books.add(new Book("The Hitchhiker's Guide to the Galaxy", 5.70, true));
+        books.add(new Book("Life, the Universe and Everything", 5.60, false));
+        books.add(new Book("The Restaurant at the End of the Universe", 5.40, true));
 
-        Map<String, Object> context = new HashMap<String, Object>();
-        context.put("title", "Ham4J");
-        context.put("message", "Simple message");
+        Map<String, Object> model = new HashMap<String, Object>();
+        model.put("books", books);
+        model.put("pageName", "My Bookshelf");
+        model.put("message", "Jade is working!");
+        model.put("newBook", new Book("The Restaurant at the End of the Universe", 5.40, true));
 
-        return template.render(context);
+        mav.addAllObjects(model);
+
+        return mav;
     }
 }

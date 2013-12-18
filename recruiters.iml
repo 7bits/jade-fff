@@ -71,9 +71,20 @@
     <orderEntry type="library" name="Maven: org.hibernate.javax.persistence:hibernate-jpa-2.0-api:1.0.1.Final" level="project" />
     <orderEntry type="library" name="Maven: org.hibernate.common:hibernate-commons-annotations:4.0.2.Final" level="project" />
     <orderEntry type="library" name="Maven: mysql:mysql-connector-java:5.0.8" level="project" />
-    <orderEntry type="library" name="Maven: com.github.tangzero:haml4j:1.0" level="project" />
-    <orderEntry type="library" name="Maven: org.jruby:jruby-complete:1.5.2" level="project" />
-    <orderEntry type="library" name="Maven: commons-io:commons-io:1.4" level="project" />
+    <orderEntry type="library" name="Maven: de.neuland-bfi:spring-jade4j:0.4.0" level="project" />
+    <orderEntry type="library" name="Maven: de.neuland-bfi:jade4j:0.4.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.commons:commons-jexl:2.1.1" level="project" />
+    <orderEntry type="library" name="Maven: commons-collections:commons-collections:3.2.1" level="project" />
+    <orderEntry type="library" name="Maven: commons-io:commons-io:2.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.1" level="project" />
+    <orderEntry type="library" name="Maven: com.googlecode.concurrentlinkedhashmap:concurrentlinkedhashmap-lru:1.3.1" level="project" />
+    <orderEntry type="library" name="Maven: org.pegdown:pegdown:1.1.0" level="project" />
+    <orderEntry type="library" name="Maven: org.parboiled:parboiled-core:1.0.2" level="project" />
+    <orderEntry type="library" name="Maven: org.parboiled:parboiled-java:1.0.2" level="project" />
+    <orderEntry type="library" name="Maven: asm:asm:3.3.1" level="project" />
+    <orderEntry type="library" name="Maven: asm:asm-util:3.3.1" level="project" />
+    <orderEntry type="library" name="Maven: asm:asm-tree:3.3.1" level="project" />
+    <orderEntry type="library" name="Maven: asm:asm-analysis:3.3.1" level="project" />
   </component>
 </module>
 

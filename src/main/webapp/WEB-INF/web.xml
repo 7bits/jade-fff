@@ -8,7 +8,7 @@
     <servlet>
         <servlet-name>mvc-dispatcher</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
+        <load-on-startup>0</load-on-startup>
     </servlet>
 
     <servlet-mapping>
@@ -16,22 +16,4 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
-
-    <servlet>
-        <servlet-name>haml4j</servlet-name>
-        <servlet-class>com.github.tangzero.haml4j.Haml4JServlet</servlet-class>
-        <init-param>
-            <param-name>TemplatePath</param-name>
-            <param-value>/haml</param-value>
-        </init-param>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>haml4j</servlet-name>
-        <url-pattern>*.haml</url-pattern>
-    </servlet-mapping>
-    
-    
-    
 </web-app>
