@@ -18,7 +18,7 @@ import java.util.Properties;
 
 
 @Configuration
-@PropertySource("classpath:jdbc.properties")
+@PropertySource({"classpath:jdbc.properties", "classpath:hibernate.properties"})
 @EnableJpaRepositories("com.recruiters")
 public class ContextConfiguration {
 
@@ -32,8 +32,8 @@ public class ContextConfiguration {
         ds.setUrl(environment.getProperty("recruiter-jdbc.url"));
         ds.setUsername(environment.getProperty("recruiter-jdbc.username"));
         ds.setPassword(environment.getProperty("recruiter-jdbc.password"));
-        ds.setMaxActive(1000);
-        ds.setMaxWait(1000);
+        ds.setMaxActive(Integer.valueOf(environment.getProperty("recruiter-jdbc.max-active")));
+        ds.setMaxWait(Integer.valueOf(environment.getProperty("recruiter-jdbc.max-wait")));
         ds.setPoolPreparedStatements(true);
         ds.setDefaultAutoCommit(true);
         ds.setValidationQuery("SELECT 1");
