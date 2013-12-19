@@ -20,9 +20,9 @@ public class HelloController {
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView vacanciesList() {
+    public ModelAndView vacanciesSearch() {
 
-        ModelAndView mav = new ModelAndView("vacancies-list");
+        ModelAndView mav = new ModelAndView("vacancies-search");
 
         // List<Book> books = new ArrayList<Book>();
         // books.add(new Book("The Hitchhiker's Guide to the Galaxy", 5.70, true));
