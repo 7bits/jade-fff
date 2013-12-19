@@ -7,15 +7,33 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("/AddVacancy")
+@RequestMapping("/")
 public class LoginPage {
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView indexPage() {
+    public ModelAndView vacanciesSearch() {
 
-        ModelAndView mav = new ModelAndView("main");
+        ModelAndView mav = new ModelAndView("vacancies-search");
 
         return mav;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/vacancy-show")
+    public ModelAndView vacancyShow() {
+        return new ModelAndView("vacancy-show");
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/vacancies-list")
+    public ModelAndView vacanciesList() {
+        return new ModelAndView("vacancies-list");
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/customer-vacancies-list")
+    public ModelAndView customerVacanciesList() {
+        return new ModelAndView("customer-vacancies-list");
     }
 }
