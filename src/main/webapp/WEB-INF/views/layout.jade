@@ -3,5 +3,21 @@ html
   head
     title= pageName
     block head
+      script(src='resources/js/lib/bootstrap.min.js')
+      link(href='resources/stylesheets/lib/bootstrap.min.css', rel='stylesheet', type='text/css')
+      link(href='resources/stylesheets/lib/bootstrap-theme.min.css', rel='stylesheet', type='text/css')
   body
     block content
+      .navbar.navbar-inverse(role="navigation")
+        .container
+          .navbar-header
+            a.navbar-brand(href="#").
+              Имя проекта
+          .navbar-collapse.collapse
+            ul.nav.navbar-nav.navbar-right
+              li
+                a(href="#").
+                  Мои Вакансии
+              li
+                a(href="#").
+                  Поиск вакансии

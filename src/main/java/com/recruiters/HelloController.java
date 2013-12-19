@@ -20,22 +20,22 @@ public class HelloController {
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView indexPage() {
+    public ModelAndView vacanciesList() {
 
-        ModelAndView mav = new ModelAndView("main");
+        ModelAndView mav = new ModelAndView("vacancies-list");
 
-        List<Book> books = new ArrayList<Book>();
-        books.add(new Book("The Hitchhiker's Guide to the Galaxy", 5.70, true));
-        books.add(new Book("Life, the Universe and Everything", 5.60, false));
-        books.add(new Book("The Restaurant at the End of the Universe", 5.40, true));
+        // List<Book> books = new ArrayList<Book>();
+        // books.add(new Book("The Hitchhiker's Guide to the Galaxy", 5.70, true));
+        // books.add(new Book("Life, the Universe and Everything", 5.60, false));
+        // books.add(new Book("The Restaurant at the End of the Universe", 5.40, true));
 
-        Map<String, Object> model = new HashMap<String, Object>();
-        model.put("books", books);
-        model.put("pageName", "My Bookshelf");
-        model.put("message", "Jade is working!");
-        model.put("newBook", new Book("The Restaurant at the End of the Universe", 5.40, true));
+        // Map<String, Object> model = new HashMap<String, Object>();
+        // model.put("books", books);
+        // model.put("pageName", "My Bookshelf");
+        // model.put("message", "Jade is working!");
+        // model.put("newBook", new Book("The Restaurant at the End of the Universe", 5.40, true));
 
-        mav.addAllObjects(model);
+        // mav.addAllObjects(model);
 
         return mav;
     }

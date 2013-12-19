@@ -1,0 +1,31 @@
+extends layout
+
+block append content
+  .container
+    h1 Просмотр активных вакансий
+    table.table.table-striped
+      thead
+        tr
+          th Наименование
+          th Описание
+          th Дата создания
+          th
+      tbody
+        tr
+          td Программист
+          td PHP guru
+          td сегодня
+          td
+            button(type="button" class="btn btn-link") Подробнее
+        tr
+          td Лесоруб
+          td Умеет клёво рубить сосны
+          td сегодня
+          td
+            button(type="button" class="btn btn-link") Подробнее
+        tr
+          td Сантехник
+          td Не пьёт!
+          td сегодня
+          td
+            button(type="button" class="btn btn-link") Подробнее
