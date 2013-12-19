@@ -39,4 +39,10 @@ public class HelloController {
 
         return mav;
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/vacancy-show")
+    public ModelAndView vacancyShow() {
+        return new ModelAndView("vacancy-show");
+    }
 }
