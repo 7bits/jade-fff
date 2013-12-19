@@ -9,6 +9,7 @@
 
     <properties>
         <spring.version>3.2.0.RELEASE</spring.version>
+        <spring-security.version>3.2.0.RELEASE</spring-security.version>
     </properties>
 
     <dependencies>
@@ -55,6 +56,29 @@
             <version>${spring.version}</version>
             <scope>test</scope>
         </dependency>
+
+    <!-- Spring Security-->
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>${spring-security.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>${spring-security.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>${spring-security.version}</version>
+        </dependency>
+
+
+        <!-- jUnit -->
 
         <dependency>
             <groupId>junit</groupId>
@@ -108,6 +132,7 @@
             <artifactId>spring-jade4j</artifactId>
             <version>0.4.0</version>
         </dependency>
+
 
     </dependencies>
 
