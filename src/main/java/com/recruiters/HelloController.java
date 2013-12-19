@@ -45,4 +45,16 @@ public class HelloController {
     public ModelAndView vacancyShow() {
         return new ModelAndView("vacancy-show");
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/vacancies-list")
+    public ModelAndView vacanciesList() {
+        return new ModelAndView("vacancies-list");
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/customer-vacancies-list")
+    public ModelAndView customerVacanciesList() {
+        return new ModelAndView("customer-vacancies-list");
+    }
 }

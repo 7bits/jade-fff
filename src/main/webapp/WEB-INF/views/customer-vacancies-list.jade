@@ -2,19 +2,21 @@ extends layout
 
 block append content
   .container
-    h1 Мои вакансии
+    h1 Мои вакансии с рекрутёром
     table.table.table-striped
       thead
         tr
           th Наименование
           th Описание
           th Дата создания
+          th Рекрутёр
           th
       tbody
         tr
           td Программист
           td PHP guru
           td сегодня
+          td Иванов
           td
             button.btn.btn-link(type="button").
               Подробнее
@@ -22,6 +24,7 @@ block append content
           td Лесоруб
           td Умеет клёво рубить сосны
           td сегодня
+          td Иванов
           td
             button.btn.btn-link(type="button").
               Подробнее
@@ -29,6 +32,7 @@ block append content
           td Сантехник
           td Не пьёт!
           td сегодня
+          td Иванов
           td
             button.btn.btn-link(type="button").
               Подробнее
