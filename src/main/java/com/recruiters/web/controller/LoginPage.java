@@ -50,6 +50,12 @@ public class LoginPage {
     }
 
     @ResponseBody
+    @RequestMapping(value = "/customer-vacancy-show")
+    public ModelAndView customerVacancyShow() {
+        return new ModelAndView("customer-vacancy-show");
+    }
+
+    @ResponseBody
     @RequestMapping(value = "/recruit-vacancy-show")
     public ModelAndView recruitVacancyShow() {
         return new ModelAndView("recruit-vacancy-show");
