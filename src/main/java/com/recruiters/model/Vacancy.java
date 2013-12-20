@@ -27,7 +27,7 @@ public class Vacancy {
     public Vacancy() {
     }
 
-    public Vacancy(final Long id, String title, String shortDescription, String creationDate) {
+    public Vacancy(final Long id, final String title, final String shortDescription, final String creationDate) {
         this.id = id;
         this.title = title;
         this.shortDescription = shortDescription;
@@ -38,7 +38,7 @@ public class Vacancy {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(final Long id) {
         this.id = id;
     }
 
@@ -46,7 +46,7 @@ public class Vacancy {
         return title;
     }
 
-    public void setTitle(String title) {
+    public void setTitle(final String title) {
         this.title = title;
     }
 
@@ -54,7 +54,7 @@ public class Vacancy {
         return shortDescription;
     }
 
-    public void setShortDescription(String shortDescription) {
+    public void setShortDescription(final String shortDescription) {
         this.shortDescription = shortDescription;
     }
 
@@ -62,7 +62,7 @@ public class Vacancy {
         return creationDate;
     }
 
-    public void setCreationDate(String creationDate) {
+    public void setCreationDate(final String creationDate) {
         this.creationDate = creationDate;
     }
 }

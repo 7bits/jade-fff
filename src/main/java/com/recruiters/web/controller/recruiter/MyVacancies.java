@@ -14,7 +14,7 @@ import java.util.List;
  */
 @Controller("recruiterMyVacancy")
 public class MyVacancies {
-    final static Long RECRUITER_ID = 1L;
+    static final Long RECRUITER_ID = 1L;
 
     /**
      * Controller for R2 "My vacancies"
@@ -23,9 +23,9 @@ public class MyVacancies {
     @RequestMapping(value = "/recruiter/myVacancies", method = RequestMethod.GET)
     public ModelAndView showMyVacancies() {
         Long myId = getMyId();
-        ModelAndView myVacancies = new ModelAndView ("myVacancies");
-        List<Vacancy> vacancyList = getMyVacancies (myId);
-        myVacancies.addObject ("vacancyList", vacancyList);
+        ModelAndView myVacancies = new ModelAndView("myVacancies");
+        List<Vacancy> vacancyList = getMyVacancies(myId);
+        myVacancies.addObject("vacancyList", vacancyList);
         return myVacancies;
     }
 
@@ -33,7 +33,7 @@ public class MyVacancies {
      * Fake getMyVacancies method, should be real service method of RecruiterService in future
      * @return list of my vacancies
      */
-    private List<Vacancy> getMyVacancies (Long recruiterId) {
+    private List<Vacancy> getMyVacancies(final Long recruiterId) {
         final Long RECRUITER1_ID = 1L;
         final Long VACANCY1_ID = 1L;
         final String VACANCY1_TITLE = "Программист";
@@ -48,12 +48,12 @@ public class MyVacancies {
         final String VACANCY3_SHORT_DESCRIPTION = "Не пьёт!";
         final String VACANCY3_DATE = "сегодня";
         List<Vacancy> myVacancies = new ArrayList<Vacancy>();
-        Vacancy vacancy1 = new Vacancy (VACANCY1_ID, VACANCY1_TITLE, VACANCY1_SHORT_DESCRIPTION, VACANCY1_DATE);
-        Vacancy vacancy2 = new Vacancy (VACANCY2_ID, VACANCY2_TITLE, VACANCY2_SHORT_DESCRIPTION, VACANCY2_DATE);
-        Vacancy vacancy3 = new Vacancy (VACANCY3_ID, VACANCY3_TITLE, VACANCY3_SHORT_DESCRIPTION, VACANCY3_DATE);
-        myVacancies.add (vacancy1);
-        myVacancies.add (vacancy2);
-        myVacancies.add (vacancy3);
+        Vacancy vacancy1 = new Vacancy(VACANCY1_ID, VACANCY1_TITLE, VACANCY1_SHORT_DESCRIPTION, VACANCY1_DATE);
+        Vacancy vacancy2 = new Vacancy(VACANCY2_ID, VACANCY2_TITLE, VACANCY2_SHORT_DESCRIPTION, VACANCY2_DATE);
+        Vacancy vacancy3 = new Vacancy(VACANCY3_ID, VACANCY3_TITLE, VACANCY3_SHORT_DESCRIPTION, VACANCY3_DATE);
+        myVacancies.add(vacancy1);
+        myVacancies.add(vacancy2);
+        myVacancies.add(vacancy3);
         if (recruiterId.equals(RECRUITER1_ID)) {
             return myVacancies;
         } else {

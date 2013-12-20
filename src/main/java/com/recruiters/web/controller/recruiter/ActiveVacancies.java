@@ -4,7 +4,6 @@ import com.recruiters.model.Vacancy;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
@@ -23,9 +22,9 @@ public class ActiveVacancies {
     @RequestMapping(value = "/recruiter-my-vacancies", method = RequestMethod.GET)
     public ModelAndView showActiveVacancies() {
 
-        ModelAndView activeVacancies = new ModelAndView ("recruiter-my-vacancies.jade");
+        ModelAndView activeVacancies = new ModelAndView("recruiter-my-vacancies.jade");
         List<Vacancy> vacancyList = getActiveVacancies();
-        activeVacancies.addObject ("vacancyList", vacancyList);
+        activeVacancies.addObject("vacancyList", vacancyList);
 
         return activeVacancies;
     }
@@ -34,7 +33,7 @@ public class ActiveVacancies {
      * Fake getActiveVacancies method, should be real service method of RecruiterService in future
      * @return list of active vacancies
      */
-    private List<Vacancy> getActiveVacancies () {
+    private List<Vacancy> getActiveVacancies() {
         final Long VACANCY1_ID = 1L;
         final String VACANCY1_TITLE = "Программист";
         final String VACANCY1_SHORT_DESCRIPTION = "PHP guru";
@@ -48,12 +47,12 @@ public class ActiveVacancies {
         final String VACANCY3_SHORT_DESCRIPTION = "Не пьёт!";
         final String VACANCY3_DATE = "сегодня";
         List<Vacancy> activeVacancies = new ArrayList<Vacancy>();
-        Vacancy vacancy1 = new Vacancy (VACANCY1_ID, VACANCY1_TITLE, VACANCY1_SHORT_DESCRIPTION, VACANCY1_DATE);
-        Vacancy vacancy2 = new Vacancy (VACANCY2_ID, VACANCY2_TITLE, VACANCY2_SHORT_DESCRIPTION, VACANCY2_DATE);
-        Vacancy vacancy3 = new Vacancy (VACANCY3_ID, VACANCY3_TITLE, VACANCY3_SHORT_DESCRIPTION, VACANCY3_DATE);
-        activeVacancies.add (vacancy1);
-        activeVacancies.add (vacancy2);
-        activeVacancies.add (vacancy3);
+        Vacancy vacancy1 = new Vacancy(VACANCY1_ID, VACANCY1_TITLE, VACANCY1_SHORT_DESCRIPTION, VACANCY1_DATE);
+        Vacancy vacancy2 = new Vacancy(VACANCY2_ID, VACANCY2_TITLE, VACANCY2_SHORT_DESCRIPTION, VACANCY2_DATE);
+        Vacancy vacancy3 = new Vacancy(VACANCY3_ID, VACANCY3_TITLE, VACANCY3_SHORT_DESCRIPTION, VACANCY3_DATE);
+        activeVacancies.add(vacancy1);
+        activeVacancies.add(vacancy2);
+        activeVacancies.add(vacancy3);
 
         return activeVacancies;
     }

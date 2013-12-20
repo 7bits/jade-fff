@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
-
 /**
  * Controller Class for R2 "Show Vacancy"
  */
@@ -20,10 +18,10 @@ public class ShowVacancy {
      * @return model and view with one vacancy
      */
     @RequestMapping(value = "/recruiter/showVacancy/{$vacancyId}", method = RequestMethod.GET)
-    public ModelAndView showVacancyById (@PathVariable Long vacancyId) {
+    public ModelAndView showVacancyById(@PathVariable final Long vacancyId) {
 
-        ModelAndView showVacancy = new ModelAndView ("showVacancy");
-        VacancyFull vacancy = getVacancyFullById (vacancyId);
+        ModelAndView showVacancy = new ModelAndView("showVacancy");
+        VacancyFull vacancy = getVacancyFullById(vacancyId);
         showVacancy.addObject("vacancy", vacancy);
         return showVacancy;
     }
@@ -33,7 +31,7 @@ public class ShowVacancy {
      * @param vacancyId    Id of vacancy for which we want to get full description
      * @return full vacancy description
      */
-    private VacancyFull getVacancyFullById (Long vacancyId) {
+    private VacancyFull getVacancyFullById(final Long vacancyId) {
         final Long VACANCY1_ID = 1L;
         final String  VACANCY1_TITLE = "Лесоруб";
         final String VACANCY1_DESCRIPTION = "Обожаю рубить сосны!";
@@ -41,7 +39,7 @@ public class ShowVacancy {
         final String VACANCY1_CREATION_DATE = "сегодня";
         final String VACANCY1_EXPIRATION_DATE = "завтра";
         final Long VACANCY1_TEST_ID = 1L;
-        VacancyFull vacancyFull1 = new VacancyFull (VACANCY1_ID, VACANCY1_TITLE, VACANCY1_DESCRIPTION,
+        VacancyFull vacancyFull1 = new VacancyFull(VACANCY1_ID, VACANCY1_TITLE, VACANCY1_DESCRIPTION,
                 VACANCY1_SALARY, VACANCY1_CREATION_DATE, VACANCY1_EXPIRATION_DATE, VACANCY1_TEST_ID);
         if (vacancyId.equals(VACANCY1_ID)) {
             return vacancyFull1;

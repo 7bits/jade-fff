@@ -15,7 +15,15 @@ public class VacancyFull {
     public VacancyFull() {
     }
 
-    public VacancyFull (Long id, String title, String description, String salary, String creationDate, String expirationDate, Long testId) {
+    public VacancyFull(
+            final Long id,
+            final String title,
+            final String description,
+            final String salary,
+            final String creationDate,
+            final String expirationDate,
+            final Long testId
+    ) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -29,7 +37,7 @@ public class VacancyFull {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(final Long id) {
         this.id = id;
     }
 
@@ -37,7 +45,7 @@ public class VacancyFull {
         return title;
     }
 
-    public void setTitle(String title) {
+    public void setTitle(final String title) {
         this.title = title;
     }
 
@@ -45,7 +53,7 @@ public class VacancyFull {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(final String description) {
         this.description = description;
     }
 
@@ -53,7 +61,7 @@ public class VacancyFull {
         return salary;
     }
 
-    public void setSalary(String salary) {
+    public void setSalary(final String salary) {
         this.salary = salary;
     }
 
@@ -61,7 +69,7 @@ public class VacancyFull {
         return creationDate;
     }
 
-    public void setCreationDate(String creationDate) {
+    public void setCreationDate(final String creationDate) {
         this.creationDate = creationDate;
     }
 
@@ -69,7 +77,7 @@ public class VacancyFull {
         return expirationDate;
     }
 
-    public void setExpirationDate(String expirationDate) {
+    public void setExpirationDate(final String expirationDate) {
         this.expirationDate = expirationDate;
     }
 
@@ -77,7 +85,7 @@ public class VacancyFull {
         return testId;
     }
 
-    public void setTestId(Long testId) {
+    public void setTestId(final Long testId) {
         this.testId = testId;
     }
 }
