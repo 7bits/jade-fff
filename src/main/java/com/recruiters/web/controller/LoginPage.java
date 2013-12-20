@@ -17,11 +17,11 @@ public class LoginPage {
         return mav;
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/recruiter-vacancy-show")
-    public ModelAndView vacancyShow() {
-        return new ModelAndView("recruiter-vacancy-show");
-    }
+//    @ResponseBody
+//    @RequestMapping(value = "/recruiter-vacancy-show")
+//    public ModelAndView vacancyShow() {
+//        return new ModelAndView("recruiter-vacancy-show");
+//    }
 
     @ResponseBody
     @RequestMapping(value = "/employer-progress-vacancies-list")

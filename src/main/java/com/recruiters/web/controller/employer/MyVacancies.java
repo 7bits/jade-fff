@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Controller Class for R12 "My vacancies"
  */
-@Controller
+@Controller("employerMyVacancy")
 public class MyVacancies {
     /** */
     static final Long RECRUITER_ID = 1L;
