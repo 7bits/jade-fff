@@ -46,7 +46,7 @@ public class ActiveVacancies {
     @RequestMapping(value = "recruiter-active-vacancies", method = RequestMethod.GET)
     public ModelAndView showActiveVacancies() {
 
-        ModelAndView activeVacancies = new ModelAndView("vacancies-search.jade");
+        ModelAndView activeVacancies = new ModelAndView("recruiter-active-vacancies.jade");
         List<Vacancy> vacancyList = getActiveVacancies();
         activeVacancies.addObject("vacancyList", vacancyList);
 

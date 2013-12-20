@@ -11,24 +11,11 @@ block append content
           th Дата создания
           th
       tbody
-        tr
-          td Программист
-          td PHP guru
-          td сегодня
-          td
-            button.btn.btn-link(type="button").
-              Подробнее
-        tr
-          td Лесоруб
-          td Умеет клёво рубить сосны
-          td сегодня
-          td
-            button.btn.btn-link(type="button").
-              Подробнее
-        tr
-          td Сантехник
-          td Не пьёт!
-          td сегодня
-          td
-            button.btn.btn-link(type="button").
-              Подробнее
+          for vacancy in vacancyList
+            tr
+              td #{vacancy.title}
+              td #{vacancy.description}
+              td #{vacancy.creationDate}
+              td
+                a.btn.btn-link(href="recruiter-vacancy-show/" + vacancy.id).
+                  Подробнее
