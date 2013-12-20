@@ -20,12 +20,13 @@ public class ActiveVacancies {
      * Controller for R11 "Active vacancies list"
      * @return model and view with list of active vacancies
      */
-    @RequestMapping(value = "/recruiter/activeVacancies", method = RequestMethod.GET)
+    @RequestMapping(value = "/recruiter-my-vacancies", method = RequestMethod.GET)
     public ModelAndView showActiveVacancies() {
 
-        ModelAndView activeVacancies = new ModelAndView ("activeVacancies");
+        ModelAndView activeVacancies = new ModelAndView ("recruiter-my-vacancies.jade");
         List<Vacancy> vacancyList = getActiveVacancies();
         activeVacancies.addObject ("vacancyList", vacancyList);
+
         return activeVacancies;
     }
 
@@ -53,6 +54,7 @@ public class ActiveVacancies {
         activeVacancies.add (vacancy1);
         activeVacancies.add (vacancy2);
         activeVacancies.add (vacancy3);
+
         return activeVacancies;
     }
 

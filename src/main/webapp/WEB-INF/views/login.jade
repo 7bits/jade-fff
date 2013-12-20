@@ -10,11 +10,11 @@ html
   body
     block content
       .container
-        form.form-signin(role="form")
+        form.form-signin(role="form", action="j_spring_security_check", method="post")
           h2.form-signin-heading Вход
-          input.form-control(type="text", name="user", placeholder="Email address", required="", autofocus="")
-          input.form-control(type="password", name="pass", placeholder="Password", required="")
+          input.form-control(type="text", name="j_username", placeholder="Email address", required="", autofocus="")
+          input.form-control(type="password", name="j_password", placeholder="Password", required="")
           label.checkbox
             input(type="checkbox", value="remember-me")
               | Запомнить меня
-          button.btn.btn-lg.btn-primary.btn-block(type="submit")
+          button.btn.btn-lg.btn-primary.btn-block(name="submit", type="submit", value="Sign In")
