@@ -47,11 +47,11 @@ public class LoginPage {
         return new ModelAndView("employer-progress-vacancy-show");
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/recruiter-vacancy-show")
-    public ModelAndView recruitVacancyShow() {
-        return new ModelAndView("recruiter-vacancy-show");
-    }
+//    @ResponseBody
+//    @RequestMapping(value = "/recruiter-vacancy-show")
+//    public ModelAndView recruitVacancyShow() {
+//        return new ModelAndView("recruiter-vacancy-show");
+//    }
 
 
 

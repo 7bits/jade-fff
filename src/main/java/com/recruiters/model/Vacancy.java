@@ -1,37 +1,39 @@
 package com.recruiters.model;
 
-import java.util.Date;
-
 /**
  * Vacancy POJO Class
  */
 public class Vacancy {
     private Long id;
+    private Long employerId;
     private String title;
-    private String shortDescription;
-    private String longDescription;
-    private Date expirationDate;
+    private String description;
     private String salary;
-//    private Test test;
-//
-//    private List<Recruiter> recruiterList;
-//    // Can be null
-//    private Recruiter activeRecruiter;
-//    // Job search is over when is not null
-//    private Applicant activeApplicant;
-
-    // Should consider more flags: archive etc
-    private boolean isActive;
     private String creationDate;
+    private String expirationDate;
+    private String testFile;
 
     public Vacancy() {
     }
 
-    public Vacancy(final Long id, final String title, final String shortDescription, final String creationDate) {
+    public Vacancy(final Long id, final String title, final String description, final String creationDate) {
         this.id = id;
         this.title = title;
-        this.shortDescription = shortDescription;
+        this.description = description;
         this.creationDate = creationDate;
+    }
+
+    public Vacancy(final Long id, final Long employerId, final String title,
+                   final String description, final String salary,
+                   final String creationDate, final String expirationDate, final String testFile) {
+        this.id = id;
+        this.employerId = employerId;
+        this.title = title;
+        this.description = description;
+        this.salary = salary;
+        this.creationDate = creationDate;
+        this.expirationDate = expirationDate;
+        this.testFile = testFile;
     }
 
     public Long getId() {
@@ -42,6 +44,14 @@ public class Vacancy {
         this.id = id;
     }
 
+    public Long getEmployerId() {
+        return employerId;
+    }
+
+    public void setEmployerId(final Long employerId) {
+        this.employerId = employerId;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -50,12 +60,20 @@ public class Vacancy {
         this.title = title;
     }
 
-    public String getShortDescription() {
-        return shortDescription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setShortDescription(final String shortDescription) {
-        this.shortDescription = shortDescription;
+    public void setDescription(final String description) {
+        this.description = description;
+    }
+
+    public String getSalary() {
+        return salary;
+    }
+
+    public void setSalary(final String salary) {
+        this.salary = salary;
     }
 
     public String getCreationDate() {
@@ -64,5 +82,21 @@ public class Vacancy {
 
     public void setCreationDate(final String creationDate) {
         this.creationDate = creationDate;
+    }
+
+    public String getExpirationDate() {
+        return expirationDate;
+    }
+
+    public void setExpirationDate(final String expirationDate) {
+        this.expirationDate = expirationDate;
+    }
+
+    public String getTestFile() {
+        return testFile;
+    }
+
+    public void setTestFile(final String testFile) {
+        this.testFile = testFile;
     }
 }
