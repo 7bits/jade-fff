@@ -15,14 +15,15 @@ public class Vacancy {
     public Vacancy() {
     }
 
-    public Vacancy(Long id, String title, String description, String creationDate) {
+    public Vacancy(final Long id, final String title, final String description, final String creationDate) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.creationDate = creationDate;
     }
 
-    public Vacancy (Long id, String title, String description, String salary, String creationDate, String expirationDate, Long testId) {
+    public Vacancy(final Long id, final String title, final String description, final String salary,
+                   final String creationDate, final String expirationDate, final Long testId) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -36,7 +37,7 @@ public class Vacancy {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(final Long id) {
         this.id = id;
     }
 
@@ -44,7 +45,7 @@ public class Vacancy {
         return title;
     }
 
-    public void setTitle(String title) {
+    public void setTitle(final String title) {
         this.title = title;
     }
 
@@ -52,7 +53,7 @@ public class Vacancy {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(final String description) {
         this.description = description;
     }
 
@@ -60,7 +61,7 @@ public class Vacancy {
         return salary;
     }
 
-    public void setSalary(String salary) {
+    public void setSalary(final String salary) {
         this.salary = salary;
     }
 
@@ -68,7 +69,7 @@ public class Vacancy {
         return creationDate;
     }
 
-    public void setCreationDate(String creationDate) {
+    public void setCreationDate(final String creationDate) {
         this.creationDate = creationDate;
     }
 
@@ -76,7 +77,7 @@ public class Vacancy {
         return expirationDate;
     }
 
-    public void setExpirationDate(String expirationDate) {
+    public void setExpirationDate(final String expirationDate) {
         this.expirationDate = expirationDate;
     }
 
@@ -84,7 +85,7 @@ public class Vacancy {
         return testId;
     }
 
-    public void setTestId(Long testId) {
+    public void setTestId(final Long testId) {
         this.testId = testId;
     }
 }

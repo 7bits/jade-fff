@@ -1,7 +1,5 @@
 package com.recruiters.model;
 
-import org.springframework.web.multipart.MultipartFile;
-
 /**
  * Java Bean Class for Applicant
  */
@@ -17,7 +15,7 @@ public class Applicant {
     public Applicant() {
     }
 
-    public Applicant(Long id, Long vacancyId, String firstName, String lastName, String description) {
+    public Applicant(final Long id, final Long vacancyId, final String firstName, final String lastName, final String description) {
         this.id = id;
         this.vacancyId = vacancyId;
         this.firstName = firstName;
@@ -29,7 +27,7 @@ public class Applicant {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(final Long id) {
         this.id = id;
     }
 
@@ -37,7 +35,7 @@ public class Applicant {
         return vacancyId;
     }
 
-    public void setVacancyId(Long vacancyId) {
+    public void setVacancyId(final Long vacancyId) {
         this.vacancyId = vacancyId;
     }
 
@@ -45,7 +43,7 @@ public class Applicant {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
+    public void setFirstName(final String firstName) {
         this.firstName = firstName;
     }
 
@@ -53,7 +51,7 @@ public class Applicant {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
+    public void setLastName(final String lastName) {
         this.lastName = lastName;
     }
 
@@ -61,7 +59,7 @@ public class Applicant {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(final String description) {
         this.description = description;
     }
 
@@ -69,7 +67,7 @@ public class Applicant {
         return resumeFile;
     }
 
-    public void setResumeFile(String resumeFile) {
+    public void setResumeFile(final String resumeFile) {
         this.resumeFile = resumeFile;
     }
 
@@ -77,7 +75,7 @@ public class Applicant {
         return testAnswerFile;
     }
 
-    public void setTestAnswerFile(String testAnswerFile) {
+    public void setTestAnswerFile(final String testAnswerFile) {
         this.testAnswerFile = testAnswerFile;
     }
 }
