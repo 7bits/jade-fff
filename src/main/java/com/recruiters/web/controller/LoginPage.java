@@ -42,4 +42,11 @@ public class LoginPage {
     public ModelAndView customerRecruitSearch() {
         return new ModelAndView("customer-recruit-search");
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/customer-recruit-show")
+    public ModelAndView customerRecruitShow() {
+        return new ModelAndView("customer-recruit-show");
+    }
+
 }
