@@ -36,4 +36,10 @@ public class LoginPage {
     public ModelAndView customerVacanciesList() {
         return new ModelAndView("customer-vacancies-list");
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/customer-recruit-search")
+    public ModelAndView customerRecruitSearch() {
+        return new ModelAndView("customer-recruit-search");
+    }
 }
