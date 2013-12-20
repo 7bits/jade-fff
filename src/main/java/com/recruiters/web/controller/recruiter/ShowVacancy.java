@@ -19,7 +19,7 @@ public class ShowVacancy {
      * Controller for R2 "Show vacancy"
      * @return model and view with one vacancy
      */
-    @RequestMapping(value = "/recruiter-vacancy-show/{$vacancyId}", method = RequestMethod.GET)
+    @RequestMapping(value = "recruiter-vacancy-show/{vacancyId}", method = RequestMethod.GET)
     public ModelAndView showVacancyById (@PathVariable Long vacancyId) {
 
         ModelAndView showVacancy = new ModelAndView ("recruiter-vacancy-show.jade");

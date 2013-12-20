@@ -20,7 +20,7 @@ public class MyVacancies {
      * Controller for R2 "My vacancies"
      * @return model and view with list of active vacancies
      */
-    @RequestMapping(value = "/recruiter-vacancies-list", method = RequestMethod.GET)
+    @RequestMapping(value = "recruiter-vacancies-list", method = RequestMethod.GET)
     public ModelAndView showMyVacancies() {
         Long myId = getMyId();
         ModelAndView myVacancies = new ModelAndView ("recruiter-my-vacancies.jade");

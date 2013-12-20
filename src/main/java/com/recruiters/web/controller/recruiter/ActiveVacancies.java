@@ -20,7 +20,7 @@ public class ActiveVacancies {
      * Controller for R11 "Active vacancies list"
      * @return model and view with list of active vacancies
      */
-    @RequestMapping(value = "/recruiter-active-vacancies", method = RequestMethod.GET)
+    @RequestMapping(value = "recruiter-active-vacancies", method = RequestMethod.GET)
     public ModelAndView showActiveVacancies() {
 
         ModelAndView activeVacancies = new ModelAndView("vacancies-search.jade");

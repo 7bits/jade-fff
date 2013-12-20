@@ -29,7 +29,7 @@ public class ModifyApplicant {
      * Controller for creating new applicant with method GET
      * @return model and view with empty applicant
      */
-    @RequestMapping(value = "/recruiter-employee-create/{vacancyId}", method = RequestMethod.GET)
+    @RequestMapping(value = "recruiter-employee-create/{vacancyId}", method = RequestMethod.GET)
     public ModelAndView addApplicant (@PathVariable Long vacancyId) {
 
         ModelAndView addApplicant = new ModelAndView ("recruiter-employee-create.jade");
@@ -39,7 +39,7 @@ public class ModifyApplicant {
         return addApplicant;
     }
 
-    @RequestMapping(value = "/recruiter-employee-create/{vacancyId}", method = RequestMethod.POST)
+    @RequestMapping(value = "recruiter-employee-create/{vacancyId}", method = RequestMethod.POST)
     public ModelAndView addApplicantValidation (@ModelAttribute("applicantForm")
                                                     ApplicantForm applicantForm,
                                                 @PathVariable Long vacancyId,
