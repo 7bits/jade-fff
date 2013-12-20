@@ -1,9 +1,9 @@
-package com.recruiters.model;
+package com.recruiters.model.entity;
 
 /**
- * Test POJO Class
+ * TestEntity POJO Class
  */
-public class Test {
+public class TestEntity {
     private Long id;
     // Or any other way we'll maintain files
     private String fileUrl;

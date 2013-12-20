@@ -34,4 +34,36 @@ public class LoginPage {
     public ModelAndView customerRecruitSearch() {
         return new ModelAndView("customer-recruit-search");
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/customer-recruit-show")
+    public ModelAndView customerRecruitShow() {
+        return new ModelAndView("customer-recruit-show");
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/customer-vacancy-show")
+    public ModelAndView customerVacancyShow() {
+        return new ModelAndView("customer-vacancy-show");
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/recruit-vacancy-show")
+    public ModelAndView recruitVacancyShow() {
+        return new ModelAndView("recruit-vacancy-show");
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/employee-create")
+    public ModelAndView employeeCreate() {
+        return new ModelAndView("employee-create");
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/employee-show")
+    public ModelAndView employeeShow() {
+        return new ModelAndView("employee-show");
+    }
+
 }
