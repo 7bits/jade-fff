@@ -1,0 +1,45 @@
+extends layout
+
+block append content
+  .container
+    h1 Вакансия, по которой идёт работа
+    .row
+      .col-md-8
+        h2
+        dl
+          dt Наименование
+          dd Лесоруб
+          dt Описание
+          dd Обожаю рубить сосны!
+          dt Диапазон з/п
+          dd 30 - 50 $ в час
+          dt Дата создания
+          dd сегодня
+          dt Дата окончания
+          dd завтра
+      .col-md-4
+        h2 Работодатель
+        p.
+          Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa.
+
+    h2 Список кандидатов
+    .row
+      .col-md-6
+        ul.list-group
+          li.list-group-item
+            | Иванов Иван
+            button.btn.btn-link.pull-right(type="button")
+              a(href="#").
+                Изменить
+          li.list-group-item
+            | Петров Пётр
+            button.btn.btn-link.pull-right(type="button")
+              a(href="#").
+                Изменить
+          li.list-group-item
+            | Константинопольский Константин
+            button.btn.btn-link.pull-right(type="button")
+              a(href="#").
+                Изменить
+
+        button.btn.btn-success(type="button") Предложить новую кандидатуру
