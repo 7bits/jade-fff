@@ -1,0 +1,20 @@
+!!! 5
+html
+  head
+    title= pageName
+    block head
+      script(src='resources/js/lib/bootstrap.min.js')
+      link(href='resources/stylesheets/lib/bootstrap.min.css', rel='stylesheet', type='text/css')
+      link(href='resources/stylesheets/lib/bootstrap-theme.min.css', rel='stylesheet', type='text/css')
+      link(href='resources/stylesheets/form.css', rel='stylesheet', type='text/css')
+  body
+    block content
+      .container
+        form.form-signin(role="form")
+          h2.form-signin-heading Вход
+          input.form-control(type="text", name="user", placeholder="Email address", required="", autofocus="")
+          input.form-control(type="password", name="pass", placeholder="Password", required="")
+          label.checkbox
+            input(type="checkbox", value="remember-me")
+              | Запомнить меня
+          button.btn.btn-lg.btn-primary.btn-block(type="submit")
