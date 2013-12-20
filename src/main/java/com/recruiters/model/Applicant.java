@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public class Applicant {
     private Long id;
+    private Long vacancyId;
     private String firstName;
     private String lastName;
     private String description;
@@ -16,8 +17,9 @@ public class Applicant {
     public Applicant() {
     }
 
-    public Applicant(Long id, String firstName, String lastName, String description) {
+    public Applicant(Long id, Long vacancyId, String firstName, String lastName, String description) {
         this.id = id;
+        this.vacancyId = vacancyId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.description = description;
@@ -29,6 +31,14 @@ public class Applicant {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getVacancyId() {
+        return vacancyId;
+    }
+
+    public void setVacancyId(Long vacancyId) {
+        this.vacancyId = vacancyId;
     }
 
     public String getFirstName() {

@@ -1,37 +1,35 @@
 package com.recruiters.model;
 
-import java.util.Date;
-
 /**
  * Vacancy POJO Class
  */
 public class Vacancy {
     private Long id;
     private String title;
-    private String shortDescription;
-    private String longDescription;
-    private Date expirationDate;
+    private String description;
     private String salary;
-//    private Test test;
-//
-//    private List<Recruiter> recruiterList;
-//    // Can be null
-//    private Recruiter activeRecruiter;
-//    // Job search is over when is not null
-//    private Applicant activeApplicant;
-
-    // Should consider more flags: archive etc
-    private boolean isActive;
     private String creationDate;
+    private String expirationDate;
+    private Long testId;
 
     public Vacancy() {
     }
 
-    public Vacancy(final Long id, String title, String shortDescription, String creationDate) {
+    public Vacancy(Long id, String title, String description, String creationDate) {
         this.id = id;
         this.title = title;
-        this.shortDescription = shortDescription;
+        this.description = description;
         this.creationDate = creationDate;
+    }
+
+    public Vacancy (Long id, String title, String description, String salary, String creationDate, String expirationDate, Long testId) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.salary = salary;
+        this.creationDate = creationDate;
+        this.expirationDate = expirationDate;
+        this.testId = testId;
     }
 
     public Long getId() {
@@ -50,12 +48,20 @@ public class Vacancy {
         this.title = title;
     }
 
-    public String getShortDescription() {
-        return shortDescription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setShortDescription(String shortDescription) {
-        this.shortDescription = shortDescription;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getSalary() {
+        return salary;
+    }
+
+    public void setSalary(String salary) {
+        this.salary = salary;
     }
 
     public String getCreationDate() {
@@ -64,5 +70,21 @@ public class Vacancy {
 
     public void setCreationDate(String creationDate) {
         this.creationDate = creationDate;
+    }
+
+    public String getExpirationDate() {
+        return expirationDate;
+    }
+
+    public void setExpirationDate(String expirationDate) {
+        this.expirationDate = expirationDate;
+    }
+
+    public Long getTestId() {
+        return testId;
+    }
+
+    public void setTestId(Long testId) {
+        this.testId = testId;
     }
 }
