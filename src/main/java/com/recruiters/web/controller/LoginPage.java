@@ -49,4 +49,11 @@ public class LoginPage {
         return new ModelAndView("customer-recruit-show");
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/recruit-vacancy-show")
+    public ModelAndView recruitVacancyShow() {
+        return new ModelAndView("recruit-vacancy-show");
+    }
+
+
 }
