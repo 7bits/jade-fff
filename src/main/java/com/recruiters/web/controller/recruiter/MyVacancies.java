@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Controller Class for R12 "My vacancies"
  */
-@Controller("recruiterMyVacancy")
+@Controller
 public class MyVacancies {
     final static Long RECRUITER_ID = 1L;
 
@@ -20,10 +20,10 @@ public class MyVacancies {
      * Controller for R2 "My vacancies"
      * @return model and view with list of active vacancies
      */
-    @RequestMapping(value = "/recruiter/myVacancies", method = RequestMethod.GET)
+    @RequestMapping(value = "/recruiter-vacancies-list", method = RequestMethod.GET)
     public ModelAndView showMyVacancies() {
         Long myId = getMyId();
-        ModelAndView myVacancies = new ModelAndView ("myVacancies");
+        ModelAndView myVacancies = new ModelAndView ("recruiter-my-vacancies.jade");
         List<Vacancy> vacancyList = getMyVacancies (myId);
         myVacancies.addObject ("vacancyList", vacancyList);
         return myVacancies;

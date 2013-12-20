@@ -20,12 +20,12 @@ public class ActiveVacancies {
      * Controller for R11 "Active vacancies list"
      * @return model and view with list of active vacancies
      */
-    @RequestMapping(value = "/recruiter-my-vacancies", method = RequestMethod.GET)
+    @RequestMapping(value = "/recruiter-vacancies-list", method = RequestMethod.GET)
     public ModelAndView showActiveVacancies() {
 
-        ModelAndView activeVacancies = new ModelAndView ("recruiter-my-vacancies.jade");
+        ModelAndView activeVacancies = new ModelAndView("vacancies-search.jade");
         List<Vacancy> vacancyList = getActiveVacancies();
-        activeVacancies.addObject ("vacancyList", vacancyList);
+        activeVacancies.addObject("vacancyList", vacancyList);
 
         return activeVacancies;
     }
@@ -34,7 +34,7 @@ public class ActiveVacancies {
      * Fake getActiveVacancies method, should be real service method of RecruiterService in future
      * @return list of active vacancies
      */
-    private List<Vacancy> getActiveVacancies () {
+    private List<Vacancy> getActiveVacancies() {
         final Long VACANCY1_ID = 1L;
         final String VACANCY1_TITLE = "Программист";
         final String VACANCY1_SHORT_DESCRIPTION = "PHP guru";

@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public class ApplicantForm {
     private Long id;
+    private Long vacancyId;
     private String firstName;
     private String lastName;
     private String description;
@@ -33,6 +34,14 @@ public class ApplicantForm {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getVacancyId() {
+        return vacancyId;
+    }
+
+    public void setVacancyId(Long vacancyId) {
+        this.vacancyId = vacancyId;
     }
 
     public String getFirstName() {
