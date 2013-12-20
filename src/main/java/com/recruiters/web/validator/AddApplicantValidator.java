@@ -1,6 +1,6 @@
-package com.recruiters.web.controller.validator;
+package com.recruiters.web.validator;
 
-import com.recruiters.web.controller.form.ApplicantForm;
+import com.recruiters.web.form.ApplicantForm;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;

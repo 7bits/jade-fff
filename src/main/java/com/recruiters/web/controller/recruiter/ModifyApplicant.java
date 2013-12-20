@@ -1,7 +1,7 @@
 package com.recruiters.web.controller.recruiter;
 
-import com.recruiters.web.controller.form.ApplicantForm;
-import com.recruiters.web.controller.validator.AddApplicantValidator;
+import com.recruiters.web.form.ApplicantForm;
+import com.recruiters.web.validator.AddApplicantValidator;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.util.List;
 
 /**
  * Controller Class fpr R61 "Edit or create applicant"

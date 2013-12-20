@@ -1,4 +1,4 @@
-package com.recruiters.web.controller.form;
+package com.recruiters.web.form;
 
 /**
  * Java Bean for Applicant Form
