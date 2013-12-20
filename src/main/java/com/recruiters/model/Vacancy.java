@@ -10,7 +10,7 @@ public class Vacancy {
     private String salary;
     private String creationDate;
     private String expirationDate;
-    private Long testId;
+    private String testFile;
 
     public Vacancy() {
     }
@@ -23,14 +23,14 @@ public class Vacancy {
     }
 
     public Vacancy(final Long id, final String title, final String description, final String salary,
-                   final String creationDate, final String expirationDate, final Long testId) {
+                   final String creationDate, final String expirationDate, final String testFile) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.salary = salary;
         this.creationDate = creationDate;
         this.expirationDate = expirationDate;
-        this.testId = testId;
+        this.testFile = testFile;
     }
 
     public Long getId() {
@@ -81,11 +81,11 @@ public class Vacancy {
         this.expirationDate = expirationDate;
     }
 
-    public Long getTestId() {
-        return testId;
+    public String getTestFile() {
+        return testFile;
     }
 
-    public void setTestId(final Long testId) {
-        this.testId = testId;
+    public void setTestFile(final String testFile) {
+        this.testFile = testFile;
     }
 }

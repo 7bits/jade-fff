@@ -14,15 +14,29 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 public class ShowVacancy {
+    /** Id of 1st vacancy */
+    static final Long VACANCY1_ID = 1L;
+    /** Title of 1st vacancy */
+    static final String  VACANCY1_TITLE = "Лесоруб";
+    /** Description of 1st vacancy */
+    static final String VACANCY1_DESCRIPTION = "Обожаю рубить сосны!";
+    /** Salary range for 1st vacancy */
+    static final String VACANCY1_SALARY = "30 - 50 $ в час";
+    /** Creation date for 1st vacancy */
+    static final String VACANCY1_CREATION_DATE = "сегодня";
+    /** Expiration date for 1st vacancy */
+    static final String VACANCY1_EXPIRATION_DATE = "завтра";
+    /** */
+    static final String VACANCY1_TEST_FILE = "#";
 
     /**
      * Controller for R2 "Show vacancy"
      * @return model and view with one vacancy
      */
     @RequestMapping(value = "recruiter-vacancy-show/{vacancyId}", method = RequestMethod.GET)
-    public ModelAndView showVacancyById (@PathVariable Long vacancyId) {
+    public ModelAndView showVacancyById(@PathVariable final Long vacancyId) {
 
-        ModelAndView showVacancy = new ModelAndView ("recruiter-vacancy-show.jade");
+        ModelAndView showVacancy = new ModelAndView("recruiter-vacancy-show.jade");
         Vacancy vacancy = getVacancyById(vacancyId);
         showVacancy.addObject("vacancy", vacancy);
         return showVacancy;
@@ -33,21 +47,14 @@ public class ShowVacancy {
      * @param vacancyId    Id of vacancy for which we want to get full description
      * @return vacancy description
      */
-    private Vacancy getVacancyById (Long vacancyId) {
-        final Long VACANCY1_ID = 1L;
-        final String  VACANCY1_TITLE = "Лесоруб";
-        final String VACANCY1_DESCRIPTION = "Обожаю рубить сосны!";
-        final String VACANCY1_SALARY = "30 - 50 $ в час";
-        final String VACANCY1_CREATION_DATE = "сегодня";
-        final String VACANCY1_EXPIRATION_DATE = "завтра";
-        final Long VACANCY1_TEST_ID = 1L;
-        Vacancy vacancy = new Vacancy (VACANCY1_ID, VACANCY1_TITLE, VACANCY1_DESCRIPTION,
-                VACANCY1_SALARY, VACANCY1_CREATION_DATE, VACANCY1_EXPIRATION_DATE, VACANCY1_TEST_ID);
+    private Vacancy getVacancyById(final Long vacancyId) {
+
+        Vacancy vacancy = new Vacancy(VACANCY1_ID, VACANCY1_TITLE, VACANCY1_DESCRIPTION,
+                VACANCY1_SALARY, VACANCY1_CREATION_DATE, VACANCY1_EXPIRATION_DATE, VACANCY1_TEST_FILE);
         if (vacancyId.equals(VACANCY1_ID)) {
             return vacancy;
         } else {
             return null;
         }
     }
-
 }
