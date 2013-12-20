@@ -16,8 +16,6 @@ public class Vacancy {
     private String salary;
     private Test test;
 
-    private List<Applicant> applicantList;
-
     private List<Recruiter> recruiterList;
     // Can be null
     private Recruiter activeRecruiter;

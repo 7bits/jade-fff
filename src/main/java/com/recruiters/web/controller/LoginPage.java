@@ -7,14 +7,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("/")
 public class LoginPage {
 
-    @ResponseBody
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView vacanciesSearch() {
 
-        ModelAndView mav = new ModelAndView("vacancies-search");
+        ModelAndView mav = new ModelAndView("vacancies-search.jade");
 
         return mav;
     }

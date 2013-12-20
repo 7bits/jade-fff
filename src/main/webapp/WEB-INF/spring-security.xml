@@ -9,7 +9,7 @@
     <http auto-config="true">
         <intercept-url pattern="/recruiter*" access="ROLE_RECRUITER" />
         <intercept-url pattern="/employer*" access="ROLE_EMPLOYER" />
-        <form-login login-page="/"
+        <form-login login-page="/dashboard"
                     authentication-failure-url="/?error=true"  />
                     <!--authentication-success-handler-ref="customAuthenticationSuccessHandler"/>-->
         <logout logout-success-url="/" />

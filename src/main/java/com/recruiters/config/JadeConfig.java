@@ -28,9 +28,12 @@ public class JadeConfig {
     }
 
     @Bean
-    public ViewResolver viewResolver() {
-        JadeViewResolver viewResolver = new JadeViewResolver();
-        viewResolver.setConfiguration(jadeConfiguration());
-        return viewResolver;
+    public ViewResolver jadeViewResolver() {
+        JadeViewResolver jadeViewResolver = new JadeViewResolver();
+        jadeViewResolver.setConfiguration(jadeConfiguration());
+        jadeViewResolver.setOrder(0);
+        return jadeViewResolver;
     }
 }
+
+

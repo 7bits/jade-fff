@@ -1,4 +1,4 @@
-package com.recruiters.web.controller.recruiter;
+package com.recruiters.web.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class ActiveVacancies {
+public class Dashboard {
 
-    @RequestMapping(value = "/recruiter-active-vacancies", method = RequestMethod.GET)
-    public ModelAndView showActiveVacancies() {
+    @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
+    public ModelAndView vacanciesSearch() {
 
-        ModelAndView mav = new ModelAndView("main");
+        ModelAndView mav = new ModelAndView("dashboard.jsp");
 
         return mav;
     }
