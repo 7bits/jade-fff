@@ -2,6 +2,7 @@ package com.recruiters.config;
 
 import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -18,8 +19,9 @@ import java.util.Properties;
 
 
 @Configuration
-@PropertySource({"classpath:jdbc.properties", "classpath:hibernate.properties"})
+@PropertySource({ "classpath:jdbc.properties", "classpath:hibernate.properties" })
 @EnableJpaRepositories("com.recruiters")
+@ComponentScan("com.recruiters")
 public class ContextConfig {
 
     @Inject
