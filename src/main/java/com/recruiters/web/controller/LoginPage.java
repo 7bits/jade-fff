@@ -55,5 +55,11 @@ public class LoginPage {
         return new ModelAndView("recruit-vacancy-show");
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/employee-create")
+    public ModelAndView employeeCreate() {
+        return new ModelAndView("employee-create");
+    }
+
 
 }
