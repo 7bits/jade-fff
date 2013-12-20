@@ -1,6 +1,7 @@
 package com.recruiters.web.validator;
 
 import com.recruiters.web.form.ApplicantForm;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
@@ -9,6 +10,7 @@ import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 /**
  * Validator for "Applicant Form" if adding applicant
  */
+@Component
 public class AddApplicantValidator implements Validator {
 
     public AddApplicantValidator() {

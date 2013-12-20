@@ -21,7 +21,7 @@ public class ApplicantForm {
     public ApplicantForm() {
     }
 
-    public ApplicantForm(Long id, String firstName, String lastName, String description) {
+    public ApplicantForm(final Long id, final String firstName, final String lastName, final String description) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -32,7 +32,7 @@ public class ApplicantForm {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(final Long id) {
         this.id = id;
     }
 
@@ -40,7 +40,7 @@ public class ApplicantForm {
         return vacancyId;
     }
 
-    public void setVacancyId(Long vacancyId) {
+    public void setVacancyId(final Long vacancyId) {
         this.vacancyId = vacancyId;
     }
 
@@ -48,7 +48,7 @@ public class ApplicantForm {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
+    public void setFirstName(final String firstName) {
         this.firstName = firstName;
     }
 
@@ -56,7 +56,7 @@ public class ApplicantForm {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
+    public void setLastName(final String lastName) {
         this.lastName = lastName;
     }
 
@@ -64,7 +64,7 @@ public class ApplicantForm {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(final String description) {
         this.description = description;
     }
 
@@ -72,7 +72,7 @@ public class ApplicantForm {
         return resumeFile;
     }
 
-    public void setResumeFile(MultipartFile resumeFile) {
+    public void setResumeFile(final MultipartFile resumeFile) {
         this.resumeFile = resumeFile;
     }
 
@@ -80,7 +80,7 @@ public class ApplicantForm {
         return testAnswerFile;
     }
 
-    public void setTestAnswerFile(MultipartFile testAnswerFile) {
+    public void setTestAnswerFile(final MultipartFile testAnswerFile) {
         this.testAnswerFile = testAnswerFile;
     }
 }
