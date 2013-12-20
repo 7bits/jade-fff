@@ -5,6 +5,7 @@ package com.recruiters.model;
  */
 public class Vacancy {
     private Long id;
+    private Long employerId;
     private String title;
     private String description;
     private String salary;
@@ -22,9 +23,11 @@ public class Vacancy {
         this.creationDate = creationDate;
     }
 
-    public Vacancy(final Long id, final String title, final String description, final String salary,
+    public Vacancy(final Long id, final Long employerId, final String title,
+                   final String description, final String salary,
                    final String creationDate, final String expirationDate, final String testFile) {
         this.id = id;
+        this.employerId = employerId;
         this.title = title;
         this.description = description;
         this.salary = salary;
@@ -39,6 +42,14 @@ public class Vacancy {
 
     public void setId(final Long id) {
         this.id = id;
+    }
+
+    public Long getEmployerId() {
+        return employerId;
+    }
+
+    public void setEmployerId(final Long employerId) {
+        this.employerId = employerId;
     }
 
     public String getTitle() {

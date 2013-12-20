@@ -16,6 +16,8 @@ import org.springframework.web.servlet.ModelAndView;
 public class ShowVacancy {
     /** Id of 1st vacancy */
     static final Long VACANCY1_ID = 1L;
+    /** If of employer for 1st vacancy */
+    static final Long VACANCY1_EMPLOYER_ID = 1L;
     /** Title of 1st vacancy */
     static final String  VACANCY1_TITLE = "Лесоруб";
     /** Description of 1st vacancy */
@@ -49,8 +51,9 @@ public class ShowVacancy {
      */
     private Vacancy getVacancyById(final Long vacancyId) {
 
-        Vacancy vacancy = new Vacancy(VACANCY1_ID, VACANCY1_TITLE, VACANCY1_DESCRIPTION,
-                VACANCY1_SALARY, VACANCY1_CREATION_DATE, VACANCY1_EXPIRATION_DATE, VACANCY1_TEST_FILE);
+        Vacancy vacancy = new Vacancy(VACANCY1_ID, VACANCY1_EMPLOYER_ID, VACANCY1_TITLE,
+                VACANCY1_DESCRIPTION, VACANCY1_SALARY, VACANCY1_CREATION_DATE,
+                VACANCY1_EXPIRATION_DATE, VACANCY1_TEST_FILE);
         if (vacancyId.equals(VACANCY1_ID)) {
             return vacancy;
         } else {
