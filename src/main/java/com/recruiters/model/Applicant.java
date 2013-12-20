@@ -1,7 +1,7 @@
 package com.recruiters.model;
 
 /**
- * Java Bean Class for Applicant
+ * Applicant POJO Class
  */
 public class Applicant {
     private Long id;
