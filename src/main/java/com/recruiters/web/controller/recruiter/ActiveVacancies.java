@@ -9,10 +9,10 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class ActiveVacancies {
 
-    @RequestMapping(value = "/recruiter-active-vacancies", method = RequestMethod.GET)
+    @RequestMapping(value = "/recruiter-my-vacancies", method = RequestMethod.GET)
     public ModelAndView showActiveVacancies() {
 
-        ModelAndView mav = new ModelAndView("main");
+        ModelAndView mav = new ModelAndView("recruiter-my-vacancies.jade");
 
         return mav;
     }
