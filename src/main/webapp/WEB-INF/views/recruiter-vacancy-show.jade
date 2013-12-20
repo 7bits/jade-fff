@@ -1,0 +1,20 @@
+extends layout
+
+block append content
+  .container
+    h1 Просмотр вакансии
+    dl.dl-horizontal
+      dt Наименование
+      dd Лесоруб
+      dt Описание
+      dd Обожаю рубить сосны!
+      dt Диапазон з/п
+      dd 30 - 50 $ в час
+      dt Дата создания
+      dd сегодня
+      dt Дата окончания
+      dd завтра
+
+    button.btn.btn-link(type="button")
+      a(href="/recruiters/vacancies-list") К списку вакансий
+    button.btn.btn-primary(type="button") Предложить свою кандидатуруrecruiter-vacancy-show

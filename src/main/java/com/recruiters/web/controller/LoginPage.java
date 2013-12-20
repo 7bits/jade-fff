@@ -18,52 +18,54 @@ public class LoginPage {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/vacancy-show")
+    @RequestMapping(value = "/recruiter-vacancy-show")
     public ModelAndView vacancyShow() {
-        return new ModelAndView("vacancy-show");
+        return new ModelAndView("recruiter-vacancy-show");
     }
 
     @ResponseBody
-    @RequestMapping(value = "/customer-vacancies-list")
+    @RequestMapping(value = "/employer-progress-vacancies-list")
     public ModelAndView customerVacanciesList() {
-        return new ModelAndView("customer-vacancies-list");
+        return new ModelAndView("employer-progress-vacancies-list");
     }
 
     @ResponseBody
-    @RequestMapping(value = "/customer-recruit-search")
+    @RequestMapping(value = "/employer-recruiter-search")
     public ModelAndView customerRecruitSearch() {
-        return new ModelAndView("customer-recruit-search");
+        return new ModelAndView("employer-recruiter-search");
     }
 
     @ResponseBody
-    @RequestMapping(value = "/customer-recruit-show")
+    @RequestMapping(value = "/employer-recruiter-show")
     public ModelAndView customerRecruitShow() {
-        return new ModelAndView("customer-recruit-show");
+        return new ModelAndView("employer-recruiter-show");
     }
 
     @ResponseBody
-    @RequestMapping(value = "/customer-vacancy-show")
+    @RequestMapping(value = "/employer-progress-vacancy-show")
     public ModelAndView customerVacancyShow() {
-        return new ModelAndView("customer-vacancy-show");
+        return new ModelAndView("employer-progress-vacancy-show");
     }
 
     @ResponseBody
-    @RequestMapping(value = "/recruit-vacancy-show")
+    @RequestMapping(value = "/recruiter-vacancy-show")
     public ModelAndView recruitVacancyShow() {
-        return new ModelAndView("recruit-vacancy-show");
+        return new ModelAndView("recruiter-vacancy-show");
     }
 
+
+
     @ResponseBody
-    @RequestMapping(value = "/employee-create")
+    @RequestMapping(value = "/recruiter-employee-create")
     public ModelAndView employeeCreate() {
-        return new ModelAndView("employee-create");
+        return new ModelAndView("recruiter-employee-create");
     }
 
 
     @ResponseBody
-    @RequestMapping(value = "/employee-show")
+    @RequestMapping(value = "/employer-employee-show")
     public ModelAndView employeeShow() {
-        return new ModelAndView("employee-show");
+        return new ModelAndView("employer-employee-show");
     }
 
 }

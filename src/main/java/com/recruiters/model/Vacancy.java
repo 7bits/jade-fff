@@ -1,7 +1,6 @@
 package com.recruiters.model;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * Vacancy POJO Class
@@ -28,7 +27,7 @@ public class Vacancy {
     public Vacancy() {
     }
 
-    public Vacancy(Long id, String title, String shortDescription, String creationDate) {
+    public Vacancy(final Long id, String title, String shortDescription, String creationDate) {
         this.id = id;
         this.title = title;
         this.shortDescription = shortDescription;
