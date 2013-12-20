@@ -68,4 +68,10 @@ public class LoginPage {
     }
 
 
+    @ResponseBody
+    @RequestMapping(value = "/employee-show")
+    public ModelAndView employeeShow() {
+        return new ModelAndView("employee-show");
+    }
+
 }
