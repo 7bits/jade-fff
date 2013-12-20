@@ -28,7 +28,7 @@ public class ShowVacancy {
     static final String VACANCY1_CREATION_DATE = "сегодня";
     /** Expiration date for 1st vacancy */
     static final String VACANCY1_EXPIRATION_DATE = "завтра";
-    /** */
+    /** Test file url for 1st vacancy */
     static final String VACANCY1_TEST_FILE = "#";
 
     /**

@@ -55,11 +55,11 @@ public class LoginPage {
 
 
 
-    @ResponseBody
-    @RequestMapping(value = "/recruiter-employee-create")
-    public ModelAndView employeeCreate() {
-        return new ModelAndView("recruiter-employee-create");
-    }
+//    @ResponseBody
+//    @RequestMapping(value = "/recruiter-employee-create")
+//    public ModelAndView employeeCreate() {
+//        return new ModelAndView("recruiter-employee-create");
+//    }
 
 
     @ResponseBody
