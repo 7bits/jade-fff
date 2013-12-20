@@ -1,9 +1,9 @@
-package com.recruiters.model;
+package com.recruiters.model.entity;
 
 /**
- * Recruiter POJO Class
+ * RecruiterEntity POJO Class
  */
-public class Recruiter {
+public class RecruiterEntity {
     private Long id;
     private String login;
     private String firstName;

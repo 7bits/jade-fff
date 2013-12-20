@@ -1,14 +1,14 @@
-package com.recruiters.model;
+package com.recruiters.model.entity;
 
 import java.util.List;
 
 /**
- * Employer POJO Class
+ * EmployerEntity POJO Class
  */
-public class Employer {
+public class EmployerEntity {
     private Long id;
     private String login;
     private String firstName;
     private String lastName;
-    private List<Vacancy> vacancyList;
+    private List<VacancyEntity> vacancyList;
 }
