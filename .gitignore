@@ -2,7 +2,7 @@
 /src/main/webapp/resources/stylesheets/*
 /target
 /.idea
-*.iml
+#*.iml
 *.class
 
 # Package Files #
