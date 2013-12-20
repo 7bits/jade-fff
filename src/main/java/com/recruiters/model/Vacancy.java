@@ -4,10 +4,10 @@ package com.recruiters.model;
  * Vacancy POJO Class
  */
 public class Vacancy {
-    public Long id;
-    public String title;
-    public String shortDescription;
-    public String creationDate;
+    private Long id;
+    private String title;
+    private String shortDescription;
+    private String creationDate;
 
     public Vacancy() {
     }
