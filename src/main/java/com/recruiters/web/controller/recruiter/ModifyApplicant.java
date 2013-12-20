@@ -3,6 +3,7 @@ package com.recruiters.web.controller.recruiter;
 import com.recruiters.web.form.ApplicantForm;
 import com.recruiters.web.validator.AddApplicantValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -19,9 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class ModifyApplicant {
     /** Apache Logger for this class*/
     //protected final Logger logger = Logger.getLogger(getClass());
-    /** Validator for add applicant */
-    @Autowired
-    private AddApplicantValidator addApplicantValidator;
+
 
     /**
      * Controller for creating new applicant with method GET
@@ -52,7 +51,7 @@ public class ModifyApplicant {
                                                @PathVariable final Long vacancyId,
                                                final BindingResult bindingResult,
                                                final RedirectAttributes redirectAttributes) {
-
+        AddApplicantValidator addApplicantValidator = new AddApplicantValidator();
         addApplicantValidator.validate(applicantForm, bindingResult);
         if (bindingResult.hasErrors()) {
             ModelAndView model = new ModelAndView("recruiter-employee-create.jade");

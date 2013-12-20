@@ -15,7 +15,15 @@ public class Applicant {
     public Applicant() {
     }
 
-    public Applicant(final Long id, final Long vacancyId, final String firstName, final String lastName, final String description) {
+    public Applicant(final Long id, final Long vacancyId, final String firstName, final String lastName) {
+        this.id = id;
+        this.vacancyId = vacancyId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    public Applicant(final Long id, final Long vacancyId, final String firstName,
+                     final String lastName, final String description) {
         this.id = id;
         this.vacancyId = vacancyId;
         this.firstName = firstName;
