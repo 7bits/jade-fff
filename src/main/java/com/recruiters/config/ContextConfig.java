@@ -69,5 +69,4 @@ public class ContextConfig {
         txManager.setEntityManagerFactory(entityManagerFactory());
         return txManager;
     }
-
 }

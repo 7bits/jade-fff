@@ -3,14 +3,14 @@ html
   head
     title= pageName
     block head
-      script(src='resources/js/lib/bootstrap.min.js')
-      link(href='resources/stylesheets/lib/bootstrap.min.css', rel='stylesheet', type='text/css')
-      link(href='resources/stylesheets/lib/bootstrap-theme.min.css', rel='stylesheet', type='text/css')
-      link(href='resources/stylesheets/form.css', rel='stylesheet', type='text/css')
+      script(src=domainName + '/resources/js/lib/bootstrap.min.js')
+      link(href=domainName + '/resources/stylesheets/lib/bootstrap.min.css', rel='stylesheet', type='text/css')
+      link(href=domainName + '/resources/stylesheets/lib/bootstrap-theme.min.css', rel='stylesheet', type='text/css')
+      link(href=domainName + '/resources/stylesheets/form.css', rel='stylesheet', type='text/css')
   body
     block content
       .container
-        form.form-signin(role="form", action="j_spring_security_check", method="post")
+        form.form-signin(role="form", action=domainName + "/j_spring_security_check", method="post")
           h2.form-signin-heading Вход
           input.form-control(type="text", name="j_username", placeholder="Email address", required="", autofocus="")
           input.form-control(type="password", name="j_password", placeholder="Password", required="")

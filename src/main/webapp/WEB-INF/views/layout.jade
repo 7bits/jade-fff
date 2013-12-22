@@ -3,9 +3,9 @@ html
   head
     title= pageName
     block head
-      script(src='resources/js/lib/bootstrap.min.js')
-      link(href='resources/stylesheets/lib/bootstrap.min.css', rel='stylesheet', type='text/css')
-      link(href='resources/stylesheets/lib/bootstrap-theme.min.css', rel='stylesheet', type='text/css')
+      script(src=domainName + '/resources/js/lib/bootstrap.min.js')
+      link(href=domainName + '/resources/stylesheets/lib/bootstrap.min.css', rel='stylesheet', type='text/css')
+      link(href=domainName + '/resources/stylesheets/lib/bootstrap-theme.min.css', rel='stylesheet', type='text/css')
   body
     block content
       .navbar.navbar-inverse(role="navigation")
@@ -16,17 +16,17 @@ html
           .navbar-collapse.collapse
             ul.nav.navbar-nav.navbar-right
               li
-                a(href="recruiter-vacancies-list").
+                a(href=domainName + "/recruiter-vacancies-list").
                   Мои Вакансии
               li
-                a(href="recruiter-active-vacancies").
+                a(href=domainName + "/recruiter-active-vacancies").
                   Поиск вакансии
               li
-                a(href="/recruiters/").
+                a(href=domainName + "/recruiters/").
                   Поиск рекрута
               li
-                a(href="/recruiters/").
+                a(href=domainName + "/recruiters/").
                   Вакансии с рекрутом
               li
-                a(href="j_spring_security_logout").
+                a(href=domainName + "/j_spring_security_logout").
                   Выйти
