@@ -1,6 +1,7 @@
 package com.recruiters.web.controller.iterceptor;
 
-import com.recruiters.service.UtilsService;
+import com.recruiters.service.Utils.TemplateService;
+import com.recruiters.service.Utils.SecurityService;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -30,14 +31,14 @@ public class HandlerInterceptor extends HandlerInterceptorAdapter {
     ) {
         mav.addObject(
                 DOMAIN_NAME_VARIABLE,
-                UtilsService.getFullUrl(
+                TemplateService.getFullUrl(
                         protocol,
                         server,
                         port,
                         applicationName
                 )
         );
-        mav.addObject(USER_ROLE_VARIABLE, UtilsService.getUserRole(request));
+        mav.addObject(USER_ROLE_VARIABLE, SecurityService.getUserRole(request));
     }
 
     public String getProtocol() {
