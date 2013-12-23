@@ -29,8 +29,8 @@ public class HandlerInterceptor extends HandlerInterceptorAdapter {
             final ModelAndView mav
     ) {
         mav.addObject(
-                DOMAIN_NAME_VARIABLE
-                , UtilsService.getFullUrl(
+                DOMAIN_NAME_VARIABLE,
+                UtilsService.getFullUrl(
                         protocol,
                         server,
                         port,
