@@ -5,11 +5,13 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  */
-public abstract class UtilsService {
+public class UtilsService {
 
     static final String ROLE_RECRUITER = "ROLE_RECRUITER";
     static final String ROLE_EMPLOYER = "ROLE_EMPLOYER";
     static final String ROLE_ANONYMOUS = "ROLE_ANONYMOUS";
+
+    private UtilsService() { }
 
     public static String getUserRole(final HttpServletRequest request) {
         if (request.isUserInRole(ROLE_EMPLOYER)) {
