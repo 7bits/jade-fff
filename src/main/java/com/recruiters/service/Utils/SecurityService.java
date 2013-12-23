@@ -1,17 +1,21 @@
-package com.recruiters.service;
+package com.recruiters.service.Utils;
 
 import org.apache.commons.lang3.StringUtils;
 import javax.servlet.http.HttpServletRequest;
 
 /**
+ *  server for support spring security
  */
-public class UtilsService {
+public final class SecurityService {
 
+    /** Name of recruiter role*/
     static final String ROLE_RECRUITER = "ROLE_RECRUITER";
+    /** Name of employer role*/
     static final String ROLE_EMPLOYER = "ROLE_EMPLOYER";
+    /** Name of anonymous role*/
     static final String ROLE_ANONYMOUS = "ROLE_ANONYMOUS";
 
-    private UtilsService() { }
+    private SecurityService() {}
 
     public static String getUserRole(final HttpServletRequest request) {
         if (request.isUserInRole(ROLE_EMPLOYER)) {
@@ -21,21 +25,5 @@ public class UtilsService {
             return ROLE_RECRUITER;
         }
         return ROLE_ANONYMOUS;
-    }
-
-    public static String getFullUrl(
-            final String protocol,
-            final String server,
-            final String port,
-            final String applicationName
-    ) {
-        String fullPath = protocol + "://" + server;
-        if (!StringUtils.isBlank(port)) {
-            fullPath += ":" + port;
-        }
-        if (!StringUtils.isBlank(applicationName)) {
-            fullPath += "/" + applicationName;
-        }
-        return fullPath;
     }
 }
