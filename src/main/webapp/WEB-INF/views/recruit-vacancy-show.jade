@@ -8,15 +8,15 @@ block append content
         h2
         dl.dl-horizontal
           dt Наименование
-          dd Лесоруб
+          dd #{vacancy.title}
           dt Описание
-          dd Обожаю рубить сосны!
+          dd #{vacancy.description}
           dt Диапазон з/п
-          dd 30 - 50 $ в час
+          dd #{vacancy.salary}
           dt Дата создания
-          dd сегодня
+          dd #{vacancy.creationDate}
           dt Дата окончания
-          dd завтра
+          dd #{vacancy.expirationDate}
       .col-md-4
         h2 Работодатель
         p.
