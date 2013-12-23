@@ -1,5 +1,7 @@
 package com.recruiters.model;
 
+import java.util.Date;
+
 /**
  * Vacancy POJO Class
  */
@@ -9,14 +11,14 @@ public class Vacancy {
     private String title;
     private String description;
     private String salary;
-    private String creationDate;
-    private String expirationDate;
+    private Date creationDate;
+    private Date expirationDate;
     private String testFile;
 
     public Vacancy() {
     }
 
-    public Vacancy(final Long id, final String title, final String description, final String creationDate) {
+    public Vacancy(final Long id, final String title, final String description, final Date creationDate) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -25,7 +27,7 @@ public class Vacancy {
 
     public Vacancy(final Long id, final Long employerId, final String title,
                    final String description, final String salary,
-                   final String creationDate, final String expirationDate, final String testFile) {
+                   final Date creationDate, final Date expirationDate, final String testFile) {
         this.id = id;
         this.employerId = employerId;
         this.title = title;
@@ -76,19 +78,19 @@ public class Vacancy {
         this.salary = salary;
     }
 
-    public String getCreationDate() {
+    public Date getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(final String creationDate) {
+    public void setCreationDate(final Date creationDate) {
         this.creationDate = creationDate;
     }
 
-    public String getExpirationDate() {
+    public Date getExpirationDate() {
         return expirationDate;
     }
 
-    public void setExpirationDate(final String expirationDate) {
+    public void setExpirationDate(final Date expirationDate) {
         this.expirationDate = expirationDate;
     }
 
