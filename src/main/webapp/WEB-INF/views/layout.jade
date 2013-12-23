@@ -11,22 +11,24 @@ html
       .navbar.navbar-inverse(role="navigation")
         .container
           .navbar-header
-            a.navbar-brand(href="#").
+            a.navbar-brand(href=domainName).
               Имя проекта
           .navbar-collapse.collapse
             ul.nav.navbar-nav.navbar-right
-              li
-                a(href=domainName + "/recruiter-vacancies-list").
-                  Мои Вакансии
-              li
-                a(href=domainName + "/recruiter-active-vacancies").
-                  Поиск вакансии
-              li
-                a(href=domainName + "/recruiters/").
-                  Поиск рекрута
-              li
-                a(href=domainName + "/recruiters/").
-                  Вакансии с рекрутом
+              if userRole == "ROLE_RECRUITER"
+                li
+                  a(href=domainName + "/recruiter-vacancies-list").
+                    Мои Вакансии
+                li
+                  a(href=domainName + "/recruiter-available-vacancies").
+                    Поиск вакансии
+              else
+                li
+                  a(href=domainName + "/recruiters/employer-recruiter-search").
+                    Поиск рекрута
+                li
+                  a(href=domainName + "/recruiters/employer-progress-vacancies-list").
+                    Вакансии с рекрутом
               li
                 a(href=domainName + "/j_spring_security_logout").
                   Выйти
