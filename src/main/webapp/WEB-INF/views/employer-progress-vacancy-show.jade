@@ -1,0 +1,34 @@
+extends layout
+
+block append content
+  .container
+    h1 Вакансия
+    .row
+      .col-md-8
+        h2
+        dl.dl-horizontal
+          dt Наименование
+          dd #{vacancy.title}
+          dt Описание
+          dd #{vacancy.description}
+          dt Диапазон з/п
+          dd #{vacancy.salary}
+          dt Дата создания
+          dd #{vacancy.creationDate}
+          dt Дата окончания
+          dd #{vacancy.expirationDate}
+      .col-md-4
+        h2 Рекрутёр
+        p
+          #{recruiter.firstName} #{recruiter.lastName}
+          .tools
+            a.btn.btn-danger(href="#") Отказаться от услуг
+    h2 Список предложенных кандидатов
+    .row
+      .col-md-6
+        ul.list-group
+          for applicant in vacancyList
+            li.list-group-item
+              #{applicant.firstName} #{applicant.lastName}
+              a.btn.btn-link.pull-right(href = domainName + "/employer-employee-show/" + applicant.id).
+                Подробнее
