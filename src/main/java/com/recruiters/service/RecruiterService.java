@@ -4,6 +4,7 @@ import com.recruiters.model.Vacancy;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -18,7 +19,7 @@ public class RecruiterService {
     /** Description of 1st vacancy */
     static final String VACANCY1_SHORT_DESCRIPTION = "PHP guru";
     /** Date of 1st vacancy */
-    static final String VACANCY1_DATE = "сегодня";
+    static final Date VACANCY1_DATE = new Date();
     /** Id of 2nd vacancy */
     static final Long VACANCY2_ID = 2L;
     /** Title of 2nd vacancy */
@@ -26,7 +27,7 @@ public class RecruiterService {
     /** Description of 2nd vacancy */
     static final String VACANCY2_SHORT_DESCRIPTION = "Умеет клёво рубить сосны";
     /** Date of 2nd vacancy */
-    static final String VACANCY2_DATE = "сегодня";
+    static final Date VACANCY2_DATE = new Date();
     /** Id of 3rd vacancy */
     static final Long VACANCY3_ID = 4L;
     /** Title of 3rd vacancy */
@@ -34,7 +35,7 @@ public class RecruiterService {
     /** Description of 3rd vacancy */
     static final String VACANCY3_SHORT_DESCRIPTION = "Не пьёт!";
     /** Date of 3rd vacancy */
-    static final String VACANCY3_DATE = "сегодня";
+    static final Date VACANCY3_DATE = new Date();
 
 
     public List<Vacancy> findAvailableListOfVacancies() {

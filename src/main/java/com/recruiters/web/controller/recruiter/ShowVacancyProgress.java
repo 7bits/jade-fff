@@ -3,6 +3,7 @@ package com.recruiters.web.controller.recruiter;
 import com.recruiters.model.Applicant;
 import com.recruiters.model.Employer;
 import com.recruiters.model.Vacancy;
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -28,9 +30,9 @@ public class ShowVacancyProgress {
     /** Salary range for 1st vacancy */
     static final String VACANCY1_SALARY = "30 - 50 $ в час";
     /** Creation date for 1st vacancy */
-    static final String VACANCY1_CREATION_DATE = "сегодня";
+    static final Date VACANCY1_CREATION_DATE = new Date();
     /** Expiration date for 1st vacancy */
-    static final String VACANCY1_EXPIRATION_DATE = "завтра";
+    static final Date VACANCY1_EXPIRATION_DATE = DateUtils.addDays(new Date(), 1);
     /** Test file url for 1st vacancy */
     static final String VACANCY1_TEST_FILE = "#";
     /** Id of 1st employer */
