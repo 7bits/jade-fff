@@ -1,8 +1,10 @@
 package com.recruiters.service;
 
+import com.recruiters.model.User;
 import com.recruiters.model.Vacancy;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -51,4 +53,23 @@ public class RecruiterService {
 
         return vacancies;
     }
+
+    public List<Vacancy> findRecruiterListOfVacancies(final Long recruiterId) {
+
+        List <Vacancy> vacancies = new ArrayList<Vacancy>();
+
+        Vacancy vacancy1 = new Vacancy(VACANCY1_ID, VACANCY1_TITLE, VACANCY1_SHORT_DESCRIPTION, VACANCY1_DATE);
+        Vacancy vacancy2 = new Vacancy(VACANCY2_ID, VACANCY2_TITLE, VACANCY2_SHORT_DESCRIPTION, VACANCY2_DATE);
+        Vacancy vacancy3 = new Vacancy(VACANCY3_ID, VACANCY3_TITLE, VACANCY3_SHORT_DESCRIPTION, VACANCY3_DATE);
+        vacancies.add(vacancy1);
+        vacancies.add(vacancy2);
+        vacancies.add(vacancy3);
+
+        return vacancies;
+    }
+
+    public User getCurrentUser(final HttpServletRequest request) {
+        return new User(1L, "recruiter", "123123");
+    }
+
 }

@@ -1,7 +1,7 @@
 package com.recruiters.web.controller.iterceptor;
 
-import com.recruiters.service.Utils.TemplateService;
-import com.recruiters.service.Utils.SecurityService;
+import com.recruiters.service.utils.TemplateService;
+import com.recruiters.service.utils.SecurityService;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -12,9 +12,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class HandlerInterceptor extends HandlerInterceptorAdapter {
 
-    /** */
+    /** domain name variable for send to view templates: consist from protocol, server_name, port and application name */
     static final String DOMAIN_NAME_VARIABLE = "domainName";
-    /** */
+    /** role name variable for send to view templates */
     static final String USER_ROLE_VARIABLE = "userRole";
 
     private String protocol = null;

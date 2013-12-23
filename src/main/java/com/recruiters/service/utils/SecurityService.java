@@ -1,6 +1,5 @@
-package com.recruiters.service.Utils;
+package com.recruiters.service.utils;
 
-import org.apache.commons.lang3.StringUtils;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -9,11 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 public final class SecurityService {
 
     /** Name of recruiter role*/
-    static final String ROLE_RECRUITER = "ROLE_RECRUITER";
+    public static final String ROLE_RECRUITER = "ROLE_RECRUITER";
     /** Name of employer role*/
-    static final String ROLE_EMPLOYER = "ROLE_EMPLOYER";
+    public static final String ROLE_EMPLOYER = "ROLE_EMPLOYER";
     /** Name of anonymous role*/
-    static final String ROLE_ANONYMOUS = "ROLE_ANONYMOUS";
+    public static final String ROLE_ANONYMOUS = "ROLE_ANONYMOUS";
 
     private SecurityService() {}
 

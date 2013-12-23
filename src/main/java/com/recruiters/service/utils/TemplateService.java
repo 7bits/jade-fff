@@ -1,4 +1,4 @@
-package com.recruiters.service.Utils;
+package com.recruiters.service.utils;
 
 import org.apache.commons.lang3.StringUtils;
 
