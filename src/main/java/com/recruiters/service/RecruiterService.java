@@ -1,8 +1,13 @@
 package com.recruiters.service;
 
+import com.recruiters.model.Applicant;
 import com.recruiters.model.User;
 import com.recruiters.model.Vacancy;
+import com.recruiters.repository.ApplicantRepository;
+import com.recruiters.repository.FileRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -13,6 +18,11 @@ import java.util.List;
  */
 @Service
 public class RecruiterService {
+
+    @Autowired
+    private FileRepository fileRepository = null;
+    @Autowired
+    private ApplicantRepository applicantRepository = null;
 
     /** Id of 1st vacancy */
     static final Long VACANCY1_ID = 1L;
@@ -68,8 +78,33 @@ public class RecruiterService {
         return vacancies;
     }
 
+    public Boolean addApplicantToVacancy(final Applicant applicant, final MultipartFile resumeFile, final MultipartFile testAnswerFile) {
+        String fileNameForResume =  this.getFileRepository().saveFile(resumeFile);
+        String fileNameForTestAnswers = this.getFileRepository().saveFile(testAnswerFile);
+        applicant.setResumeFile(fileNameForResume);
+        applicant.setTestAnswerFile(fileNameForTestAnswers);
+
+
+        return this.getApplicantRepository().saveApplicant(applicant);
+    }
+
     public User getCurrentUser(final HttpServletRequest request) {
         return new User(1L, "recruiter", "123123");
     }
 
+    public FileRepository getFileRepository() {
+        return fileRepository;
+    }
+
+    public void setFileRepository(final FileRepository fileRepository) {
+        this.fileRepository = fileRepository;
+    }
+
+    public ApplicantRepository getApplicantRepository() {
+        return applicantRepository;
+    }
+
+    public void setApplicantRepository(final ApplicantRepository applicantRepository) {
+        this.applicantRepository = applicantRepository;
+    }
 }

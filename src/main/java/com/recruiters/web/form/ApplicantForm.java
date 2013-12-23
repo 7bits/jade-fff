@@ -4,6 +4,7 @@ package com.recruiters.web.form;
  * Java Bean for Applicant Form
  */
 
+import com.recruiters.model.Applicant;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -26,6 +27,16 @@ public class ApplicantForm {
         this.firstName = firstName;
         this.lastName = lastName;
         this.description = description;
+    }
+
+    public Applicant getModel() {
+        Applicant applicant = new Applicant();
+        applicant.setId(this.getId() != null ? this.getId() : 0L);
+        applicant.setFirstName(this.getFirstName());
+        applicant.setLastName(this.getLastName());
+        applicant.setDescription(this.getDescription());
+
+        return applicant;
     }
 
     public Long getId() {
