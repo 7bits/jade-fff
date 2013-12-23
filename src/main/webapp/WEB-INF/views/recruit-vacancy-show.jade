@@ -19,27 +19,16 @@ block append content
           dd #{vacancy.expirationDate}
       .col-md-4
         h2 Работодатель
-        p.
-          Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa.
+        p #{employer.firstName} #{employer.lastName}
 
     h2 Список кандидатов
     .row
       .col-md-6
         ul.list-group
-          li.list-group-item
-            | Иванов Иван
-            button.btn.btn-link.pull-right(type="button")
-              a(href= domainName + "/recruiter-employee-create/" + vacancy.id).
-                Изменить
-          li.list-group-item
-            | Петров Пётр
-            button.btn.btn-link.pull-right(type="button")
-              a(href= domainName + "/recruiter-employee-create/" + vacancy.id).
-                Изменить
-          li.list-group-item
-            | Константинопольский Константин
-            button.btn.btn-link.pull-right(type="button")
-              a(href= domainName + "/recruiter-employee-create/" + vacancy.id).
+          for applicant in applicantList
+            li.list-group-item
+              #{applicant.firstName} #{applicant.lastName}
+              a.btn.btn-link.pull-right(href= domainName + "/recruiter-employee-create/" + vacancy.id).
                 Изменить
 
         a.btn.btn-success(href= domainName + "/recruiter-employee-create/" + vacancy.id) Предложить новую кандидатуру

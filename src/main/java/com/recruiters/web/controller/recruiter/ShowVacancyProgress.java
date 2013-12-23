@@ -19,6 +19,8 @@ import java.util.List;
  */
 @Controller
 public class ShowVacancyProgress {
+    /** Id of current recruiter visited this page */
+    static final Long RECRUITER_ID = 1L;
     /** Id of 1st vacancy */
     static final Long VACANCY1_ID = 1L;
     /** If of employer for 1st vacancy */
@@ -70,17 +72,24 @@ public class ShowVacancyProgress {
     @RequestMapping(value = "recruiter-progress-vacancy-show/{vacancyId}", method = RequestMethod.GET)
     public ModelAndView showVacancyProgress(@PathVariable final Long vacancyId) {
 
+        Long recruiterId = getMyId();
         ModelAndView vacancyProgress = new ModelAndView("recruit-vacancy-show.jade");
-        Vacancy vacancy = getVacancyInfo(vacancyId);
+        Vacancy vacancy = getVacancyInfo(recruiterId, vacancyId);
         vacancyProgress.addObject("vacancy", vacancy);
-        Employer employer = getEmployerInfo(vacancy.getEmployerId());
+        Employer employer = getEmployerInfo(recruiterId, vacancy.getEmployerId());
         vacancyProgress.addObject("employer", employer);
-        List<Applicant> applicantList = getApplicantListForVacancy(vacancyId);
+        List<Applicant> applicantList = getApplicantListForVacancy(recruiterId, vacancyId);
         vacancyProgress.addObject("applicantList", applicantList);
         return vacancyProgress;
     }
 
-    private Vacancy getVacancyInfo(final Long vacancyId) {
+    /**
+     * Get Information about vacancy by its id
+     * @param recruiterId    Id of recruiter who wants to get it
+     * @param vacancyId      Id of vacancy
+     * @return Vacancy info
+     */
+    private Vacancy getVacancyInfo(final Long recruiterId, final Long vacancyId) {
 
         Vacancy vacancy = new Vacancy(VACANCY1_ID, VACANCY1_EMPLOYER_ID, VACANCY1_TITLE,
                 VACANCY1_DESCRIPTION, VACANCY1_SALARY, VACANCY1_CREATION_DATE, VACANCY1_EXPIRATION_DATE,
@@ -92,7 +101,13 @@ public class ShowVacancyProgress {
         }
     }
 
-    private Employer getEmployerInfo(final Long employerId) {
+    /**
+     * Get employer info service method
+     * @param recruiterId    Id of recruiter who asks for data
+     * @param employerId     Id of employer we want to get info about
+     * @return employer information
+     */
+    private Employer getEmployerInfo(final Long recruiterId, final Long employerId) {
 
         Employer employer = new Employer(EMPLOYER1_ID, EMPLOYER1_FIRST_NAME, EMPLOYER1_LAST_NAME);
         if (employerId.equals(EMPLOYER1_ID)) {
@@ -103,7 +118,13 @@ public class ShowVacancyProgress {
 
     }
 
-    private List<Applicant> getApplicantListForVacancy(final Long vacancyId) {
+    /**
+     * List of applicants for this job
+     * @param recruiterId    Id of recruiter who asks for data
+     * @param vacancyId      Id of vacancy, applicants apply for
+     * @return List of applicants
+     */
+    private List<Applicant> getApplicantListForVacancy(final Long recruiterId, final Long vacancyId) {
 
         List<Applicant> applicantList = new ArrayList<Applicant>();
         Applicant applicant1 = new Applicant(APPLICANT1_ID, APPLICANT1_VACANCY_ID,
@@ -120,5 +141,14 @@ public class ShowVacancyProgress {
         } else {
             return null;
         }
+    }
+
+    /**
+     * Fake method to get id of current recruiter
+     * Should be implemented according to security behaviour
+     * @return id of current recruiter
+     */
+    private Long getMyId() {
+        return RECRUITER_ID;
     }
 }

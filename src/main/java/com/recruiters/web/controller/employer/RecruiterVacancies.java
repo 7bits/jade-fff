@@ -24,6 +24,8 @@ public class RecruiterVacancies {
     static final String VACANCY1_DESCRIPTION = "PHP guru";
     /** 1st vacancy date of creation */
     static final Date VACANCY1_DATE = new Date();
+    /** 1st vacancy Recruiter Id */
+    static final Long VACANCY1_RECRUITER_ID = 1L;
     /** 1st vacancy active recruiter name */
     static final String VACANCY1_RECRUITER_NAME = "Иванов";
     /** Id of 2nd vacancy */
@@ -34,6 +36,8 @@ public class RecruiterVacancies {
     static final String VACANCY2_DESCRIPTION = "Умеет клёво рубить сосны";
     /** 2nd vacancy date of creation */
     static final Date VACANCY2_DATE = new Date();
+    /** 2nd vacancy Recruiter Id */
+    static final Long VACANCY2_RECRUITER_ID = 1L;
     /** 2nd vacancy active recruiter name */
     static final String VACANCY2_RECRUITER_NAME = "Иванов";
     /** Id of 3rd vacancy */
@@ -44,7 +48,9 @@ public class RecruiterVacancies {
     static final String VACANCY3_DESCRIPTION = "Стеклит!";
     /** 3rd vacancy date of creation */
     static final Date VACANCY3_DATE = new Date();
-    /** 1st vacancy active recruiter name */
+    /** 3rd vacancy Recruiter Id */
+    static final Long VACANCY3_RECRUITER_ID = 1L;
+    /** 3rd vacancy active recruiter name */
     static final String VACANCY3_RECRUITER_NAME = "Иванов";
 
     /**
@@ -68,11 +74,11 @@ public class RecruiterVacancies {
 
         List<VacancyForRecruiterVacancies> myVacancies = new ArrayList<VacancyForRecruiterVacancies>();
         VacancyForRecruiterVacancies vacancy1 = new VacancyForRecruiterVacancies(VACANCY1_ID, VACANCY1_TITLE,
-                VACANCY1_DESCRIPTION, VACANCY1_DATE, VACANCY1_RECRUITER_NAME);
+                VACANCY1_DESCRIPTION, VACANCY1_DATE, VACANCY1_RECRUITER_ID, VACANCY1_RECRUITER_NAME);
         VacancyForRecruiterVacancies vacancy2 = new VacancyForRecruiterVacancies(VACANCY2_ID, VACANCY2_TITLE,
-                VACANCY2_DESCRIPTION, VACANCY2_DATE, VACANCY2_RECRUITER_NAME);
+                VACANCY2_DESCRIPTION, VACANCY2_DATE, VACANCY2_RECRUITER_ID, VACANCY2_RECRUITER_NAME);
         VacancyForRecruiterVacancies vacancy3 = new VacancyForRecruiterVacancies(VACANCY3_ID, VACANCY3_TITLE,
-                VACANCY3_DESCRIPTION, VACANCY3_DATE, VACANCY3_RECRUITER_NAME);
+                VACANCY3_DESCRIPTION, VACANCY3_DATE, VACANCY3_RECRUITER_ID, VACANCY3_RECRUITER_NAME);
         myVacancies.add(vacancy1);
         myVacancies.add(vacancy2);
         myVacancies.add(vacancy3);
@@ -95,22 +101,24 @@ public class RecruiterVacancies {
     /**
      * Vacancy POJO class for current controller
      */
-    class VacancyForRecruiterVacancies {
+    public class VacancyForRecruiterVacancies {
         private Long id;
         private String title;
         private String description;
         private Date creationDate;
+        private Long recruiterId;
         private String recruiterName;
 
         VacancyForRecruiterVacancies() {
         }
 
         VacancyForRecruiterVacancies(final Long id, final String title, final String description,
-                                     final Date creationDate, final String recruiterName) {
+                                     final Date creationDate, final Long recruiterId, final String recruiterName) {
             this.id = id;
             this.title = title;
             this.description = description;
             this.creationDate = creationDate;
+            this.recruiterId = recruiterId;
             this.recruiterName = recruiterName;
         }
 
@@ -144,6 +152,14 @@ public class RecruiterVacancies {
 
         public void setCreationDate(final Date creationDate) {
             this.creationDate = creationDate;
+        }
+
+        public Long getRecruiterId() {
+            return recruiterId;
+        }
+
+        public void setRecruiterId(final Long recruiterId) {
+            this.recruiterId = recruiterId;
         }
 
         public String getRecruiterName() {

@@ -11,6 +11,8 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class EmployerApplicantView {
 
+    /** Id of the employer who is visiting this page*/
+    static final Long EMPLOYER_ID = 1L;
     /** Id of 1st applicant */
     static final Long APPLICANT1_ID = 1L;
     /** Name of 1st applicant */
@@ -60,18 +62,22 @@ public class EmployerApplicantView {
      */
     @RequestMapping(value = "employer-employee-show/{applicantId}")
     public ModelAndView employeeShow(@PathVariable final Long applicantId) {
+
+        Long employerId = getMyId();
         ModelAndView myModel = new ModelAndView("employer-employee-show.jade");
-        ApplicantForEmployer applicant = getApplicantById(applicantId);
+        ApplicantForEmployer applicant = getApplicantById(employerId, applicantId);
         myModel.addObject("applicant", applicant);
         return myModel;
     }
 
     /**
      * Returns applicant info by its id
+     * @param employerId     Id of employer for security purposes
      * @param applicantId    Id of applicant
      * @return Applicant info
      */
-    private ApplicantForEmployer getApplicantById(final Long applicantId) {
+    private ApplicantForEmployer getApplicantById(final Long employerId, final Long applicantId) {
+
         ApplicantForEmployer applicant1 = new ApplicantForEmployer(APPLICANT1_ID,
                 APPLICANT1_FIRST_NAME, APPLICANT1_LAST_NAME, APPLICANT1_AGE, APPLICANT1_SEX,
                 APPLICANT1_RESUME_URL, APPLICANT1_TEST_ANSWER_URL);
@@ -81,6 +87,7 @@ public class EmployerApplicantView {
         ApplicantForEmployer applicant3 = new ApplicantForEmployer(APPLICANT3_ID,
                 APPLICANT3_FIRST_NAME, APPLICANT3_LAST_NAME, APPLICANT3_AGE, APPLICANT3_SEX,
                 APPLICANT3_RESUME_URL, APPLICANT3_TEST_ANSWER_URL);
+
         if (applicantId.equals(APPLICANT1_ID)) {
             return applicant1;
         } else if (applicantId.equals(APPLICANT2_ID)) {
@@ -95,7 +102,7 @@ public class EmployerApplicantView {
     /**
      * Applicant POJO controller-specific
      */
-    class ApplicantForEmployer {
+    public class ApplicantForEmployer {
         private Long id;
         private String firstName;
         private String lastName;
@@ -174,5 +181,14 @@ public class EmployerApplicantView {
         public void setTestAnswerUrl(final String testAnswerUrl) {
             this.testAnswerUrl = testAnswerUrl;
         }
+    }
+
+    /**
+     * Fake method to get id of current employer
+     * Should be implemented according to security behaviour
+     * @return id of current employer
+     */
+    private Long getMyId() {
+        return EMPLOYER_ID;
     }
 }
