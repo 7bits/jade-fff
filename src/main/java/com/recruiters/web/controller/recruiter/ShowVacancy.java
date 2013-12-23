@@ -17,6 +17,8 @@ import java.util.Date;
  */
 @Controller
 public class ShowVacancy {
+    /** Id of recruiter visited page */
+    static final Long RECRUITER_ID = 1L;
     /** Id of 1st vacancy */
     static final Long VACANCY1_ID = 1L;
     /** If of employer for 1st vacancy */
@@ -40,19 +42,20 @@ public class ShowVacancy {
      */
     @RequestMapping(value = "recruiter-vacancy-show/{vacancyId}", method = RequestMethod.GET)
     public ModelAndView showVacancyById(@PathVariable final Long vacancyId) {
-
+        Long recruiterId = getMyId();
         ModelAndView showVacancy = new ModelAndView("recruiter-vacancy-show.jade");
-        Vacancy vacancy = getVacancyById(vacancyId);
+        Vacancy vacancy = getVacancyById(recruiterId, vacancyId);
         showVacancy.addObject("vacancy", vacancy);
         return showVacancy;
     }
 
     /**
      * Fake "get vacancy description" method, should be implemented in RecruiterService
+     * @param recruiterId  Id of recruiter who wants to get this data
      * @param vacancyId    Id of vacancy for which we want to get full description
      * @return vacancy description
      */
-    private Vacancy getVacancyById(final Long vacancyId) {
+    private Vacancy getVacancyById(final Long recruiterId, final Long vacancyId) {
 
         Vacancy vacancy = new Vacancy(VACANCY1_ID, VACANCY1_EMPLOYER_ID, VACANCY1_TITLE,
                 VACANCY1_DESCRIPTION, VACANCY1_SALARY, VACANCY1_CREATION_DATE,
@@ -62,5 +65,14 @@ public class ShowVacancy {
         } else {
             return null;
         }
+    }
+
+    /**
+     * Fake method to get id of current recruiter
+     * Should be implemented according to security behaviour
+     * @return id of current recruiter
+     */
+    private Long getMyId() {
+        return RECRUITER_ID;
     }
 }
