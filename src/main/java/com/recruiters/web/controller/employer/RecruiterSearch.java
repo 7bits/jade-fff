@@ -129,7 +129,7 @@ public class RecruiterSearch {
     /**
      * Controller-specific POJO for Vacancy
      */
-    private final class VacancyForSearch {
+    public final class VacancyForSearch {
         private Long id;
         private String title;
 
@@ -161,7 +161,7 @@ public class RecruiterSearch {
     /**
      * Controller-specific Recruiter POJO
      */
-    private final class RecruiterForSearch {
+    public final class RecruiterForSearch {
         private Long id;
         private Long vacancyId;
         private String firstName;
