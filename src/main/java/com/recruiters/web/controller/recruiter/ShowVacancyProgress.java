@@ -83,6 +83,12 @@ public class ShowVacancyProgress {
         return vacancyProgress;
     }
 
+    /**
+     * Get Information about vacancy by its id
+     * @param recruiterId    Id of recruiter who wants to get it
+     * @param vacancyId      Id of vacancy
+     * @return Vacancy info
+     */
     private Vacancy getVacancyInfo(final Long recruiterId, final Long vacancyId) {
 
         Vacancy vacancy = new Vacancy(VACANCY1_ID, VACANCY1_EMPLOYER_ID, VACANCY1_TITLE,
@@ -95,6 +101,12 @@ public class ShowVacancyProgress {
         }
     }
 
+    /**
+     * Get employer info service method
+     * @param recruiterId    Id of recruiter who asks for data
+     * @param employerId     Id of employer we want to get info about
+     * @return employer information
+     */
     private Employer getEmployerInfo(final Long recruiterId, final Long employerId) {
 
         Employer employer = new Employer(EMPLOYER1_ID, EMPLOYER1_FIRST_NAME, EMPLOYER1_LAST_NAME);
@@ -106,6 +118,12 @@ public class ShowVacancyProgress {
 
     }
 
+    /**
+     * List of applicants for this job
+     * @param recruiterId    Id of recruiter who asks for data
+     * @param vacancyId      Id of vacancy, applicants apply for
+     * @return List of applicants
+     */
     private List<Applicant> getApplicantListForVacancy(final Long recruiterId, final Long vacancyId) {
 
         List<Applicant> applicantList = new ArrayList<Applicant>();
