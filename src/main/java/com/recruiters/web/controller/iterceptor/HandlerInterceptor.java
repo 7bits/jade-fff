@@ -11,6 +11,11 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class HandlerInterceptor extends HandlerInterceptorAdapter {
 
+    /** */
+    static final String DOMAIN_NAME_VARIABLE = "domainName";
+    /** */
+    static final String USER_ROLE_VARIABLE = "userRole";
+
     private String protocol = null;
     private String server = null;
     private String port = null;
@@ -24,14 +29,15 @@ public class HandlerInterceptor extends HandlerInterceptorAdapter {
             final ModelAndView mav
     ) {
         mav.addObject(
-                "domainName", UtilsService.getFullUrl(
+                DOMAIN_NAME_VARIABLE
+                , UtilsService.getFullUrl(
                         protocol,
                         server,
                         port,
                         applicationName
                 )
         );
-        mav.addObject("userRole", UtilsService.getUserRole(request));
+        mav.addObject(USER_ROLE_VARIABLE, UtilsService.getUserRole(request));
     }
 
     public String getProtocol() {

@@ -16,7 +16,7 @@ public class Dashboard {
             return "redirect:recruiter-vacancies-list";
         }
         if (request.isUserInRole("ROLE_EMPLOYER")) {
-            return "redirect:recruiter-vacancies-list";
+            return "redirect:employer-progress-vacancies-list";
         }
 
         return "redirect:login-page";

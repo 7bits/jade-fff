@@ -17,12 +17,6 @@ public class LoginPage {
         return mav;
     }
 
-//    @ResponseBody
-//    @RequestMapping(value = "/recruiter-vacancy-show")
-//    public ModelAndView vacancyShow() {
-//        return new ModelAndView("recruiter-vacancy-show");
-//    }
-
     @ResponseBody
     @RequestMapping(value = "/employer-progress-vacancies-list")
     public ModelAndView customerVacanciesList() {
@@ -46,21 +40,6 @@ public class LoginPage {
     public ModelAndView customerVacancyShow() {
         return new ModelAndView("employer-progress-vacancy-show");
     }
-
-//    @ResponseBody
-//    @RequestMapping(value = "/recruiter-vacancy-show")
-//    public ModelAndView recruitVacancyShow() {
-//        return new ModelAndView("recruiter-vacancy-show");
-//    }
-
-
-
-//    @ResponseBody
-//    @RequestMapping(value = "/recruiter-employee-create")
-//    public ModelAndView employeeCreate() {
-//        return new ModelAndView("recruiter-employee-create");
-//    }
-
 
     @ResponseBody
     @RequestMapping(value = "/employer-employee-show")
