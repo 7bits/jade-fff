@@ -158,7 +158,7 @@ public class RecruiterVacancies {
             return recruiterId;
         }
 
-        public void setRecruiterId(Long recruiterId) {
+        public void setRecruiterId(final Long recruiterId) {
             this.recruiterId = recruiterId;
         }
 
