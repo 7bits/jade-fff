@@ -1,6 +1,5 @@
 package com.recruiters.web.controller.employer;
 
-import com.recruiters.model.Vacancy;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -93,7 +92,9 @@ public class RecruiterVacancies {
         return EMPLOYER_ID;
     }
 
-
+    /**
+     * Vacancy POJO class for current controller
+     */
     class VacancyForRecruiterVacancies {
         private Long id;
         private String title;
@@ -104,7 +105,8 @@ public class RecruiterVacancies {
         VacancyForRecruiterVacancies() {
         }
 
-        VacancyForRecruiterVacancies(Long id, String title, String description, Date creationDate, String recruiterName) {
+        VacancyForRecruiterVacancies(final Long id, final String title, final String description,
+                                     final Date creationDate, final String recruiterName) {
             this.id = id;
             this.title = title;
             this.description = description;
@@ -116,7 +118,7 @@ public class RecruiterVacancies {
             return id;
         }
 
-        public void setId(Long id) {
+        public void setId(final Long id) {
             this.id = id;
         }
 
@@ -124,7 +126,7 @@ public class RecruiterVacancies {
             return title;
         }
 
-        public void setTitle(String title) {
+        public void setTitle(final String title) {
             this.title = title;
         }
 
@@ -132,7 +134,7 @@ public class RecruiterVacancies {
             return description;
         }
 
-        public void setDescription(String description) {
+        public void setDescription(final String description) {
             this.description = description;
         }
 
@@ -140,7 +142,7 @@ public class RecruiterVacancies {
             return creationDate;
         }
 
-        public void setCreationDate(Date creationDate) {
+        public void setCreationDate(final Date creationDate) {
             this.creationDate = creationDate;
         }
 
@@ -148,7 +150,7 @@ public class RecruiterVacancies {
             return recruiterName;
         }
 
-        public void setRecruiterName(String recruiterName) {
+        public void setRecruiterName(final String recruiterName) {
             this.recruiterName = recruiterName;
         }
     }
