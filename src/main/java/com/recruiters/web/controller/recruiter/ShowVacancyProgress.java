@@ -26,9 +26,9 @@ public class ShowVacancyProgress {
     /** If of employer for 1st vacancy */
     static final Long VACANCY1_EMPLOYER_ID = 1L;
     /** Title of 1st vacancy */
-    static final String  VACANCY1_TITLE = "Лесоруб";
+    static final String  VACANCY1_TITLE = "Программист";
     /** Description of 1st vacancy */
-    static final String VACANCY1_DESCRIPTION = "Обожаю рубить сосны!";
+    static final String VACANCY1_DESCRIPTION = "PHP Guru";
     /** Salary range for 1st vacancy */
     static final String VACANCY1_SALARY = "30 - 50 $ в час";
     /** Creation date for 1st vacancy */
@@ -67,6 +67,38 @@ public class ShowVacancyProgress {
     static final String APPLICANT3_FIRST_NAME = "Константин";
     /** 3rd Applicant last name */
     static final String APPLICANT3_LAST_NAME = "Константинопольский";
+    /** Id of 2nd vacancy */
+    static final Long VACANCY2_ID = 2L;
+    /** If of employer for 2nd vacancy */
+    static final Long VACANCY2_EMPLOYER_ID = 1L;
+    /** Title of 2nd vacancy */
+    static final String  VACANCY2_TITLE = "Лесоруб";
+    /** Description of 2nd vacancy */
+    static final String VACANCY2_DESCRIPTION = "Умеет клёво рубить сосны";
+    /** Salary range for 2nd vacancy */
+    static final String VACANCY2_SALARY = "33 - 45 $ в час";
+    /** Creation date for 2nd vacancy */
+    static final Date VACANCY2_CREATION_DATE = new Date();
+    /** Expiration date for 2nd vacancy */
+    static final Date VACANCY2_EXPIRATION_DATE = DateUtils.addDays(new Date(), 1);
+    /** Test file url for 2nd vacancy */
+    static final String VACANCY2_TEST_FILE = "#";
+    /** Id of 3rd vacancy */
+    static final Long VACANCY3_ID = 4L;
+    /** If of employer for 3rd vacancy */
+    static final Long VACANCY3_EMPLOYER_ID = 1L;
+    /** Title of 3rd vacancy */
+    static final String  VACANCY3_TITLE = "Сантехник";
+    /** Description of 3rd vacancy */
+    static final String VACANCY3_DESCRIPTION = "Не пьёт!";
+    /** Salary range for 3rd vacancy */
+    static final String VACANCY3_SALARY = "80 - 100 $ в час";
+    /** Creation date for 3rd vacancy */
+    static final Date VACANCY3_CREATION_DATE = new Date();
+    /** Expiration date for 3rd vacancy */
+    static final Date VACANCY3_EXPIRATION_DATE = DateUtils.addDays(new Date(), 1);
+    /** Test file url for 3rd vacancy */
+    static final String VACANCY3_TEST_FILE = "#";
 
 
     @RequestMapping(value = "recruiter-progress-vacancy-show/{vacancyId}", method = RequestMethod.GET)
@@ -91,11 +123,22 @@ public class ShowVacancyProgress {
      */
     private Vacancy getVacancyInfo(final Long recruiterId, final Long vacancyId) {
 
-        Vacancy vacancy = new Vacancy(VACANCY1_ID, VACANCY1_EMPLOYER_ID, VACANCY1_TITLE,
+        Vacancy vacancy1 = new Vacancy(VACANCY1_ID, VACANCY1_EMPLOYER_ID, VACANCY1_TITLE,
                 VACANCY1_DESCRIPTION, VACANCY1_SALARY, VACANCY1_CREATION_DATE, VACANCY1_EXPIRATION_DATE,
                 VACANCY1_TEST_FILE);
+        Vacancy vacancy2 = new Vacancy(VACANCY2_ID, VACANCY2_EMPLOYER_ID, VACANCY2_TITLE,
+                VACANCY2_DESCRIPTION, VACANCY2_SALARY, VACANCY2_CREATION_DATE, VACANCY2_EXPIRATION_DATE,
+                VACANCY2_TEST_FILE);
+        Vacancy vacancy3 = new Vacancy(VACANCY3_ID, VACANCY3_EMPLOYER_ID, VACANCY3_TITLE,
+                VACANCY3_DESCRIPTION, VACANCY3_SALARY, VACANCY3_CREATION_DATE, VACANCY3_EXPIRATION_DATE,
+                VACANCY3_TEST_FILE);
+
         if (vacancyId.equals(VACANCY1_ID)) {
-            return vacancy;
+            return vacancy1;
+        } else if (vacancyId.equals(VACANCY2_ID)) {
+            return vacancy2;
+        } else if (vacancyId.equals(VACANCY3_ID)) {
+            return vacancy3;
         } else {
             return null;
         }
