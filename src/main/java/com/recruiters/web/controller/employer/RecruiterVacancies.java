@@ -101,7 +101,7 @@ public class RecruiterVacancies {
     /**
      * Vacancy POJO class for current controller
      */
-    class VacancyForRecruiterVacancies {
+    public class VacancyForRecruiterVacancies {
         private Long id;
         private String title;
         private String description;
