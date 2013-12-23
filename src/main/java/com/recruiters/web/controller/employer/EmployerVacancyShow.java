@@ -116,7 +116,7 @@ public class EmployerVacancyShow {
     /**
      * Vacancy Info POJO controller-specific
      */
-    class VacancyForEmployer {
+    public class VacancyForEmployer {
         private Long id;
         private String title;
         private String description;
@@ -189,7 +189,7 @@ public class EmployerVacancyShow {
     /**
      * Controller-specific Recruiter POJO-class
      */
-    class RecruiterApplication {
+    public class RecruiterApplication {
         private Long id;
         private String firstName;
         private String lastName;
@@ -231,7 +231,7 @@ public class EmployerVacancyShow {
     /**
      *  Applicant POJO controller-specific
      */
-    class ApplicantForEmployer {
+    public class ApplicantForEmployer {
         private Long id;
         private String firstName;
         private String lastName;

@@ -79,7 +79,7 @@ public class EmployerRecruiterDeal {
     /**
      * Controller-specific Vacancy POJO
      */
-    class VacancyShortInfo {
+    public class VacancyShortInfo {
         private Long id;
         private String description;
         private String salary;
@@ -121,7 +121,7 @@ public class EmployerRecruiterDeal {
     /**
      * Controller-specific Recruiter POJO-class
      */
-    class RecruitApplication {
+    public class RecruitApplication {
         private Long id;
         private String firstName;
         private String lastName;
