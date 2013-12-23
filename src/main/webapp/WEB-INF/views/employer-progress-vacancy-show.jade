@@ -30,5 +30,5 @@ block append content
           for applicant in vacancyList
             li.list-group-item
               #{applicant.firstName} #{applicant.lastName}
-              a.btn.btn-link.pull-right(href="#").
+              a.btn.btn-link.pull-right(href = domainName + "/employer-employee-show/" + applicant.id).
                 Подробнее

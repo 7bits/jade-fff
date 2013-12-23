@@ -3,34 +3,14 @@ extends layout
 block append content
   .container
     h1 Выбор рекрутёра
-    h2 Лесоруб
-    .row
-      .col-md-6
-        ul.list-group
-          li.list-group-item
-            | Иванов Иван
-            a.btn.btn-link.pull-right(href="#").
-              Подробнее
-          li.list-group-item
-            | Петров Пётр
-            a.btn.btn-link.pull-right(href="#").
-              Подробнее
-          li.list-group-item
-            | Константинопольский Константин
-            a.btn.btn-link.pull-right(href="#").
-              Подробнее
-
-        h2 Сантехник
-        ul.list-group
-          li.list-group-item
-            | Иванов Иван
-            a.btn.btn-link.pull-right(href="#").
-              Подробнее
-          li.list-group-item
-            | Петров Пётр
-            a.btn.btn-link.pull-right(href="#").
-              Подробнее
-          li.list-group-item
-            | Константинопольский Константин
-            a.btn.btn-link.pull-right(href="#").
-              Подробнее
+    for vacancy in vacancyList
+      h2 #{vacancy.title}
+      .row
+        .col-md-6
+          ul.list-group
+            for vacancyRecruiter in recruiterList
+              if vacancyRecruiter.vacancyId == vacancy.id
+                li.list-group-item
+                  #{vacancyRecruiter.firstName} #{vacancyRecruiter.lastName}
+                  a.btn.btn-link.pull-right(href = domainName + "/employer-recruiter-show/recruiter/" + vacancyRecruiter.id + "/vacancy/" + vacancyRecruiter.vacancyId).
+                    Подробнее
