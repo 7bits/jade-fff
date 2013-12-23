@@ -12,27 +12,12 @@ block append content
           th Рекрутёр
           th
       tbody
-        tr
-          td Программист
-          td PHP guru
-          td сегодня
-          td Иванов
-          td
-            button.btn.btn-link(type="button").
-              Подробнее
-        tr
-          td Лесоруб
-          td Умеет клёво рубить сосны
-          td сегодня
-          td Иванов
-          td
-            button.btn.btn-link(type="button").
-              Подробнее
-        tr
-          td Сантехник
-          td Не пьёт!
-          td сегодня
-          td Иванов
-          td
-            button.btn.btn-link(type="button").
-              Подробнее
+        for vacancy in vacancyList
+          tr
+            td #{vacancy.title}
+            td #{vacancy.description}
+            td #{vacancy.creationDate}
+            td Иванов
+            td
+              a.btn.btn-link(href = domainName + "/employer-progress-vacancy-show").
+                Подробнее

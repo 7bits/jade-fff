@@ -5,19 +5,16 @@ block append content
     .row
       .col-md-6
         h1 Кандидат на вакансию
-        h2 Иванов Иван
+        h2 #{applicant.firstName} #{applicant.lastName}
         dl.dl-horizontal
-          dt Возраст
-          dd 25
-          dt Пол
-          dd мужской
-        button.btn.btn-link(type="button")
-          a(href="#").
+          dt Краткая информация
+          dd #{applicant.description}
+          a.btn.btn-link(href="#").
             Скачать резюме
         button.btn.btn-link(type="button")
-          a(href="#").
+          a.btn.btn-link(href="#").
             Скачать тестовое задание
     .row
       .col-md-6
-        button.btn.btn-success(type="button") Нанять
-        button.btn.btn-danger(type="button") Отклонить
+        a.btn.btn-success(href="#") Нанять
+        a.btn.btn-danger(href="#") Отклонить
