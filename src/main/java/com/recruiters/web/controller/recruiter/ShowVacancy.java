@@ -1,14 +1,19 @@
 package com.recruiters.web.controller.recruiter;
 
 
+import com.recruiters.model.Recruiter;
+import com.recruiters.model.User;
 import com.recruiters.model.Vacancy;
+import com.recruiters.service.RecruiterService;
 import org.apache.commons.lang3.time.DateUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 
@@ -17,62 +22,33 @@ import java.util.Date;
  */
 @Controller
 public class ShowVacancy {
-    /** Id of recruiter visited page */
-    static final Long RECRUITER_ID = 1L;
-    /** Id of 1st vacancy */
-    static final Long VACANCY1_ID = 1L;
-    /** If of employer for 1st vacancy */
-    static final Long VACANCY1_EMPLOYER_ID = 1L;
-    /** Title of 1st vacancy */
-    static final String  VACANCY1_TITLE = "Лесоруб";
-    /** Description of 1st vacancy */
-    static final String VACANCY1_DESCRIPTION = "Обожаю рубить сосны!";
-    /** Salary range for 1st vacancy */
-    static final String VACANCY1_SALARY = "30 - 50 $ в час";
-    /** Creation date for 1st vacancy */
-    static final Date VACANCY1_CREATION_DATE = new Date();
-    /** Expiration date for 1st vacancy */
-    static final Date VACANCY1_EXPIRATION_DATE = DateUtils.addDays(new Date(), 1);
-    /** Test file url for 1st vacancy */
-    static final String VACANCY1_TEST_FILE = "#";
+
+    @Autowired
+    private RecruiterService recruiterService = null;
 
     /**
      * Controller for R2 "Show vacancy"
      * @return model and view with one vacancy
      */
     @RequestMapping(value = "recruiter-vacancy-show/{vacancyId}", method = RequestMethod.GET)
-    public ModelAndView showVacancyById(@PathVariable final Long vacancyId) {
-        Long recruiterId = getMyId();
+    public ModelAndView showVacancyById(@PathVariable final Long vacancyId, final HttpServletRequest request) {
         ModelAndView showVacancy = new ModelAndView("recruiter-vacancy-show.jade");
-        Vacancy vacancy = getVacancyById(recruiterId, vacancyId);
-        showVacancy.addObject("vacancy", vacancy);
+        User currentUser = this.getRecruiterService().getCurrentUser(request);
+        Recruiter recruiter = this.getRecruiterService().findRecruiterByUserId(currentUser.getId());
+        if (recruiter != null) {
+            Vacancy vacancy = this.getRecruiterService().getVacancyByRecruiterIdAndVacancyId(recruiter.getId(), vacancyId);
+            showVacancy.addObject("vacancy", vacancy);
+
+        }
+
         return showVacancy;
     }
 
-    /**
-     * Fake "get vacancy description" method, should be implemented in RecruiterService
-     * @param recruiterId  Id of recruiter who wants to get this data
-     * @param vacancyId    Id of vacancy for which we want to get full description
-     * @return vacancy description
-     */
-    private Vacancy getVacancyById(final Long recruiterId, final Long vacancyId) {
-
-        Vacancy vacancy = new Vacancy(VACANCY1_ID, VACANCY1_EMPLOYER_ID, VACANCY1_TITLE,
-                VACANCY1_DESCRIPTION, VACANCY1_SALARY, VACANCY1_CREATION_DATE,
-                VACANCY1_EXPIRATION_DATE, VACANCY1_TEST_FILE);
-        if (vacancyId.equals(VACANCY1_ID)) {
-            return vacancy;
-        } else {
-            return null;
-        }
+    public RecruiterService getRecruiterService() {
+        return recruiterService;
     }
 
-    /**
-     * Fake method to get id of current recruiter
-     * Should be implemented according to security behaviour
-     * @return id of current recruiter
-     */
-    private Long getMyId() {
-        return RECRUITER_ID;
+    public void setRecruiterService(final RecruiterService recruiterService) {
+        this.recruiterService = recruiterService;
     }
 }

@@ -1,5 +1,6 @@
 package com.recruiters.web.controller.recruiter;
 
+import com.recruiters.model.Recruiter;
 import com.recruiters.model.User;
 import com.recruiters.service.RecruiterService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,10 @@ public class MyVacancies {
     public ModelAndView showMyVacancies(final HttpServletRequest request) {
         ModelAndView myVacancies = new ModelAndView("recruiter-my-vacancies.jade");
         User currentUser = this.getRecruiterService().getCurrentUser(request);
-        myVacancies.addObject("vacancyList", getRecruiterService().findRecruiterListOfVacancies(currentUser.getId()));
+        Recruiter recruiter = this.getRecruiterService().findRecruiterByUserId(currentUser.getId());
+        if (recruiter != null) {
+            myVacancies.addObject("vacancyList", getRecruiterService().findListOfInProgressVacanciesForRecruiter(recruiter.getId()));
+        }
 
         return myVacancies;
     }
