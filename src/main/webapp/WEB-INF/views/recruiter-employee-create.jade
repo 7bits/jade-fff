@@ -3,24 +3,26 @@ extends layout
 block append content
   .container
     h2 Создание кандидата
-    form
+    form(name="applicantForm", action="", method="post", enctype="multipart/form-data")
       .row
         .col-md-6
           .form-group
             label(for="name")
-            input(type="text", class="form-control", id="name", placeholder="Имя")
+            input(type="text", class="form-control", id="firstName", name="firstName", placeholder="Имя", value=applicantForm.firstName)
           .form-group
             label(for="last-name")
-            input(type="text", class="form-control", id="last-name", placeholder="Фамилия")
+            input(type="text", class="form-control", id="lastName", name="lastName", placeholder="Фамилия")
           .form-group
             label(for="descr")
-            textarea(class="form-control", id="descr", placeholder="Описание")
+            textarea(class="form-control", id="description", name="description", placeholder="Описание")
           .form-group
             label(for="resume") Прикрепить резюме
-            input(type="file", id="resume", placeholder="Прикрепить резюме")
+            input(type="file", id="resumeFile", name="resumeFile", placeholder="Прикрепить резюме")
           .form-group
             label(for="test-answers") Ответы на тест
-            input(type="file", id="test-answers", placeholder="Ответы на тест")
-          a.btn.btn-success(href="#") Добавить
+            input(type="file", id="testAnswerFile", name="testAnswerFile", placeholder="Ответы на тест")
+          .form-group
+            input(type="hidden", id="vacancyId", name="vacancyId", value=applicantForm.vacancyId)
+          input.btn.btn-success(type="submit", name="submit", value="Добавить") Добавить
           a.btn.btn-link(href="#")
             a(href=domainName + "/recruiter-progress-vacancy-show/" + applicantForm.vacancyId) К описанию вакансии
