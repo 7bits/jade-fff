@@ -14,24 +14,18 @@ public class ApplicantRepository {
 
     /** Id of 1st applicant */
     static final Long APPLICANT1_ID = 1L;
-    /** Vacancy id applicant belongs to */
-    static final Long APPLICANT1_VACANCY_ID = 1L;
     /** 1st Applicant first name */
     static final String APPLICANT1_FIRST_NAME = "Иван";
     /** 1st Applicant last name */
     static final String APPLICANT1_LAST_NAME = "Иванов";
     /** Id of 2nd applicant */
     static final Long APPLICANT2_ID = 2L;
-    /** Vacancy id applicant belongs to */
-    static final Long APPLICANT2_VACANCY_ID = 1L;
     /** 2nd Applicant first name */
     static final String APPLICANT2_FIRST_NAME = "Пётр";
     /** 2nd Applicant last name */
     static final String APPLICANT2_LAST_NAME = "Петров";
     /** Id of 3rd applicant */
     static final Long APPLICANT3_ID = 3L;
-    /** Vacancy id applicant belongs to */
-    static final Long APPLICANT3_VACANCY_ID = 1L;
     /** 3rd Applicant first name */
     static final String APPLICANT3_FIRST_NAME = "Константин";
     /** 3rd Applicant last name */
@@ -56,7 +50,7 @@ public class ApplicantRepository {
         applicantList.add(applicant1);
         applicantList.add(applicant2);
         applicantList.add(applicant3);
-        if (dealId.equals(APPLICANT1_VACANCY_ID)) {
+        if (dealId.equals(1L)) {
             return applicantList;
         } else {
             return null;

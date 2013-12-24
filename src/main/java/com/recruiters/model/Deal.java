@@ -8,7 +8,8 @@ public class Deal {
     private Vacancy vacancy = null;
     private Recruiter recruiter = null;
 
-    public Deal(final Vacancy vacancy, final Recruiter recruiter) {
+    public Deal(final Long id, final Vacancy vacancy, final Recruiter recruiter) {
+        this.id = id;
         this.vacancy = vacancy;
         this.recruiter = recruiter;
     }
