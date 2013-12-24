@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
@@ -20,6 +21,7 @@ import javax.validation.Valid;
  * Controller Class fpr R61 "Edit or create applicant"
  */
 @Controller
+@SessionAttributes("applicantForm")
 public class ModifyApplicant {
 
     @Autowired
@@ -46,7 +48,8 @@ public class ModifyApplicant {
 
     /**
      * Controller for creating new applicant with method POST
-     * @param applicantForm         Form model attribute for applicant
+     * @param applicantForm
+     * @Form model attribute for applicant
      * @param vacancyId             Id of vacancy for corresponded applicant
      * @param bindingResult         BindingResult
      * @param redirectAttributes    RedirectAttributes
