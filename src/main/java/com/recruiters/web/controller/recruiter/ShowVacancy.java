@@ -36,7 +36,7 @@ public class ShowVacancy {
         User currentUser = this.getRecruiterService().getCurrentUser(request);
         Recruiter recruiter = this.getRecruiterService().findRecruiterByUserId(currentUser.getId());
         if (recruiter != null) {
-            Vacancy vacancy = this.getRecruiterService().getVacancyByRecruiterIdAndVacancyId(recruiter.getId(), vacancyId);
+            Vacancy vacancy = this.getRecruiterService().getVacancyById(vacancyId);
             showVacancy.addObject("vacancy", vacancy);
 
         }

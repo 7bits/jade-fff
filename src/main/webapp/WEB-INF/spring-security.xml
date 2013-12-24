@@ -8,8 +8,8 @@
                                   http://www.springframework.org/schema/security/spring-security-3.2.xsd">
 
     <security:http access-denied-page="/" use-expressions="true" auto-config="true">
-        <security:intercept-url pattern="/recruiter*" access="hasRole('ROLE_RECRUITER')" />
-        <security:intercept-url pattern="/employer*" access="hasRole('ROLE_EMPLOYER')"/>
+        <security:intercept-url pattern="/recruiter**" access="hasRole('ROLE_RECRUITER')" />
+        <security:intercept-url pattern="/employer**" access="hasRole('ROLE_EMPLOYER')"/>
         <security:anonymous granted-authority="ROLE_ANONYMOUS" key="anonymousKey" username="guest"/>
         <security:form-login login-page="/" authentication-failure-url="/?error=true" default-target-url="/" always-use-default-target="true" />
         <security:logout logout-success-url="/" />

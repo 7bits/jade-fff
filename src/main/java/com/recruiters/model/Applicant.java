@@ -5,7 +5,7 @@ package com.recruiters.model;
  */
 public class Applicant {
     private Long id;
-    private Long vacancyId;
+    private Deal deal;
     private String firstName;
     private String lastName;
     private String description;
@@ -15,17 +15,17 @@ public class Applicant {
     public Applicant() {
     }
 
-    public Applicant(final Long id, final Long vacancyId, final String firstName, final String lastName) {
+    public Applicant(final Long id, final Deal deal, final String firstName, final String lastName) {
         this.id = id;
-        this.vacancyId = vacancyId;
+        this.deal = deal;
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
-    public Applicant(final Long id, final Long vacancyId, final String firstName,
+    public Applicant(final Long id, final Deal deal, final String firstName,
                      final String lastName, final String description) {
         this.id = id;
-        this.vacancyId = vacancyId;
+        this.deal = deal;
         this.firstName = firstName;
         this.lastName = lastName;
         this.description = description;
@@ -39,12 +39,12 @@ public class Applicant {
         this.id = id;
     }
 
-    public Long getVacancyId() {
-        return vacancyId;
+    public Deal getDeal() {
+        return deal;
     }
 
-    public void setVacancyId(final Long vacancyId) {
-        this.vacancyId = vacancyId;
+    public void setDeal(final Deal deal) {
+        this.deal = deal;
     }
 
     public String getFirstName() {

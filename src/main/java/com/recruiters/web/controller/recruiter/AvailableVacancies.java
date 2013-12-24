@@ -23,7 +23,7 @@ public class AvailableVacancies {
     @RequestMapping(value = "recruiter-available-vacancies", method = RequestMethod.GET)
     public ModelAndView showActiveVacancies() {
         ModelAndView activeVacancies = new ModelAndView("recruiter-available-vacancies.jade");
-        activeVacancies.addObject("vacancyList", getRecruiterService().findAvailableListOfVacancies());
+        activeVacancies.addObject("vacancyList", getRecruiterService().findListOfAvailableVacancies());
 
         return activeVacancies;
     }
