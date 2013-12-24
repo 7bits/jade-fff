@@ -4,10 +4,13 @@ html
     title= pageName
     block head
       script(src="http://code.jquery.com/jquery-2.0.3.js")
-      script(src=domainName + '/resources/js/lib/bootstrap.min.js')
+      script(src=domainName + '/resources/js/lib/bootstrap.js')
+      script(src=domainName + '/resources/js/lib/bootstrap-confirmation.js')
       script(src=domainName + '/resources/js/confirmation.js')
       link(href=domainName + '/resources/stylesheets/lib/bootstrap.min.css', rel='stylesheet', type='text/css')
       link(href=domainName + '/resources/stylesheets/lib/bootstrap-theme.min.css', rel='stylesheet', type='text/css')
+      link(href=domainName + '/resources/stylesheets/advanced-lists.css', rel='stylesheet', type='text/css')
+      link(href=domainName + '/resources/stylesheets/table.css', rel='stylesheet', type='text/css')
   body
     block content
       .navbar.navbar-inverse(role="navigation")
