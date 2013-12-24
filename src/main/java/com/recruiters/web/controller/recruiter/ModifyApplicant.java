@@ -3,6 +3,7 @@ package com.recruiters.web.controller.recruiter;
 import com.recruiters.service.RecruiterService;
 import com.recruiters.web.form.ApplicantForm;
 import com.recruiters.web.validator.ApplicantValidator;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -23,6 +24,8 @@ import javax.validation.Valid;
 @Controller
 @SessionAttributes("applicantForm")
 public class ModifyApplicant {
+    /** Logger */
+    protected final Logger log = Logger.getLogger(getClass());
 
     @Autowired
     private RecruiterService recruiterService = null;
@@ -48,8 +51,7 @@ public class ModifyApplicant {
 
     /**
      * Controller for creating new applicant with method POST
-     * @param applicantForm
-     * @Form model attribute for applicant
+     * @param applicantForm model attribute for applicant
      * @param vacancyId             Id of vacancy for corresponded applicant
      * @param bindingResult         BindingResult
      * @param redirectAttributes    RedirectAttributes
@@ -58,7 +60,7 @@ public class ModifyApplicant {
      */
     @RequestMapping(value = "recruiter-employee-create/{vacancyId}", method = RequestMethod.POST)
     public ModelAndView addApplicantValidation(
-           @Valid @ModelAttribute("applicantForm") final ApplicantForm applicantForm,
+           @ModelAttribute("applicantForm") final ApplicantForm applicantForm,
            @PathVariable final Long vacancyId,
            final BindingResult bindingResult,
            final RedirectAttributes redirectAttributes
@@ -68,6 +70,7 @@ public class ModifyApplicant {
             model.addObject("errors", bindingResult.getFieldError().getDefaultMessage());
             return model;
         }
+        log.debug("ApplicantFormName:" + applicantForm.getFirstName());
         this.getRecruiterService().addApplicantToVacancy(
                 applicantForm.getModel(), applicantForm.getResumeFile(), applicantForm.getTestAnswerFile()
         );
