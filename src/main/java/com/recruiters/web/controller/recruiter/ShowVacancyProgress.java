@@ -6,7 +6,6 @@ import com.recruiters.model.Recruiter;
 import com.recruiters.model.User;
 import com.recruiters.model.Vacancy;
 import com.recruiters.service.RecruiterService;
-import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -35,7 +32,7 @@ public class ShowVacancyProgress {
         User currentUser = this.getRecruiterService().getCurrentUser(request);
         Recruiter recruiter = this.getRecruiterService().findRecruiterByUserId(currentUser.getId());
         if (recruiter != null) {
-            Vacancy vacancy = this.getRecruiterService().getVacancyInProgressByRecruiterIdAndVacancy(recruiter.getId(), vacancyId);
+            Vacancy vacancy = this.getRecruiterService().getVacancyInProgressByRecruiterIdAndVacancyId(recruiter.getId(), vacancyId);
             vacancyInProgress.addObject("vacancy", vacancy);
             Employer employer = this.getRecruiterService().getEmployerByVacancyId(vacancy.getId());
             vacancyInProgress.addObject("employer", employer);

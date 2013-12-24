@@ -81,7 +81,7 @@ public class RecruiterService {
      * @param vacancyId    Id of vacancy for which we want to get full description
      * @return vacancy description
      */
-    public Vacancy getVacancyInProgressByRecruiterIdAndVacancy(final Long recruiterId, final Long vacancyId) {
+    public Vacancy getVacancyInProgressByRecruiterIdAndVacancyId(final Long recruiterId, final Long vacancyId) {
 
         return this.getVacancyRepository().getVacancyByRecruiterIdAndVacancyId(recruiterId, vacancyId);
     }
