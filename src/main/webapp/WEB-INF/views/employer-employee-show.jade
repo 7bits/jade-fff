@@ -4,16 +4,18 @@ block append content
   .container
     .row
       .col-md-6
-        h1 Кандидат на вакансию
+        h1=fmt.message("employer-employee-show.h1")
         h2 #{applicant.firstName} #{applicant.lastName}
         dl.dl-horizontal
-          dt Краткая информация
+          dt=fmt.message("employer-employee-show.description")
           dd #{applicant.description}
-        a.btn.btn-link(href="#").
-          Скачать резюме
-        a.btn.btn-link(href="#").
-          Скачать тестовое задание
+          dt=fmt.message("employer-employee-show.sex")
+          dd #{applicant.sex}
+          dt=fmt.message("employer-employee-show.age")
+          dd #{applicant.age}
+        a.btn.btn-link(href="#")=fmt.message("employer-employee-show.resume")
+        a.btn.btn-link(href="#")=fmt.message("employer-employee-show.test")
     .row
       .col-md-6
-        a.btn.btn-success(href="#",data-toggle="confirmation", data-placement="left", data-original-title="", title="") Нанять
-        a.btn.btn-danger(href="#",data-toggle="confirmation", data-placement="left", data-original-title="", title="") Отклонить
+        a.btn.btn-success(href="#",data-toggle="confirmation", data-placement="left", data-original-title="", title="")=fmt.message("employer-employee-show.apply")
+        a.btn.btn-danger(href="#",data-toggle="confirmation", data-placement="left", data-original-title="", title="")=fmt.message("employer-employee-show.decline")

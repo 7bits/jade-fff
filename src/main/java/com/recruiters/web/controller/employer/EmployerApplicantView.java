@@ -19,6 +19,8 @@ public class EmployerApplicantView {
     static final String APPLICANT1_FIRST_NAME = "Иван";
     /** Last name of 1st applicant */
     static final String APPLICANT1_LAST_NAME = "Иванов";
+    /** Description of 1st applicant */
+    static final String APPLICANT1_DESCRIPTION = "Круто рубит дрова";
     /** Age of 1st applicant */
     static final Integer APPLICANT1_AGE = 25;
     /** Sex of 1st applicant*/
@@ -33,6 +35,8 @@ public class EmployerApplicantView {
     static final String APPLICANT2_FIRST_NAME = "Петр";
     /** Last name of 2nd applicant */
     static final String APPLICANT2_LAST_NAME = "Петров";
+    /** Description of 2nd applicant */
+    static final String APPLICANT2_DESCRIPTION = "Рубит дрова так что щепки во все стороны летят";
     /** Age of 2nd applicant */
     static final Integer APPLICANT2_AGE = 34;
     /** Sex of 2nd applicant*/
@@ -47,6 +51,8 @@ public class EmployerApplicantView {
     static final String APPLICANT3_FIRST_NAME = "Семен";
     /** Last name of 3rd applicant */
     static final String APPLICANT3_LAST_NAME = "Варламов";
+    /** Description of 3rd applicant */
+    static final String APPLICANT3_DESCRIPTION = "Рубит дрова с двух рук!";
     /** Age of 3rd applicant */
     static final Integer APPLICANT3_AGE = 31;
     /** Sex of 3rd applicant*/
@@ -79,14 +85,14 @@ public class EmployerApplicantView {
     private ApplicantForEmployer getApplicantById(final Long employerId, final Long applicantId) {
 
         ApplicantForEmployer applicant1 = new ApplicantForEmployer(APPLICANT1_ID,
-                APPLICANT1_FIRST_NAME, APPLICANT1_LAST_NAME, APPLICANT1_AGE, APPLICANT1_SEX,
-                APPLICANT1_RESUME_URL, APPLICANT1_TEST_ANSWER_URL);
+                APPLICANT1_FIRST_NAME, APPLICANT1_LAST_NAME, APPLICANT1_DESCRIPTION,
+                APPLICANT1_AGE, APPLICANT1_SEX, APPLICANT1_RESUME_URL, APPLICANT1_TEST_ANSWER_URL);
         ApplicantForEmployer applicant2 = new ApplicantForEmployer(APPLICANT2_ID,
-                APPLICANT2_FIRST_NAME, APPLICANT2_LAST_NAME, APPLICANT2_AGE, APPLICANT2_SEX,
-                APPLICANT2_RESUME_URL, APPLICANT2_TEST_ANSWER_URL);
+                APPLICANT2_FIRST_NAME, APPLICANT2_LAST_NAME, APPLICANT2_DESCRIPTION,
+                APPLICANT2_AGE, APPLICANT2_SEX, APPLICANT2_RESUME_URL, APPLICANT2_TEST_ANSWER_URL);
         ApplicantForEmployer applicant3 = new ApplicantForEmployer(APPLICANT3_ID,
-                APPLICANT3_FIRST_NAME, APPLICANT3_LAST_NAME, APPLICANT3_AGE, APPLICANT3_SEX,
-                APPLICANT3_RESUME_URL, APPLICANT3_TEST_ANSWER_URL);
+                APPLICANT3_FIRST_NAME, APPLICANT3_LAST_NAME, APPLICANT3_DESCRIPTION,
+                APPLICANT3_AGE, APPLICANT3_SEX, APPLICANT3_RESUME_URL, APPLICANT3_TEST_ANSWER_URL);
 
         if (applicantId.equals(APPLICANT1_ID)) {
             return applicant1;
@@ -106,6 +112,7 @@ public class EmployerApplicantView {
         private Long id;
         private String firstName;
         private String lastName;
+        private String description;
         private Integer age;
         private String sex;
         private String resumeUrl;
@@ -115,11 +122,12 @@ public class EmployerApplicantView {
         }
 
         ApplicantForEmployer(final Long id, final String firstName, final String lastName,
-                           final Integer age, final String sex,
+                           final String description, final Integer age, final String sex,
                            final String resumeUrl, final String testAnswerUrl) {
             this.id = id;
             this.firstName = firstName;
             this.lastName = lastName;
+            this.description = description;
             this.age = age;
             this.sex = sex;
             this.resumeUrl = resumeUrl;
@@ -148,6 +156,14 @@ public class EmployerApplicantView {
 
         public void setLastName(final String lastName) {
             this.lastName = lastName;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(final String description) {
+            this.description = description;
         }
 
         public Integer getAge() {

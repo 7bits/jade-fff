@@ -2,14 +2,14 @@ extends layout
 
 block append content
   .container
-    h1 Мои вакансии с рекрутёром
+    h1=fmt.message("employer-progress-vacancies-list.h1")
     table.table.table-striped
       thead
         tr
-          th Наименование
-          th Описание
-          th Дата создания
-          th Рекрутёр
+          th=fmt.message("employer-progress-vacancies-list.table.name")
+          th=fmt.message("employer-progress-vacancies-list.table.description")
+          th=fmt.message("employer-progress-vacancies-list.table.creation")
+          th=fmt.message("employer-progress-vacancies-list.table.recruiter")
           th
       tbody
         for vacancy in vacancyList
@@ -20,4 +20,4 @@ block append content
             td #{vacancy.recruiterName}
             td
               a.btn.btn-link(href = domainName + "/employer-progress-vacancy-show/vacancy/" + vacancy.id + "/recruiter/" + vacancy.recruiterId).
-                Подробнее
+                    #{fmt.message("employer-progress-vacancies-list.more")}

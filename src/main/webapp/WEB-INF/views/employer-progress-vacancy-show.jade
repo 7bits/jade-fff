@@ -2,28 +2,29 @@ extends layout
 
 block append content
   .container
-    h1 Вакансия
+    h1=fmt.message("employer-progress-vacancy-show.h1")
     .row
       .col-md-8
         h2
         dl.dl-horizontal
-          dt Наименование
+          dt=fmt.message("employer-progress-vacancy-show.dt.name")
           dd #{vacancy.title}
-          dt Описание
+          dt=fmt.message("employer-progress-vacancy-show.dt.description")
           dd #{vacancy.description}
-          dt Диапазон з/п
+          dt=fmt.message("employer-progress-vacancy-show.dt.salary")
           dd #{vacancy.salary}
-          dt Дата создания
+          dt=fmt.message("employer-progress-vacancy-show.dt.creation")
           dd #{vacancy.creationDate}
-          dt Дата окончания
+          dt=fmt.message("employer-progress-vacancy-show.dt.expiration")
           dd #{vacancy.expirationDate}
       .col-md-4
-        h2 Рекрутёр
+        h2=fmt.message("employer-progress-vacancy-show.recruiter.h2")
         p
           #{recruiter.firstName} #{recruiter.lastName}
           .tools
-            a.btn.btn-danger(href="#",data-toggle="confirmation", data-placement="left", data-original-title="", title="") Отказаться от услуг
-    h2 Список предложенных кандидатов
+            a.btn.btn-danger(href="#",data-toggle="confirmation", data-placement="left", data-original-title="", title="").
+              #{fmt.message("employer-progress-vacancy-show.recruiter.decline")}
+    h2=fmt.message("employer-progress-vacancy-show.applicants.h2")
     .row
       .col-md-6
         ul.list-group
@@ -31,4 +32,4 @@ block append content
             li.list-group-item
               #{applicant.firstName} #{applicant.lastName}
               a.btn.btn-link.pull-right(href = domainName + "/employer-employee-show/" + applicant.id).
-                Подробнее
+                #{fmt.message("employer-progress-vacancy-show.applicants.more")}
