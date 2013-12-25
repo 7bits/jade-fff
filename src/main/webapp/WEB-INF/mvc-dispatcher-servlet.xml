@@ -12,7 +12,7 @@
     ">
     <!--<mvc:annotation-driven />-->
 
-    <mvc:annotation-driven ignoreDefaultModelOnRedirect="true" />
+    <!--<mvc:annotation-driven ignoreDefaultModelOnRedirect="true" />-->
 
     <context:annotation-config />
     <context:component-scan base-package="com.recruiters"/>
