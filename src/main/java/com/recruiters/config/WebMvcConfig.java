@@ -1,6 +1,6 @@
 package com.recruiters.config;
 
-import com.recruiters.web.controller.iterceptor.HandlerInterceptor;
+import com.recruiters.web.controller.interceptor.HandlerInterceptor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
