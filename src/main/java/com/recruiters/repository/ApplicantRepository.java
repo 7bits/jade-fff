@@ -32,12 +32,34 @@ public class ApplicantRepository {
     static final String APPLICANT3_LAST_NAME = "Константинопольский";
 
 
+    public Applicant getApplicantById(final Long applicantId) {
+        DealRepository dealRepository = new DealRepository();
+
+        Applicant applicant1 = new Applicant(APPLICANT1_ID, dealRepository.getById(1L),
+                APPLICANT1_FIRST_NAME, APPLICANT1_LAST_NAME);
+        Applicant applicant2 = new Applicant(APPLICANT2_ID, dealRepository.getById(2L),
+                APPLICANT2_FIRST_NAME, APPLICANT2_LAST_NAME);
+        Applicant applicant3 = new Applicant(APPLICANT3_ID, dealRepository.getById(3L),
+                APPLICANT3_FIRST_NAME, APPLICANT3_LAST_NAME);
+        if(applicantId.equals(1L)) {
+            return applicant1;
+        }
+        if(applicantId.equals(2L)) {
+            return applicant2;
+        }
+        if(applicantId.equals(3L)) {
+            return applicant3;
+        }
+
+        return null;
+    }
+
     /**
      *  Method must return list of applicants for given deal
      * @param dealId
      * @return
      */
-    public List<Applicant> getAppByDealId(final Long dealId) {
+    public List<Applicant> getApplicantByDealId(final Long dealId) {
         List<Applicant> applicantList = new ArrayList<Applicant>();
         DealRepository dealRepository = new DealRepository();
 
