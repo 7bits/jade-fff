@@ -2,14 +2,11 @@ package com.recruiters.web.controller.recruiter;
 
 import com.recruiters.service.RecruiterService;
 import com.recruiters.web.form.ApplicantForm;
-import com.recruiters.web.validator.ApplicantValidator;
+import com.recruiters.web.validator.AddApplicantValidator;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,11 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import javax.validation.Valid;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Controller Class fpr R61 "Edit or create applicant"
@@ -37,7 +29,7 @@ public class ModifyApplicant {
 
     /** Validator for check applicant  form*/
     @Autowired
-    private ApplicantValidator applicantValidator = null;
+    private AddApplicantValidator addApplicantValidator = null;
 
     /**
      * Controller for creating new applicant with method GET
@@ -70,8 +62,7 @@ public class ModifyApplicant {
            final BindingResult bindingResult,
            final RedirectAttributes redirectAttributes) {
 
-        ApplicantValidator validator = new ApplicantValidator();
-        validator.validate(applicantForm, bindingResult);
+        addApplicantValidator.validate(applicantForm, bindingResult);
         if (bindingResult.hasErrors()) {
             ModelAndView model = new ModelAndView("recruiter-employee-create.jade");
             model.addObject("applicantForm", applicantForm);
@@ -82,20 +73,6 @@ public class ModifyApplicant {
                 applicantForm.getModel(), applicantForm.getResumeFile(), applicantForm.getTestAnswerFile()
         );
         return new ModelAndView("redirect:/recruiter-progress-vacancy-show/" + vacancyId);
-    }
-
-    @InitBinder("applicantForm")
-    protected void initApplicantFormBinder(final WebDataBinder binder) {
-
-        binder.setValidator(this.getApplicantValidator());
-    }
-
-    public ApplicantValidator getApplicantValidator() {
-        return applicantValidator;
-    }
-
-    public void setApplicantValidator(final ApplicantValidator applicantValidator) {
-        this.applicantValidator = applicantValidator;
     }
 
     public RecruiterService getRecruiterService() {

@@ -12,9 +12,9 @@ import org.springframework.web.context.support.SpringBeanAutowiringSupport;
  * Validator for "Applicant Form" if adding applicant
  */
 @Component
-public class ApplicantValidator implements Validator {
+public class AddApplicantValidator implements Validator {
 
-    public ApplicantValidator() {
+    public AddApplicantValidator() {
         SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
     }
 
