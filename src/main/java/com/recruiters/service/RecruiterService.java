@@ -86,6 +86,11 @@ public class RecruiterService {
         return this.getVacancyRepository().getVacancyByRecruiterIdAndVacancyId(recruiterId, vacancyId);
     }
 
+    public Applicant getApplicantById(final Long applicantId) {
+
+        return this.getApplicantRepository().getApplicantById(applicantId);
+    }
+
     /**
      * List of applicants for this vacancy (if vacancy has dael for this recruiter)
      * @param recruiterId    Id of recruiter who asks for data
@@ -96,7 +101,7 @@ public class RecruiterService {
         Deal deal = this.getDealRepository().findByRecruiterIdAndVacancyId(recruiterId, vacancyId);
         List<Applicant> applicantList = null;
         if (deal != null) {
-            applicantList = this.getApplicantRepository().getAppByDealId(deal.getId());
+            applicantList = this.getApplicantRepository().getApplicantByDealId(deal.getId());
         }
         return applicantList;
     }
@@ -108,7 +113,7 @@ public class RecruiterService {
      * @param testAnswerFile
      * @return
      */
-    public Boolean addApplicantToVacancy(final Applicant applicant, final MultipartFile resumeFile, final MultipartFile testAnswerFile) {
+    public Boolean saveApplicantToVacancy(final Applicant applicant, final MultipartFile resumeFile, final MultipartFile testAnswerFile) {
         String fileNameForResume =  this.getFileRepository().saveFile(resumeFile);
         String fileNameForTestAnswers = this.getFileRepository().saveFile(testAnswerFile);
         applicant.setResumeFile(fileNameForResume);

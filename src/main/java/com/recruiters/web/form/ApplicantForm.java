@@ -11,13 +11,15 @@ import org.springframework.web.multipart.MultipartFile;
  * Java Bean Class for Applicant Form
  */
 public class ApplicantForm {
-    private Long id;
-    private Long vacancyId;
-    private String firstName;
-    private String lastName;
-    private String description;
-    private MultipartFile resumeFile;
-    private MultipartFile testAnswerFile;
+    private Long id = 0L;
+    private Long vacancyId = null;
+    private String firstName = null;
+    private String lastName = null;
+    private String description = null;
+    private MultipartFile resumeFile = null;
+    private MultipartFile testAnswerFile = null;
+    private String linkToResumeFile = null;
+    private String linkToTestAnswerFile = null;
 
     public ApplicantForm() {
     }
@@ -27,6 +29,16 @@ public class ApplicantForm {
         this.firstName = firstName;
         this.lastName = lastName;
         this.description = description;
+    }
+
+    public ApplicantForm(final Applicant applicant) {
+        this.id = applicant.getId();
+        this.firstName = applicant.getFirstName();
+        this.lastName = applicant.getLastName();
+        this.description = applicant.getDescription();
+        this.linkToResumeFile = applicant.getResumeFile();
+        this.linkToTestAnswerFile = applicant.getTestAnswerFile();
+        this.vacancyId = applicant.getDeal().getVacancy().getId();
     }
 
     public Applicant getModel() {
@@ -93,5 +105,21 @@ public class ApplicantForm {
 
     public void setTestAnswerFile(final MultipartFile testAnswerFile) {
         this.testAnswerFile = testAnswerFile;
+    }
+
+    public String getLinkToResumeFile() {
+        return linkToResumeFile;
+    }
+
+    public void setLinkToResumeFile(final String linkToResumeFile) {
+        this.linkToResumeFile = linkToResumeFile;
+    }
+
+    public String getLinkToTestAnswerFile() {
+        return linkToTestAnswerFile;
+    }
+
+    public void setLinkToTestAnswerFile(final String linkToTestAnswerFile) {
+        this.linkToTestAnswerFile = linkToTestAnswerFile;
     }
 }
