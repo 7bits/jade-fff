@@ -33,6 +33,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         handlerInterceptor.setServer(environment.getProperty("recruiter-server.server"));
         handlerInterceptor.setPort(environment.getProperty("recruiter-server.port"));
         handlerInterceptor.setApplicationName(environment.getProperty("recruiter-server.application-name"));
+        handlerInterceptor.setMessageSource(messageSource());
         registry.addInterceptor(handlerInterceptor);
     }
 
@@ -52,5 +53,6 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         // # -1 : never reload, 0 always reload
         messageSource.setCacheSeconds(0);
         return messageSource;
-    } }
+    }
+}
 

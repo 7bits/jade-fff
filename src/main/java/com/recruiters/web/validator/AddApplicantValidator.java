@@ -23,9 +23,9 @@ public class AddApplicantValidator implements Validator {
     }
 
     public void validate(final Object object, final Errors errors) {
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "NotEmpty.applicantForm.firstName", "Error");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "NotEmpty.applicantForm.lastName", "Error");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "description", "NotEmpty.applicantForm.description", "Error");
-        ValidationUtils.rejectIfEmpty(errors, "vacancyId", "NotEmpty.applicationForm.vacancyId", "Error");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "NotEmpty.applicantForm.firstName");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "NotEmpty.applicantForm.lastName");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "description", "NotEmpty.applicantForm.description");
+        ValidationUtils.rejectIfEmpty(errors, "vacancyId", "NotEmpty.applicationForm.vacancyId");
     }
 }

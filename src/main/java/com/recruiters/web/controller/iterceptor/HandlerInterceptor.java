@@ -2,7 +2,10 @@ package com.recruiters.web.controller.iterceptor;
 
 import com.recruiters.service.utils.TemplateService;
 import com.recruiters.service.utils.SecurityService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.DefaultMessageCodesResolver;
 import org.springframework.validation.FieldError;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -30,6 +33,8 @@ public class HandlerInterceptor extends HandlerInterceptorAdapter {
     private String server = null;
     private String port = null;
     private String applicationName = null;
+    @Autowired
+    private MessageSource messageSource;
 
     @Override
     public void postHandle(
@@ -53,6 +58,7 @@ public class HandlerInterceptor extends HandlerInterceptorAdapter {
         // and adding them to HashMap with pre-configured name into ModelAndView
         Map<String, Object> modelMap = mav.getModelMap();
         Map<String, String> errors = new HashMap<String, String>();
+        DefaultMessageCodesResolver defaultMessageCodesResolver = new DefaultMessageCodesResolver();
         for (Map.Entry<String, Object> entry : modelMap.entrySet()) {
             String key = entry.getKey();
             Object value = entry.getValue();
@@ -61,7 +67,17 @@ public class HandlerInterceptor extends HandlerInterceptorAdapter {
                 if (bindingResult.getFieldErrors().size() != 0) {
                     List<FieldError> fieldErrors = bindingResult.getFieldErrors();
                     for (FieldError error : fieldErrors) {
-                        errors.put(error.getField(), error.getDefaultMessage());
+                        // Resolving error codes with MessageSource
+                        String[] codes = error.getCodes();
+                        String resolvedMessage = "";
+                        String tempMessage = "";
+                        for (String code: codes) {
+                            tempMessage = messageSource.getMessage(code, null, null);
+                            if (!tempMessage.equals(code)) {
+                                resolvedMessage = tempMessage;
+                            }
+                        }
+                        errors.put(error.getField(), resolvedMessage);
                     }
                 }
             }
@@ -101,5 +117,9 @@ public class HandlerInterceptor extends HandlerInterceptorAdapter {
 
     public void setApplicationName(final String applicationName) {
         this.applicationName = applicationName;
+    }
+
+    public void setMessageSource(final MessageSource messageSource) {
+        this.messageSource = messageSource;
     }
 }
