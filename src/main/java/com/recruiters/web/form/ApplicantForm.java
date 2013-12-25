@@ -38,7 +38,9 @@ public class ApplicantForm {
         this.description = applicant.getDescription();
         this.linkToResumeFile = applicant.getResumeFile();
         this.linkToTestAnswerFile = applicant.getTestAnswerFile();
-        this.dealId = applicant.getDeal().getId();
+        //TODO
+        // temporary solve for dealId (replace by: this.dealId = applicant.getDeal().getId() )
+        this.dealId = applicant.getDeal() != null ? applicant.getDeal().getId() : 1L;
     }
 
     public Applicant getModel() {

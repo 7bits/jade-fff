@@ -50,7 +50,6 @@ public class RecruiterApplicant {
     /**
      * Controller for creating new applicant with method POST
      * @param applicantForm model attribute for applicant
-     * @param dealId             Id of deal for corresponded applicant
      * @param bindingResult         BindingResult
      * @return model and view for creating new applicant with errors if any,
      * otherwise redirects to R6 "Vacancy in progress of job searching"
@@ -79,9 +78,9 @@ public class RecruiterApplicant {
      * @param applicantId    Id of applicant
      * @return Model and View filled with applicant data
      */
-    @RequestMapping(value = "recruiter-employee-edit/{applicantId}", method = RequestMethod.GET)
+    @RequestMapping(value = "recruiter-edit-applicant/{applicantId}", method = RequestMethod.GET)
     public ModelAndView editApplicant(@PathVariable final Long applicantId) {
-        ModelAndView editApplicant = new ModelAndView("recruiter-employee-edit.jade");
+        ModelAndView editApplicant = new ModelAndView("recruiter/recruiter-edit-applicant.jade");
         ApplicantForm applicantForm = new ApplicantForm(this.getRecruiterService().getApplicantById(applicantId));
 
         editApplicant.addObject("applicantForm", applicantForm);
@@ -92,27 +91,26 @@ public class RecruiterApplicant {
     /**
      * Controller for editing applicant with method POST
      * @param applicantForm model attribute for applicant
-     * @param applicantId             Id of applicant
      * @param bindingResult         BindingResult
      * @return model and view for editing applicant with errors if any,
      * otherwise redirects to R6 "Vacancy in progress of job searching"
      */
-    @RequestMapping(value = "recruiter-employee-edit/{applicantId}", method = RequestMethod.POST)
+    @RequestMapping(value = "recruiter-edit-applicant/{applicantId}", method = RequestMethod.POST)
     public ModelAndView editApplicantValidation(
             @Valid @ModelAttribute("applicantForm") final ApplicantForm applicantForm,
             final BindingResult bindingResult
     ) {
         if (bindingResult.hasErrors()) {
-            ModelAndView model = new ModelAndView("recruiter-employee-edit.jade");
+            ModelAndView model = new ModelAndView("recruiter/recruiter-edit-applicant.jade");
             model.addObject("applicantForm", applicantForm);
             return model;
         }
-        Long vacancyId = applicantForm.getDealId();
         this.getRecruiterService().saveApplicantToVacancy(
                 applicantForm.getModel(), applicantForm.getResumeFile(), applicantForm.getTestAnswerFile()
         );
+        Long dealId = applicantForm.getDealId();
 
-        return new ModelAndView("redirect:/recruiter-progress-vacancy-show/" + vacancyId);
+        return new ModelAndView("redirect:/recruiter-show-in-progress-vacancy/" + dealId);
     }
 
     @InitBinder("applicantForm")
