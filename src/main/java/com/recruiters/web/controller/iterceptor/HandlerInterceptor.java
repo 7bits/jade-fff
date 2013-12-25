@@ -2,10 +2,10 @@ package com.recruiters.web.controller.iterceptor;
 
 import com.recruiters.service.utils.TemplateService;
 import com.recruiters.service.utils.SecurityService;
+import com.recruiters.web.helper.MessageResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.DefaultMessageCodesResolver;
 import org.springframework.validation.FieldError;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -28,6 +28,8 @@ public class HandlerInterceptor extends HandlerInterceptorAdapter {
     static final String TYPE_WITH_BINDING_RESULT = "org.springframework.validation.BindingResult";
     /** Object name which will contains form errors if any in model */
     static final String MODEL_ERRORS_NAME = "errors";
+    /** Message resolver Helper name */
+    static final String MODEL_MESSAGE_RESOLVER_NAME = "m";
 
     private String protocol = null;
     private String server = null;
@@ -58,7 +60,6 @@ public class HandlerInterceptor extends HandlerInterceptorAdapter {
         // and adding them to HashMap with pre-configured name into ModelAndView
         Map<String, Object> modelMap = mav.getModelMap();
         Map<String, String> errors = new HashMap<String, String>();
-        DefaultMessageCodesResolver defaultMessageCodesResolver = new DefaultMessageCodesResolver();
         for (Map.Entry<String, Object> entry : modelMap.entrySet()) {
             String key = entry.getKey();
             Object value = entry.getValue();
@@ -85,6 +86,9 @@ public class HandlerInterceptor extends HandlerInterceptorAdapter {
         // Should be outside ModelMap iterating otherwise we will get exception
         // Adding is forced because otherwise jade is output some sh!t when it shouldn't
         mav.addObject(MODEL_ERRORS_NAME, errors);
+
+        // Message resolver added
+        mav.addObject(MODEL_MESSAGE_RESOLVER_NAME, new MessageResolver(messageSource));
     }
 
     public String getProtocol() {
