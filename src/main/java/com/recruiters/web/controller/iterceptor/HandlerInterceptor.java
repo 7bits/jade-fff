@@ -67,9 +67,8 @@ public class HandlerInterceptor extends HandlerInterceptorAdapter {
             }
         }
         // Should be outside ModelMap iterating otherwise we will get exception
-        if (errors.size() != 0) {
-            mav.addObject(MODEL_ERRORS_NAME, errors);
-        }
+        // Adding is forced because otherwise jade is output some sh!t when it shouldn't
+        mav.addObject(MODEL_ERRORS_NAME, errors);
     }
 
     public String getProtocol() {
