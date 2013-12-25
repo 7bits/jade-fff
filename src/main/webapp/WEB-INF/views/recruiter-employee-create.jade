@@ -2,35 +2,35 @@ extends layout
 
 block append content
   .container
-    h2=m.get("recruiter-employee-create.title")
+    h2=fmt.message("recruiter-employee-create.title")
     form(name="applicantForm", action="", method="post", enctype="multipart/form-data")
       .row
         .col-md-6
           .form-group
             label(for="firstName")
-            input(type="text", class="form-control", id="firstName", name="firstName", placeholder=m.get("recruiter-employee-create.firstName"))
+            input(type="text", class="form-control", id="firstName", name="firstName", placeholder=fmt.message("recruiter-employee-create.firstName"))
             #{errors.firstName}
           .form-group
             label(for="lastName")
-            input(type="text", class="form-control", id="lastName", name="lastName", placeholder=m.get("recruiter-employee-create.lastName"))
+            input(type="text", class="form-control", id="lastName", name="lastName", placeholder=fmt.message("recruiter-employee-create.lastName"))
             #{errors.lastName}
           .form-group
             label(for="description")
-            textarea(class="form-control", id="description", name="description", placeholder=m.get("recruiter-employee-create.description"))
+            textarea(class="form-control", id="description", name="description", placeholder=fmt.message("recruiter-employee-create.description"))
             #{errors.description}
           .form-group
-            label(for="resumeFile")=m.get("recruiter-employee-create.resumeFile")
-            input(type="file", id="resumeFile", name="resumeFile", placeholder=m.get("recruiter-employee-create.resumeFile"))
+            label(for="resumeFile")=fmt.message("recruiter-employee-create.resumeFile")
+            input(type="file", id="resumeFile", name="resumeFile", placeholder=fmt.message("recruiter-employee-create.resumeFile"))
             #{errors.resumeFile}
           .form-group
-            label(for="testAnswerFile")=m.get("recruiter-employee-create.testAnswerFile")
-            input(type="file", id="testAnswerFile", name="testAnswerFile", placeholder=m.get("recruiter-employee-create.testAnswerFile"))
+            label(for="testAnswerFile")=fmt.message("recruiter-employee-create.testAnswerFile")
+            input(type="file", id="testAnswerFile", name="testAnswerFile", placeholder=fmt.message("recruiter-employee-create.testAnswerFile"))
             #{errors.testAnswerFile}
           .form-group
             input(type="hidden", id="vacancyId", name="vacancyId", value=applicantForm.vacancyId)
             #{errors.vacancyId}
             input(type="hidden", id="id", name="id", value=applicantForm.id)
             #{errors.id}
-          input.btn.btn-success(type="submit", name="submit", value=m.get("recruiter-employee-create.add"))=m.get("recruiter-employee-create.add")
+          input.btn.btn-success(type="submit", name="submit", value=fmt.message("recruiter-employee-create.add"))=fmt.message("recruiter-employee-create.add")
           a.btn.btn-link(href="#")
-            a(href=domainName + "/recruiter-progress-vacancy-show/" + applicantForm.vacancyId)=m.get("recruiter-employee-create.back")
+            a(href=domainName + "/recruiter-progress-vacancy-show/" + applicantForm.vacancyId)=fmt.message("recruiter-employee-create.back")

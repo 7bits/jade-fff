@@ -22,7 +22,7 @@ public class MessageResolver {
      * @param code code to resolve
      * @return message
      */
-    public String get(final String code) {
+    public String message(final String code) {
 
         try {
             return messageSource.getMessage(code, null, null);
