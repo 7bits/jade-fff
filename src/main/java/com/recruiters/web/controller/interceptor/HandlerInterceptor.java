@@ -29,7 +29,7 @@ public class HandlerInterceptor extends HandlerInterceptorAdapter {
     /** Object name which will contains form errors if any in model */
     static final String MODEL_ERRORS_NAME = "errors";
     /** Message resolver Helper name */
-    static final String MODEL_MESSAGE_RESOLVER_NAME = "m";
+    static final String MODEL_MESSAGE_RESOLVER_NAME = "fmt";
 
     private String protocol = null;
     private String server = null;
