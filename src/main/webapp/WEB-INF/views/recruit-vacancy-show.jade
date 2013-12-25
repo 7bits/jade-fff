@@ -28,7 +28,7 @@ block append content
           for applicant in applicantList
             li.list-group-item
               #{applicant.firstName} #{applicant.lastName}
-              a.btn.btn-link.pull-right(href= domainName + "/recruiter-employee-create/" + vacancy.id).
+              a.btn.btn-link.pull-right(href= domainName + "/recruiter-employee-edit/" + applicant.id).
                 Изменить
 
         a.btn.btn-success(href= domainName + "/recruiter-employee-create/" + vacancy.id) Предложить новую кандидатуру

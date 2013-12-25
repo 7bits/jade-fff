@@ -16,7 +16,7 @@ block append content
             #{errors.lastName}
           .form-group
             label(for="description")
-            textarea(class="form-control", id="description", name="description", placeholder="Описание", value=applicantForm.description)
+            textarea(class="form-control", id="description", name="description", placeholder="Описание")#{applicantForm.description}
             #{errors.description}
           .form-group
             label(for="resumeFile") Прикрепить резюме
@@ -29,6 +29,8 @@ block append content
           .form-group
             input(type="hidden", id="vacancyId", name="vacancyId", value=applicantForm.vacancyId)
             #{errors.vacancyId}
+            input(type="hidden", id="id", name="id", value=applicantForm.id)
+            #{errors.id}
           input.btn.btn-success(type="submit", name="submit", value="Добавить") Добавить
           a.btn.btn-link(href="#")
             a(href=domainName + "/recruiter-progress-vacancy-show/" + applicantForm.vacancyId) К описанию вакансии
