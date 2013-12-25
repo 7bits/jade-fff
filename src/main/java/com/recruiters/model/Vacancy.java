@@ -7,7 +7,7 @@ import java.util.Date;
  */
 public class Vacancy {
     private Long id;
-    private Long employerId;
+    private Employer employer = null;
     private String title;
     private String description;
     private String salary;
@@ -18,18 +18,19 @@ public class Vacancy {
     public Vacancy() {
     }
 
-    public Vacancy(final Long id, final String title, final String description, final Date creationDate) {
+    public Vacancy(final Long id, final Employer employer, final String title, final String description, final Date creationDate) {
         this.id = id;
+        this.employer = employer;
         this.title = title;
         this.description = description;
         this.creationDate = creationDate;
     }
 
-    public Vacancy(final Long id, final Long employerId, final String title,
+    public Vacancy(final Long id, final Employer employer, final String title,
                    final String description, final String salary,
                    final Date creationDate, final Date expirationDate, final String testFile) {
         this.id = id;
-        this.employerId = employerId;
+        this.employer = employer;
         this.title = title;
         this.description = description;
         this.salary = salary;
@@ -46,12 +47,12 @@ public class Vacancy {
         this.id = id;
     }
 
-    public Long getEmployerId() {
-        return employerId;
+    public Employer getEmployer() {
+        return employer;
     }
 
-    public void setEmployerId(final Long employerId) {
-        this.employerId = employerId;
+    public void setEmployer(final Employer employer) {
+        this.employer = employer;
     }
 
     public String getTitle() {

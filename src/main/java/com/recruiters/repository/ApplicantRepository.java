@@ -35,11 +35,11 @@ public class ApplicantRepository {
     public Applicant getApplicantById(final Long applicantId) {
         DealRepository dealRepository = new DealRepository();
 
-        Applicant applicant1 = new Applicant(APPLICANT1_ID, dealRepository.getById(1L),
+        Applicant applicant1 = new Applicant(APPLICANT1_ID, null,
                 APPLICANT1_FIRST_NAME, APPLICANT1_LAST_NAME);
-        Applicant applicant2 = new Applicant(APPLICANT2_ID, dealRepository.getById(2L),
+        Applicant applicant2 = new Applicant(APPLICANT2_ID, null,
                 APPLICANT2_FIRST_NAME, APPLICANT2_LAST_NAME);
-        Applicant applicant3 = new Applicant(APPLICANT3_ID, dealRepository.getById(3L),
+        Applicant applicant3 = new Applicant(APPLICANT3_ID, null,
                 APPLICANT3_FIRST_NAME, APPLICANT3_LAST_NAME);
         if(applicantId.equals(1L)) {
             return applicant1;
@@ -63,11 +63,11 @@ public class ApplicantRepository {
         List<Applicant> applicantList = new ArrayList<Applicant>();
         DealRepository dealRepository = new DealRepository();
 
-        Applicant applicant1 = new Applicant(APPLICANT1_ID, dealRepository.getById(1L),
+        Applicant applicant1 = new Applicant(APPLICANT1_ID, null,
                 APPLICANT1_FIRST_NAME, APPLICANT1_LAST_NAME);
-        Applicant applicant2 = new Applicant(APPLICANT2_ID, dealRepository.getById(2L),
+        Applicant applicant2 = new Applicant(APPLICANT2_ID, null,
                 APPLICANT2_FIRST_NAME, APPLICANT2_LAST_NAME);
-        Applicant applicant3 = new Applicant(APPLICANT3_ID, dealRepository.getById(3L),
+        Applicant applicant3 = new Applicant(APPLICANT3_ID, null,
                 APPLICANT3_FIRST_NAME, APPLICANT3_LAST_NAME);
         applicantList.add(applicant1);
         applicantList.add(applicant2);

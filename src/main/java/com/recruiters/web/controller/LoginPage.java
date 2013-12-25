@@ -16,35 +16,4 @@ public class LoginPage {
 
         return mav;
     }
-
-//    @ResponseBody
-//    @RequestMapping(value = "/employer-progress-vacancies-list")
-//    public ModelAndView customerVacanciesList() {
-//        return new ModelAndView("employer-progress-vacancies-list");
-//    }
-
-//    @ResponseBody
-//    @RequestMapping(value = "/employer-recruiter-search")
-//    public ModelAndView customerRecruitSearch() {
-//        return new ModelAndView("employer-recruiter-search");
-//    }
-
-//    @ResponseBody
-//    @RequestMapping(value = "/employer-recruiter-show")
-//    public ModelAndView customerRecruitShow() {
-//        return new ModelAndView("employer-recruiter-show");
-//    }
-
-//    @ResponseBody
-//    @RequestMapping(value = "/employer-progress-vacancy-show")
-//    public ModelAndView customerVacancyShow() {
-//        return new ModelAndView("employer-progress-vacancy-show");
-//    }
-
-//    @ResponseBody
-//    @RequestMapping(value = "/employer-employee-show")
-//    public ModelAndView employeeShow() {
-//        return new ModelAndView("employer-employee-show");
-//    }
-
 }

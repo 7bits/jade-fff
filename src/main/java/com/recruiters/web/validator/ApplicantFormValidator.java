@@ -26,6 +26,5 @@ public class ApplicantFormValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "NotEmpty.applicantForm.firstName");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "NotEmpty.applicantForm.lastName");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "description", "NotEmpty.applicantForm.description");
-        ValidationUtils.rejectIfEmpty(errors, "vacancyId", "NotEmpty.applicationForm.vacancyId");
     }
 }

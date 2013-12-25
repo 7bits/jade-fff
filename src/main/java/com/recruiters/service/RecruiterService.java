@@ -20,7 +20,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -59,22 +58,16 @@ public class RecruiterService {
      * @param recruiterId
      * @return
      */
-    public List<Vacancy> findListOfInProgressVacanciesForRecruiter(final Long recruiterId) {
+    public List<Deal> findListOfDealsForRecruiterByRecruiterId(final Long recruiterId) {
 
-        List <Deal> deals = this.getDealRepository().findAllByRecruiterId(recruiterId);
-        List <Vacancy> vacancies = new ArrayList<Vacancy>();
-        for (Deal deal : deals) {
-            vacancies.add(deal.getVacancy());
-        }
-
-        return vacancies;
+        return this.getDealRepository().findAllActiveByRecruiterId(recruiterId);
     }
 
     /**
      * Method must return list of recruiter bids.
      * @return
      */
-    public List<Bid> findListOfRecruiterBids(final Long recruiterId) {
+    public List<Bid> findListOfActiveBidsForRecruiterByRecruiterId(final Long recruiterId) {
 
         return this.getBidRepository().findListOfRecruiterBids(recruiterId);
     }
@@ -90,13 +83,17 @@ public class RecruiterService {
 
     /**
      * Method must return vacancy if it has deal for this recruiter
-     * @param recruiterId  Id of recruiter who wants to get this data
-     * @param vacancyId    Id of vacancy for which we want to get full description
+     * @param dealId  Id of deal
      * @return vacancy description
      */
-    public Vacancy getVacancyInProgressByRecruiterIdAndVacancyId(final Long recruiterId, final Long vacancyId) {
+    public Deal getDealById(final Long dealId, final Recruiter recruiter) {
 
-        return this.getVacancyRepository().getVacancyByRecruiterIdAndVacancyId(recruiterId, vacancyId);
+        Deal deal = this.getDealRepository().getById(dealId);
+        if (deal.getRecruiter().getId().equals(recruiter.getId())) {
+            return deal;
+        }
+
+        return null;
     }
 
     public Applicant getApplicantById(final Long applicantId) {

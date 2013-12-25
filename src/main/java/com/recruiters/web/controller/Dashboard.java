@@ -13,7 +13,7 @@ public class Dashboard {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String routeByRole(final HttpServletRequest request, final HttpServletResponse response) {
         if (request.isUserInRole("ROLE_RECRUITER")) {
-            return "redirect:recruiter-vacancies-list";
+            return "redirect:recruiter-active-deals";
         }
         if (request.isUserInRole("ROLE_EMPLOYER")) {
             return "redirect:employer-progress-vacancies-list";

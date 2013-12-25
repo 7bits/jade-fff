@@ -1,4 +1,4 @@
-extends layout
+extends ../layout
 
 block append content
   .container
@@ -15,5 +15,5 @@ block append content
       dt Дата окончания
       dd #{vacancy.expirationDate}
 
-    a.btn.btn-link(href=domainName + "/recruiter-available-vacancies") К списку вакансий
+    a.btn.btn-link(href=domainName + "/recruiter-find-new-vacancies") К списку вакансий
     a.btn.btn-primary(href="#",data-toggle="confirmation", data-placement="left", data-original-title="", title="") Предложить свою кандидатуру

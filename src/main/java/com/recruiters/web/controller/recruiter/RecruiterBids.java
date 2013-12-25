@@ -12,27 +12,27 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Controller Class for "In progress vacancies"
+ * Controller Class for R12 "My vacancies"
  */
 @Controller
-public class InProgressVacancies {
+public class RecruiterBids {
 
     @Autowired
     private RecruiterService recruiterService = null;
     /**
-     * Controller for "in progress vacancies"
+     * Controller for R2 "My vacancies"
      * @return model and view with list of active vacancies
      */
-    @RequestMapping(value = "recruiter-vacancies-in-progress", method = RequestMethod.GET)
-    public ModelAndView showMyVacancies(final HttpServletRequest request) {
-        ModelAndView inProgressVacancies = new ModelAndView("recruiter/recruiter-in-progress-vacancies.jade");
+    @RequestMapping(value = "recruiter-active-bids", method = RequestMethod.GET)
+    public ModelAndView showRecruiterActiveBids(final HttpServletRequest request) {
+        ModelAndView recruiterBids = new ModelAndView("recruiter/recruiter-active-bids.jade");
         User currentUser = this.getRecruiterService().getCurrentUser(request);
         Recruiter recruiter = this.getRecruiterService().findRecruiterByUserId(currentUser.getId());
         if (recruiter != null) {
-            inProgressVacancies.addObject("vacancyList", getRecruiterService().findListOfInProgressVacanciesForRecruiter(recruiter.getId()));
+            recruiterBids.addObject("bids", getRecruiterService().findListOfActiveBidsForRecruiterByRecruiterId(recruiter.getId()));
         }
 
-        return inProgressVacancies;
+        return recruiterBids;
     }
 
     public RecruiterService getRecruiterService() {

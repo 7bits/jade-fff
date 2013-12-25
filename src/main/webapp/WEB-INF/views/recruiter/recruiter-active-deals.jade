@@ -2,7 +2,7 @@ extends ../layout
 
 block append content
   .container
-    h1 Мои вакансии
+    h1 Вакансии в работе
     table.table.table-striped
       thead
         tr
@@ -11,11 +11,11 @@ block append content
           th Дата создания
           th
       tbody
-        for vacancy in vacancyList
+        for deal in deals
           tr
-            td #{vacancy.title}
-            td #{vacancy.description}
-            td #{vacancy.creationDate}
+            td #{deal.vacancy.title}
+            td #{deal.vacancy.description}
+            td #{deal.vacancy.creationDate}
             td
-              a.btn.btn-link(href=domainName + "/recruiter-progress-vacancy-show/" + vacancy.id).
+              a.btn.btn-link(href=domainName + "/recruiter-show-in-progress-vacancy/" + deal.id).
                 Подробнее

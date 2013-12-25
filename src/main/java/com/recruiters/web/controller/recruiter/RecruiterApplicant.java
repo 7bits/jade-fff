@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 /**
@@ -23,7 +24,7 @@ import javax.validation.Valid;
  */
 @Controller
 @SessionAttributes("applicantForm")
-public class ModifyApplicant {
+public class RecruiterApplicant {
 
     @Autowired
     private RecruiterService recruiterService = null;
@@ -35,12 +36,12 @@ public class ModifyApplicant {
      * Controller for creating new applicant with method GET
      * @return model and view with empty applicant
      */
-    @RequestMapping(value = "recruiter-employee-create/{vacancyId}", method = RequestMethod.GET)
-    public ModelAndView addApplicant(@PathVariable final Long vacancyId) {
+    @RequestMapping(value = "recruiter-add-applicant/{dealId}", method = RequestMethod.GET)
+    public ModelAndView addApplicant(@PathVariable final Long dealId) {
 
-        ModelAndView addApplicant = new ModelAndView("recruiter-employee-create.jade");
+        ModelAndView addApplicant = new ModelAndView("recruiter/recruiter-add-applicant.jade");
         ApplicantForm applicantForm = new ApplicantForm();
-        applicantForm.setVacancyId(vacancyId);
+        applicantForm.setDealId(dealId);
         addApplicant.addObject("applicantForm", applicantForm);
 
         return addApplicant;
@@ -49,21 +50,18 @@ public class ModifyApplicant {
     /**
      * Controller for creating new applicant with method POST
      * @param applicantForm model attribute for applicant
-     * @param vacancyId             Id of vacancy for corresponded applicant
+     * @param dealId             Id of deal for corresponded applicant
      * @param bindingResult         BindingResult
-     * @param redirectAttributes    RedirectAttributes
      * @return model and view for creating new applicant with errors if any,
      * otherwise redirects to R6 "Vacancy in progress of job searching"
      */
-    @RequestMapping(value = "recruiter-employee-create/{vacancyId}", method = RequestMethod.POST)
+    @RequestMapping(value = "recruiter-add-applicant/{dealId}", method = RequestMethod.POST)
     public ModelAndView addApplicantValidation(
            @Valid @ModelAttribute("applicantForm") final ApplicantForm applicantForm,
-           @PathVariable final Long vacancyId,
-           final BindingResult bindingResult,
-           final RedirectAttributes redirectAttributes) {
-
+           final BindingResult bindingResult
+    ) {
         if (bindingResult.hasErrors()) {
-            ModelAndView model = new ModelAndView("recruiter-employee-create.jade");
+            ModelAndView model = new ModelAndView("recruiter/recruiter-add-applicant.jade");
             model.addObject("applicantForm", applicantForm);
 
             return model;
@@ -71,8 +69,9 @@ public class ModifyApplicant {
         this.getRecruiterService().saveApplicantToVacancy(
                 applicantForm.getModel(), applicantForm.getResumeFile(), applicantForm.getTestAnswerFile()
         );
+        Long dealId = applicantForm.getDealId();
 
-        return new ModelAndView("redirect:/recruiter-progress-vacancy-show/" + vacancyId);
+        return new ModelAndView("redirect:/recruiter-show-in-progress-vacancy/" + dealId);
     }
 
     /**
@@ -95,23 +94,20 @@ public class ModifyApplicant {
      * @param applicantForm model attribute for applicant
      * @param applicantId             Id of applicant
      * @param bindingResult         BindingResult
-     * @param redirectAttributes    RedirectAttributes
      * @return model and view for editing applicant with errors if any,
      * otherwise redirects to R6 "Vacancy in progress of job searching"
      */
     @RequestMapping(value = "recruiter-employee-edit/{applicantId}", method = RequestMethod.POST)
     public ModelAndView editApplicantValidation(
             @Valid @ModelAttribute("applicantForm") final ApplicantForm applicantForm,
-            @PathVariable final Long applicantId,
-            final BindingResult bindingResult,
-            final RedirectAttributes redirectAttributes) {
-
+            final BindingResult bindingResult
+    ) {
         if (bindingResult.hasErrors()) {
             ModelAndView model = new ModelAndView("recruiter-employee-edit.jade");
             model.addObject("applicantForm", applicantForm);
             return model;
         }
-        Long vacancyId = applicantForm.getVacancyId();
+        Long vacancyId = applicantForm.getDealId();
         this.getRecruiterService().saveApplicantToVacancy(
                 applicantForm.getModel(), applicantForm.getResumeFile(), applicantForm.getTestAnswerFile()
         );
@@ -119,7 +115,7 @@ public class ModifyApplicant {
         return new ModelAndView("redirect:/recruiter-progress-vacancy-show/" + vacancyId);
     }
 
-    @InitBinder("applicantFormValidator")
+    @InitBinder("applicantForm")
     protected void initSurveyListFormBinder(final WebDataBinder binder) {
         binder.setValidator(this.getApplicantFormValidator());
     }

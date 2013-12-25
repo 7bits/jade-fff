@@ -1,4 +1,4 @@
-extends layout
+extends ../layout
 
 block append content
   .container
@@ -27,10 +27,8 @@ block append content
             input(type="file", id="testAnswerFile", name="testAnswerFile", placeholder=fmt.message("recruiter-employee-create.testAnswerFile"))
             #{errors.testAnswerFile}
           .form-group
-            input(type="hidden", id="vacancyId", name="vacancyId", value=applicantForm.vacancyId)
-            #{errors.vacancyId}
+            input(type="hidden", id="dealId", name="dealId", value=applicantForm.dealId)
             input(type="hidden", id="id", name="id", value=applicantForm.id)
-            #{errors.id}
           input.btn.btn-success(type="submit", name="submit", value=fmt.message("recruiter-employee-create.add"))=fmt.message("recruiter-employee-create.add")
           a.btn.btn-link(href="#")
-            a(href=domainName + "/recruiter-progress-vacancy-show/" + applicantForm.vacancyId)=fmt.message("recruiter-employee-create.back")
+            a(href=domainName + "/recruiter-show-in-progress-vacancy/" + applicantForm.dealId)=fmt.message("recruiter-employee-create.back")

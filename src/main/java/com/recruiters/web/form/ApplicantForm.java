@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public class ApplicantForm {
     private Long id = 0L;
-    private Long vacancyId = null;
+    private Long dealId = null;
     private String firstName = null;
     private String lastName = null;
     private String description = null;
@@ -38,7 +38,7 @@ public class ApplicantForm {
         this.description = applicant.getDescription();
         this.linkToResumeFile = applicant.getResumeFile();
         this.linkToTestAnswerFile = applicant.getTestAnswerFile();
-        this.vacancyId = applicant.getDeal().getVacancy().getId();
+        this.dealId = applicant.getDeal().getId();
     }
 
     public Applicant getModel() {
@@ -59,12 +59,12 @@ public class ApplicantForm {
         this.id = id;
     }
 
-    public Long getVacancyId() {
-        return vacancyId;
+    public Long getDealId() {
+        return dealId;
     }
 
-    public void setVacancyId(final Long vacancyId) {
-        this.vacancyId = vacancyId;
+    public void setDealId(final Long dealId) {
+        this.dealId = dealId;
     }
 
     public String getFirstName() {

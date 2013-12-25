@@ -92,9 +92,10 @@ public class VacancyRepository {
      */
     public Vacancy getById(final Long vacancyId) {
 
-        Vacancy vacancy1 = new Vacancy(VACANCY1_ID, VACANCY1_TITLE, VACANCY1_SHORT_DESCRIPTION, VACANCY1_DATE);
-        Vacancy vacancy2 = new Vacancy(VACANCY2_ID, VACANCY2_TITLE, VACANCY2_SHORT_DESCRIPTION, VACANCY2_DATE);
-        Vacancy vacancy3 = new Vacancy(VACANCY3_ID, VACANCY3_TITLE, VACANCY3_SHORT_DESCRIPTION, VACANCY3_DATE);
+        EmployerRepository employerRepository = new EmployerRepository();
+        Vacancy vacancy1 = new Vacancy(VACANCY1_ID, employerRepository.getById(1L), VACANCY1_TITLE, VACANCY1_SHORT_DESCRIPTION, VACANCY1_DATE);
+        Vacancy vacancy2 = new Vacancy(VACANCY2_ID, employerRepository.getById(1L), VACANCY2_TITLE, VACANCY2_SHORT_DESCRIPTION, VACANCY2_DATE);
+        Vacancy vacancy3 = new Vacancy(VACANCY3_ID, employerRepository.getById(1L), VACANCY3_TITLE, VACANCY3_SHORT_DESCRIPTION, VACANCY3_DATE);
         if (vacancyId.equals(1L)) {
             return vacancy1;
         }
@@ -115,38 +116,14 @@ public class VacancyRepository {
     public List<Vacancy> findListOfAvailableVacancies() {
         List <Vacancy> vacancies = new ArrayList<Vacancy>();
 
-        Vacancy vacancy1 = new Vacancy(VACANCY1_ID, VACANCY1_TITLE, VACANCY1_SHORT_DESCRIPTION, VACANCY1_DATE);
-        Vacancy vacancy2 = new Vacancy(VACANCY2_ID, VACANCY2_TITLE, VACANCY2_SHORT_DESCRIPTION, VACANCY2_DATE);
-        Vacancy vacancy3 = new Vacancy(VACANCY3_ID, VACANCY3_TITLE, VACANCY3_SHORT_DESCRIPTION, VACANCY3_DATE);
+        EmployerRepository employerRepository = new EmployerRepository();
+        Vacancy vacancy1 = new Vacancy(VACANCY1_ID, employerRepository.getById(1L), VACANCY1_TITLE, VACANCY1_SHORT_DESCRIPTION, VACANCY1_DATE);
+        Vacancy vacancy2 = new Vacancy(VACANCY2_ID, employerRepository.getById(1L), VACANCY2_TITLE, VACANCY2_SHORT_DESCRIPTION, VACANCY2_DATE);
+        Vacancy vacancy3 = new Vacancy(VACANCY3_ID, employerRepository.getById(1L), VACANCY3_TITLE, VACANCY3_SHORT_DESCRIPTION, VACANCY3_DATE);
         vacancies.add(vacancy1);
         vacancies.add(vacancy2);
         vacancies.add(vacancy3);
 
         return vacancies;
     }
-
-    /**
-     * Method must return vacancy if it has deal for this recruiter
-     * @param recruiterId
-     * @param vacancyId
-     * @return vacancy
-     */
-    public Vacancy getVacancyByRecruiterIdAndVacancyId(final Long recruiterId, final Long vacancyId) {
-        if (vacancyId.equals(VACANCY1_ID)) {
-            return new Vacancy(VACANCY1_ID, VACANCY1_EMPLOYER_ID, VACANCY1_TITLE,
-                    VACANCY1_DESCRIPTION, VACANCY1_SALARY, VACANCY1_CREATION_DATE, VACANCY1_EXPIRATION_DATE,
-                    VACANCY1_TEST_FILE);
-        } else if (vacancyId.equals(VACANCY2_ID)) {
-            return new Vacancy(VACANCY2_ID, VACANCY2_EMPLOYER_ID, VACANCY2_TITLE,
-                    VACANCY2_DESCRIPTION, VACANCY2_SALARY, VACANCY2_CREATION_DATE, VACANCY2_EXPIRATION_DATE,
-                    VACANCY2_TEST_FILE);
-        } else if (vacancyId.equals(VACANCY3_ID)) {
-            return new Vacancy(VACANCY3_ID, VACANCY3_EMPLOYER_ID, VACANCY3_TITLE,
-                    VACANCY3_DESCRIPTION, VACANCY3_SALARY, VACANCY3_CREATION_DATE, VACANCY3_EXPIRATION_DATE,
-                    VACANCY3_TEST_FILE);
-        } else {
-            return null;
-        }
-    }
-
 }

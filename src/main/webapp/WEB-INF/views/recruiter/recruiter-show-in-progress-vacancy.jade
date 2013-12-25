@@ -1,0 +1,35 @@
+extends ../layout
+
+block append content
+  .container
+    h1 Вакансия, по которой идёт работа
+    .row
+      .col-md-8
+        h2
+        dl.dl-horizontal
+          dt Наименование
+          dd #{deal.vacancy.title}
+          dt Описание
+          dd #{deal.vacancy.description}
+          dt Диапазон з/п
+          dd #{deal.vacancy.salary}
+          dt Дата создания
+          dd #{deal.vacancy.creationDate}
+          dt Дата окончания
+          dd #{deal.vacancy.expirationDate}
+      .col-md-4
+        h2 Работодатель
+        p #{deal.vacancy.employer.firstName} #{deal.vacancy.employer.lastName}
+
+    h2 Список кандидатов
+    .row
+      .col-md-6
+        ul.list-group
+          if deal.applicants
+            for applicant in deal.applicants
+              li.list-group-item
+                #{applicant.firstName} #{applicant.lastName}
+                a.btn.btn-link.pull-right(href= domainName + "/recruiter-edit-applicant/" + applicant.id).
+                  Изменить
+
+        a.btn.btn-success(href= domainName + "/recruiter-add-applicant/" + deal.id) Предложить новую кандидатуру

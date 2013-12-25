@@ -17,8 +17,13 @@ public class EmployerRepository {
     /** Last name of 1st employer */
     static final String EMPLOYER1_LAST_NAME = "Иванов";
 
-    public Employer getByUserId(final Long userId) {
-        return new Employer(1L, "Пупко", "Васькин");
+    public Employer getById(final Long employerId) {
+        Employer employer = new Employer(EMPLOYER1_ID, EMPLOYER1_FIRST_NAME, EMPLOYER1_LAST_NAME);
+        if (employerId.equals(EMPLOYER1_ID)) {
+            return employer;
+        } else {
+            return null;
+        }
     }
 
     public Employer getEmployerByVacancyId(final Long employerId) {

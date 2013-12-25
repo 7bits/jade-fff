@@ -12,27 +12,27 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Controller Class for R12 "My vacancies"
+ * Controller Class for "In progress vacancies"
  */
 @Controller
-public class MyBid {
+public class RecruiterDeals {
 
     @Autowired
     private RecruiterService recruiterService = null;
     /**
-     * Controller for R2 "My vacancies"
+     * Controller for "in progress vacancies"
      * @return model and view with list of active vacancies
      */
-    @RequestMapping(value = "recruiter-show-my-bids", method = RequestMethod.GET)
-    public ModelAndView showRecruiterBids(final HttpServletRequest request) {
-        ModelAndView recruiterBids = new ModelAndView("recruiter-my-bids.jade");
+    @RequestMapping(value = "recruiter-active-deals", method = RequestMethod.GET)
+    public ModelAndView showMyVacancies(final HttpServletRequest request) {
+        ModelAndView activeDeals = new ModelAndView("recruiter/recruiter-active-deals.jade");
         User currentUser = this.getRecruiterService().getCurrentUser(request);
         Recruiter recruiter = this.getRecruiterService().findRecruiterByUserId(currentUser.getId());
         if (recruiter != null) {
-            recruiterBids.addObject("vacancyList", getRecruiterService().findListOfRecruiterBids(recruiter.getId()));
+            activeDeals.addObject("deals", getRecruiterService().findListOfDealsForRecruiterByRecruiterId(recruiter.getId()));
         }
 
-        return recruiterBids;
+        return activeDeals;
     }
 
     public RecruiterService getRecruiterService() {
