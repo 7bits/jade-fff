@@ -1,0 +1,21 @@
+extends ../layout
+
+block append content
+  .container
+    h1 Вакансии в работе
+    table.table.table-striped
+      thead
+        tr
+          th Наименование
+          th Описание
+          th Дата создания
+          th
+      tbody
+        for vacancy in vacancyList
+          tr
+            td #{vacancy.title}
+            td #{vacancy.description}
+            td #{vacancy.creationDate}
+            td
+              a.btn.btn-link(href=domainName + "/recruiter-progress-vacancy-show/" + vacancy.id).
+                Подробнее

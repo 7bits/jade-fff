@@ -7,11 +7,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * Controller Class for R11 "Show active vacancies"
  */
 @Controller
-public class AvailableVacancies {
+public class AllAvailableVacancies {
 
     @Autowired
     private RecruiterService recruiterService = null;
@@ -20,12 +22,12 @@ public class AvailableVacancies {
      * Controller for R11 "Active vacancies list"
      * @return model and view with list of active vacancies
      */
-    @RequestMapping(value = "recruiter-available-vacancies", method = RequestMethod.GET)
-    public ModelAndView showActiveVacancies() {
-        ModelAndView activeVacancies = new ModelAndView("recruiter-available-vacancies.jade");
-        activeVacancies.addObject("vacancyList", getRecruiterService().findListOfAvailableVacancies());
+    @RequestMapping(value = "recruiter-find-new-vacancies", method = RequestMethod.GET)
+    public ModelAndView showAllAvailableVacancies(final HttpServletRequest request) {
+        ModelAndView allAvailableVacancies = new ModelAndView("recruiter/recruiter-find-new-vacancies.jade");
+        allAvailableVacancies.addObject("vacancyList", getRecruiterService().findListOfAllAvailableVacancies());
 
-        return activeVacancies;
+        return allAvailableVacancies;
     }
 
     public RecruiterService getRecruiterService() {

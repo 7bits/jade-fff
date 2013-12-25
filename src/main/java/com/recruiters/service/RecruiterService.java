@@ -1,12 +1,14 @@
 package com.recruiters.service;
 
 import com.recruiters.model.Applicant;
+import com.recruiters.model.Bid;
 import com.recruiters.model.Deal;
 import com.recruiters.model.Employer;
 import com.recruiters.model.Recruiter;
 import com.recruiters.model.User;
 import com.recruiters.model.Vacancy;
 import com.recruiters.repository.ApplicantRepository;
+import com.recruiters.repository.BidRepository;
 import com.recruiters.repository.DealRepository;
 import com.recruiters.repository.EmployerRepository;
 import com.recruiters.repository.FileRepository;
@@ -40,12 +42,14 @@ public class RecruiterService {
     private UserRepository userRepository = null;
     @Autowired
     private RecruiterRepository recruiterRepository = null;
+    @Autowired
+    private BidRepository bidRepository = null;
 
     /**
      * Method must return all vacancies for this recruiter
      * @return
      */
-    public List<Vacancy> findListOfAvailableVacancies() {
+    public List<Vacancy> findListOfAllAvailableVacancies() {
 
         return this.getVacancyRepository().findListOfAvailableVacancies();
     }
@@ -64,6 +68,15 @@ public class RecruiterService {
         }
 
         return vacancies;
+    }
+
+    /**
+     * Method must return list of recruiter bids.
+     * @return
+     */
+    public List<Bid> findListOfRecruiterBids(final Long recruiterId) {
+
+        return this.getBidRepository().findListOfRecruiterBids(recruiterId);
     }
 
     /**
@@ -201,5 +214,13 @@ public class RecruiterService {
 
     public void setRecruiterRepository(final RecruiterRepository recruiterRepository) {
         this.recruiterRepository = recruiterRepository;
+    }
+
+    public BidRepository getBidRepository() {
+        return bidRepository;
+    }
+
+    public void setBidRepository(final BidRepository bidRepository) {
+        this.bidRepository = bidRepository;
     }
 }

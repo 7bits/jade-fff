@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
  * Controller Class for R12 "My vacancies"
  */
 @Controller
-public class MyVacancies {
+public class MyBid {
 
     @Autowired
     private RecruiterService recruiterService = null;
@@ -23,16 +23,16 @@ public class MyVacancies {
      * Controller for R2 "My vacancies"
      * @return model and view with list of active vacancies
      */
-    @RequestMapping(value = "recruiter-vacancies-list", method = RequestMethod.GET)
-    public ModelAndView showMyVacancies(final HttpServletRequest request) {
-        ModelAndView myVacancies = new ModelAndView("recruiter-my-vacancies.jade");
+    @RequestMapping(value = "recruiter-show-my-bids", method = RequestMethod.GET)
+    public ModelAndView showRecruiterBids(final HttpServletRequest request) {
+        ModelAndView recruiterBids = new ModelAndView("recruiter-my-bids.jade");
         User currentUser = this.getRecruiterService().getCurrentUser(request);
         Recruiter recruiter = this.getRecruiterService().findRecruiterByUserId(currentUser.getId());
         if (recruiter != null) {
-            myVacancies.addObject("vacancyList", getRecruiterService().findListOfInProgressVacanciesForRecruiter(recruiter.getId()));
+            recruiterBids.addObject("vacancyList", getRecruiterService().findListOfRecruiterBids(recruiter.getId()));
         }
 
-        return myVacancies;
+        return recruiterBids;
     }
 
     public RecruiterService getRecruiterService() {

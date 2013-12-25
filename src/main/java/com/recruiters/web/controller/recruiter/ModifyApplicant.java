@@ -3,7 +3,6 @@ package com.recruiters.web.controller.recruiter;
 import com.recruiters.service.RecruiterService;
 import com.recruiters.web.form.ApplicantForm;
 import com.recruiters.web.validator.ApplicantFormValidator;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -25,8 +24,6 @@ import javax.validation.Valid;
 @Controller
 @SessionAttributes("applicantForm")
 public class ModifyApplicant {
-    /** Logger */
-    protected final Logger log = Logger.getLogger(getClass());
 
     @Autowired
     private RecruiterService recruiterService = null;
