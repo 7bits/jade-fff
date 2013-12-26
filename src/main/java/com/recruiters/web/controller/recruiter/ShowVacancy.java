@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -43,6 +45,29 @@ public class ShowVacancy {
 
         return showVacancy;
     }
+
+    /**
+     * Controller for R2 "Show vacancy"
+     * @return model and view with one vacancy
+     */
+
+    @ResponseBody
+    @RequestMapping(value = "recruiter-show-vacancy/{vacancyId}", method = RequestMethod.POST)
+    public String applyToVacancy(
+            @PathVariable final Long vacancyId,
+            @RequestParam(value = "message", required = false) final String message,
+            final HttpServletRequest request
+    ) {
+        User currentUser = this.getRecruiterService().getCurrentUser(request);
+        Recruiter recruiter = this.getRecruiterService().findRecruiterByUserId(currentUser.getId());
+        Boolean successApplied = false;
+        if (recruiter != null) {
+            successApplied = this.getRecruiterService().applyRecruiterToVacancy(recruiter, message);
+        }
+
+        return null;
+    }
+
 
     public RecruiterService getRecruiterService() {
         return recruiterService;

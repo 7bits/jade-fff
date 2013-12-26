@@ -45,42 +45,44 @@ public class HandlerInterceptor extends HandlerInterceptorAdapter {
             final Object handler,
             final ModelAndView mav
     ) {
-        mav.addObject(DOMAIN_NAME_VARIABLE, new TemplateService(protocol, server, port, applicationName));
-        mav.addObject(SECURITY_SERVICE_NAME, new SecurityService());
+        if (mav != null) {
+            mav.addObject(DOMAIN_NAME_VARIABLE, new TemplateService(protocol, server, port, applicationName));
+            mav.addObject(SECURITY_SERVICE_NAME, new SecurityService());
 
-        // Resolving if ModelAndView have any form data, getting errors from it (if any)
-        // and adding them to HashMap with pre-configured name into ModelAndView
-        Map<String, Object> modelMap = mav.getModelMap();
-        Map<String, String> errors = new HashMap<String, String>();
-        for (Map.Entry<String, Object> entry : modelMap.entrySet()) {
-            String key = entry.getKey();
-            Object value = entry.getValue();
-            if (key.contains(TYPE_WITH_BINDING_RESULT)) {
-                BindingResult bindingResult = (BindingResult) value;
-                if (bindingResult.getFieldErrors().size() != 0) {
-                    List<FieldError> fieldErrors = bindingResult.getFieldErrors();
-                    for (FieldError error : fieldErrors) {
-                        // Resolving error codes with MessageSource
-                        String[] codes = error.getCodes();
-                        String resolvedMessage = "";
-                        String tempMessage = "";
-                        for (String code: codes) {
-                            tempMessage = messageSource.getMessage(code, null, null);
-                            if (!tempMessage.equals(code)) {
-                                resolvedMessage = tempMessage;
+            // Resolving if ModelAndView have any form data, getting errors from it (if any)
+            // and adding them to HashMap with pre-configured name into ModelAndView
+            Map<String, Object> modelMap = mav.getModelMap();
+            Map<String, String> errors = new HashMap<String, String>();
+            for (Map.Entry<String, Object> entry : modelMap.entrySet()) {
+                String key = entry.getKey();
+                Object value = entry.getValue();
+                if (key.contains(TYPE_WITH_BINDING_RESULT)) {
+                    BindingResult bindingResult = (BindingResult) value;
+                    if (bindingResult.getFieldErrors().size() != 0) {
+                        List<FieldError> fieldErrors = bindingResult.getFieldErrors();
+                        for (FieldError error : fieldErrors) {
+                            // Resolving error codes with MessageSource
+                            String[] codes = error.getCodes();
+                            String resolvedMessage = "";
+                            String tempMessage = "";
+                            for (String code: codes) {
+                                tempMessage = messageSource.getMessage(code, null, null);
+                                if (!tempMessage.equals(code)) {
+                                    resolvedMessage = tempMessage;
+                                }
                             }
+                            errors.put(error.getField(), resolvedMessage);
                         }
-                        errors.put(error.getField(), resolvedMessage);
                     }
                 }
             }
-        }
-        // Should be outside ModelMap iterating otherwise we will get exception
-        // Adding is forced because otherwise jade is output some sh!t when it shouldn't
-        mav.addObject(MODEL_ERRORS_NAME, errors);
+            // Should be outside ModelMap iterating otherwise we will get exception
+            // Adding is forced because otherwise jade is output some sh!t when it shouldn't
+            mav.addObject(MODEL_ERRORS_NAME, errors);
 
-        // Message resolver added
-        mav.addObject(MODEL_MESSAGE_RESOLVER_NAME, new MessageResolver(messageSource));
+            // Message resolver added
+            mav.addObject(MODEL_MESSAGE_RESOLVER_NAME, new MessageResolver(messageSource));
+        }
     }
 
     public String getProtocol() {
