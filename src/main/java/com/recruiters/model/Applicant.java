@@ -13,6 +13,7 @@ public class Applicant {
     private Integer age;
     private String resumeFile;
     private String testAnswerFile;
+    private ApplicantStatus status = null;
 
     public Applicant() {
     }
@@ -22,6 +23,7 @@ public class Applicant {
         this.deal = deal;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.status = ApplicantStatus.IN_PROGRESS;
     }
 
     public Applicant(final Long id, final Deal deal, final String firstName,
@@ -32,6 +34,7 @@ public class Applicant {
         this.firstName = firstName;
         this.lastName = lastName;
         this.description = description;
+        this.status = ApplicantStatus.IN_PROGRESS;
         this.sex = sex;
         this.age = age;
         this.resumeFile = resumeFile;
@@ -92,6 +95,14 @@ public class Applicant {
 
     public void setTestAnswerFile(final String testAnswerFile) {
         this.testAnswerFile = testAnswerFile;
+    }
+
+    public ApplicantStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(final ApplicantStatus status) {
+        this.status = status;
     }
 
     public String getSex() {

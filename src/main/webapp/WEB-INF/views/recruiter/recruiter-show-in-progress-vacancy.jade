@@ -24,12 +24,24 @@ block append content
     h2 Список кандидатов
     .row
       .col-md-6
-        ul.list-group
+        table.table.table-striped
+          thead
+            tr
+              th Имя
+              th Фамилия
+              th Статус
+              th Дата создания
+              th Действие
           if deal.applicants
             for applicant in deal.applicants
-              li.list-group-item
-                #{applicant.firstName} #{applicant.lastName}
-                a.btn.btn-link.pull-right(href= domain.getAbsoluteUrl() + "/recruiter-edit-applicant/" + applicant.id).
-                  Изменить
+              tr
+                td #{applicant.firstName}
+                td #{applicant.lastName}
+                td #{applicant.status}
+                td #{deal.vacancy.creationDate}
+                td
+                  if applicant.status != 'REJECTED'
+                    a.btn.btn-link.pull-right(href= domain.getAbsoluteUrl() + "/recruiter-edit-applicant/" + applicant.id).
+                      Изменить
 
-        a.btn.btn-success(href= domain.getAbsoluteUrl() + "/recruiter-add-applicant/" + deal.id) Предложить новую кандидатуру
+        a.btn.btn-success(href= domain.getAbsoluteUrl() + "/recruiter-add-applicant/" + deal.id) Предложить нового кандидата
