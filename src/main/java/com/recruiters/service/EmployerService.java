@@ -1,10 +1,7 @@
 package com.recruiters.service;
 
 import com.recruiters.model.*;
-import com.recruiters.repository.ApplicantRepository;
-import com.recruiters.repository.DealRepository;
-import com.recruiters.repository.EmployerRepository;
-import com.recruiters.repository.UserRepository;
+import com.recruiters.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +22,8 @@ public class EmployerService {
     private DealRepository dealRepository = null;
     @Autowired
     private ApplicantRepository applicantRepository = null;
+    @Autowired
+    private BidRepository bidRepository = null;
 
 
     /**
@@ -64,7 +63,7 @@ public class EmployerService {
     }
 
     /**
-     * Gets all active deals from DB for current employer
+     * Get all active deals from DB for current employer
      * @param employer    Employer POJO instance
      * @return list of deals
      */
@@ -87,5 +86,16 @@ public class EmployerService {
             return applicant;
         }
         return null;
+    }
+
+
+    /**
+     * Get all active bids from DB for current employer
+     * @param employer    Employer POJO instance
+     * @return list of bids
+     */
+    public List<Bid> findEmployerBids(final Employer employer) {
+
+        return bidRepository.findAllActiveByEmployerId(employer.getId());
     }
 }
