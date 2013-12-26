@@ -1,4 +1,4 @@
-extends layout
+extends ../layout
 
 block append content
   .container
@@ -12,12 +12,12 @@ block append content
           th=fmt.message("employer-progress-vacancies-list.table.recruiter")
           th
       tbody
-        for vacancy in vacancyList
+        for deal in deals
           tr
-            td #{vacancy.title}
-            td #{vacancy.description}
-            td #{vacancy.creationDate}
-            td #{vacancy.recruiterName}
+            td #{deal.vacancy.title}
+            td #{deal.vacancy.description}
+            td #{deal.vacancy.creationDate}
+            td #{deal.recruiter.firstName} #{deal.recruiter.lastName}
             td
-              a.btn.btn-link(href = domain.getAbsoluteUrl() + "/employer-progress-vacancy-show/vacancy/" + vacancy.id + "/recruiter/" + vacancy.recruiterId).
+              a.btn.btn-link(href = domain.getAbsoluteUrl() + "/employer-progress-vacancy-show/" + deal.id).
                     #{fmt.message("employer-progress-vacancies-list.more")}
