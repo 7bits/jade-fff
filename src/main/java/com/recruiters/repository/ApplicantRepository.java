@@ -1,6 +1,7 @@
 package com.recruiters.repository;
 
 import com.recruiters.model.Applicant;
+import com.recruiters.model.Deal;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -34,13 +35,13 @@ public class ApplicantRepository {
 
     public Applicant getApplicantById(final Long applicantId) {
         DealRepository dealRepository = new DealRepository();
-
-        Applicant applicant1 = new Applicant(APPLICANT1_ID, null,
-                APPLICANT1_FIRST_NAME, APPLICANT1_LAST_NAME);
-        Applicant applicant2 = new Applicant(APPLICANT2_ID, null,
-                APPLICANT2_FIRST_NAME, APPLICANT2_LAST_NAME);
-        Applicant applicant3 = new Applicant(APPLICANT3_ID, null,
-                APPLICANT3_FIRST_NAME, APPLICANT3_LAST_NAME);
+        Deal deal = dealRepository.getById(1L);
+        Applicant applicant1 = new Applicant(APPLICANT1_ID, deal,
+                APPLICANT1_FIRST_NAME, APPLICANT1_LAST_NAME, "Круто работает", "Мужской", 34, "#", "#");
+        Applicant applicant2 = new Applicant(APPLICANT2_ID, deal,
+                APPLICANT2_FIRST_NAME, APPLICANT2_LAST_NAME, "Работает с утра до ночи", "Мужской", 26, "#", "#");
+        Applicant applicant3 = new Applicant(APPLICANT3_ID, deal,
+                APPLICANT3_FIRST_NAME, APPLICANT3_LAST_NAME, "Работает не покладая рук", "Мужской", 41, "#", "#");
         if(applicantId.equals(1L)) {
             return applicant1;
         }
