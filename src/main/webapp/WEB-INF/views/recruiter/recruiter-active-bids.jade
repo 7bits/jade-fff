@@ -8,6 +8,7 @@ block append content
         tr
           th Наименование
           th Описание
+          th Статус
           th Дата создания
           th
       tbody
@@ -15,6 +16,7 @@ block append content
           tr
             td #{bid.vacancy.title}
             td #{bid.vacancy.description}
+            td #{bid.status}
             td #{bid.vacancy.creationDate}
             td
               a.btn.btn-link(href=domain.getAbsoluteUrl() + "/recruiter-show-vacancy/" + bid.vacancy.id).

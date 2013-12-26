@@ -14,6 +14,7 @@ public class Vacancy {
     private Date creationDate;
     private Date expirationDate;
     private String testFile;
+    private VacancyStatus status = null;
 
     public Vacancy() {
     }
@@ -24,6 +25,7 @@ public class Vacancy {
         this.title = title;
         this.description = description;
         this.creationDate = creationDate;
+        this.status = VacancyStatus.ACTIVE;
     }
 
     public Vacancy(final Long id, final Employer employer, final String title,
@@ -37,6 +39,7 @@ public class Vacancy {
         this.creationDate = creationDate;
         this.expirationDate = expirationDate;
         this.testFile = testFile;
+        this.status = VacancyStatus.ACTIVE;
     }
 
     public Long getId() {
@@ -101,5 +104,13 @@ public class Vacancy {
 
     public void setTestFile(final String testFile) {
         this.testFile = testFile;
+    }
+
+    public VacancyStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(final VacancyStatus status) {
+        this.status = status;
     }
 }

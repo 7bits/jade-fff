@@ -10,12 +10,14 @@ public class Deal {
     private Vacancy vacancy = null;
     private Recruiter recruiter = null;
     private List<Applicant> applicants = null;
+    private DealStatus status = null;
 
     public Deal(final Long id, final Vacancy vacancy, final Recruiter recruiter, final List<Applicant> applicants) {
         this.id = id;
         this.vacancy = vacancy;
         this.recruiter = recruiter;
         this.applicants = applicants;
+        this.status = DealStatus.IN_PROGRESS;
     }
 
     public Deal() {
@@ -51,5 +53,13 @@ public class Deal {
 
     public void setApplicants(final List<Applicant> applicants) {
         this.applicants = applicants;
+    }
+
+    public DealStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(final DealStatus status) {
+        this.status = status;
     }
 }

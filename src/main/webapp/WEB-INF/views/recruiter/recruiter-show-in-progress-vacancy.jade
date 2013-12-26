@@ -29,7 +29,10 @@ block append content
             for applicant in deal.applicants
               li.list-group-item
                 #{applicant.firstName} #{applicant.lastName}
-                a.btn.btn-link.pull-right(href= domain.getAbsoluteUrl() + "/recruiter-edit-applicant/" + applicant.id).
-                  Изменить
+                span
+                  | Статус: #{applicant.status}
+                if applicant.status != 'REJECTED'
+                  a.btn.btn-link.pull-right(href= domain.getAbsoluteUrl() + "/recruiter-edit-applicant/" + applicant.id).
+                    Изменить
 
-        a.btn.btn-success(href= domain.getAbsoluteUrl() + "/recruiter-add-applicant/" + deal.id) Предложить новую кандидатуру
+        a.btn.btn-success(href= domain.getAbsoluteUrl() + "/recruiter-add-applicant/" + deal.id) Предложить нового кандидата
