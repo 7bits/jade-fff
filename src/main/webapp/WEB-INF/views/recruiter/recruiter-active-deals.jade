@@ -17,5 +17,5 @@ block append content
             td #{deal.vacancy.description}
             td #{deal.vacancy.creationDate}
             td
-              a.btn.btn-link(href=domainName + "/recruiter-show-in-progress-vacancy/" + deal.id).
+              a.btn.btn-link(href=domain.getAbsoluteUrl() + "/recruiter-show-in-progress-vacancy/" + deal.id).
                 Подробнее

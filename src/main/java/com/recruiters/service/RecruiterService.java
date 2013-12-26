@@ -102,21 +102,6 @@ public class RecruiterService {
     }
 
     /**
-     * List of applicants for this vacancy (if vacancy has dael for this recruiter)
-     * @param recruiterId    Id of recruiter who asks for data
-     * @param vacancyId      Id of vacancy, applicants apply for
-     * @return List of applicants
-     */
-    public List<Applicant> getApplicantListForVacancy(final Long recruiterId, final Long vacancyId) {
-        Deal deal = this.getDealRepository().findByRecruiterIdAndVacancyId(recruiterId, vacancyId);
-        List<Applicant> applicantList = null;
-        if (deal != null) {
-            applicantList = this.getApplicantRepository().getApplicantByDealId(deal.getId());
-        }
-        return applicantList;
-    }
-
-    /**
      * Method must add new applicant to current vacancy by recruiter
      * @param applicant
      * @param resumeFile
@@ -130,16 +115,6 @@ public class RecruiterService {
         applicant.setTestAnswerFile(fileNameForTestAnswers);
 
         return this.getApplicantRepository().saveApplicant(applicant);
-    }
-
-    /**
-     * Method must return employer by given vacancy id
-     * @param vacancyId
-     * @return
-     */
-    public Employer getEmployerByVacancyId(final Long vacancyId) {
-
-        return this.getEmployerRepository().getEmployerByVacancyId(vacancyId);
     }
 
     /**

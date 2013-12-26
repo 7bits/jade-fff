@@ -43,7 +43,7 @@ public class ApplicantForm {
         this.dealId = applicant.getDeal() != null ? applicant.getDeal().getId() : 1L;
     }
 
-    public Applicant getModel() {
+    public Applicant fillModel() {
         Applicant applicant = new Applicant();
         applicant.setId(this.getId() != null ? this.getId() : 0L);
         applicant.setFirstName(this.getFirstName());

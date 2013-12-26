@@ -5,39 +5,39 @@ html
     title= pageName
     block head
       script(src="http://code.jquery.com/jquery-2.0.3.js")
-      script(src=domainName + '/resources/js/lib/bootstrap.js')
-      script(src=domainName + '/resources/js/lib/bootstrap-confirmation.js')
-      script(src=domainName + '/resources/js/confirmation.js')
-      link(href=domainName + '/resources/stylesheets/lib/bootstrap.min.css', rel='stylesheet', type='text/css')
-      link(href=domainName + '/resources/stylesheets/lib/bootstrap-theme.min.css', rel='stylesheet', type='text/css')
-      link(href=domainName + '/resources/stylesheets/advanced-lists.css', rel='stylesheet', type='text/css')
-      link(href=domainName + '/resources/stylesheets/table.css', rel='stylesheet', type='text/css')
+      script(src=domain.getAbsoluteUrl() + '/resources/js/lib/bootstrap.js')
+      script(src=domain.getAbsoluteUrl() + '/resources/js/lib/bootstrap-confirmation.js')
+      script(src=domain.getAbsoluteUrl() + '/resources/js/confirmation.js')
+      link(href=domain.getAbsoluteUrl() + '/resources/stylesheets/lib/bootstrap.min.css', rel='stylesheet', type='text/css')
+      link(href=domain.getAbsoluteUrl() + '/resources/stylesheets/lib/bootstrap-theme.min.css', rel='stylesheet', type='text/css')
+      link(href=domain.getAbsoluteUrl() + '/resources/stylesheets/advanced-lists.css', rel='stylesheet', type='text/css')
+      link(href=domain.getAbsoluteUrl() + '/resources/stylesheets/table.css', rel='stylesheet', type='text/css')
   body
     block content
       .navbar.navbar-inverse(role="navigation")
         .container
           .navbar-header
-            a.navbar-brand(href=domainName).
+            a.navbar-brand(href=domain.getAbsoluteUrl()).
               Имя и логотип проекта
           .navbar-collapse.collapse
             ul.nav.navbar-nav.navbar-right
-              if userRole == "ROLE_RECRUITER"
+              if security.isUserInRole("ROLE_RECRUITER")
                 li
-                  a(href=domainName + "/recruiter-active-deals").
+                  a(href=domain.getAbsoluteUrl() + "/recruiter-active-deals").
                     Вакансии в работе
                 li
-                  a(href=domainName + "/recruiter-active-bids").
+                  a(href=domain.getAbsoluteUrl() + "/recruiter-active-bids").
                     Мои заявки
                 li
-                  a(href=domainName + "/recruiter-find-new-vacancies").
+                  a(href=domain.getAbsoluteUrl() + "/recruiter-find-new-vacancies").
                     Поиск вакансии
-              else
+              if security.isUserInRole("ROLE_EMPLOYER")
                 li
-                  a(href=domainName + "/employer-recruiter-search").
+                  a(href=domain.getAbsoluteUrl() + "/employer-recruiter-search").
                     Выбор рекрутёра
                 li
-                  a(href=domainName + "/employer-progress-vacancies-list").
-                    Вакансии с рекрутом
+                  a(href=domain.getAbsoluteUrl() + "/employer-progress-vacancies-list").
+                    Вакансии с рекрутёром
               li
-                a(href=domainName + "/j_spring_security_logout").
+                a(href=domain.getAbsoluteUrl() + "/j_spring_security_logout").
                   Выйти
