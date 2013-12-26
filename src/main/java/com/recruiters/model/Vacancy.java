@@ -15,6 +15,7 @@ public class Vacancy {
     private Date expirationDate;
     private String testFile;
     private VacancyStatus status = null;
+    private Long bidCount;
 
     public Vacancy() {
     }
@@ -112,5 +113,13 @@ public class Vacancy {
 
     public void setStatus(final VacancyStatus status) {
         this.status = status;
+    }
+
+    public Long getBidCount() {
+        return bidCount;
+    }
+
+    public void setBidCount(final Long bidCount) {
+        this.bidCount = bidCount;
     }
 }
