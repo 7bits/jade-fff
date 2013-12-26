@@ -4,6 +4,6 @@ block append content
   .container
     h1=fmt.message("employer-recruiter-search.h1")
     for vacancy in vacancies
-      h2 #{vacancy.vacancy.title}
-      a.btn.btn-link(href = domain.getAbsoluteUrl() + "/employer-show-recruiter-bids/" + vacancy.vacancy.id).
+      h2 #{vacancy.title}
+      a.btn.btn-link(href = domain.getAbsoluteUrl() + "/employer-show-recruiter-bids/" + vacancy.id).
                 #{fmt.message("employer-recruiter-search.bids")} (#{vacancy.bidCount})

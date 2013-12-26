@@ -15,7 +15,7 @@ public class Vacancy {
     private Date expirationDate;
     private String testFile;
     private VacancyStatus status = null;
-    private Long bidCount;
+    private Long bidCount = 0L;
 
     public Vacancy() {
     }

@@ -127,6 +127,17 @@ public class EmployerService {
         return vacancyRepository.findEmployerVacancies(employer.getId());
     }
 
+
+    /**
+     * Find all vacancies for exact employer with count of bids for each
+     * @param employer    Employer POJO instance
+     * @return List of vacancies
+     */
+    public List<Vacancy> findEmployerVacanciesWithBidCount(final Employer employer) {
+
+        return vacancyRepository.findEmployerVacanciesWithBidCount(employer.getId());
+    }
+
     /**
      * Get bid by its id, employer verification required
      * @param bidId       Id of bid

@@ -1,13 +1,12 @@
 package com.recruiters.repository;
 
+import com.recruiters.model.Bid;
 import com.recruiters.model.Recruiter;
 import com.recruiters.model.Vacancy;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Repository for working with vacancy
@@ -154,5 +153,36 @@ public class VacancyRepository {
         }
 
         return null;
+    }
+
+    /**
+     * Find vacancies of exact employer by its id
+     * with count of bids for each
+     * @param employerId    Id of employer
+     * @return List of vacancies
+     */
+    public List<Vacancy> findEmployerVacanciesWithBidCount(final Long employerId) {
+
+        BidRepository bidRepository = new BidRepository();
+        List<Vacancy> vacancies = findEmployerVacancies(employerId);
+        List<Bid> bids  = bidRepository.findAllActiveByEmployerId(employerId);
+
+        Map<Long, Long> bidCount = new HashMap<Long, Long>();
+        for (Bid bid: bids) {
+            Long vacancyId = bid.getVacancy().getId();
+            if (bidCount.get(vacancyId) == null) {
+                bidCount.put(vacancyId, 1L);
+            } else {
+                bidCount.put(vacancyId, bidCount.get(vacancyId) + 1L);
+            }
+        }
+
+        for (Vacancy vacancy: vacancies) {
+            if (bidCount.get(vacancy.getId()) != null) {
+                vacancy.setBidCount(bidCount.get(vacancy.getId()));
+            }
+        }
+
+        return vacancies;
     }
 }
