@@ -126,4 +126,27 @@ public class VacancyRepository {
 
         return vacancies;
     }
+
+    /**
+     * Find vacancies of exact employer by its id
+     * @param employerId    Id of employer
+     * @return List of vacancies
+     */
+    public List<Vacancy> findEmployerVacancies(final Long employerId) {
+
+        EmployerRepository employerRepository = new EmployerRepository();
+        Vacancy vacancy1 = new Vacancy(VACANCY1_ID, employerRepository.getById(1L), VACANCY1_TITLE, VACANCY1_SHORT_DESCRIPTION, VACANCY1_DATE);
+        Vacancy vacancy2 = new Vacancy(VACANCY2_ID, employerRepository.getById(1L), VACANCY2_TITLE, VACANCY2_SHORT_DESCRIPTION, VACANCY2_DATE);
+        Vacancy vacancy3 = new Vacancy(VACANCY3_ID, employerRepository.getById(1L), VACANCY3_TITLE, VACANCY3_SHORT_DESCRIPTION, VACANCY3_DATE);
+        List<Vacancy> vacancyList = new ArrayList<Vacancy>();
+
+        if (employerId.equals(1L)) {
+            vacancyList.add(vacancy1);
+            vacancyList.add(vacancy2);
+            vacancyList.add(vacancy3);
+            return vacancyList;
+        }
+
+        return null;
+    }
 }

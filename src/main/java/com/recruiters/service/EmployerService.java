@@ -24,6 +24,8 @@ public class EmployerService {
     private ApplicantRepository applicantRepository = null;
     @Autowired
     private BidRepository bidRepository = null;
+    @Autowired
+    private VacancyRepository vacancyRepository = null;
 
 
     /**
@@ -97,5 +99,15 @@ public class EmployerService {
     public List<Bid> findEmployerBids(final Employer employer) {
 
         return bidRepository.findAllActiveByEmployerId(employer.getId());
+    }
+
+    /**
+     * Find all vacancies for exact employer
+     * @param employer    Employer POJO instance
+     * @return List of vacancies
+     */
+    public List<Vacancy> findEmployerVacancies(final Employer employer) {
+
+        return vacancyRepository.findEmployerVacancies(employer.getId());
     }
 }
