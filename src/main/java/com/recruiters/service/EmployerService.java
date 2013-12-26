@@ -1,9 +1,7 @@
 package com.recruiters.service;
 
-import com.recruiters.model.Deal;
-import com.recruiters.model.Employer;
-import com.recruiters.model.User;
-import com.recruiters.model.Vacancy;
+import com.recruiters.model.*;
+import com.recruiters.repository.ApplicantRepository;
 import com.recruiters.repository.DealRepository;
 import com.recruiters.repository.EmployerRepository;
 import com.recruiters.repository.UserRepository;
@@ -14,15 +12,19 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
+ * Service Class for Employer
  */
 @Service
 public class EmployerService {
+
     @Autowired
     private UserRepository userRepository = null;
     @Autowired
     private EmployerRepository employerRepository = null;
     @Autowired
     private DealRepository dealRepository = null;
+    @Autowired
+    private ApplicantRepository applicantRepository = null;
 
 
     /**
@@ -69,5 +71,21 @@ public class EmployerService {
     public List<Deal> findEmployerDeals(final Employer employer) {
 
         return dealRepository.findAllActiveByEmployerId(employer.getId());
+    }
+
+    /**
+     * Get applicant by its id and return it if it's related to current employer
+     * otherwise return null
+     * @param applicantId    Id of applicant
+     * @param employer       Employer POJO instance
+     * @return Applicant POJO instance
+     */
+    public Applicant getApplicantById(final Long applicantId, final Employer employer) {
+
+        Applicant applicant = applicantRepository.getApplicantById(applicantId);
+        if (applicant.getDeal().getVacancy().getEmployer().getId().equals(employer.getId())) {
+            return applicant;
+        }
+        return null;
     }
 }
