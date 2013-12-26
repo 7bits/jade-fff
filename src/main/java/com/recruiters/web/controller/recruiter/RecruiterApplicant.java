@@ -14,13 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 /**
- * Controller Class fpr R61 "Edit or create applicant"
+ * Controller Class for R61 "Edit or create applicant"
  */
 @Controller
 @SessionAttributes("applicantForm")
@@ -55,9 +53,9 @@ public class RecruiterApplicant {
      * otherwise redirects to R6 "Vacancy in progress of job searching"
      */
     @RequestMapping(value = "recruiter-add-applicant/{dealId}", method = RequestMethod.POST)
-    public ModelAndView addApplicantValidation(
-           @Valid @ModelAttribute("applicantForm") final ApplicantForm applicantForm,
-           final BindingResult bindingResult
+    public ModelAndView createApplicant(
+            @Valid @ModelAttribute("applicantForm") final ApplicantForm applicantForm,
+            final BindingResult bindingResult
     ) {
         if (bindingResult.hasErrors()) {
             ModelAndView model = new ModelAndView("recruiter/recruiter-add-applicant.jade");
@@ -65,8 +63,9 @@ public class RecruiterApplicant {
 
             return model;
         }
+        // need some time for research
         this.getRecruiterService().saveApplicantToVacancy(
-                applicantForm.getModel(), applicantForm.getResumeFile(), applicantForm.getTestAnswerFile()
+                applicantForm.fillModel(), applicantForm.getResumeFile(), applicantForm.getTestAnswerFile()
         );
         Long dealId = applicantForm.getDealId();
 
@@ -96,7 +95,7 @@ public class RecruiterApplicant {
      * otherwise redirects to R6 "Vacancy in progress of job searching"
      */
     @RequestMapping(value = "recruiter-edit-applicant/{applicantId}", method = RequestMethod.POST)
-    public ModelAndView editApplicantValidation(
+    public ModelAndView updateApplicant(
             @Valid @ModelAttribute("applicantForm") final ApplicantForm applicantForm,
             final BindingResult bindingResult
     ) {
@@ -105,8 +104,10 @@ public class RecruiterApplicant {
             model.addObject("applicantForm", applicantForm);
             return model;
         }
+        // TODO
+        // need some time for research
         this.getRecruiterService().saveApplicantToVacancy(
-                applicantForm.getModel(), applicantForm.getResumeFile(), applicantForm.getTestAnswerFile()
+                applicantForm.fillModel(), applicantForm.getResumeFile(), applicantForm.getTestAnswerFile()
         );
         Long dealId = applicantForm.getDealId();
 

@@ -19,5 +19,5 @@ block append content
             td #{vacancy.creationDate}
             td #{vacancy.recruiterName}
             td
-              a.btn.btn-link(href = domainName + "/employer-progress-vacancy-show/vacancy/" + vacancy.id + "/recruiter/" + vacancy.recruiterId).
+              a.btn.btn-link(href = domain.getAbsoluteUrl() + "/employer-progress-vacancy-show/vacancy/" + vacancy.id + "/recruiter/" + vacancy.recruiterId).
                     #{fmt.message("employer-progress-vacancies-list.more")}

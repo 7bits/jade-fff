@@ -1,28 +1,22 @@
 package com.recruiters.service.utils;
 
-import javax.servlet.http.HttpServletRequest;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  *  server for support spring security
  */
 public final class SecurityService {
 
-    /** Name of recruiter role*/
-    public static final String ROLE_RECRUITER = "ROLE_RECRUITER";
-    /** Name of employer role*/
-    public static final String ROLE_EMPLOYER = "ROLE_EMPLOYER";
-    /** Name of anonymous role*/
-    public static final String ROLE_ANONYMOUS = "ROLE_ANONYMOUS";
+    public String getUserRole() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-    private SecurityService() {}
+        return ((GrantedAuthority)(auth.getAuthorities().toArray()[0])).getAuthority();
+    }
 
-    public static String getUserRole(final HttpServletRequest request) {
-        if (request.isUserInRole(ROLE_EMPLOYER)) {
-            return ROLE_EMPLOYER;
-        }
-        if (request.isUserInRole(ROLE_RECRUITER)) {
-            return ROLE_RECRUITER;
-        }
-        return ROLE_ANONYMOUS;
+    public Boolean isUserInRole(final String roleName) {
+
+        return this.getUserRole().equals(roleName);
     }
 }

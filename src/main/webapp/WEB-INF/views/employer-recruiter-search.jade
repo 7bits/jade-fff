@@ -12,5 +12,5 @@ block append content
               if vacancyRecruiter.vacancyId == vacancy.id
                 li.list-group-item
                   #{vacancyRecruiter.firstName} #{vacancyRecruiter.lastName}
-                  a.btn.btn-link.pull-right(href = domainName + "/employer-recruiter-show/recruiter/" + vacancyRecruiter.id + "/vacancy/" + vacancyRecruiter.vacancyId).
+                  a.btn.btn-link.pull-right(href = domain.getAbsoluteUrl() + "/employer-recruiter-show/recruiter/" + vacancyRecruiter.id + "/vacancy/" + vacancyRecruiter.vacancyId).
                     Подробнее

@@ -21,9 +21,9 @@ import java.util.Map;
 public class HandlerInterceptor extends HandlerInterceptorAdapter {
 
     /** domain name variable for send to view templates: consist from protocol, server_name, port and application name */
-    static final String DOMAIN_NAME_VARIABLE = "domainName";
+    static final String DOMAIN_NAME_VARIABLE = "domain";
     /** role name variable for send to view templates */
-    static final String USER_ROLE_VARIABLE = "userRole";
+    static final String SECURITY_SERVICE_NAME = "security";
     /** Type of object in ModelAndView which contains BindingResults */
     static final String TYPE_WITH_BINDING_RESULT = "org.springframework.validation.BindingResult";
     /** Object name which will contains form errors if any in model */
@@ -45,16 +45,8 @@ public class HandlerInterceptor extends HandlerInterceptorAdapter {
             final Object handler,
             final ModelAndView mav
     ) {
-        mav.addObject(
-                DOMAIN_NAME_VARIABLE,
-                TemplateService.getFullUrl(
-                        protocol,
-                        server,
-                        port,
-                        applicationName
-                )
-        );
-        mav.addObject(USER_ROLE_VARIABLE, SecurityService.getUserRole(request));
+        mav.addObject(DOMAIN_NAME_VARIABLE, new TemplateService(protocol, server, port, applicationName));
+        mav.addObject(SECURITY_SERVICE_NAME, new SecurityService());
 
         // Resolving if ModelAndView have any form data, getting errors from it (if any)
         // and adding them to HashMap with pre-configured name into ModelAndView

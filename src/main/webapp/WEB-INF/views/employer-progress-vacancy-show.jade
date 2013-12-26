@@ -31,5 +31,5 @@ block append content
           for applicant in vacancyList
             li.list-group-item
               #{applicant.firstName} #{applicant.lastName}
-              a.btn.btn-link.pull-right(href = domainName + "/employer-employee-show/" + applicant.id).
+              a.btn.btn-link.pull-right(href = domain.getAbsoluteUrl() + "/employer-employee-show/" + applicant.id).
                 #{fmt.message("employer-progress-vacancy-show.applicants.more")}
