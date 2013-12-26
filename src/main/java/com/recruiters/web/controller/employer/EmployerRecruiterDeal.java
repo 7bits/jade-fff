@@ -47,7 +47,7 @@ public class EmployerRecruiterDeal {
     @RequestMapping(value = "employer-recruiter-show/recruiter/{recruiterId}/vacancy/{vacancyId}")
     public ModelAndView customerRecruitShow(@PathVariable final Long recruiterId,
                                             @PathVariable final Long vacancyId) {
-        ModelAndView myModel = new ModelAndView("employer-recruiter-show.jade");
+        ModelAndView myModel = new ModelAndView("employer/employer-recruiter-show.jade");
         myModel.addObject("recruiter", getRecruiterInfo(recruiterId));
         myModel.addObject("vacancy", getVacancyInfo(vacancyId));
         return myModel;
