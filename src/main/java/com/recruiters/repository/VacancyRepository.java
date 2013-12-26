@@ -1,5 +1,6 @@
 package com.recruiters.repository;
 
+import com.recruiters.model.Recruiter;
 import com.recruiters.model.Vacancy;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.stereotype.Repository;
@@ -125,5 +126,10 @@ public class VacancyRepository {
         vacancies.add(vacancy3);
 
         return vacancies;
+    }
+
+    public Boolean updateVacancy(final Recruiter recruiter, final String message) {
+
+        return true;
     }
 }

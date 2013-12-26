@@ -118,6 +118,17 @@ public class RecruiterService {
     }
 
     /**
+     * Method must return true if vacancy has been updated successful
+     * @param recruiter
+     * @param message
+     * @return
+     */
+    public Boolean applyRecruiterToVacancy(final Recruiter recruiter, final String message) {
+
+        return this.getVacancyRepository().updateVacancy(recruiter, message);
+    }
+
+    /**
      * Method must return recruiter by given user id
      * @param userId
      * @return
