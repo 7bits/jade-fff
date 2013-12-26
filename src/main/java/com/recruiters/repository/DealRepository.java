@@ -71,4 +71,32 @@ public class DealRepository {
 
         return  null;
     }
+
+    /**
+     * Lists all active deals for exact Employer
+     * @param employerId    Id of employer
+     * @return List of POJO Deal instances
+     */
+    public List<Deal> findAllActiveByEmployerId(final Long employerId) {
+
+        List <Deal> deals = new ArrayList<Deal>();
+        if (employerId.equals(1L)) {
+            VacancyRepository vacancyRepository = new VacancyRepository();
+            RecruiterRepository recruiterRepository = new RecruiterRepository();
+            ApplicantRepository applicantRepository = new ApplicantRepository();
+
+            Deal deal1 = new Deal(1L, vacancyRepository.getById(1L), recruiterRepository.getByUserId(1L), applicantRepository.getApplicantByDealId(1L));
+            Deal deal2 = new Deal(2L, vacancyRepository.getById(2L), recruiterRepository.getByUserId(1L), applicantRepository.getApplicantByDealId(1L));
+            Deal deal3 = new Deal(3L, vacancyRepository.getById(3L), recruiterRepository.getByUserId(1L), applicantRepository.getApplicantByDealId(1L));
+
+            deals.add(deal1);
+            deals.add(deal2);
+            deals.add(deal3);
+
+            return deals;
+        }
+
+        return null;
+    }
+
 }

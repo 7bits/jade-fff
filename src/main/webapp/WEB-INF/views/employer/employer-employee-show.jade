@@ -1,4 +1,4 @@
-extends layout
+extends ../layout
 
 block append content
   .container
@@ -13,8 +13,8 @@ block append content
           dd #{applicant.sex}
           dt=fmt.message("employer-employee-show.age")
           dd #{applicant.age}
-        a.btn.btn-link(href="#")=fmt.message("employer-employee-show.resume")
-        a.btn.btn-link(href="#")=fmt.message("employer-employee-show.test")
+        a.btn.btn-link(href=applicant.resumeFile)=fmt.message("employer-employee-show.resume")
+        a.btn.btn-link(href=applicant.testAnswerFile)=fmt.message("employer-employee-show.test")
     .row
       .col-md-6
         a.btn.btn-success(href="#",data-toggle="confirmation", data-placement="left", data-original-title="", title="")=fmt.message("employer-employee-show.apply")

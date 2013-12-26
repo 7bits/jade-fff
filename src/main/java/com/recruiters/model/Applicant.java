@@ -9,6 +9,8 @@ public class Applicant {
     private String firstName;
     private String lastName;
     private String description;
+    private String sex;
+    private Integer age;
     private String resumeFile;
     private String testAnswerFile;
     private ApplicantStatus status = null;
@@ -25,13 +27,18 @@ public class Applicant {
     }
 
     public Applicant(final Long id, final Deal deal, final String firstName,
-                     final String lastName, final String description) {
+                     final String lastName, final String description, final String sex,
+                     final Integer age, final String resumeFile, final String testAnswerFile) {
         this.id = id;
         this.deal = deal;
         this.firstName = firstName;
         this.lastName = lastName;
         this.description = description;
         this.status = ApplicantStatus.IN_PROGRESS;
+        this.sex = sex;
+        this.age = age;
+        this.resumeFile = resumeFile;
+        this.testAnswerFile = testAnswerFile;
     }
 
     public Long getId() {
@@ -96,5 +103,21 @@ public class Applicant {
 
     public void setStatus(final ApplicantStatus status) {
         this.status = status;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(final String sex) {
+        this.sex = sex;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(final Integer age) {
+        this.age = age;
     }
 }

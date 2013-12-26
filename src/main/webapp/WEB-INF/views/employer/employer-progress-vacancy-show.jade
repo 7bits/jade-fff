@@ -1,4 +1,4 @@
-extends layout
+extends ../layout
 
 block append content
   .container
@@ -8,19 +8,19 @@ block append content
         h2
         dl.dl-horizontal
           dt=fmt.message("employer-progress-vacancy-show.dt.name")
-          dd #{vacancy.title}
+          dd #{deal.vacancy.title}
           dt=fmt.message("employer-progress-vacancy-show.dt.description")
-          dd #{vacancy.description}
+          dd #{deal.vacancy.description}
           dt=fmt.message("employer-progress-vacancy-show.dt.salary")
-          dd #{vacancy.salary}
+          dd #{deal.vacancy.salary}
           dt=fmt.message("employer-progress-vacancy-show.dt.creation")
-          dd #{vacancy.creationDate}
+          dd #{deal.vacancy.creationDate}
           dt=fmt.message("employer-progress-vacancy-show.dt.expiration")
-          dd #{vacancy.expirationDate}
+          dd #{deal.vacancy.expirationDate}
       .col-md-4
         h2=fmt.message("employer-progress-vacancy-show.recruiter.h2")
         p
-          #{recruiter.firstName} #{recruiter.lastName}
+          #{deal.recruiter.firstName} #{deal.recruiter.lastName}
           .tools
             a.btn.btn-danger(href="#",data-toggle="confirmation", data-placement="left", data-original-title="", title="").
               #{fmt.message("employer-progress-vacancy-show.recruiter.decline")}
@@ -28,7 +28,7 @@ block append content
     .row
       .col-md-6
         ul.list-group
-          for applicant in vacancyList
+          for applicant in deal.applicants
             li.list-group-item
               #{applicant.firstName} #{applicant.lastName}
               a.btn.btn-link.pull-right(href = domain.getAbsoluteUrl() + "/employer-employee-show/" + applicant.id).
