@@ -101,6 +101,22 @@ public class EmployerService {
         return bidRepository.findAllActiveByEmployerId(employer.getId());
     }
 
+
+    /**
+     * Get bids for exact vacancy from DB for current employer
+     * @param vacancyId   Id of vacancy
+     * @param employer    Employer POJO instance
+     * @return list of bids
+     */
+    public List<Bid> findBidsForVacancy(final Long vacancyId, final Employer employer) {
+
+        Vacancy vacancy = vacancyRepository.getById(vacancyId);
+        if (vacancy.getEmployer().getId().equals(employer.getId())) {
+            return bidRepository.findAllBidsForVacancy(vacancyId);
+        }
+        return null;
+    }
+
     /**
      * Find all vacancies for exact employer
      * @param employer    Employer POJO instance
@@ -122,6 +138,20 @@ public class EmployerService {
         Bid bid = bidRepository.getBidById(bidId);
         if (bid.getVacancy().getEmployer().getId().equals(employer.getId())) {
             return bid;
+        }
+        return null;
+    }
+
+    /**
+     * Get Vacancy by its id if its related to exact employer
+     * @param vacancyId    Id of vacancy
+     * @param employer     Employer POJO instance
+     * @return Vacancy POJO instance
+     */
+    public Vacancy getVacancyById(final Long vacancyId, final Employer employer) {
+        Vacancy vacancy = vacancyRepository.getById(vacancyId);
+        if (vacancy.getEmployer().getId().equals(employer.getId())) {
+            return vacancy;
         }
         return null;
     }
