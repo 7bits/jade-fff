@@ -21,8 +21,19 @@ public class UserRepository {
         return this.findUserByUserName(request.getUserPrincipal().getName());
     }
 
+    /**
+     * Returns User POJO instance by username
+     * @param username    Username
+     * @return User POJO instance
+     */
     public User findUserByUserName(final String username) {
-        //TODO
-        return new User(1L, "recruiter", "123123");
+
+        if (username.equals("recruiter")) {
+            return new User(1L, "recruiter", "123123");
+        } else if (username.equals("employer")) {
+            return new User(2L, "employer", "123123");
+        } else {
+            return null;
+        }
     }
 }
