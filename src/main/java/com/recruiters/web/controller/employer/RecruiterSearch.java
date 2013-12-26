@@ -44,10 +44,11 @@ public class RecruiterSearch {
             // Populating map <Vacancy id, Count of Recruiter offers>
             Map<Long, Long> bidCount = new HashMap<Long, Long>();
             for (Bid bid: bids) {
-                if (bidCount.get(bid.getId()) == null) {
-                    bidCount.put(bid.getId(), 1L);
+                Long vacancyId = bid.getVacancy().getId();
+                if (bidCount.get(vacancyId) == null) {
+                    bidCount.put(vacancyId, 1L);
                 } else {
-                    bidCount.put(bid.getId(), bidCount.get(bid.getId()) + 1L);
+                    bidCount.put(vacancyId, bidCount.get(vacancyId) + 1L);
                 }
             }
 
