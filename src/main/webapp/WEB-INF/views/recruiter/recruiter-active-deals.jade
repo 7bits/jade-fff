@@ -8,6 +8,7 @@ block append content
         tr
           th Наименование
           th Описание
+          th Статус
           th Дата создания
           th
       tbody
@@ -15,6 +16,7 @@ block append content
           tr
             td #{deal.vacancy.title}
             td #{deal.vacancy.description}
+            td #{deal.status}
             td #{deal.vacancy.creationDate}
             td
               a.btn.btn-link(href=domain.getAbsoluteUrl() + "/recruiter-show-in-progress-vacancy/" + deal.id).
