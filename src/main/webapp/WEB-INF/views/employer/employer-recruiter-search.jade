@@ -3,17 +3,7 @@ extends ../layout
 block append content
   .container
     h1=fmt.message("employer-recruiter-search.h1")
-    table.table.table-striped
-      thead
-        tr
-          th=fmt.message("employer-recruiter-search.table.vacancy")
-          th=fmt.message("employer-recruiter-search.table.recruiter")
-          th
-      tbody
-        for bid in bids
-          tr
-            td #{bid.vacancy.title}
-            td #{bid.recruiter.firstName} #{bid.recruiter.lastName}
-            td
-              a.btn.btn-link.pull-right(href = domain.getAbsoluteUrl() + "/employer-recruiter-show/recruiter/" + bid.recruiter.id + "/vacancy/" + bid.vacancy.id).
-                        #{fmt.message("employer-recruiter-search.more")}
+    for vacancy in vacancies
+      h2 #{vacancy.vacancy.title}
+      a.btn.btn-link(href = domain.getAbsoluteUrl() + "/employer-show-recruiter-bids/" + vacancy.vacancy.id).
+                #{fmt.message("employer-recruiter-search.bids")} (#{vacancy.bidCount})

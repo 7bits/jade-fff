@@ -1,0 +1,21 @@
+extends ../layout
+
+block append content
+  .container
+    .row
+      .col-md-8
+        h2=fmt.message("employer-recruiter-show.h2.recruiter")
+        p #{bid.recruiter.firstName} #{bid.recruiter.lastName}
+        p #{bid.message}
+      .col-md-4
+        h2=fmt.message("employer-recruiter-show.h2.vacancy")
+        p #{bid.vacancy.title}
+        p #{bid.vacancy.description}
+        p #{bid.vacancy.salary}
+
+    .row
+      .col-md-6
+        .a.btn.btn-success(href="#",data-toggle="confirmation", data-placement="left", data-original-title="", title="")
+          #{fmt.message("employer-recruiter-show.apply")}
+        .a.btn.btn-danger(href="#",data-toggle="confirmation", data-placement="left", data-original-title="", title="")
+          #{fmt.message("employer-recruiter-show.decline")}

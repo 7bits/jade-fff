@@ -44,7 +44,7 @@ public class VacancyRepository {
     /** Title of 2nd vacancy */
     static final String VACANCY2_TITLE = "Лесоруб";
     /** Description of 2nd vacancy */
-    static final String VACANCY2_SHORT_DESCRIPTION = "Умеет клёво рубить сосны";
+    static final String VACANCY2_SHORT_DESCRIPTION = "Уметь клёво рубить сосны";
     /** Date of 2nd vacancy */
     static final Date VACANCY2_DATE = new Date();
     /** If of employer for 2nd vacancy */
@@ -68,7 +68,7 @@ public class VacancyRepository {
     /** Title of 3rd vacancy */
     static final String VACANCY3_TITLE = "Сантехник";
     /** Description of 3rd vacancy */
-    static final String VACANCY3_SHORT_DESCRIPTION = "Не пьёт!";
+    static final String VACANCY3_SHORT_DESCRIPTION = "Не пить!";
     /** Date of 3rd vacancy */
     static final Date VACANCY3_DATE = new Date();
     /** If of employer for 3rd vacancy */
@@ -131,5 +131,28 @@ public class VacancyRepository {
     public Boolean updateVacancy(final Recruiter recruiter, final String message) {
 
         return true;
+    }
+
+    /**
+     * Find vacancies of exact employer by its id
+     * @param employerId    Id of employer
+     * @return List of vacancies
+     */
+    public List<Vacancy> findEmployerVacancies(final Long employerId) {
+
+        EmployerRepository employerRepository = new EmployerRepository();
+        Vacancy vacancy1 = new Vacancy(VACANCY1_ID, employerRepository.getById(1L), VACANCY1_TITLE, VACANCY1_SHORT_DESCRIPTION, VACANCY1_DATE);
+        Vacancy vacancy2 = new Vacancy(VACANCY2_ID, employerRepository.getById(1L), VACANCY2_TITLE, VACANCY2_SHORT_DESCRIPTION, VACANCY2_DATE);
+        Vacancy vacancy3 = new Vacancy(VACANCY3_ID, employerRepository.getById(1L), VACANCY3_TITLE, VACANCY3_SHORT_DESCRIPTION, VACANCY3_DATE);
+        List<Vacancy> vacancyList = new ArrayList<Vacancy>();
+
+        if (employerId.equals(1L)) {
+            vacancyList.add(vacancy1);
+            vacancyList.add(vacancy2);
+            vacancyList.add(vacancy3);
+            return vacancyList;
+        }
+
+        return null;
     }
 }
