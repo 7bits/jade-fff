@@ -110,4 +110,19 @@ public class EmployerService {
 
         return vacancyRepository.findEmployerVacancies(employer.getId());
     }
+
+    /**
+     * Get bid by its id, employer verification required
+     * @param bidId       Id of bid
+     * @param employer    Employer POJO instance
+     * @return Bid POJO instance
+     */
+    public Bid getBidById(final Long bidId, final Employer employer) {
+
+        Bid bid = bidRepository.getBidById(bidId);
+        if (bid.getVacancy().getEmployer().getId().equals(employer.getId())) {
+            return bid;
+        }
+        return null;
+    }
 }

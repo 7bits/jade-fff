@@ -43,7 +43,7 @@ public class VacancyRepository {
     /** Title of 2nd vacancy */
     static final String VACANCY2_TITLE = "Лесоруб";
     /** Description of 2nd vacancy */
-    static final String VACANCY2_SHORT_DESCRIPTION = "Умеет клёво рубить сосны";
+    static final String VACANCY2_SHORT_DESCRIPTION = "Уметь клёво рубить сосны";
     /** Date of 2nd vacancy */
     static final Date VACANCY2_DATE = new Date();
     /** If of employer for 2nd vacancy */
@@ -67,7 +67,7 @@ public class VacancyRepository {
     /** Title of 3rd vacancy */
     static final String VACANCY3_TITLE = "Сантехник";
     /** Description of 3rd vacancy */
-    static final String VACANCY3_SHORT_DESCRIPTION = "Не пьёт!";
+    static final String VACANCY3_SHORT_DESCRIPTION = "Не пить!";
     /** Date of 3rd vacancy */
     static final Date VACANCY3_DATE = new Date();
     /** If of employer for 3rd vacancy */
