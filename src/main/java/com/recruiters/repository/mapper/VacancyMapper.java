@@ -70,12 +70,14 @@ public interface VacancyMapper {
     })
     List<Vacancy> findEmployerVacancies(final Long employerId);
 
-    //TODO add bidCount
-    @Select("SELECT vacancies.*, users.firstname, users.lastname " +
+    @Select("SELECT vacancies.*, count(bids.id) as bid_count, " +
+            "users.firstname, users.lastname " +
             "FROM vacancies " +
             "INNER JOIN employers ON employers.id = vacancies.employer_id " +
             "INNER JOIN users  ON employers.user_id=users.id " +
-            "WHERE vacancies.employer_id=#{employerId}")
+            "LEFT JOIN bids ON bids.vacancy_id=vacancies.id " +
+            "WHERE vacancies.employer_id=#{employerId} " +
+            "GROUP BY vacancies.id")
     @Results({
             @Result(column = "id", property = "id"),
             @Result(column = "employer_id", property = "employer.id"),
@@ -85,6 +87,7 @@ public interface VacancyMapper {
             @Result(column = "creation_date", property = "creationDate"),
             @Result(column = "expiration_date", property = "expirationDate"),
             @Result(column = "test_file", property = "testFile"),
+            @Result(column = "bid_count", property = "bidCount"),
             @Result(column = "firstname", property = "employer.user.firstName"),
             @Result(column = "lastname", property = "employer.user.lastName"),
     })
