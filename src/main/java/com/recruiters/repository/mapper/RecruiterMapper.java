@@ -10,7 +10,8 @@ import org.apache.ibatis.annotations.Select;
  */
 public interface RecruiterMapper {
 
-    @Select("SELECT recruiters.*, users.* " +
+    @Select("SELECT recruiters.id, recruiters.user_id, " +
+            "users.firstname, users.lastname, users.username, users.password " +
             "FROM recruiters " +
             "RIGHT JOIN users ON users.id = recruiters.user_id " +
             "WHERE recruiters.id=#{recruiterId}")
@@ -24,7 +25,8 @@ public interface RecruiterMapper {
     })
     Recruiter getById(final Long recruiterId);
 
-    @Select("SELECT recruiters.*, users.* " +
+    @Select("SELECT recruiters.id, recruiters.user_id, " +
+            "users.firstname, users.lastname, users.username, users.password " +
             "FROM recruiters " +
             "RIGHT JOIN users ON users.id = recruiters.user_id " +
             "WHERE recruiters.user_id=#{userId}")
