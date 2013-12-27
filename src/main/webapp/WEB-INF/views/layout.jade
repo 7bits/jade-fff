@@ -7,37 +7,54 @@ html
       script(src="http://code.jquery.com/jquery-2.0.3.js")
       script(src=domain.getAbsoluteUrl() + '/resources/js/lib/bootstrap.js')
       script(src=domain.getAbsoluteUrl() + '/resources/js/lib/bootstrap-confirmation.js')
+      script(src=domain.getAbsoluteUrl() + '/resources/js/lib/bootstrap-datepicker.js')
       script(src=domain.getAbsoluteUrl() + '/resources/js/confirmation.js')
       link(href=domain.getAbsoluteUrl() + '/resources/stylesheets/lib/bootstrap.min.css', rel='stylesheet', type='text/css')
       link(href=domain.getAbsoluteUrl() + '/resources/stylesheets/lib/bootstrap-theme.min.css', rel='stylesheet', type='text/css')
+      link(href=domain.getAbsoluteUrl() + '/resources/stylesheets/lib/datepicker.css', rel='stylesheet', type='text/css')
+      link(href=domain.getAbsoluteUrl() + '/resources/stylesheets/lib/font-awesome.min.css', rel='stylesheet', type='text/css')
+      link(href=domain.getAbsoluteUrl() + '/resources/stylesheets/colors.css', rel='stylesheet', type='text/css')
       link(href=domain.getAbsoluteUrl() + '/resources/stylesheets/advanced-lists.css', rel='stylesheet', type='text/css')
       link(href=domain.getAbsoluteUrl() + '/resources/stylesheets/table.css', rel='stylesheet', type='text/css')
+      link(href=domain.getAbsoluteUrl() + '/resources/stylesheets/buttons.css', rel='stylesheet', type='text/css')
   body
     block content
-      .navbar.navbar-inverse(role="navigation")
+      .navbar.navbar-default(role="navigation")
         .container
           .navbar-header
             a.navbar-brand(href=domain.getAbsoluteUrl()).
               Имя и логотип проекта
           .navbar-collapse.collapse
             ul.nav.navbar-nav.navbar-right
-              if security.isUserInRole("ROLE_RECRUITER")
-                li
-                  a(href=domain.getAbsoluteUrl() + "/recruiter-active-deals").
-                    Вакансии в работе
-                li
-                  a(href=domain.getAbsoluteUrl() + "/recruiter-active-bids").
-                    Мои заявки
-                li
-                  a(href=domain.getAbsoluteUrl() + "/recruiter-find-new-vacancies").
-                    Поиск вакансии
-              if security.isUserInRole("ROLE_EMPLOYER")
-                li
-                  a(href=domain.getAbsoluteUrl() + "/employer-recruiter-search").
-                    Выбор рекрутёра
-                li
-                  a(href=domain.getAbsoluteUrl() + "/employer-progress-vacancies-list").
-                    Вакансии с рекрутёром
-              li
-                a(href=domain.getAbsoluteUrl() + "/j_spring_security_logout").
-                  Выйти
+              li#fat-menu.dropdown
+                a(href="#", id="menu", role="button", class="dropdown-toggle", data-toggle="dropdown")
+                  span.glyphicon.glyphicon-star
+                  b.caret
+                ul(class="dropdown-menu", role="menu", aria-labelledby="menu")
+                  if security.isUserInRole("ROLE_RECRUITER")
+                    li(role="presentation")
+                      a(href=domain.getAbsoluteUrl() + "/recruiter-profile", role="menuitem", tabindex="-1").
+                        Настройки
+                    li(role="presentation")
+                      a(href=domain.getAbsoluteUrl() + "/recruiter-active-deals", role="menuitem", tabindex="-1").
+                        Вакансии в работе
+                    li(role="presentation")
+                      a(href=domain.getAbsoluteUrl() + "/recruiter-active-bids", role="menuitem", tabindex="-1").
+                        Мои заявки
+                    li(role="presentation")
+                      a(href=domain.getAbsoluteUrl() + "/recruiter-find-new-vacancies", role="menuitem", tabindex="-1").
+                        Поиск вакансии
+                  if security.isUserInRole("ROLE_EMPLOYER")
+                    li(role="presentation")
+                      a(href=domain.getAbsoluteUrl() + "/employer-profile", role="menuitem", tabindex="-1").
+                        Настройки
+                    li(role="presentation")
+                      a(href=domain.getAbsoluteUrl() + "/employer-recruiter-search", role="menuitem", tabindex="-1").
+                        Выбор рекрутёра
+                    li(role="presentation")
+                      a(href=domain.getAbsoluteUrl() + "/employer-progress-vacancies-list", role="menuitem", tabindex="-1").
+                        Вакансии с рекрутёром
+                  li(role="presentation", class="divider")
+                  li(role="presentation")
+                    a(href=domain.getAbsoluteUrl() + "/j_spring_security_logout", role="menuitem", tabindex="-1").
+                      Выйти

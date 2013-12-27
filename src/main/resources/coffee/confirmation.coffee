@@ -1,4 +1,6 @@
 $ ->
+  #TODO:: replace this
+  $('.datepicker').datepicker()
   $('[data-toggle="confirmation"]').confirmation({
       title: 'Вы уверены?'
       btnOkLabel: '<i class="icon-ok-sign icon-white"></i> Да'

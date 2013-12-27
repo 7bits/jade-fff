@@ -3,7 +3,9 @@ extends ../layout
 block append content
   .container
     h1=fmt.message("employer-recruiter-search.h1")
-    for vacancy in vacancies
-      h2 #{vacancy.title}
-      a.btn.btn-link(href = domain.getAbsoluteUrl() + "/employer-show-recruiter-bids/" + vacancy.id).
-                #{fmt.message("employer-recruiter-search.bids")} (#{vacancy.bidCount})
+    ol
+      for vacancy in vacancies
+        li
+          a.btn.btn-link.black(href = domain.getAbsoluteUrl() + "/employer-show-recruiter-bids/" + vacancy.id)
+            #{vacancy.title} &nbsp;
+            | (#{vacancy.bidCount})

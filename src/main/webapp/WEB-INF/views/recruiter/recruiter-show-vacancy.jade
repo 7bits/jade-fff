@@ -15,6 +15,11 @@ block append content
       dt Дата окончания
       dd #{vacancy.expirationDate}
 
-    a.btn.btn-link(href=domain.getAbsoluteUrl() + "/recruiter-find-new-vacancies") К списку вакансий
-    input(type="text", class="form-control js-message-for-bid", name="message", placeholder="текст")
-    a.btn.btn-primary(data-href=domain.getAbsoluteUrl() + "/recruiter-show-vacancy/" + vacancy.id, data-toggle="confirmation", data-placement="left", data-original-title="", title="") Предложить свои услуги
+
+    .row
+      .col-md-6
+        textarea(class="form-control js-message-for-bid", name="message", placeholder="Условия работы", rows="4")
+
+    .btn-row
+      a.btn.btn-primary(data-href=domain.getAbsoluteUrl() + "/recruiter-show-vacancy/" + vacancy.id, data-toggle="confirmation", data-placement="left", data-original-title="", title="") Предложить свои услуги
+      a.btn.btn-link(href=domain.getAbsoluteUrl() + "/recruiter-find-new-vacancies") К списку вакансий

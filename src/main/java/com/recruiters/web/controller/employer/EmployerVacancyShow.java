@@ -47,6 +47,29 @@ public class EmployerVacancyShow {
         return vacancyProgress;
     }
 
+
+    /*TODO:: replace this and add make real*/
+
+    @RequestMapping(value = "employer-vacancy-create", method = RequestMethod.GET)
+    public ModelAndView createVacancyForEmployer() {
+
+        return new ModelAndView("employer/vacancy-create.jade");
+    }
+    @RequestMapping(value = "employer-profile", method = RequestMethod.GET)
+    public ModelAndView employerProfile() {
+
+        return new ModelAndView("employer/profile.jade");
+    }
+
+    @RequestMapping(value = "recruiter-profile", method = RequestMethod.GET)
+    public ModelAndView recruiterProfile() {
+
+        return new ModelAndView("recruiter/profile.jade");
+    }
+
+    /*************************************/
+
+
     public EmployerService getEmployerService() {
         return employerService;
     }
