@@ -2,21 +2,17 @@ extends ../layout
 
 block append content
   .container
-    .h1=fmt.message("employer-show-recruiter-bids.h1")
+    h1=fmt.message("employer-show-recruiter-bids.h1")
     .row
       .col-md-8
-        table.table.table-striped
-          thead
-            tr
-              th=fmt.message("employer-show-recruiter-bids.recruiter")
-              th
-          tbody
-            for bid in bids
-              tr
-                td #{bid.recruiter.firstName} #{bid.recruiter.lastName}
-                td
-                  a.btn.btn-link(href = domain.getAbsoluteUrl() + "/employer-recruiter-show/" + bid.id).
-                        #{fmt.message("employer-show-recruiter-bids.more")}
+        h2
+        ul.list-group
+          for bid in bids
+            li.list-group-item
+              #{bid.recruiter.firstName} #{bid.recruiter.lastName}
+              a.btn.btn-link.pull-right(href = domain.getAbsoluteUrl() + "/employer-recruiter-show/" + bid.id).
+                #{fmt.message("employer-show-recruiter-bids.more")}
+
       .col-md-4
         h2=fmt.message("employer-show-recruiter-bids.vacancy.h2")
         p #{vacancy.title}
