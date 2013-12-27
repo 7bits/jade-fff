@@ -18,11 +18,17 @@ block append content
             label(for="pay-from")
               =fmt.message("employer-vacancy-create.pay")
             .row
-              .col-xs-2
+              .col-xs-3
                 input(type="number", class="form-control", id="pay-from", name="pay-from", placeholder=fmt.message("employer-vacancy-create.pay-from"))
-              .col-xs-2
+              .col-xs-3
                 input(type="number", class="form-control", id="pay-to", name="pay-to", placeholder=fmt.message("employer-vacancy-create.pay-to"))
             #{errors.pay}
+          .form-group
+            label(for="date")
+            .row
+              .col-xs-4
+                input(type="text", class="form-control datepicker", id="date", name="date", placeholder=fmt.message("employer-vacancy-create.date"))
+            #{errors.name}
           .form-group
             label(for="testFile")=fmt.message("employer-vacancy-create.testFile")
             input(type="file", id="test-file", name="testFile", placeholder=fmt.message("employer-vacancy-create.testFile"))
