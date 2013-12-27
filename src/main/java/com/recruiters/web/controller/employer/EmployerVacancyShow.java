@@ -55,6 +55,13 @@ public class EmployerVacancyShow {
 
         return new ModelAndView("employer/vacancy-create.jade");
     }
+    @RequestMapping(value = "profile", method = RequestMethod.GET)
+    public ModelAndView profile() {
+
+        return new ModelAndView("profile.jade");
+    }
+
+    /*************************************/
 
 
     public EmployerService getEmployerService() {
