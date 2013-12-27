@@ -7,6 +7,9 @@ import com.recruiters.model.Vacancy;
 import com.recruiters.service.RecruiterService;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 
 
@@ -51,9 +55,9 @@ public class ShowVacancy {
      * @return model and view with one vacancy
      */
 
-    @ResponseBody
+
     @RequestMapping(value = "recruiter-show-vacancy/{vacancyId}", method = RequestMethod.POST)
-    public String applyToVacancy(
+    public @ResponseBody Boolean applyToVacancy(
             @PathVariable final Long vacancyId,
             @RequestParam(value = "message", required = false) final String message,
             final HttpServletRequest request
@@ -65,7 +69,7 @@ public class ShowVacancy {
             successApplied = this.getRecruiterService().applyRecruiterToVacancy(recruiter, message);
         }
 
-        return null;
+        return successApplied;
     }
 
 
