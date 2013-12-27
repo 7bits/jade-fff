@@ -22,26 +22,24 @@ block append content
         p #{deal.vacancy.employer.firstName} #{deal.vacancy.employer.lastName}
 
     h2 Список кандидатов
-    .row
-      .col-md-6
-        table.table.table-striped
-          thead
-            tr
-              th Имя
-              th Фамилия
-              th Статус
-              th Дата создания
-              th Действие
-          if deal.applicants
-            for applicant in deal.applicants
-              tr
-                td #{applicant.firstName}
-                td #{applicant.lastName}
-                td #{applicant.status}
-                td #{deal.vacancy.creationDate}
-                td
-                  if applicant.status != 'REJECTED'
-                    a.btn.btn-link.pull-right(href= domain.getAbsoluteUrl() + "/recruiter-edit-applicant/" + applicant.id).
-                      Изменить
+    table.table.table-striped
+      thead
+        tr
+          th Имя
+          th Фамилия
+          th Статус
+          th Дата создания
+          th
+      if deal.applicants
+        for applicant in deal.applicants
+          tr
+            td #{applicant.firstName}
+            td #{applicant.lastName}
+            td #{applicant.status}
+            td #{deal.vacancy.creationDate}
+            td
+              if applicant.status != 'REJECTED'
+                a.btn.btn-link.pull-right(href= domain.getAbsoluteUrl() + "/recruiter-edit-applicant/" + applicant.id).
+                  Изменить
 
-        a.btn.btn-success(href= domain.getAbsoluteUrl() + "/recruiter-add-applicant/" + deal.id) Предложить нового кандидата
+    a.btn.btn-success(href= domain.getAbsoluteUrl() + "/recruiter-add-applicant/" + deal.id) Предложить нового кандидата
