@@ -47,6 +47,16 @@ public class EmployerVacancyShow {
         return vacancyProgress;
     }
 
+
+    /*TODO:: replace this and add make real*/
+
+    @RequestMapping(value = "employer-vacancy-create", method = RequestMethod.GET)
+    public ModelAndView createVacancyForEmployer() {
+
+        return new ModelAndView("employer/vacancy-create.jade");
+    }
+
+
     public EmployerService getEmployerService() {
         return employerService;
     }
