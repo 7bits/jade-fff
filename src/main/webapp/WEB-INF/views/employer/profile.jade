@@ -1,25 +1,25 @@
 extends ../layout
 
 block append content
-  .container
+  .container(ng-controller="FormController")
     h2=fmt.message("profile.title")
-    form(name="applicantForm", action="", method="post", enctype="multipart/form-data")
+    form(name="applicantForm", action="", method="post", enctype="multipart/form-data", novalidate="", ng-submit="update(user)")
       .row
         .col-md-6
           .form-group
             label(for="firstName")
-            input(type="text", class="form-control", id="firstName", name="firstName", placeholder=fmt.message("profile.firstName"))
+            input(type="text", class="form-control", id="firstName", name="firstName", placeholder=fmt.message("profile.firstName"), ng-model="user.firstName", required="")
             #{errors.firstName}
           .form-group
             label(for="lastName")
-            input(type="text", class="form-control", id="lastName", name="lastName", placeholder=fmt.message("profile.lastName"))
+            input(type="text", class="form-control", id="lastName", name="lastName", placeholder=fmt.message("profile.lastName"), ng-model="user.lastName", required="")
             #{errors.lastName}
           .form-group
             label(for="company")
-            input(type="text", class="form-control", id="company", name="company", placeholder=fmt.message("profile.company"))
+            input(type="text", class="form-control", id="company", name="company", placeholder=fmt.message("profile.company"), ng-model="user.company")
             #{errors.company}
           .form-group
             label(for="description")
-            textarea(class="form-control", id="description", name="description", placeholder=fmt.message("profile.description"))
+            textarea(class="form-control", id="description", name="description", placeholder=fmt.message("profile.description"), ng-model="user.description")
             #{errors.description}
           input.btn.btn-success(type="submit", name="submit", value=fmt.message("profile.submit"))=fmt.message("profile.submit")

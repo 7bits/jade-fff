@@ -1,14 +1,16 @@
 !!! 5
-html
+html(ng-app="")
   head
     meta(charset="utf-8")
     title= pageName
     block head
+      script(src="http://code.angularjs.org/1.1.4/angular.min.js")
       script(src="http://code.jquery.com/jquery-2.0.3.js")
       script(src=domain.getAbsoluteUrl() + '/resources/js/lib/bootstrap.js')
       script(src=domain.getAbsoluteUrl() + '/resources/js/lib/bootstrap-confirmation.js')
       script(src=domain.getAbsoluteUrl() + '/resources/js/lib/bootstrap-datepicker.js')
       script(src=domain.getAbsoluteUrl() + '/resources/js/confirmation.js')
+      script(src=domain.getAbsoluteUrl() + '/resources/js/form.js')
       link(href=domain.getAbsoluteUrl() + '/resources/stylesheets/lib/bootstrap.min.css', rel='stylesheet', type='text/css')
       link(href=domain.getAbsoluteUrl() + '/resources/stylesheets/lib/bootstrap-theme.min.css', rel='stylesheet', type='text/css')
       link(href=domain.getAbsoluteUrl() + '/resources/stylesheets/lib/datepicker.css', rel='stylesheet', type='text/css')
@@ -20,7 +22,7 @@ html
   body
     block content
       .navbar.navbar-default(role="navigation")
-        .container
+        .container.main-container(data-base-url=domain.getAbsoluteUrl())
           .navbar-header
             a.navbar-brand(href=domain.getAbsoluteUrl()).
               Имя и логотип проекта
