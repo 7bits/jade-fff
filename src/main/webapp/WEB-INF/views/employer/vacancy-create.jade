@@ -33,9 +33,9 @@ block append content
             label(for="testFile")=fmt.message("employer-vacancy-create.testFile")
             input(type="file", id="test-file", name="testFile", placeholder=fmt.message("employer-vacancy-create.testFile"))
             #{errors.testFile}
-          .checkbox
-            label(for="public")
-              input(type="checkbox", id="public", name="public")
-              =fmt.message("employer-vacancy-create.public")
-            #{errors.public}
+          //- .checkbox
+          //-   label(for="public")
+          //-     input(type="checkbox", id="public", name="public")
+          //-     =fmt.message("employer-vacancy-create.public")
+          //-   #{errors.public}
           input.btn.btn-success(type="submit", name="submit", value=fmt.message("employer-vacancy-create.add"))=fmt.message("employer-vacancy-create.add")

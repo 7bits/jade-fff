@@ -31,10 +31,10 @@ html
                   span.glyphicon.glyphicon-star
                   b.caret
                 ul(class="dropdown-menu", role="menu", aria-labelledby="menu")
-                  li(role="presentation")
-                    a(href=domain.getAbsoluteUrl() + "/profile", role="menuitem", tabindex="-1").
-                      Настройки
                   if security.isUserInRole("ROLE_RECRUITER")
+                    li(role="presentation")
+                      a(href=domain.getAbsoluteUrl() + "/recruiter-profile", role="menuitem", tabindex="-1").
+                        Настройки
                     li(role="presentation")
                       a(href=domain.getAbsoluteUrl() + "/recruiter-active-deals", role="menuitem", tabindex="-1").
                         Вакансии в работе
@@ -45,6 +45,9 @@ html
                       a(href=domain.getAbsoluteUrl() + "/recruiter-find-new-vacancies", role="menuitem", tabindex="-1").
                         Поиск вакансии
                   if security.isUserInRole("ROLE_EMPLOYER")
+                    li(role="presentation")
+                      a(href=domain.getAbsoluteUrl() + "/employer-profile", role="menuitem", tabindex="-1").
+                        Настройки
                     li(role="presentation")
                       a(href=domain.getAbsoluteUrl() + "/employer-recruiter-search", role="menuitem", tabindex="-1").
                         Выбор рекрутёра
