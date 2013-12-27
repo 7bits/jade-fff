@@ -4,6 +4,7 @@ import com.recruiters.model.Bid;
 import com.recruiters.model.Recruiter;
 import com.recruiters.model.Vacancy;
 import org.apache.commons.lang3.time.DateUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
@@ -22,21 +23,6 @@ public class VacancyRepository {
     static final String VACANCY1_SHORT_DESCRIPTION = "PHP guru";
     /** Date of 1st vacancy */
     static final Date VACANCY1_DATE = new Date();
-    /** If of employer for 1st vacancy */
-    static final Long VACANCY1_EMPLOYER_ID = 1L;
-    /** Description of 1st vacancy */
-    static final String VACANCY1_DESCRIPTION = "Обожаю рубить сосны!";
-    /** Salary range for 1st vacancy */
-    static final String VACANCY1_SALARY = "30 - 50 $ в час";
-    /** Creation date for 1st vacancy */
-    static final Date VACANCY1_CREATION_DATE = new Date();
-    /** Expiration date for 1st vacancy */
-    static final Date VACANCY1_EXPIRATION_DATE = DateUtils.addDays(new Date(), 1);
-    /** Test file url for 1st vacancy */
-    static final String VACANCY1_TEST_FILE = "#";
-
-
-
 
     /** Id of 2nd vacancy */
     static final Long VACANCY2_ID = 2L;
@@ -46,21 +32,6 @@ public class VacancyRepository {
     static final String VACANCY2_SHORT_DESCRIPTION = "Уметь клёво рубить сосны";
     /** Date of 2nd vacancy */
     static final Date VACANCY2_DATE = new Date();
-    /** If of employer for 2nd vacancy */
-    static final Long VACANCY2_EMPLOYER_ID = 1L;
-    /** Description of 2nd vacancy */
-    static final String VACANCY2_DESCRIPTION = "Умеет клёво рубить сосны";
-    /** Salary range for 2nd vacancy */
-    static final String VACANCY2_SALARY = "33 - 45 $ в час";
-    /** Creation date for 2nd vacancy */
-    static final Date VACANCY2_CREATION_DATE = new Date();
-    /** Expiration date for 2nd vacancy */
-    static final Date VACANCY2_EXPIRATION_DATE = DateUtils.addDays(new Date(), 1);
-    /** Test file url for 2nd vacancy */
-    static final String VACANCY2_TEST_FILE = "#";
-
-
-
 
     /** Id of 3rd vacancy */
     static final Long VACANCY3_ID = 3L;
@@ -70,20 +41,9 @@ public class VacancyRepository {
     static final String VACANCY3_SHORT_DESCRIPTION = "Не пить!";
     /** Date of 3rd vacancy */
     static final Date VACANCY3_DATE = new Date();
-    /** If of employer for 3rd vacancy */
-    static final Long VACANCY3_EMPLOYER_ID = 1L;
-    /** Description of 3rd vacancy */
-    static final String VACANCY3_DESCRIPTION = "Не пьёт!";
-    /** Salary range for 3rd vacancy */
-    static final String VACANCY3_SALARY = "80 - 100 $ в час";
-    /** Creation date for 3rd vacancy */
-    static final Date VACANCY3_CREATION_DATE = new Date();
-    /** Expiration date for 3rd vacancy */
-    static final Date VACANCY3_EXPIRATION_DATE = DateUtils.addDays(new Date(), 1);
-    /** Test file url for 3rd vacancy */
-    static final String VACANCY3_TEST_FILE = "#";
 
-
+    @Autowired
+    private EmployerRepository employerRepository = null;
 
     /**
      * Method return vacancy by id
@@ -92,7 +52,6 @@ public class VacancyRepository {
      */
     public Vacancy getById(final Long vacancyId) {
 
-        EmployerRepository employerRepository = new EmployerRepository();
         Vacancy vacancy1 = new Vacancy(VACANCY1_ID, employerRepository.getById(1L), VACANCY1_TITLE, VACANCY1_SHORT_DESCRIPTION, VACANCY1_DATE);
         Vacancy vacancy2 = new Vacancy(VACANCY2_ID, employerRepository.getById(1L), VACANCY2_TITLE, VACANCY2_SHORT_DESCRIPTION, VACANCY2_DATE);
         Vacancy vacancy3 = new Vacancy(VACANCY3_ID, employerRepository.getById(1L), VACANCY3_TITLE, VACANCY3_SHORT_DESCRIPTION, VACANCY3_DATE);
@@ -116,7 +75,6 @@ public class VacancyRepository {
     public List<Vacancy> findListOfAvailableVacancies() {
         List <Vacancy> vacancies = new ArrayList<Vacancy>();
 
-        EmployerRepository employerRepository = new EmployerRepository();
         Vacancy vacancy1 = new Vacancy(VACANCY1_ID, employerRepository.getById(1L), VACANCY1_TITLE, VACANCY1_SHORT_DESCRIPTION, VACANCY1_DATE);
         Vacancy vacancy2 = new Vacancy(VACANCY2_ID, employerRepository.getById(1L), VACANCY2_TITLE, VACANCY2_SHORT_DESCRIPTION, VACANCY2_DATE);
         Vacancy vacancy3 = new Vacancy(VACANCY3_ID, employerRepository.getById(1L), VACANCY3_TITLE, VACANCY3_SHORT_DESCRIPTION, VACANCY3_DATE);
@@ -139,7 +97,6 @@ public class VacancyRepository {
      */
     public List<Vacancy> findEmployerVacancies(final Long employerId) {
 
-        EmployerRepository employerRepository = new EmployerRepository();
         Vacancy vacancy1 = new Vacancy(VACANCY1_ID, employerRepository.getById(1L), VACANCY1_TITLE, VACANCY1_SHORT_DESCRIPTION, VACANCY1_DATE);
         Vacancy vacancy2 = new Vacancy(VACANCY2_ID, employerRepository.getById(1L), VACANCY2_TITLE, VACANCY2_SHORT_DESCRIPTION, VACANCY2_DATE);
         Vacancy vacancy3 = new Vacancy(VACANCY3_ID, employerRepository.getById(1L), VACANCY3_TITLE, VACANCY3_SHORT_DESCRIPTION, VACANCY3_DATE);
@@ -184,5 +141,13 @@ public class VacancyRepository {
         }
 
         return vacancies;
+    }
+
+    public EmployerRepository getEmployerRepository() {
+        return employerRepository;
+    }
+
+    public void setEmployerRepository(final EmployerRepository employerRepository) {
+        this.employerRepository = employerRepository;
     }
 }

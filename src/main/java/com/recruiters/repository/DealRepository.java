@@ -1,6 +1,7 @@
 package com.recruiters.repository;
 
 import com.recruiters.model.Deal;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -11,16 +12,19 @@ import java.util.List;
  */
 @Repository
 public class DealRepository {
+    @Autowired
+    private RecruiterRepository recruiterRepository = null;
+    @Autowired
+    private EmployerRepository employerRepository = null;
+    @Autowired
+    private VacancyRepository vacancyRepository = null;
+    @Autowired
+    private ApplicantRepository applicantRepository = null;
 
     public Deal getById(final Long id) {
-        VacancyRepository vacancyRepository = new VacancyRepository();
-        EmployerRepository employerRepository = new EmployerRepository();
-        RecruiterRepository recruiterRepository = new RecruiterRepository();
-        ApplicantRepository applicantRepository = new ApplicantRepository();
-
-        Deal deal1 = new Deal(1L, vacancyRepository.getById(1L), recruiterRepository.getByUserId(1L), applicantRepository.getApplicantByDealId(1L));
-        Deal deal2 = new Deal(2L, vacancyRepository.getById(2L), recruiterRepository.getByUserId(1L), applicantRepository.getApplicantByDealId(1L));
-        Deal deal3 = new Deal(3L, vacancyRepository.getById(3L), recruiterRepository.getByUserId(1L), applicantRepository.getApplicantByDealId(1L));
+        Deal deal1 = new Deal(1L, vacancyRepository.getById(1L), recruiterRepository.getById(1L), applicantRepository.getApplicantByDealId(1L));
+        Deal deal2 = new Deal(2L, vacancyRepository.getById(2L), recruiterRepository.getById(1L), applicantRepository.getApplicantByDealId(1L));
+        Deal deal3 = new Deal(3L, vacancyRepository.getById(3L), recruiterRepository.getById(1L), applicantRepository.getApplicantByDealId(1L));
 
         if (id.equals(1L)) {
             return deal1;
@@ -36,16 +40,11 @@ public class DealRepository {
     }
 
     public List<Deal> findAllActiveByRecruiterId(final Long recruiterId) {
-
         List <Deal> deals = new ArrayList<Deal>();
-        VacancyRepository vacancyRepository = new VacancyRepository();
-        EmployerRepository employerRepository = new EmployerRepository();
-        RecruiterRepository recruiterRepository = new RecruiterRepository();
-        ApplicantRepository applicantRepository = new ApplicantRepository();
 
-        Deal deal1 = new Deal(1L, vacancyRepository.getById(1L), recruiterRepository.getByUserId(1L), applicantRepository.getApplicantByDealId(1L));
-        Deal deal2 = new Deal(2L, vacancyRepository.getById(2L), recruiterRepository.getByUserId(1L), applicantRepository.getApplicantByDealId(1L));
-        Deal deal3 = new Deal(3L, vacancyRepository.getById(3L), recruiterRepository.getByUserId(1L), applicantRepository.getApplicantByDealId(1L));
+        Deal deal1 = new Deal(1L, vacancyRepository.getById(1L), recruiterRepository.getById(1L), applicantRepository.getApplicantByDealId(1L));
+        Deal deal2 = new Deal(2L, vacancyRepository.getById(2L), recruiterRepository.getById(1L), applicantRepository.getApplicantByDealId(1L));
+        Deal deal3 = new Deal(3L, vacancyRepository.getById(3L), recruiterRepository.getById(1L), applicantRepository.getApplicantByDealId(1L));
 
         deals.add(deal1);
         deals.add(deal2);
@@ -54,40 +53,18 @@ public class DealRepository {
         return deals;
     }
 
-    public Deal findByRecruiterIdAndVacancyId(final Long recruiterId, final Long vacancyId) {
-        VacancyRepository vacancyRepository = new VacancyRepository();
-        EmployerRepository employerRepository = new EmployerRepository();
-        RecruiterRepository recruiterRepository = new RecruiterRepository();
-        ApplicantRepository applicantRepository = new ApplicantRepository();
-        if (vacancyId.equals(1L)) {
-            return new Deal(1L, vacancyRepository.getById(1L), recruiterRepository.getByUserId(1L), applicantRepository.getApplicantByDealId(1L));
-        }
-        if (vacancyId.equals(2L)) {
-            return new Deal(2L, vacancyRepository.getById(2L), recruiterRepository.getByUserId(1L), applicantRepository.getApplicantByDealId(1L));
-        }
-        if (vacancyId.equals(3L)) {
-            return new Deal(3L, vacancyRepository.getById(3L), recruiterRepository.getByUserId(1L), applicantRepository.getApplicantByDealId(1L));
-        }
-
-        return  null;
-    }
-
     /**
      * Lists all active deals for exact Employer
      * @param employerId    Id of employer
      * @return List of POJO Deal instances
      */
     public List<Deal> findAllActiveByEmployerId(final Long employerId) {
-
         List <Deal> deals = new ArrayList<Deal>();
         if (employerId.equals(1L)) {
-            VacancyRepository vacancyRepository = new VacancyRepository();
-            RecruiterRepository recruiterRepository = new RecruiterRepository();
-            ApplicantRepository applicantRepository = new ApplicantRepository();
 
-            Deal deal1 = new Deal(1L, vacancyRepository.getById(1L), recruiterRepository.getByUserId(1L), applicantRepository.getApplicantByDealId(1L));
-            Deal deal2 = new Deal(2L, vacancyRepository.getById(2L), recruiterRepository.getByUserId(1L), applicantRepository.getApplicantByDealId(1L));
-            Deal deal3 = new Deal(3L, vacancyRepository.getById(3L), recruiterRepository.getByUserId(1L), applicantRepository.getApplicantByDealId(1L));
+            Deal deal1 = new Deal(1L, vacancyRepository.getById(1L), recruiterRepository.getById(1L), applicantRepository.getApplicantByDealId(1L));
+            Deal deal2 = new Deal(2L, vacancyRepository.getById(2L), recruiterRepository.getById(1L), applicantRepository.getApplicantByDealId(1L));
+            Deal deal3 = new Deal(3L, vacancyRepository.getById(3L), recruiterRepository.getById(1L), applicantRepository.getApplicantByDealId(1L));
 
             deals.add(deal1);
             deals.add(deal2);
@@ -99,4 +76,35 @@ public class DealRepository {
         return null;
     }
 
+    public RecruiterRepository getRecruiterRepository() {
+        return recruiterRepository;
+    }
+
+    public void setRecruiterRepository(final RecruiterRepository recruiterRepository) {
+        this.recruiterRepository = recruiterRepository;
+    }
+
+    public EmployerRepository getEmployerRepository() {
+        return employerRepository;
+    }
+
+    public void setEmployerRepository(final EmployerRepository employerRepository) {
+        this.employerRepository = employerRepository;
+    }
+
+    public VacancyRepository getVacancyRepository() {
+        return vacancyRepository;
+    }
+
+    public void setVacancyRepository(final VacancyRepository vacancyRepository) {
+        this.vacancyRepository = vacancyRepository;
+    }
+
+    public ApplicantRepository getApplicantRepository() {
+        return applicantRepository;
+    }
+
+    public void setApplicantRepository(final ApplicantRepository applicantRepository) {
+        this.applicantRepository = applicantRepository;
+    }
 }

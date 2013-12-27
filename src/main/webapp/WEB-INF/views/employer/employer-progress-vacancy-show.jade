@@ -20,7 +20,7 @@ block append content
       .col-md-4
         h2=fmt.message("employer-progress-vacancy-show.recruiter.h2")
         p
-          #{deal.recruiter.firstName} #{deal.recruiter.lastName}
+          #{deal.recruiter.user.firstName} #{deal.recruiter.user.lastName}
           .tools
             a.btn.btn-danger(href="#",data-toggle="confirmation", data-placement="left", data-original-title="", title="").
               #{fmt.message("employer-progress-vacancy-show.recruiter.decline")}

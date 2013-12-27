@@ -4,17 +4,15 @@ package com.recruiters.model;
  * Employer POJO Class
  */
 public class Recruiter {
-    private Long id;
-    private String firstName;
-    private String lastName;
+    private Long id = null;
+    private User user = null;
 
     public Recruiter() {
     }
 
-    public Recruiter(final Long id, final String firstName, final String lastName) {
+    public Recruiter(final Long id, final User user) {
         this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.user = user;
     }
 
     public Long getId() {
@@ -25,20 +23,12 @@ public class Recruiter {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public User getUser() {
+        return user;
     }
 
-    public void setFirstName(final String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(final String lastName) {
-        this.lastName = lastName;
+    public void setUser(final User user) {
+        this.user = user;
     }
 }
 

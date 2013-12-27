@@ -1,6 +1,8 @@
 package com.recruiters.repository;
 
 import com.recruiters.model.User;
+import com.recruiters.repository.mapper.UserMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +12,9 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Repository
 public class UserRepository {
+
+    @Autowired
+    private UserMapper userMapper = null;
 
     /**
      * Method must return user model by credentials of request
@@ -22,18 +27,29 @@ public class UserRepository {
     }
 
     /**
+     * Method must return user by given id
+     * @param id
+     * @return
+     */
+    public User getById(final Long id) {
+        return this.getUserMapper().getById(id);
+    }
+
+    /**
      * Returns User POJO instance by username
-     * @param username    Username
+     * @param username Username
      * @return User POJO instance
      */
     public User findUserByUserName(final String username) {
 
-        if (username.equals("recruiter")) {
-            return new User(1L, "recruiter", "123123");
-        } else if (username.equals("employer")) {
-            return new User(2L, "employer", "123123");
-        } else {
-            return null;
-        }
+        return this.getUserMapper().findUserByUserName(username);
+    }
+
+    public UserMapper getUserMapper() {
+        return userMapper;
+    }
+
+    public void setUserMapper(final UserMapper userMapper) {
+        this.userMapper = userMapper;
     }
 }

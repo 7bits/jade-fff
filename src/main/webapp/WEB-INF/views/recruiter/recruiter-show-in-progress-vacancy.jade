@@ -19,7 +19,7 @@ block append content
           dd #{deal.vacancy.expirationDate}
       .col-md-4
         h2 Работодатель
-        p #{deal.vacancy.employer.firstName} #{deal.vacancy.employer.lastName}
+        p #{deal.vacancy.employer.user.firstName} #{deal.vacancy.employer.user.lastName}
 
     h2 Список кандидатов
     .row

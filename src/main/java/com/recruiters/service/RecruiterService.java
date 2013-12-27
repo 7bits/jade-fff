@@ -3,7 +3,6 @@ package com.recruiters.service;
 import com.recruiters.model.Applicant;
 import com.recruiters.model.Bid;
 import com.recruiters.model.Deal;
-import com.recruiters.model.Employer;
 import com.recruiters.model.Recruiter;
 import com.recruiters.model.User;
 import com.recruiters.model.Vacancy;
@@ -135,7 +134,7 @@ public class RecruiterService {
      */
     public Recruiter findRecruiterByUserId(final Long userId) {
 
-        return this.getRecruiterRepository().findRecruiterByUserId(userId);
+        return this.getRecruiterRepository().getByUserId(userId);
     }
 
     public User getCurrentUser(final HttpServletRequest request) {

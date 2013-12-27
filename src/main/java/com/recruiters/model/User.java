@@ -6,11 +6,23 @@ public class User {
     private Long id = null;
     private String username = null;
     private String password = null;
+    private String firstName = null;
+    private String lastName = null;
+
+    public User() {
+
+    }
 
     public User(final Long id, final String username, final String password) {
         this.id = id;
         this.username = username;
         this.password = password;
+    }
+
+    public User(final Long id, final String username, final String password, final String firstName, final String lastName) {
+        this(id, username, password);
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     public Long getId() {
@@ -35,5 +47,21 @@ public class User {
 
     public void setPassword(final String password) {
         this.password = password;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(final String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(final String lastName) {
+        this.lastName = lastName;
     }
 }

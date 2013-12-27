@@ -5,7 +5,7 @@ block append content
     .row
       .col-md-8
         h2=fmt.message("employer-recruiter-show.h2.recruiter")
-        p #{bid.recruiter.firstName} #{bid.recruiter.lastName}
+        p #{bid.recruiter.user.firstName} #{bid.recruiter.user.lastName}
         p #{bid.message}
       .col-md-4
         h2=fmt.message("employer-recruiter-show.h2.vacancy")

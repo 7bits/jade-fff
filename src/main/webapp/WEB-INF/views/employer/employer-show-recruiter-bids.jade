@@ -13,7 +13,7 @@ block append content
           tbody
             for bid in bids
               tr
-                td #{bid.recruiter.firstName} #{bid.recruiter.lastName}
+                td #{bid.recruiter.user.firstName} #{bid.recruiter.user.lastName}
                 td
                   a.btn.btn-link(href = domain.getAbsoluteUrl() + "/employer-recruiter-show/" + bid.id).
                         #{fmt.message("employer-show-recruiter-bids.more")}
