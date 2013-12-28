@@ -1,10 +1,7 @@
 package com.recruiters.repository.mapper;
 
 import com.recruiters.model.Deal;
-import com.recruiters.model.Recruiter;
-import com.recruiters.repository.ApplicantRepository;
-import com.recruiters.repository.EmployerRepository;
-import com.recruiters.repository.VacancyRepository;
+import org.apache.ibatis.annotations.Many;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
@@ -28,7 +25,7 @@ public interface DealMapper {
             "INNER JOIN users ON recruiters.user_id=users.id " +
             "WHERE deals.id=#{dealId}")
     @Results({
-            @Result(column = "id", property = "id"),
+//            @Result(column = "id", property = "id", javaType = Long.class),
             @Result(column = "status", property = "status"),
             @Result(column = "vacancy_id", property = "vacancy.id"),
             @Result(column = "employer_id", property = "vacancy.employer.id"),
@@ -38,7 +35,9 @@ public interface DealMapper {
             @Result(column = "creation_date", property = "vacancy.creationDate"),
             @Result(column = "recruiter_id", property = "recruiter.id"),
             @Result(column = "firstname", property = "recruiter.user.firstName"),
-            @Result(column = "lastname", property = "recruiter.user.lastName")
+            @Result(column = "lastname", property = "recruiter.user.lastName"),
+            @Result(property = "applicants", column = "id", javaType = List.class,
+                    many = @Many(select = "com.recruiters.repository.mapper.ApplicantMapper.getApplicantByDealId"))
     })
     Deal getById(final Long dealId);
 
