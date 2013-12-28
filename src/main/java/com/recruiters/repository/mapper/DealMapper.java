@@ -17,12 +17,78 @@ import java.util.List;
  */
 public interface DealMapper {
 
-    @Select("SELECT * FROM deals WHERE id = #{dealId}")
+    @Select("SELECT deals.id, deals.status, " +
+            "vacancies.id as vacancy_id,  vacancies.employer_id, vacancies.title, " +
+            "vacancies.description, vacancies.salary, vacancies.creation_date, " +
+            "recruiters.id as recruiter_id, " +
+            "users.firstname, users.lastname " +
+            "FROM deals " +
+            "INNER JOIN vacancies ON vacancies.id=deals.vacancy_id " +
+            "INNER JOIN recruiters  ON recruiters.id=deals.recruiter_id " +
+            "INNER JOIN users ON recruiters.user_id=users.id " +
+            "WHERE deals.id=#{dealId}")
+    @Results({
+            @Result(column = "id", property = "id"),
+            @Result(column = "status", property = "status"),
+            @Result(column = "vacancy_id", property = "vacancy.id"),
+            @Result(column = "employer_id", property = "vacancy.employer.id"),
+            @Result(column = "title", property = "vacancy.title"),
+            @Result(column = "description", property = "vacancy.description"),
+            @Result(column = "salary", property = "vacancy.salary"),
+            @Result(column = "creation_date", property = "vacancy.creationDate"),
+            @Result(column = "recruiter_id", property = "recruiter.id"),
+            @Result(column = "firstname", property = "recruiter.user.firstName"),
+            @Result(column = "lastname", property = "recruiter.user.lastName")
+    })
     Deal getById(final Long dealId);
 
+    @Select("SELECT deals.id, deals.status, " +
+            "vacancies.id as vacancy_id,  vacancies.employer_id, vacancies.title, " +
+            "vacancies.description, vacancies.salary, vacancies.creation_date, " +
+            "recruiters.id as recruiter_id, " +
+            "users.firstname, users.lastname " +
+            "FROM deals " +
+            "INNER JOIN vacancies ON vacancies.id=deals.vacancy_id " +
+            "INNER JOIN recruiters  ON recruiters.id=deals.recruiter_id " +
+            "INNER JOIN users ON recruiters.user_id=users.id " +
+            "WHERE deals.recruiter_id=#{recruiterId} AND deals.status=\"IN_PROGRESS\"")
+    @Results({
+            @Result(column = "id", property = "id"),
+            @Result(column = "status", property = "status"),
+            @Result(column = "vacancy_id", property = "vacancy.id"),
+            @Result(column = "employer_id", property = "vacancy.employer.id"),
+            @Result(column = "title", property = "vacancy.title"),
+            @Result(column = "description", property = "vacancy.description"),
+            @Result(column = "salary", property = "vacancy.salary"),
+            @Result(column = "creation_date", property = "vacancy.creationDate"),
+            @Result(column = "recruiter_id", property = "recruiter.id"),
+            @Result(column = "firstname", property = "recruiter.user.firstName"),
+            @Result(column = "lastname", property = "recruiter.user.lastName")
+    })
     List<Deal> findAllActiveByRecruiterId(final Long recruiterId);
 
-    Deal findByRecruiterIdAndVacancyId(final Long recruiterId, final Long vacancyId);
-
+    @Select("SELECT deals.id, deals.status, " +
+            "vacancies.id as vacancy_id,  vacancies.employer_id, vacancies.title, " +
+            "vacancies.description, vacancies.salary, vacancies.creation_date, " +
+            "recruiters.id as recruiter_id, " +
+            "users.firstname, users.lastname " +
+            "FROM deals " +
+            "INNER JOIN vacancies ON vacancies.id=deals.vacancy_id " +
+            "INNER JOIN recruiters  ON recruiters.id=deals.recruiter_id " +
+            "INNER JOIN users ON recruiters.user_id=users.id " +
+            "WHERE vacancies.employer_id=#{employerId} AND deals.status=\"IN_PROGRESS\"")
+    @Results({
+            @Result(column = "id", property = "id"),
+            @Result(column = "status", property = "status"),
+            @Result(column = "vacancy_id", property = "vacancy.id"),
+            @Result(column = "employer_id", property = "vacancy.employer.id"),
+            @Result(column = "title", property = "vacancy.title"),
+            @Result(column = "description", property = "vacancy.description"),
+            @Result(column = "salary", property = "vacancy.salary"),
+            @Result(column = "creation_date", property = "vacancy.creationDate"),
+            @Result(column = "recruiter_id", property = "recruiter.id"),
+            @Result(column = "firstname", property = "recruiter.user.firstName"),
+            @Result(column = "lastname", property = "recruiter.user.lastName")
+    })
     List<Deal> findAllActiveByEmployerId(final Long employerId);
 }
