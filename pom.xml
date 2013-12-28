@@ -383,7 +383,6 @@
                                     <url>jdbc:mysql://localhost:3306</url>
                                     <autocommit>true</autocommit>
                                     <sqlCommand>drop database recruiters</sqlCommand>
-                                    <!-- ignore error when database is not avaiable -->
                                     <onError>continue</onError>
                                 </configuration>
                             </execution>
@@ -404,7 +403,6 @@
                                     </driverProperties>
                                     <autocommit>true</autocommit>
                                     <sqlCommand>create database recruiters</sqlCommand>
-                                    <!-- ignore error when database is not avaiable -->
                                     <onError>continue</onError>
                                 </configuration>
                             </execution>

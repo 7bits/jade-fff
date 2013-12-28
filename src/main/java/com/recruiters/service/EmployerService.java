@@ -1,7 +1,17 @@
 package com.recruiters.service;
 
-import com.recruiters.model.*;
-import com.recruiters.repository.*;
+import com.recruiters.model.Applicant;
+import com.recruiters.model.Bid;
+import com.recruiters.model.Deal;
+import com.recruiters.model.Employer;
+import com.recruiters.model.User;
+import com.recruiters.model.Vacancy;
+import com.recruiters.repository.ApplicantRepository;
+import com.recruiters.repository.BidRepository;
+import com.recruiters.repository.DealRepository;
+import com.recruiters.repository.EmployerRepository;
+import com.recruiters.repository.UserRepository;
+import com.recruiters.repository.VacancyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
