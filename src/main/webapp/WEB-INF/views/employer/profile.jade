@@ -1,9 +1,9 @@
 extends ../layout
 
 block append content
-  .container(ng-controller="FormController")
+  .container(ng-controller="EmployerProfileController")
     h2=fmt.message("profile.title")
-    form(name="applicantForm", action="", method="post", enctype="multipart/form-data", novalidate="", ng-submit="update(user)")
+    form(name="employerProfileForm", action="", method="post", enctype="multipart/form-data", novalidate="", ng-submit="submit()")
       .row
         .col-md-6
           .form-group
