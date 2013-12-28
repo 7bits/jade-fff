@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 28, 2013 at 12:27 PM
+-- Generation Time: Dec 28, 2013 at 12:56 PM
 -- Server version: 5.5.34
 -- PHP Version: 5.3.10-1ubuntu3.8
 
@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `applicants`;
 CREATE TABLE IF NOT EXISTS `applicants` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `deal` bigint(20) NOT NULL,
+  `deal_id` bigint(20) NOT NULL,
   `first_name` varchar(255) NOT NULL,
   `last_name` varchar(255) NOT NULL,
   `description` varchar(255) NOT NULL,
@@ -40,14 +40,14 @@ CREATE TABLE IF NOT EXISTS `applicants` (
   `test_answer_file` varchar(255) DEFAULT NULL,
   `status` varchar(50) NOT NULL DEFAULT 'IN_PROGRESS',
   PRIMARY KEY (`id`),
-  KEY `deal` (`deal`)
+  KEY `deal` (`deal_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `applicants`
 --
 
-INSERT INTO `applicants` (`id`, `deal`, `first_name`, `last_name`, `description`, `sex`, `age`, `resume_file`, `test_answer_file`, `status`) VALUES
+INSERT INTO `applicants` (`id`, `deal_id`, `first_name`, `last_name`, `description`, `sex`, `age`, `resume_file`, `test_answer_file`, `status`) VALUES
 (1, 1, 'Александр', 'Иванов', 'Программирую даже во сне', 'Мужской', 34, '#', '#', 'IN_PROGRESS'),
 (2, 1, 'Павел', 'Никифоров', 'Круто программирует на всём', 'Мужской', 45, '#', '#', 'IN_PROGRESS');
 
@@ -217,7 +217,7 @@ INSERT INTO `vacancies` (`id`, `employer_id`, `title`, `description`, `salary`, 
 -- Constraints for table `applicants`
 --
 ALTER TABLE `applicants`
-  ADD CONSTRAINT `applicants_ibfk_1` FOREIGN KEY (`deal`) REFERENCES `deals` (`id`);
+  ADD CONSTRAINT `applicants_ibfk_1` FOREIGN KEY (`deal_id`) REFERENCES `deals` (`id`);
 
 --
 -- Constraints for table `bids`
