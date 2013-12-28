@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 
 /**
- *
+ * Mapper for Employer POJO
  */
 public interface EmployerMapper {
 
@@ -16,12 +16,12 @@ public interface EmployerMapper {
             "RIGHT JOIN users ON users.id = employers.user_id " +
             "WHERE employers.id=#{employerId}")
     @Results({
-            @Result(column="id", property="id"),
-            @Result(column="user_id", property="user.id"),
-            @Result(column="firstname", property="user.firstName"),
-            @Result(column="lastname", property="user.lastName"),
-            @Result(column="username", property="user.username"),
-            @Result(column="password", property="user.password")
+            @Result(column = "id", property = "id"),
+            @Result(column = "user_id", property = "user.id"),
+            @Result(column = "firstname", property = "user.firstName"),
+            @Result(column = "lastname", property = "user.lastName"),
+            @Result(column = "username", property = "user.username"),
+            @Result(column = "password", property = "user.password")
     })
     Employer getById(final Long employerId);
 
@@ -31,12 +31,12 @@ public interface EmployerMapper {
             "RIGHT JOIN users ON users.id = employers.user_id " +
             "WHERE employers.user_id=#{userId}")
     @Results({
-            @Result(column="id", property="id"),
-            @Result(column="user_id", property="user.id"),
-            @Result(column="firstname", property="user.firstName"),
-            @Result(column="lastname", property="user.lastName"),
-            @Result(column="username", property="user.username"),
-            @Result(column="password", property="user.password")
+            @Result(column = "id", property = "id"),
+            @Result(column = "user_id", property = "user.id"),
+            @Result(column = "firstname", property = "user.firstName"),
+            @Result(column = "lastname", property = "user.lastName"),
+            @Result(column = "username", property = "user.username"),
+            @Result(column = "password", property = "user.password")
     })
     Employer getByUserId(final Long userId);
 }

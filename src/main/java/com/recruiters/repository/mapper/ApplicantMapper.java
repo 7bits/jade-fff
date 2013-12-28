@@ -1,7 +1,11 @@
 package com.recruiters.repository.mapper;
 
 import com.recruiters.model.Applicant;
-import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Result;
+import org.apache.ibatis.annotations.Results;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -68,7 +72,7 @@ public interface ApplicantMapper {
             "#{sex}, #{age}, #{resumeFile}, #{testAnswerFile})")
     void createApplicant(final Applicant applicant);
 
-    @Insert("UPDATE applicants SET first_name=#{firstName}, " +
+    @Update("UPDATE applicants SET first_name=#{firstName}, " +
             "last_name=#{lastName}, description=#{description}, " +
             "sex=#{sex}, age=#{age}, " +
             "resume_file=#{resumeFile}, test_answer_file=#{testAnswerFile} " +
