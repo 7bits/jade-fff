@@ -1,10 +1,7 @@
 package com.recruiters.repository.mapper;
 
 import com.recruiters.model.Applicant;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -65,7 +62,16 @@ public interface ApplicantMapper {
     })
     List<Applicant> getApplicantByDealId(final Long dealId);
 
-    Boolean createApplicant(final Applicant applicant);
+    @Insert("INSERT INTO applicants (deal_id, first_name, last_name, description, " +
+            "sex, age, resume_file, test_answer_file) " +
+            "VALUES (#{deal.id}, #{firstName}, #{lastName}, #{description}, " +
+            "#{sex}, #{age}, #{resumeFile}, #{testAnswerFile})")
+    void createApplicant(final Applicant applicant);
 
-    Boolean updateApplicant(final Applicant applicant);
+    @Insert("UPDATE applicants SET first_name=#{firstName}, " +
+            "last_name=#{lastName}, description=#{description}, " +
+            "sex=#{sex}, age=#{age}, " +
+            "resume_file=#{resumeFile}, test_answer_file=#{testAnswerFile} " +
+            "WHERE id=#{id}")
+    void updateApplicant(final Applicant applicant);
 }

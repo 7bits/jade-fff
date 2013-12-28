@@ -41,7 +41,12 @@ public class ApplicantRepository {
      * @return <tt>true</tt> if model has been saved successful, <tt>false</tt> - otherwise
      */
     public Boolean createApplicant(final Applicant applicant) {
-        return true;
+        try {
+            applicantMapper.createApplicant(applicant);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     /**
@@ -50,7 +55,12 @@ public class ApplicantRepository {
      * @return <tt>true</tt> if model has been saved successful, <tt>false</tt> - otherwise
      */
     public Boolean updateApplicant(final Applicant applicant) {
-        return true;
+        try {
+            applicantMapper.updateApplicant(applicant);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public ApplicantMapper getApplicantMapper() {
