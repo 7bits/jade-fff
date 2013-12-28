@@ -5,7 +5,8 @@ Java Spring project.
 
 Using technologies:
 
-    Backend:    Spring-mvc
+    Backend:    Java
+                Spring-mvc
                 Spring security
                 Spring config
                 myBatis
