@@ -25,7 +25,7 @@ public interface DealMapper {
             "INNER JOIN users ON recruiters.user_id=users.id " +
             "WHERE deals.id=#{dealId}")
     @Results({
-//            @Result(column = "id", property = "id", javaType = Long.class),
+            @Result(column = "id", property = "id", javaType = Long.class),
             @Result(column = "status", property = "status"),
             @Result(column = "vacancy_id", property = "vacancy.id"),
             @Result(column = "employer_id", property = "vacancy.employer.id"),
