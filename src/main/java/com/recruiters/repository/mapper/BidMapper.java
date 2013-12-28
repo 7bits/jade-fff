@@ -3,9 +3,7 @@ package com.recruiters.repository.mapper;
 import com.recruiters.model.Bid;
 import com.recruiters.model.Recruiter;
 import com.recruiters.model.Vacancy;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -118,5 +116,9 @@ public interface BidMapper {
     })
     List<Bid> findAllBidsForVacancy(final Long vacancyId);
 
-    Boolean createBid(final Recruiter recruiter, final Vacancy vacancy, final  String message);
+    @Insert("INSERT INTO bids (vacancy_id, recruiter_id, message) " +
+            "VALUES (#{vacancyId}, #{recruiterId}, #{message})")
+    void createBid(@Param("recruiterId")final Long recruiterId,
+                   @Param("vacancyId") final Long vacancyId,
+                   @Param("message") final  String message);
 }
