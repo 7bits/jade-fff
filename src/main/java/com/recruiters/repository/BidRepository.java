@@ -60,7 +60,12 @@ public class BidRepository {
 
     public Boolean createBid(final Recruiter recruiter, final Vacancy vacancy, final String message) {
 
-        return bidMapper.createBid(recruiter, vacancy, message);
+         try {
+             bidMapper.createBid(recruiter.getId(), vacancy.getId(), message);
+             return true;
+         } catch (Exception e) {
+             return false;
+         }
     }
 
     public BidMapper getBidMapper() {
