@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * Mapper for Deal POJO
  */
 public interface DealMapper {
 
