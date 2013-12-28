@@ -113,7 +113,11 @@ public class RecruiterService {
         applicant.setResumeFile(fileNameForResume);
         applicant.setTestAnswerFile(fileNameForTestAnswers);
 
-        return this.getApplicantRepository().saveApplicant(applicant);
+        if (applicant.getId().equals(0L)) {
+            return this.getApplicantRepository().createApplicant(applicant);
+        } else {
+            return this.getApplicantRepository().updateApplicant(applicant);
+        }
     }
 
     /**

@@ -63,8 +63,9 @@ public interface ApplicantMapper {
             @Result(column = "employer_id", property = "deal.vacancy.employer.id"),
             @Result(column = "recruiter_id", property = "deal.recruiter.id")
     })
-    public List<Applicant> getApplicantByDealId(final Long dealId);
+    List<Applicant> getApplicantByDealId(final Long dealId);
 
-    //TODO
-    Boolean saveApplicant(final Applicant applicant);
+    Boolean createApplicant(final Applicant applicant);
+
+    Boolean updateApplicant(final Applicant applicant);
 }
