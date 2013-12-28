@@ -28,17 +28,18 @@ public class EmployerApplicantView {
      * @return model and view with applicant
      */
     @RequestMapping(value = "employer-employee-show/{applicantId}")
-    public ModelAndView employeeShow(@PathVariable final Long applicantId,
-                                     final HttpServletRequest request) {
-
+    public ModelAndView employeeShow(
+            @PathVariable final Long applicantId,
+            final HttpServletRequest request
+    ) {
         ModelAndView showApplicant = new ModelAndView("employer/employer-employee-show.jade");
         User currentUser = employerService.getCurrentUser(request);
         Employer employer = employerService.findEmployerByUserId(currentUser.getId());
-
         if (employer != null) {
             Applicant applicant = employerService.getApplicantById(applicantId, employer);
             showApplicant.addObject("applicant", applicant);
         }
+
         return showApplicant;
     }
 

@@ -107,7 +107,11 @@ public class RecruiterService {
      * @param testAnswerFile
      * @return
      */
-    public Boolean saveApplicantToVacancy(final Applicant applicant, final MultipartFile resumeFile, final MultipartFile testAnswerFile) {
+    public Boolean saveApplicantToVacancy(
+            final Applicant applicant,
+            final MultipartFile resumeFile,
+            final MultipartFile testAnswerFile
+    ) {
         String fileNameForResume =  this.getFileRepository().saveFile(resumeFile);
         String fileNameForTestAnswers = this.getFileRepository().saveFile(testAnswerFile);
         applicant.setResumeFile(fileNameForResume);
