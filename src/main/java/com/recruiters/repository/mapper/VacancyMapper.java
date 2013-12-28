@@ -32,11 +32,11 @@ public interface VacancyMapper {
     })
     Vacancy getById(final Long vacancyId);
 
-    //TODO "available"
     @Select("SELECT vacancies.*, users.firstname, users.lastname " +
             "FROM vacancies " +
             "INNER JOIN employers ON employers.id = vacancies.employer_id " +
-            "INNER JOIN users  ON employers.user_id=users.id ")
+            "INNER JOIN users  ON employers.user_id=users.id " +
+            "WHERE status=0")
     @Results({
             @Result(column = "id", property = "id"),
             @Result(column = "employer_id", property = "employer.id"),
