@@ -12,6 +12,7 @@ Using technologies:
     Frontend:   Jade Templates
                 CoffeeScript
                 SCSS
+                Bootstrap
     Collector:  Maven
     DB:         MySQL
     VCS:        Git
