@@ -64,9 +64,10 @@ public class ShowVacancy {
     ) {
         User currentUser = this.getRecruiterService().getCurrentUser(request);
         Recruiter recruiter = this.getRecruiterService().findRecruiterByUserId(currentUser.getId());
+        Vacancy vacancy = this.getRecruiterService().getVacancyById(vacancyId);
         Boolean successApplied = false;
         if (recruiter != null) {
-            successApplied = this.getRecruiterService().applyRecruiterToVacancy(recruiter, message);
+            successApplied = this.getRecruiterService().applyRecruiterToVacancy(recruiter, vacancy, message);
         }
 
         return successApplied;

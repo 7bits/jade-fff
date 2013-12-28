@@ -122,9 +122,9 @@ public class RecruiterService {
      * @param message
      * @return
      */
-    public Boolean applyRecruiterToVacancy(final Recruiter recruiter, final String message) {
+    public Boolean applyRecruiterToVacancy(final Recruiter recruiter, final Vacancy vacancy, final String message) {
 
-        return this.getVacancyRepository().updateVacancy(recruiter, message);
+        return this.getBidRepository().createBid(recruiter, vacancy, message);
     }
 
     /**

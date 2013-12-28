@@ -1,6 +1,8 @@
 package com.recruiters.repository;
 
 import com.recruiters.model.Bid;
+import com.recruiters.model.Recruiter;
+import com.recruiters.model.Vacancy;
 import com.recruiters.repository.mapper.BidMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -54,6 +56,11 @@ public class BidRepository {
     public List<Bid> findAllBidsForVacancy(final Long vacancyId) {
 
         return bidMapper.findAllBidsForVacancy(vacancyId);
+    }
+
+    public Boolean createBid(final Recruiter recruiter, final Vacancy vacancy, final String message) {
+
+        return bidMapper.createBid(recruiter, vacancy, message);
     }
 
     public BidMapper getBidMapper() {

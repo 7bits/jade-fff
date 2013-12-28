@@ -38,12 +38,6 @@ public class VacancyRepository {
         return vacancyMapper.findListOfAvailableVacancies();
     }
 
-    //TODO ??? to what vacancy ???
-    public Boolean updateVacancy(final Recruiter recruiter, final String message) {
-
-        return true;
-    }
-
     /**
      * Find vacancies of exact employer by its id
      * @param employerId    Id of employer
@@ -70,6 +64,7 @@ public class VacancyRepository {
     }
 
     public void setVacancyMapper(final VacancyMapper vacancyMapper) {
+
         this.vacancyMapper = vacancyMapper;
     }
 }

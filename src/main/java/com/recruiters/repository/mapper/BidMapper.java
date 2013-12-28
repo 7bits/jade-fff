@@ -1,6 +1,8 @@
 package com.recruiters.repository.mapper;
 
 import com.recruiters.model.Bid;
+import com.recruiters.model.Recruiter;
+import com.recruiters.model.Vacancy;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
@@ -115,4 +117,6 @@ public interface BidMapper {
             @Result(column = "lastname", property = "recruiter.user.lastName")
     })
     List<Bid> findAllBidsForVacancy(final Long vacancyId);
+
+    Boolean createBid(final Recruiter recruiter, final Vacancy vacancy, final  String message);
 }
