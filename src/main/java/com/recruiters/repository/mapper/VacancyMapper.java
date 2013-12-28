@@ -36,7 +36,7 @@ public interface VacancyMapper {
             "FROM vacancies " +
             "INNER JOIN employers ON employers.id = vacancies.employer_id " +
             "INNER JOIN users  ON employers.user_id=users.id " +
-            "WHERE status=0")
+            "WHERE status=\"ACTIVE\"")
     @Results({
             @Result(column = "id", property = "id"),
             @Result(column = "employer_id", property = "employer.id"),
