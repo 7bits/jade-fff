@@ -5,6 +5,7 @@ package com.recruiters.web.form;
  */
 
 import com.recruiters.model.Applicant;
+import com.recruiters.model.Deal;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -49,6 +50,7 @@ public class ApplicantForm {
         applicant.setFirstName(this.getFirstName());
         applicant.setLastName(this.getLastName());
         applicant.setDescription(this.getDescription());
+        applicant.setDeal(new Deal(dealId));
 
         return applicant;
     }

@@ -23,6 +23,10 @@ public class Deal {
     public Deal() {
     }
 
+    public Deal(final Long id) {
+        this.id = id;
+    }
+
     public Long getId() {
         return id;
     }
