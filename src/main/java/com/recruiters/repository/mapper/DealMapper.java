@@ -14,14 +14,15 @@ import java.util.List;
 public interface DealMapper {
 
     @Select("SELECT deals.id, deals.status, " +
-            "vacancies.id as vacancy_id,  vacancies.employer_id, vacancies.title, " +
+            "vacancies.id as vacancy_id, vacancies.employer_id, vacancies.title, " +
             "vacancies.description, vacancies.salary, vacancies.creation_date, " +
             "recruiters.id as recruiter_id, " +
             "users.firstname, users.lastname " +
             "FROM deals " +
             "INNER JOIN vacancies ON vacancies.id=deals.vacancy_id " +
             "INNER JOIN recruiters  ON recruiters.id=deals.recruiter_id " +
-            "INNER JOIN users ON recruiters.user_id=users.id " +
+            "INNER JOIN employers ON employers.id = vacancies.employer_id " +
+            "INNER JOIN users ON employers.user_id=users.id " +
             "WHERE deals.id=#{dealId}")
     @Results({
             @Result(column = "id", property = "id", javaType = Long.class),
@@ -33,12 +34,12 @@ public interface DealMapper {
             @Result(column = "salary", property = "vacancy.salary"),
             @Result(column = "creation_date", property = "vacancy.creationDate"),
             @Result(column = "recruiter_id", property = "recruiter.id"),
-            @Result(column = "firstname", property = "recruiter.user.firstName"),
-            @Result(column = "lastname", property = "recruiter.user.lastName"),
+            @Result(column = "firstname", property = "vacancy.employer.user.firstName"),
+            @Result(column = "lastname", property = "vacancy.employer.user.lastName"),
             @Result(property = "applicants", column = "id", javaType = List.class,
                     many = @Many(select = "com.recruiters.repository.mapper.ApplicantMapper.getApplicantsByDealId"))
     })
-    Deal getById(final Long dealId);
+    Deal findById(final Long dealId);
 
     @Select("SELECT deals.id, deals.status, " +
             "vacancies.id as vacancy_id,  vacancies.employer_id, vacancies.title, " +

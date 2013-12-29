@@ -18,7 +18,7 @@ public class DealRepository {
 
     public Deal findById(final Long id) {
 
-        return dealMapper.getById(id);
+        return dealMapper.findById(id);
     }
 
     public List<Deal> findActiveDealsForRecruiter(final Long recruiterId) {
