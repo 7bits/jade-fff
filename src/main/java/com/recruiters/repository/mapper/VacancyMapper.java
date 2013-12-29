@@ -29,7 +29,7 @@ public interface VacancyMapper {
             @Result(column = "firstname", property = "employer.user.firstName"),
             @Result(column = "lastname", property = "employer.user.lastName"),
     })
-    Vacancy getById(final Long vacancyId);
+    Vacancy findById(final Long vacancyId);
 
     @Select("SELECT vacancies.*, users.firstname, users.lastname " +
             "FROM vacancies " +
@@ -48,7 +48,7 @@ public interface VacancyMapper {
             @Result(column = "firstname", property = "employer.user.firstName"),
             @Result(column = "lastname", property = "employer.user.lastName"),
     })
-    List<Vacancy> findListOfAvailableVacancies();
+    List<Vacancy> findAvailableVacanciesForRecruiter();
 
     @Select("SELECT vacancies.*, users.firstname, users.lastname " +
             "FROM vacancies " +

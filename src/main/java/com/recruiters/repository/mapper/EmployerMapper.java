@@ -23,7 +23,7 @@ public interface EmployerMapper {
             @Result(column = "username", property = "user.username"),
             @Result(column = "password", property = "user.password")
     })
-    Employer getById(final Long employerId);
+    Employer findById(final Long employerId);
 
     @Select("SELECT employers.id, employers.user_id, " +
             "users.firstname, users.lastname, users.username, users.password " +

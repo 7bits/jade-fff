@@ -1,10 +1,7 @@
 package com.recruiters.repository;
 
-import com.recruiters.model.Bid;
-import com.recruiters.model.Recruiter;
 import com.recruiters.model.Vacancy;
 import com.recruiters.repository.mapper.VacancyMapper;
-import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -24,18 +21,19 @@ public class VacancyRepository {
      * @param vacancyId
      * @return
      */
-    public Vacancy getById(final Long vacancyId) {
+    public Vacancy findById(final Long vacancyId) {
 
-        return vacancyMapper.getById(vacancyId);
+        return vacancyMapper.findById(vacancyId);
     }
 
     /**
      * Method must return all vacancies for this recruiter
      * @return
      */
-    public List<Vacancy> findListOfAvailableVacancies() {
+    public List<Vacancy> findAvailableVacanciesForRecruiter() {
 
-        return vacancyMapper.findListOfAvailableVacancies();
+        /*TODO: Use recruiterId to know bids and deals*/
+        return vacancyMapper.findAvailableVacanciesForRecruiter();
     }
 
     /**

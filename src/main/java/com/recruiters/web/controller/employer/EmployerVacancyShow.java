@@ -2,9 +2,8 @@ package com.recruiters.web.controller.employer;
 
 import com.recruiters.model.Deal;
 import com.recruiters.model.Employer;
-import com.recruiters.model.User;
 import com.recruiters.service.EmployerService;
-import org.apache.commons.lang3.time.DateUtils;
+import com.recruiters.web.controller.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,9 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 /**
  * Controller for C70 "Show progress of vacancy "
@@ -25,6 +21,8 @@ public class EmployerVacancyShow {
 
     @Autowired
     private EmployerService employerService = null;
+    @Autowired
+    private UserUtils userUtils = null;
 
     /**
      * Page controller for C70 "Show progress of vacancy"
@@ -37,11 +35,11 @@ public class EmployerVacancyShow {
                                                        final HttpServletRequest request) {
 
         ModelAndView vacancyProgress =  new ModelAndView("employer/employer-progress-vacancy-show.jade");
-        User currentUser = employerService.getCurrentUser(request);
-        Employer employer = employerService.findEmployerByUserId(currentUser.getId());
+        Long userId = userUtils.getCurrentUserId(request);
+        Employer employer = employerService.findEmployerByUser(userId);
 
         if (employer != null) {
-            Deal deal = employerService.getDealById(dealId, employer);
+            Deal deal = employerService.findDealById(dealId, employer);
             vacancyProgress.addObject("deal", deal);
         }
         return vacancyProgress;

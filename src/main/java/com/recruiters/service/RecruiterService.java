@@ -44,31 +44,42 @@ public class RecruiterService {
     private BidRepository bidRepository = null;
 
     /**
+     * Method must return recruiter by given id
+     * @param id
+     * @return
+     */
+    public Recruiter findRecruiterById(final Long id) {
+
+        return this.getRecruiterRepository().findById(id);
+    }
+
+    /**
+     * Method must return recruiter by given user id
+     * @param userId
+     * @return
+     */
+    public Recruiter findRecruiterByUserId(final Long userId) {
+
+        return this.getRecruiterRepository().findByUser(userId);
+    }
+
+    /**
+     * Method must return recruiter id by given user id
+     * @param userId
+     * @return
+     */
+    public Long findRecruiterIdByUserId(final Long userId) {
+
+        return this.getRecruiterRepository().findIdByUser(userId);
+    }
+
+    /**
      * Method must return all vacancies for this recruiter
      * @return
      */
-    public List<Vacancy> findListOfAllAvailableVacancies() {
+    public List<Vacancy> findAvailableVacanciesForRecruiter() {
 
-        return this.getVacancyRepository().findListOfAvailableVacancies();
-    }
-
-    /**
-     * Method must return list of vacancies. Each of vacancies has deal for this recruiter
-     * @param recruiterId
-     * @return
-     */
-    public List<Deal> findListOfDealsForRecruiterByRecruiterId(final Long recruiterId) {
-
-        return this.getDealRepository().findAllActiveByRecruiterId(recruiterId);
-    }
-
-    /**
-     * Method must return list of recruiter bids.
-     * @return
-     */
-    public List<Bid> findListOfActiveBidsForRecruiterByRecruiterId(final Long recruiterId) {
-
-        return this.getBidRepository().findListOfRecruiterBids(recruiterId);
+        return this.getVacancyRepository().findAvailableVacanciesForRecruiter();
     }
 
     /**
@@ -77,7 +88,26 @@ public class RecruiterService {
      */
     public Vacancy getVacancyById(final Long vacancyId) {
 
-        return this.getVacancyRepository().getById(vacancyId);
+        return this.getVacancyRepository().findById(vacancyId);
+    }
+
+    /**
+     * Method must return list of recruiter bids.
+     * @return
+     */
+    public List<Bid> findRecruiterBids(final Long recruiterId) {
+
+        return this.getBidRepository().findRecruiterBids(recruiterId);
+    }
+
+    /**
+     * Method must return list of vacancies. Each of vacancies has deal for this recruiter
+     * @param recruiterId
+     * @return
+     */
+    public List<Deal> findActiveDealsForRecruiter(final Long recruiterId) {
+
+        return this.getDealRepository().findActiveDealsForRecruiter(recruiterId);
     }
 
     /**
@@ -85,10 +115,10 @@ public class RecruiterService {
      * @param dealId  Id of deal
      * @return vacancy description
      */
-    public Deal getDealById(final Long dealId, final Recruiter recruiter) {
+    public Deal findDealByIdForRecruiter(final Long dealId, final Long recruiterId) {
 
-        Deal deal = this.getDealRepository().getById(dealId);
-        if (deal.getRecruiter().getId().equals(recruiter.getId())) {
+        Deal deal = this.getDealRepository().findById(dealId);
+        if (deal.getRecruiter().getId().equals(recruiterId)) {
             return deal;
         }
 
@@ -97,7 +127,7 @@ public class RecruiterService {
 
     public Applicant getApplicantById(final Long applicantId) {
 
-        return this.getApplicantRepository().getApplicantById(applicantId);
+        return this.getApplicantRepository().findById(applicantId);
     }
 
     /**
@@ -112,6 +142,7 @@ public class RecruiterService {
             final MultipartFile resumeFile,
             final MultipartFile testAnswerFile
     ) {
+        /*TODO: Make FileService instead of FileRepository and use it in Web-layer. Use file names at this method */
         String fileNameForResume =  this.getFileRepository().saveFile(resumeFile);
         String fileNameForTestAnswers = this.getFileRepository().saveFile(testAnswerFile);
         applicant.setResumeFile(fileNameForResume);
@@ -126,28 +157,14 @@ public class RecruiterService {
 
     /**
      * Method must return true if vacancy has been updated successful
-     * @param recruiter
+     * @param recruiterId
+     * @param vacancyId
      * @param message
      * @return
      */
-    public Boolean applyRecruiterToVacancy(final Recruiter recruiter, final Vacancy vacancy, final String message) {
+    public Boolean applyRecruiterToVacancy(final Long recruiterId, final Long vacancyId, final String message) {
 
-        return this.getBidRepository().createBid(recruiter, vacancy, message);
-    }
-
-    /**
-     * Method must return recruiter by given user id
-     * @param userId
-     * @return
-     */
-    public Recruiter findRecruiterByUserId(final Long userId) {
-
-        return this.getRecruiterRepository().getByUserId(userId);
-    }
-
-    public User getCurrentUser(final HttpServletRequest request) {
-
-        return this.getUserRepository().getCurrentUser(request);
+        return this.getBidRepository().createBid(recruiterId, vacancyId, message);
     }
 
     public FileRepository getFileRepository() {

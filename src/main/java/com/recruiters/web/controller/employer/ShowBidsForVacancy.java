@@ -2,9 +2,9 @@ package com.recruiters.web.controller.employer;
 
 import com.recruiters.model.Bid;
 import com.recruiters.model.Employer;
-import com.recruiters.model.User;
 import com.recruiters.model.Vacancy;
 import com.recruiters.service.EmployerService;
+import com.recruiters.web.controller.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +22,8 @@ public class ShowBidsForVacancy {
 
     @Autowired
     private EmployerService employerService = null;
+    @Autowired
+    private UserUtils userUtils = null;
 
     /**
      * Controller showing bids for exact vacancy
@@ -34,12 +36,12 @@ public class ShowBidsForVacancy {
                                               final HttpServletRequest request) {
 
         ModelAndView recruiterBids = new ModelAndView("employer/employer-show-recruiter-bids.jade");
-        User currentUser = employerService.getCurrentUser(request);
-        Employer employer = employerService.findEmployerByUserId(currentUser.getId());
+        Long userId = userUtils.getCurrentUserId(request);
+        Employer employer = employerService.findEmployerByUser(userId);
 
         if (employer != null) {
             List<Bid> bids = employerService.findBidsForVacancy(vacancyId, employer);
-            Vacancy vacancy = employerService.getVacancyById(vacancyId, employer);
+            Vacancy vacancy = employerService.findVacancyById(vacancyId, employer);
             recruiterBids.addObject("bids", bids);
             recruiterBids.addObject("vacancy", vacancy);
         }

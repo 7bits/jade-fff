@@ -7,7 +7,6 @@ import com.recruiters.repository.mapper.BidMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,32 +19,13 @@ public class BidRepository {
     private BidMapper bidMapper = null;
 
     /**
-     * Method must return list of recruiter bids.
-     * @return
-     */
-    public List<Bid> findListOfRecruiterBids(final Long recruiterId) {
-
-        return bidMapper.findListOfRecruiterBids(recruiterId);
-    }
-
-    /**
-     * Find all bids for vacancies of exact employer
-     * @param employerId    Id of employer
-     * @return List of Bid POJO instances
-     */
-    public List<Bid> findAllActiveByEmployerId(final Long employerId) {
-
-        return bidMapper.findAllActiveByEmployerId(employerId);
-    }
-
-    /**
      * Get Bid by its id
      * @param bidId    Id of bid
      * @return Bid POJO instance
      */
-    public Bid getBidById(final Long bidId) {
+    public Bid findById(final Long bidId) {
 
-        return bidMapper.getBidById(bidId);
+        return bidMapper.findById(bidId);
     }
 
     /**
@@ -53,15 +33,34 @@ public class BidRepository {
      * @param vacancyId    Vacancy Id
      * @return List of Bid POJO instances
      */
-    public List<Bid> findAllBidsForVacancy(final Long vacancyId) {
+    public List<Bid> findBidsForVacancy(final Long vacancyId) {
 
-        return bidMapper.findAllBidsForVacancy(vacancyId);
+        return bidMapper.findBidsForVacancy(vacancyId);
     }
 
-    public Boolean createBid(final Recruiter recruiter, final Vacancy vacancy, final String message) {
+    /**
+     * Method must return list of recruiter bids.
+     * @return
+     */
+    public List<Bid> findRecruiterBids(final Long recruiterId) {
+
+        return bidMapper.findRecruiterBids(recruiterId);
+    }
+
+    /**
+     * Find all bids for vacancies of exact employer
+     * @param employerId    Id of employer
+     * @return List of Bid POJO instances
+     */
+    public List<Bid> findBidsForEmployerVacancies(final Long employerId) {
+
+        return bidMapper.findBidsForEmployerVacancies(employerId);
+    }
+
+    public Boolean createBid(final Long recruiterId, final Long vacancyId, final String message) {
 
          try {
-             bidMapper.createBid(recruiter.getId(), vacancy.getId(), message);
+             bidMapper.createBid(recruiterId, vacancyId, message);
              return true;
          } catch (Exception e) {
              return false;

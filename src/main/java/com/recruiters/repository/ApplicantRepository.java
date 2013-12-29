@@ -1,12 +1,10 @@
 package com.recruiters.repository;
 
 import com.recruiters.model.Applicant;
-import com.recruiters.model.Deal;
 import com.recruiters.repository.mapper.ApplicantMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,10 +16,9 @@ public class ApplicantRepository {
     @Autowired
     private ApplicantMapper applicantMapper = null;
 
-    public Applicant getApplicantById(final Long applicantId) {
+    public Applicant findById(final Long applicantId) {
 
-        Applicant applicant = applicantMapper.getApplicantById(applicantId);
-        return applicant;
+        return applicantMapper.findById(applicantId);
     }
 
     /**
@@ -29,10 +26,9 @@ public class ApplicantRepository {
      * @param dealId
      * @return
      */
-    public List<Applicant> getApplicantByDealId(final Long dealId) {
+    public List<Applicant> findApplicantsForDeal(final Long dealId) {
 
-        List<Applicant> applicantList = applicantMapper.getApplicantByDealId(dealId);
-        return applicantList;
+        return applicantMapper.getApplicantsByDealId(dealId);
     }
 
     /**

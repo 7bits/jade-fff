@@ -28,11 +28,11 @@ public class RecruiterFormValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "NotEmpty.recruiterForm.firstName");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "NotEmpty.recruiterForm.lastName");
         RecruiterForm recruiterForm = (RecruiterForm) object;
-        Recruiter currentRecruiter = recruiterService.findRecruiterByUserId(recruiterForm.getId());
+        Recruiter recruiter = recruiterService.findRecruiterById(recruiterForm.getId());
         if (!recruiterForm.getNewPassword().isEmpty()) {
             if (recruiterForm.getOldPassword().isEmpty()) {
                 errors.rejectValue("oldPassword", "NotEmpty.recruiterForm.oldPassword");
-            } else if (!recruiterForm.getOldPassword().equals(currentRecruiter.getUser().getPassword())) {
+            } else if (!recruiterForm.getOldPassword().equals(recruiter.getUser().getPassword())) {
                 errors.rejectValue("oldPassword", "NotEqual.recruiterForm.oldPassword");
             } else if (recruiterForm.getNewPassword().length() < 6){
                 errors.rejectValue("newPassword", "Short.recruiterForm.newPassword");

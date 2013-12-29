@@ -38,7 +38,7 @@ public interface BidMapper {
             @Result(column = "firstname", property = "recruiter.user.firstName"),
             @Result(column = "lastname", property = "recruiter.user.lastName")
     })
-    List<Bid> findListOfRecruiterBids(final Long recruiterId);
+    List<Bid> findRecruiterBids(final Long recruiterId);
 
     @Select("SELECT bids.id, bids.message, bids.status, " +
             "vacancies.id as vacancy_id,  vacancies.employer_id, vacancies.title, " +
@@ -64,7 +64,7 @@ public interface BidMapper {
             @Result(column = "firstname", property = "recruiter.user.firstName"),
             @Result(column = "lastname", property = "recruiter.user.lastName")
     })
-    List<Bid> findAllActiveByEmployerId(final Long employerId);
+    List<Bid> findBidsForEmployerVacancies(final Long employerId);
 
     @Select("SELECT bids.id, bids.message, bids.status, " +
             "vacancies.id as vacancy_id,  vacancies.employer_id, vacancies.title, " +
@@ -90,7 +90,7 @@ public interface BidMapper {
             @Result(column = "firstname", property = "recruiter.user.firstName"),
             @Result(column = "lastname", property = "recruiter.user.lastName")
     })
-    Bid getBidById(final Long bidId);
+    Bid findById(final Long bidId);
 
     @Select("SELECT bids.id, bids.message, bids.status, " +
             "vacancies.id as vacancy_id,  vacancies.employer_id, vacancies.title, " +
@@ -116,7 +116,7 @@ public interface BidMapper {
             @Result(column = "firstname", property = "recruiter.user.firstName"),
             @Result(column = "lastname", property = "recruiter.user.lastName")
     })
-    List<Bid> findAllBidsForVacancy(final Long vacancyId);
+    List<Bid> findBidsForVacancy(final Long vacancyId);
 
     @Insert("INSERT INTO bids (vacancy_id, recruiter_id, message) " +
             "VALUES (#{vacancyId}, #{recruiterId}, #{message})")

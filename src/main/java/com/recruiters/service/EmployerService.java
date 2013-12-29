@@ -25,8 +25,6 @@ import java.util.List;
 public class EmployerService {
 
     @Autowired
-    private UserRepository userRepository = null;
-    @Autowired
     private EmployerRepository employerRepository = null;
     @Autowired
     private DealRepository dealRepository = null;
@@ -37,41 +35,14 @@ public class EmployerService {
     @Autowired
     private VacancyRepository vacancyRepository = null;
 
-
-    /**
-     * Detached user getter, should be combined with equal getter
-     * in RecruiterService Class in future
-     * @param request Http request
-     * @return User POJO instance
-     */
-    public User getCurrentUser(final HttpServletRequest request) {
-
-        return userRepository.getCurrentUser(request);
-    }
-
     /**
      * Finds Employer POJO instance by its user id
      * @param userId    User Id
      * @return Employer POJO instance
      */
-    public Employer findEmployerByUserId(final Long userId) {
+    public Employer findEmployerByUser(final Long userId) {
 
-        return employerRepository.getEmployerByUserId(userId);
-    }
-
-    /**
-     * Returns deal for employer by its Id, using Employer instance as security measures
-     * @param dealId      Id of deal
-     * @param employer    Employer POJO instance
-     * @return POJO Deal instance
-     */
-    public Deal getDealById(final Long dealId, final Employer employer) {
-
-        Deal deal = dealRepository.getById(dealId);
-        if (deal.getVacancy().getEmployer().getId().equals(employer.getId())) {
-            return deal;
-        }
-        return null;
+        return employerRepository.findEmployerByUser(userId);
     }
 
     /**
@@ -81,7 +52,22 @@ public class EmployerService {
      */
     public List<Deal> findEmployerDeals(final Employer employer) {
 
-        return dealRepository.findAllActiveByEmployerId(employer.getId());
+        return dealRepository.findActiveDealsForEmployer(employer.getId());
+    }
+
+    /**
+     * Returns deal for employer by its Id, using Employer instance as security measures
+     * @param dealId      Id of deal
+     * @param employer    Employer POJO instance
+     * @return POJO Deal instance
+     */
+    public Deal findDealById(final Long dealId, final Employer employer) {
+
+        Deal deal = dealRepository.findById(dealId);
+        if (deal.getVacancy().getEmployer().getId().equals(employer.getId())) {
+            return deal;
+        }
+        return null;
     }
 
     /**
@@ -91,15 +77,14 @@ public class EmployerService {
      * @param employer       Employer POJO instance
      * @return Applicant POJO instance
      */
-    public Applicant getApplicantById(final Long applicantId, final Employer employer) {
+    public Applicant findApplicantById(final Long applicantId, final Employer employer) {
 
-        Applicant applicant = applicantRepository.getApplicantById(applicantId);
+        Applicant applicant = applicantRepository.findById(applicantId);
         if (applicant.getDeal().getVacancy().getEmployer().getId().equals(employer.getId())) {
             return applicant;
         }
         return null;
     }
-
 
     /**
      * Get all active bids from DB for current employer
@@ -108,9 +93,8 @@ public class EmployerService {
      */
     public List<Bid> findEmployerBids(final Employer employer) {
 
-        return bidRepository.findAllActiveByEmployerId(employer.getId());
+        return bidRepository.findBidsForEmployerVacancies(employer.getId());
     }
-
 
     /**
      * Get bids for exact vacancy from DB for current employer
@@ -120,9 +104,24 @@ public class EmployerService {
      */
     public List<Bid> findBidsForVacancy(final Long vacancyId, final Employer employer) {
 
-        Vacancy vacancy = vacancyRepository.getById(vacancyId);
+        Vacancy vacancy = vacancyRepository.findById(vacancyId);
         if (vacancy.getEmployer().getId().equals(employer.getId())) {
-            return bidRepository.findAllBidsForVacancy(vacancyId);
+            return bidRepository.findBidsForVacancy(vacancyId);
+        }
+        return null;
+    }
+
+    /**
+     * Get bid by its id, employer verification required
+     * @param bidId       Id of bid
+     * @param employer    Employer POJO instance
+     * @return Bid POJO instance
+     */
+    public Bid findBidById(final Long bidId, final Employer employer) {
+
+        Bid bid = bidRepository.findById(bidId);
+        if (bid.getVacancy().getEmployer().getId().equals(employer.getId())) {
+            return bid;
         }
         return null;
     }
@@ -149,28 +148,13 @@ public class EmployerService {
     }
 
     /**
-     * Get bid by its id, employer verification required
-     * @param bidId       Id of bid
-     * @param employer    Employer POJO instance
-     * @return Bid POJO instance
-     */
-    public Bid getBidById(final Long bidId, final Employer employer) {
-
-        Bid bid = bidRepository.getBidById(bidId);
-        if (bid.getVacancy().getEmployer().getId().equals(employer.getId())) {
-            return bid;
-        }
-        return null;
-    }
-
-    /**
      * Get Vacancy by its id if its related to exact employer
      * @param vacancyId    Id of vacancy
      * @param employer     Employer POJO instance
      * @return Vacancy POJO instance
      */
-    public Vacancy getVacancyById(final Long vacancyId, final Employer employer) {
-        Vacancy vacancy = vacancyRepository.getById(vacancyId);
+    public Vacancy findVacancyById(final Long vacancyId, final Employer employer) {
+        Vacancy vacancy = vacancyRepository.findById(vacancyId);
         if (vacancy.getEmployer().getId().equals(employer.getId())) {
             return vacancy;
         }

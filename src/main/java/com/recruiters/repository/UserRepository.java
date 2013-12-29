@@ -18,12 +18,12 @@ public class UserRepository {
 
     /**
      * Method must return user model by credentials of request
-     * @param request
+     * @param username
      * @return
      */
-    public User getCurrentUser(final HttpServletRequest request) {
+    public User findUserByUsername(final String username) {
 
-        return this.findUserByUserName(request.getUserPrincipal().getName());
+        return this.findByUsername(username);
     }
 
     /**
@@ -31,8 +31,8 @@ public class UserRepository {
      * @param id
      * @return
      */
-    public User getById(final Long id) {
-        return this.getUserMapper().getById(id);
+    public User findById(final Long id) {
+        return this.getUserMapper().findById(id);
     }
 
     /**
@@ -40,9 +40,9 @@ public class UserRepository {
      * @param username Username
      * @return User POJO instance
      */
-    public User findUserByUserName(final String username) {
+    public User findByUsername(final String username) {
 
-        return this.getUserMapper().findUserByUserName(username);
+        return this.getUserMapper().findByUsername(username);
     }
 
     public UserMapper getUserMapper() {

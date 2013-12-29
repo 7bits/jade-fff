@@ -2,8 +2,8 @@ package com.recruiters.web.controller.employer;
 
 import com.recruiters.model.Applicant;
 import com.recruiters.model.Employer;
-import com.recruiters.model.User;
 import com.recruiters.service.EmployerService;
+import com.recruiters.web.controller.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +20,8 @@ public class EmployerApplicantView {
 
     @Autowired
     private EmployerService employerService = null;
+    @Autowired
+    private UserUtils userUtils = null;
 
     /**
      * Page controller for C71 "View applicant"
@@ -33,10 +35,10 @@ public class EmployerApplicantView {
             final HttpServletRequest request
     ) {
         ModelAndView showApplicant = new ModelAndView("employer/employer-employee-show.jade");
-        User currentUser = employerService.getCurrentUser(request);
-        Employer employer = employerService.findEmployerByUserId(currentUser.getId());
+        Long userId = userUtils.getCurrentUserId(request);
+        Employer employer = employerService.findEmployerByUser(userId);
         if (employer != null) {
-            Applicant applicant = employerService.getApplicantById(applicantId, employer);
+            Applicant applicant = employerService.findApplicantById(applicantId, employer);
             showApplicant.addObject("applicant", applicant);
         }
 

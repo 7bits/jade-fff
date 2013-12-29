@@ -3,6 +3,7 @@ package com.recruiters.web.controller.recruiter;
 import com.recruiters.model.Recruiter;
 import com.recruiters.model.User;
 import com.recruiters.service.RecruiterService;
+import com.recruiters.web.controller.utils.UserUtils;
 import com.recruiters.web.form.RecruiterForm;
 import com.recruiters.web.validator.RecruiterFormValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,8 @@ import javax.validation.Valid;
 public class EditProfile {
 
     @Autowired
+    private UserUtils userUtils = null;
+    @Autowired
     private RecruiterService recruiterService = null;
     @Autowired
     private RecruiterFormValidator recruiterFormValidator = null;
@@ -36,8 +39,8 @@ public class EditProfile {
     @RequestMapping(value = "recruiter-profile", method = RequestMethod.GET)
     public ModelAndView showRecruiterProfile(final HttpServletRequest request) {
         ModelAndView recruiterProfile = new ModelAndView("recruiter/recruiter-profile.jade");
-        User currentUser = recruiterService.getCurrentUser(request);
-        Recruiter recruiter = recruiterService.findRecruiterByUserId(currentUser.getId());
+        Long userId = userUtils.getCurrentUserId(request);
+        Recruiter recruiter = recruiterService.findRecruiterByUserId(userId);
         RecruiterForm recruiterForm = new RecruiterForm(recruiter);
         recruiterProfile.addObject("recruiterForm", recruiterForm);
         return recruiterProfile;

@@ -5,7 +5,6 @@ import com.recruiters.repository.mapper.DealMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,16 +16,14 @@ public class DealRepository {
     @Autowired
     private DealMapper dealMapper = null;
 
-    public Deal getById(final Long id) {
+    public Deal findById(final Long id) {
 
-        Deal deal = dealMapper.getById(id);
-        return deal;
+        return dealMapper.getById(id);
     }
 
-    public List<Deal> findAllActiveByRecruiterId(final Long recruiterId) {
+    public List<Deal> findActiveDealsForRecruiter(final Long recruiterId) {
 
-        List<Deal> dealList = dealMapper.findAllActiveByRecruiterId(recruiterId);
-        return dealList;
+        return dealMapper.findActiveDealsByRecruiterId(recruiterId);
     }
 
     /**
@@ -34,10 +31,9 @@ public class DealRepository {
      * @param employerId    Id of employer
      * @return List of POJO Deal instances
      */
-    public List<Deal> findAllActiveByEmployerId(final Long employerId) {
+    public List<Deal> findActiveDealsForEmployer(final Long employerId) {
 
-        List<Deal> dealList = dealMapper.findAllActiveByEmployerId(employerId);
-        return dealList;
+        return dealMapper.findActiveDealsByEmployerId(employerId);
     }
 
     public DealMapper getDealMapper() {

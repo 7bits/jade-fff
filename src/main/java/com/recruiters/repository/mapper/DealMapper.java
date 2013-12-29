@@ -36,7 +36,7 @@ public interface DealMapper {
             @Result(column = "firstname", property = "recruiter.user.firstName"),
             @Result(column = "lastname", property = "recruiter.user.lastName"),
             @Result(property = "applicants", column = "id", javaType = List.class,
-                    many = @Many(select = "com.recruiters.repository.mapper.ApplicantMapper.getApplicantByDealId"))
+                    many = @Many(select = "com.recruiters.repository.mapper.ApplicantMapper.getApplicantsByDealId"))
     })
     Deal getById(final Long dealId);
 
@@ -63,7 +63,7 @@ public interface DealMapper {
             @Result(column = "firstname", property = "recruiter.user.firstName"),
             @Result(column = "lastname", property = "recruiter.user.lastName")
     })
-    List<Deal> findAllActiveByRecruiterId(final Long recruiterId);
+    List<Deal> findActiveDealsByRecruiterId(final Long recruiterId);
 
     @Select("SELECT deals.id, deals.status, " +
             "vacancies.id as vacancy_id,  vacancies.employer_id, vacancies.title, " +
@@ -88,5 +88,5 @@ public interface DealMapper {
             @Result(column = "firstname", property = "recruiter.user.firstName"),
             @Result(column = "lastname", property = "recruiter.user.lastName")
     })
-    List<Deal> findAllActiveByEmployerId(final Long employerId);
+    List<Deal> findActiveDealsByEmployerId(final Long employerId);
 }

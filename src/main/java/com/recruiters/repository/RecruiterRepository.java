@@ -14,16 +14,19 @@ public class RecruiterRepository {
     @Autowired
     private RecruiterMapper recruiterMapper = null;
 
-    public Recruiter getById(final Long recruiterId) {
-        Recruiter recruiter = this.getRecruiterMapper().getById(recruiterId);
+    public Recruiter findById(final Long recruiterId) {
 
-        return recruiter;
+        return this.getRecruiterMapper().findById(recruiterId);
     }
 
-    public Recruiter getByUserId(final Long userId) {
-        Recruiter recruiter = this.getRecruiterMapper().getByUserId(userId);
+    public Long findIdByUser(final Long userId) {
 
-        return recruiter;
+        return this.getRecruiterMapper().findRecruiterIdByUserId(userId);
+    }
+
+    public Recruiter findByUser(final Long userId) {
+
+        return this.getRecruiterMapper().findByUserId(userId);
     }
 
     public RecruiterMapper getRecruiterMapper() {

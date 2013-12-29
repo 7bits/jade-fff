@@ -5,6 +5,7 @@ import com.recruiters.model.Recruiter;
 import com.recruiters.model.User;
 import com.recruiters.model.Vacancy;
 import com.recruiters.service.RecruiterService;
+import com.recruiters.web.controller.utils.UserUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -30,6 +31,8 @@ import java.util.Date;
 public class ShowVacancy {
 
     @Autowired
+    private UserUtils userUtils = null;
+    @Autowired
     private RecruiterService recruiterService = null;
 
     /**
@@ -39,13 +42,8 @@ public class ShowVacancy {
     @RequestMapping(value = "recruiter-show-vacancy/{vacancyId}", method = RequestMethod.GET)
     public ModelAndView showVacancyById(@PathVariable final Long vacancyId, final HttpServletRequest request) {
         ModelAndView showVacancy = new ModelAndView("recruiter/recruiter-show-vacancy.jade");
-        User currentUser = this.getRecruiterService().getCurrentUser(request);
-        Recruiter recruiter = this.getRecruiterService().findRecruiterByUserId(currentUser.getId());
-        if (recruiter != null) {
-            Vacancy vacancy = this.getRecruiterService().getVacancyById(vacancyId);
-            showVacancy.addObject("vacancy", vacancy);
-
-        }
+        Vacancy vacancy = this.getRecruiterService().getVacancyById(vacancyId);
+        showVacancy.addObject("vacancy", vacancy);
 
         return showVacancy;
     }
@@ -62,12 +60,11 @@ public class ShowVacancy {
             @RequestParam(value = "message", required = false) final String message,
             final HttpServletRequest request
     ) {
-        User currentUser = this.getRecruiterService().getCurrentUser(request);
-        Recruiter recruiter = this.getRecruiterService().findRecruiterByUserId(currentUser.getId());
-        Vacancy vacancy = this.getRecruiterService().getVacancyById(vacancyId);
+        Long userId = userUtils.getCurrentUserId(request);
+        Long recruiterId = this.getRecruiterService().findRecruiterIdByUserId(userId);
         Boolean successApplied = false;
-        if (recruiter != null) {
-            successApplied = this.getRecruiterService().applyRecruiterToVacancy(recruiter, vacancy, message);
+        if (recruiterId != null) {
+            successApplied = this.getRecruiterService().applyRecruiterToVacancy(recruiterId, vacancyId, message);
         }
 
         return successApplied;
