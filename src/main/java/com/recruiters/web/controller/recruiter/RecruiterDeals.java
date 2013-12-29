@@ -28,10 +28,7 @@ public class RecruiterDeals {
     public ModelAndView showMyVacancies(final HttpServletRequest request) {
         ModelAndView activeDeals = new ModelAndView("recruiter/recruiter-active-deals.jade");
         Long userId = userUtils.getCurrentUserId(request);
-        Long recruiterId = this.getRecruiterService().findRecruiterIdByUserId(userId);
-        if (recruiterId != null) {
-            activeDeals.addObject("deals", getRecruiterService().findActiveDealsForRecruiter(recruiterId));
-        }
+        activeDeals.addObject("deals", getRecruiterService().findActiveDealsForRecruiter(userId));
 
         return activeDeals;
     }

@@ -1,7 +1,6 @@
 package com.recruiters.web.controller.recruiter;
 
 import com.recruiters.model.Deal;
-import com.recruiters.model.User;
 import com.recruiters.service.RecruiterService;
 import com.recruiters.web.controller.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,11 +28,8 @@ public class ShowInProgressVacancy {
 
         ModelAndView vacancyInProgress = new ModelAndView("recruiter/recruiter-show-in-progress-vacancy.jade");
         Long userId = userUtils.getCurrentUserId(request);
-        Long recruiterId = this.getRecruiterService().findRecruiterIdByUserId(userId);
-        if (recruiterId != null) {
-            Deal deal = this.getRecruiterService().findDealByIdForRecruiter(dealId, recruiterId);
-            vacancyInProgress.addObject("deal", deal);
-        }
+        vacancyInProgress.addObject("deal", this.getRecruiterService().findDealForRecruiter(dealId, userId));
+
         return vacancyInProgress;
     }
 

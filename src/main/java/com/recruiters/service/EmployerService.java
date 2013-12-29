@@ -58,16 +58,12 @@ public class EmployerService {
     /**
      * Returns deal for employer by its Id, using Employer instance as security measures
      * @param dealId      Id of deal
-     * @param employer    Employer POJO instance
+     * @param userId    Id of user
      * @return POJO Deal instance
      */
-    public Deal findDealById(final Long dealId, final Employer employer) {
+    public Deal findDealById(final Long dealId, final Long userId) {
 
-        Deal deal = dealRepository.findById(dealId);
-        if (deal.getVacancy().getEmployer().getId().equals(employer.getId())) {
-            return deal;
-        }
-        return null;
+        return dealRepository.findDealForEmployer(dealId, userId);
     }
 
     /**

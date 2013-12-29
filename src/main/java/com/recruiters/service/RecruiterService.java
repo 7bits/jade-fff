@@ -4,7 +4,6 @@ import com.recruiters.model.Applicant;
 import com.recruiters.model.Bid;
 import com.recruiters.model.Deal;
 import com.recruiters.model.Recruiter;
-import com.recruiters.model.User;
 import com.recruiters.model.Vacancy;
 import com.recruiters.repository.ApplicantRepository;
 import com.recruiters.repository.BidRepository;
@@ -18,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -102,12 +100,12 @@ public class RecruiterService {
 
     /**
      * Method must return list of vacancies. Each of vacancies has deal for this recruiter
-     * @param recruiterId
+     * @param userId
      * @return
      */
-    public List<Deal> findActiveDealsForRecruiter(final Long recruiterId) {
+    public List<Deal> findActiveDealsForRecruiter(final Long userId) {
 
-        return this.getDealRepository().findActiveDealsForRecruiter(recruiterId);
+        return this.getDealRepository().findActiveDealsForRecruiter(userId);
     }
 
     /**
@@ -115,14 +113,9 @@ public class RecruiterService {
      * @param dealId  Id of deal
      * @return vacancy description
      */
-    public Deal findDealByIdForRecruiter(final Long dealId, final Long recruiterId) {
+    public Deal findDealForRecruiter(final Long dealId, final Long userId) {
 
-        Deal deal = this.getDealRepository().findById(dealId);
-        if (deal.getRecruiter().getId().equals(recruiterId)) {
-            return deal;
-        }
-
-        return null;
+        return this.getDealRepository().findDealForRecruiter(dealId, userId);
     }
 
     public Applicant getApplicantById(final Long applicantId) {

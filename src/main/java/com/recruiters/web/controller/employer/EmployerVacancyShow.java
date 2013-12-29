@@ -31,17 +31,15 @@ public class EmployerVacancyShow {
      * @return model and view with single deal
      */
     @RequestMapping(value = "employer-progress-vacancy-show/{dealId}", method = RequestMethod.GET)
-    public ModelAndView showVacancyProgressForEmployer(@PathVariable final Long dealId,
-                                                       final HttpServletRequest request) {
+    public ModelAndView showVacancyProgressForEmployer(
+            @PathVariable final Long dealId,
+            final HttpServletRequest request
+    ) {
 
         ModelAndView vacancyProgress =  new ModelAndView("employer/employer-progress-vacancy-show.jade");
         Long userId = userUtils.getCurrentUserId(request);
-        Employer employer = employerService.findEmployerByUser(userId);
+        vacancyProgress.addObject("deal", employerService.findDealById(dealId, userId));
 
-        if (employer != null) {
-            Deal deal = employerService.findDealById(dealId, employer);
-            vacancyProgress.addObject("deal", deal);
-        }
         return vacancyProgress;
     }
 

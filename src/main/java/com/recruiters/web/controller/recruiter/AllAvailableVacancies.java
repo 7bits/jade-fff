@@ -24,6 +24,7 @@ public class AllAvailableVacancies {
      */
     @RequestMapping(value = "recruiter-find-new-vacancies", method = RequestMethod.GET)
     public ModelAndView showAllAvailableVacancies(final HttpServletRequest request) {
+
         ModelAndView allAvailableVacancies = new ModelAndView("recruiter/recruiter-find-new-vacancies.jade");
         allAvailableVacancies.addObject("vacancies", getRecruiterService().findAvailableVacanciesForRecruiter());
 

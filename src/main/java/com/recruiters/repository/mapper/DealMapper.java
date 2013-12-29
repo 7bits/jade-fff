@@ -2,6 +2,7 @@ package com.recruiters.repository.mapper;
 
 import com.recruiters.model.Deal;
 import org.apache.ibatis.annotations.Many;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
@@ -20,10 +21,10 @@ public interface DealMapper {
             "users.firstname, users.lastname " +
             "FROM deals " +
             "INNER JOIN vacancies ON vacancies.id=deals.vacancy_id " +
-            "INNER JOIN recruiters  ON recruiters.id=deals.recruiter_id " +
+            "INNER JOIN recruiters ON recruiters.id=deals.recruiter_id " +
             "INNER JOIN employers ON employers.id = vacancies.employer_id " +
             "INNER JOIN users ON employers.user_id=users.id " +
-            "WHERE deals.id=#{dealId}")
+            "WHERE deals.id=#{dealId} and recruiters.user_id=#{userId}")
     @Results({
             @Result(column = "id", property = "id", javaType = Long.class),
             @Result(column = "status", property = "status"),
@@ -39,7 +40,35 @@ public interface DealMapper {
             @Result(property = "applicants", column = "id", javaType = List.class,
                     many = @Many(select = "com.recruiters.repository.mapper.ApplicantMapper.getApplicantsByDealId"))
     })
-    Deal findById(final Long dealId);
+    Deal findDealForRecruiter(@Param(value = "dealId") final Long dealId, @Param(value = "userId") final Long userId);
+
+    @Select("SELECT deals.id, deals.status, " +
+            "vacancies.id as vacancy_id, vacancies.employer_id, vacancies.title, " +
+            "vacancies.description, vacancies.salary, vacancies.creation_date, " +
+            "recruiters.id as recruiter_id, " +
+            "users.firstname, users.lastname " +
+            "FROM deals " +
+            "INNER JOIN vacancies ON vacancies.id=deals.vacancy_id " +
+            "INNER JOIN recruiters ON recruiters.id=deals.recruiter_id " +
+            "INNER JOIN employers ON employers.id = vacancies.employer_id " +
+            "INNER JOIN users ON recruiters.user_id=users.id " +
+            "WHERE deals.id=#{dealId} and employers.user_id=#{userId}")
+    @Results({
+            @Result(column = "id", property = "id", javaType = Long.class),
+            @Result(column = "status", property = "status"),
+            @Result(column = "vacancy_id", property = "vacancy.id"),
+            @Result(column = "employer_id", property = "vacancy.employer.id"),
+            @Result(column = "title", property = "vacancy.title"),
+            @Result(column = "description", property = "vacancy.description"),
+            @Result(column = "salary", property = "vacancy.salary"),
+            @Result(column = "creation_date", property = "vacancy.creationDate"),
+            @Result(column = "recruiter_id", property = "recruiter.id"),
+            @Result(column = "firstname", property = "recruiter.user.firstName"),
+            @Result(column = "lastname", property = "recruiter.user.lastName"),
+            @Result(property = "applicants", column = "id", javaType = List.class,
+                    many = @Many(select = "com.recruiters.repository.mapper.ApplicantMapper.getApplicantsByDealId"))
+    })
+    Deal findDealForEmployer(@Param(value = "dealId") final Long dealId, @Param(value = "userId") final Long userId);
 
     @Select("SELECT deals.id, deals.status, " +
             "vacancies.id as vacancy_id,  vacancies.employer_id, vacancies.title, " +
@@ -50,7 +79,7 @@ public interface DealMapper {
             "INNER JOIN vacancies ON vacancies.id=deals.vacancy_id " +
             "INNER JOIN recruiters  ON recruiters.id=deals.recruiter_id " +
             "INNER JOIN users ON recruiters.user_id=users.id " +
-            "WHERE deals.recruiter_id=#{recruiterId} AND deals.status=\"IN_PROGRESS\"")
+            "WHERE recruiters.user_id=#{userId} AND deals.status=\"IN_PROGRESS\"")
     @Results({
             @Result(column = "id", property = "id"),
             @Result(column = "status", property = "status"),
@@ -64,7 +93,7 @@ public interface DealMapper {
             @Result(column = "firstname", property = "recruiter.user.firstName"),
             @Result(column = "lastname", property = "recruiter.user.lastName")
     })
-    List<Deal> findActiveDealsByRecruiterId(final Long recruiterId);
+    List<Deal> findActiveRecruiterDealsByUserId(final Long userId);
 
     @Select("SELECT deals.id, deals.status, " +
             "vacancies.id as vacancy_id,  vacancies.employer_id, vacancies.title, " +

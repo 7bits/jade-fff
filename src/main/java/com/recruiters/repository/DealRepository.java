@@ -16,14 +16,14 @@ public class DealRepository {
     @Autowired
     private DealMapper dealMapper = null;
 
-    public Deal findById(final Long id) {
+    public List<Deal> findActiveDealsForRecruiter(final Long userId) {
 
-        return dealMapper.findById(id);
+        return dealMapper.findActiveRecruiterDealsByUserId(userId);
     }
 
-    public List<Deal> findActiveDealsForRecruiter(final Long recruiterId) {
+    public Deal findDealForRecruiter(final Long dealId, final Long userId) {
 
-        return dealMapper.findActiveDealsByRecruiterId(recruiterId);
+        return dealMapper.findDealForRecruiter(dealId, userId);
     }
 
     /**
@@ -34,6 +34,11 @@ public class DealRepository {
     public List<Deal> findActiveDealsForEmployer(final Long employerId) {
 
         return dealMapper.findActiveDealsByEmployerId(employerId);
+    }
+
+    public Deal findDealForEmployer(final Long dealId, final Long userId) {
+
+        return dealMapper.findDealForEmployer(dealId, userId);
     }
 
     public DealMapper getDealMapper() {
