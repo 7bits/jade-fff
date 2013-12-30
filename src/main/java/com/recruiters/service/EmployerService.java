@@ -72,13 +72,13 @@ public class EmployerService {
      * Get applicant by its id and return it if it's related to current employer
      * otherwise return null
      * @param applicantId    Id of applicant
-     * @param employer       Employer POJO instance
+     * @param employerId     Id of employer
      * @return Applicant POJO instance
      */
-    public Applicant findApplicantById(final Long applicantId, final Employer employer) {
+    public Applicant findApplicantById(final Long applicantId, final Long employerId) {
 
         Applicant applicant = applicantRepository.findById(applicantId);
-        if (applicant.getDeal().getVacancy().getEmployer().getId().equals(employer.getId())) {
+        if (applicant.getDeal().getVacancy().getEmployer().getId().equals(employerId)) {
             return applicant;
         }
         return null;
@@ -189,7 +189,7 @@ public class EmployerService {
     }
 
     /**
-     * Applys Applicant
+     * Apply Applicant
      * @param applicantId      Id of applicant
      * @param employerId       Id of employer
      * @return true if success, otherwise false
@@ -198,5 +198,17 @@ public class EmployerService {
         //TODO deal should change its state or smth.
 
         return applicantRepository.updateApplicantStatus(applicantId, ApplicantStatus.APPROVED, employerId);
+    }
+
+
+    /**
+     * Decline Applicant
+     * @param applicantId      Id of applicant
+     * @param employerId       Id of employer
+     * @return true if success, otherwise false
+     */
+    public Boolean declineApplicant(final Long applicantId, final Long employerId) {
+
+        return applicantRepository.updateApplicantStatus(applicantId, ApplicantStatus.REJECTED, employerId);
     }
 }

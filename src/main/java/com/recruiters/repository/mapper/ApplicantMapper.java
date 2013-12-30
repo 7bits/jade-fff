@@ -50,7 +50,7 @@ public interface ApplicantMapper {
             "INNER JOIN deals ON deals.id=applicants.deal_id " +
             "INNER JOIN vacancies ON vacancies.id=deals.vacancy_id " +
             "INNER JOIN recruiters  ON recruiters.id=deals.recruiter_id " +
-            "WHERE applicants.deal_id=#{dealId}")
+            "WHERE applicants.deal_id=#{dealId} AND applicants.status=\"IN_PROGRESS\"")
     @Results({
             @Result(column = "id", property = "id"),
             @Result(column = "first_name", property = "firstName"),
