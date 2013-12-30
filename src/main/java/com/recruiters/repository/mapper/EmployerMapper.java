@@ -11,7 +11,7 @@ import org.apache.ibatis.annotations.Select;
 public interface EmployerMapper {
 
     @Select("SELECT employers.id, employers.user_id, " +
-            "users.firstname, users.lastname, users.username, users.password " +
+            "users.firstname, users.lastname, users.username, users.password, users.description " +
             "FROM employers " +
             "RIGHT JOIN users ON users.id = employers.user_id " +
             "WHERE employers.id=#{employerId}")
@@ -21,12 +21,13 @@ public interface EmployerMapper {
             @Result(column = "firstname", property = "user.firstName"),
             @Result(column = "lastname", property = "user.lastName"),
             @Result(column = "username", property = "user.username"),
-            @Result(column = "password", property = "user.password")
+            @Result(column = "password", property = "user.password"),
+            @Result(column = "description", property = "user.description")
     })
     Employer findById(final Long employerId);
 
     @Select("SELECT employers.id, employers.user_id, " +
-            "users.firstname, users.lastname, users.username, users.password " +
+            "users.firstname, users.lastname, users.username, users.password, users.description " +
             "FROM employers " +
             "RIGHT JOIN users ON users.id = employers.user_id " +
             "WHERE employers.user_id=#{userId}")
@@ -36,7 +37,8 @@ public interface EmployerMapper {
             @Result(column = "firstname", property = "user.firstName"),
             @Result(column = "lastname", property = "user.lastName"),
             @Result(column = "username", property = "user.username"),
-            @Result(column = "password", property = "user.password")
+            @Result(column = "password", property = "user.password"),
+            @Result(column = "description", property = "user.description")
     })
     Employer getByUserId(final Long userId);
 }

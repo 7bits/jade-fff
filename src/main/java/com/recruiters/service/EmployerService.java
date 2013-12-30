@@ -15,7 +15,6 @@ import com.recruiters.repository.VacancyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -34,6 +33,8 @@ public class EmployerService {
     private BidRepository bidRepository = null;
     @Autowired
     private VacancyRepository vacancyRepository = null;
+    @Autowired
+    private UserRepository userRepository = null;
 
     /**
      * Finds Employer POJO instance by its user id
@@ -155,5 +156,34 @@ public class EmployerService {
             return vacancy;
         }
         return null;
+    }
+
+
+    /**
+     * Saving employer profile
+     * Logic looks like bullsh!t but I don't see another implementation w/o
+     * user being in session scope some level before
+     * @param employer    Employer POJO instance
+     * @return true if update is ok, otherwise false
+     */
+    public Boolean saveEmployerProfile(final Employer employer) {
+        Employer employerOld = employerRepository.findById(employer.getId());
+        employer.getUser().setId(employerOld.getUser().getId());
+        employer.getUser().setUsername(employerOld.getUser().getUsername());
+        if (employer.getUser().getPassword() == null) {
+            employer.getUser().setPassword(employerOld.getUser().getPassword());
+        }
+
+        return userRepository.update(employer.getUser());
+    }
+
+    /**
+     * Finds Employer POJO instance by its  id
+     * @param employerId    Employer Id
+     * @return Employer POJO instance
+     */
+    public Employer findEmployerById(final Long employerId) {
+
+        return employerRepository.findById(employerId);
     }
 }
