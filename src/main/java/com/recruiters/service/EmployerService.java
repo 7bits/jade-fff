@@ -1,6 +1,7 @@
 package com.recruiters.service;
 
 import com.recruiters.model.Applicant;
+import com.recruiters.model.ApplicantStatus;
 import com.recruiters.model.Bid;
 import com.recruiters.model.Deal;
 import com.recruiters.model.Employer;
@@ -185,5 +186,17 @@ public class EmployerService {
     public Employer findEmployerById(final Long employerId) {
 
         return employerRepository.findById(employerId);
+    }
+
+    /**
+     * Applys Applicant
+     * @param applicantId      Id of applicant
+     * @param employerId       Id of employer
+     * @return true if success, otherwise false
+     */
+    public Boolean applyApplicant(final Long applicantId, final Long employerId) {
+        //TODO deal should change its state or smth.
+
+        return applicantRepository.updateApplicantStatus(applicantId, ApplicantStatus.APPROVED, employerId);
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,7 +30,7 @@ public class EmployerApplicantView {
      * @param request        Http request
      * @return model and view with applicant
      */
-    @RequestMapping(value = "employer-employee-show/{applicantId}")
+    @RequestMapping(value = "employer-employee-show/{applicantId}", method = RequestMethod.GET)
     public ModelAndView employeeShow(
             @PathVariable final Long applicantId,
             final HttpServletRequest request
@@ -43,6 +44,24 @@ public class EmployerApplicantView {
         }
 
         return showApplicant;
+    }
+
+    /**
+     * Agree with Applicant offer
+     * @param applicantId    Id of applicant
+     * @param request        Http request
+     * @return model and view with applicant
+     */
+    @RequestMapping(value = "employer-employee-show/apply/{applicantId}", method = RequestMethod.GET)
+    public String applicantApply(
+            @PathVariable final Long applicantId,
+            final HttpServletRequest request
+    ) {
+        Long userId = userUtils.getCurrentUserId(request);
+        Employer employer = employerService.findEmployerByUser(userId);
+        employerService.applyApplicant(applicantId, employer.getId());
+
+        return "redirect:/employer-progress-vacancies-list";
     }
 
     public EmployerService getEmployerService() {
