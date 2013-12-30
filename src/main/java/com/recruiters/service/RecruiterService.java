@@ -160,6 +160,24 @@ public class RecruiterService {
         return this.getBidRepository().createBid(recruiterId, vacancyId, message);
     }
 
+    /**
+     * Saving recruiter profile
+     * Logic looks like bullsh!t but I don't see another implementation w/o
+     * user being in session scope some level before
+     * @param recruiter    Recruiter POJO instance
+     * @return true if update is ok, otherwise false
+     */
+    public Boolean saveRecruiterProfile(final Recruiter recruiter) {
+        Recruiter recruiterOld = recruiterRepository.findById(recruiter.getId());
+        recruiter.getUser().setId(recruiterOld.getUser().getId());
+        recruiter.getUser().setUsername(recruiterOld.getUser().getUsername());
+        if (recruiter.getUser().getPassword() == null) {
+            recruiter.getUser().setPassword(recruiterOld.getUser().getPassword());
+        }
+
+        return userRepository.update(recruiter.getUser());
+    }
+
     public FileRepository getFileRepository() {
         return fileRepository;
     }

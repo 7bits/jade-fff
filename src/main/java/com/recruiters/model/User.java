@@ -8,6 +8,7 @@ public class User {
     private String password = null;
     private String firstName = null;
     private String lastName = null;
+    private String description = null;
 
     public User() {
 
@@ -23,6 +24,14 @@ public class User {
         this(id, username, password);
         this.firstName = firstName;
         this.lastName = lastName;
+    }
+
+    public User(final Long id, final String username, final String password,
+                final String firstName, final String lastName, final String description) {
+        this(id, username, password);
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.description = description;
     }
 
     public Long getId() {
@@ -63,5 +72,13 @@ public class User {
 
     public void setLastName(final String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(final String description) {
+        this.description = description;
     }
 }

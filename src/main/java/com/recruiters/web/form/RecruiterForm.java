@@ -1,6 +1,7 @@
 package com.recruiters.web.form;
 
 import com.recruiters.model.Recruiter;
+import com.recruiters.model.User;
 
 /**
  * JavaBean for RecruiterForm
@@ -9,6 +10,7 @@ public class RecruiterForm {
     private Long id;
     private String firstName;
     private String lastName;
+    private String description;
     private String oldPassword;
     private String newPassword;
 
@@ -19,6 +21,22 @@ public class RecruiterForm {
         this.id = recruiter.getId();
         this.firstName = recruiter.getUser().getFirstName();
         this.lastName = recruiter.getUser().getLastName();
+        this.description = recruiter.getUser().getDescription();
+    }
+
+    public Recruiter fillModel() {
+        Recruiter recruiter = new Recruiter();
+        recruiter.setId(id);
+        User user = new User();
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setDescription(description);
+        if (!newPassword.isEmpty()) {
+            user.setPassword(newPassword);
+        }
+        recruiter.setUser(user);
+
+        return recruiter;
     }
 
     public Long getId() {
@@ -59,5 +77,13 @@ public class RecruiterForm {
 
     public void setNewPassword(final String newPassword) {
         this.newPassword = newPassword;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(final String description) {
+        this.description = description;
     }
 }
