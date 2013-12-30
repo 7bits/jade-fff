@@ -35,7 +35,7 @@ public class EmployerApplicantView {
             @PathVariable final Long applicantId,
             final HttpServletRequest request
     ) {
-        ModelAndView showApplicant = new ModelAndView("employer/employer-employee-show.jade");
+        ModelAndView showApplicant = new ModelAndView("employer/employer-applicant-show.jade");
         Long userId = userUtils.getCurrentUserId(request);
         Employer employer = employerService.findEmployerByUser(userId);
         if (employer != null) {
