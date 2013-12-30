@@ -15,6 +15,10 @@ block append content
             input(type="text", class="form-control", id="lastName", name="lastName", value=recruiterForm.lastName, placeholder=fmt.message("profile.lastName"))
             #{errors.lastName}
           .form-group
+            label(for="description")
+            input(type="text", class="form-control", id="description", name="description", value=recruiterForm.description, placeholder=fmt.message("profile.description"))
+            #{errors.description}
+          .form-group
             label(for="oldPassword")
             input(type="password", class="form-control", id="oldPassword", name="oldPassword", value=recruiterForm.oldPassword, placeholder=fmt.message("profile.oldPassword"))
             #{errors.oldPassword}

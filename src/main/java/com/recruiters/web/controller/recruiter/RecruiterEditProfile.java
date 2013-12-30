@@ -23,7 +23,7 @@ import javax.validation.Valid;
  * Controller Class for "Recruiter Profile"
  */
 @Controller
-public class EditProfile {
+public class RecruiterEditProfile {
 
     @Autowired
     private UserUtils userUtils = null;
@@ -63,8 +63,7 @@ public class EditProfile {
 
             return model;
         }
-        // TODO SAVE
-
+        recruiterService.saveRecruiterProfile(recruiterForm.fillModel());
 
         return new ModelAndView("redirect:/recruiter-active-deals");
     }
