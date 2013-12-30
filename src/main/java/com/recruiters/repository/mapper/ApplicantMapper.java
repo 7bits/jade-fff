@@ -1,7 +1,9 @@
 package com.recruiters.repository.mapper;
 
 import com.recruiters.model.Applicant;
+import com.recruiters.model.ApplicantStatus;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
@@ -48,7 +50,7 @@ public interface ApplicantMapper {
             "INNER JOIN deals ON deals.id=applicants.deal_id " +
             "INNER JOIN vacancies ON vacancies.id=deals.vacancy_id " +
             "INNER JOIN recruiters  ON recruiters.id=deals.recruiter_id " +
-            "WHERE applicants.deal_id=#{dealId}")
+            "WHERE applicants.deal_id=#{dealId} AND applicants.status=\"IN_PROGRESS\"")
     @Results({
             @Result(column = "id", property = "id"),
             @Result(column = "first_name", property = "firstName"),
@@ -78,4 +80,13 @@ public interface ApplicantMapper {
             "resume_file=#{resumeFile}, test_answer_file=#{testAnswerFile} " +
             "WHERE id=#{id}")
     void updateApplicant(final Applicant applicant);
+
+    @Update("UPDATE applicants SET status=#{status} " +
+            "WHERE id=#{applicantId} and applicants.deal_id IN " +
+            "(SELECT deals.id FROM deals " +
+            "INNER JOIN vacancies ON vacancies.id = deals.vacancy_id " +
+            "WHERE vacancies.employer_id=#{employerId})")
+    void updateStatus(@Param("applicantId")final Long applicantId,
+                      @Param("status")final ApplicantStatus applicantStatus,
+                      @Param("employerId") final Long employerId);
 }

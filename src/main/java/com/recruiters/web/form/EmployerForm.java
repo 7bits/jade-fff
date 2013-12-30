@@ -1,12 +1,13 @@
 package com.recruiters.web.form;
 
+import com.recruiters.model.Employer;
 import com.recruiters.model.Recruiter;
 import com.recruiters.model.User;
 
 /**
- * JavaBean for RecruiterForm
+ * JavaBean for EmployerForm
  */
-public class RecruiterForm {
+public class EmployerForm {
     private Long id;
     private String firstName;
     private String lastName;
@@ -14,19 +15,19 @@ public class RecruiterForm {
     private String oldPassword;
     private String newPassword;
 
-    public RecruiterForm() {
+    public EmployerForm() {
     }
 
-    public RecruiterForm(final Recruiter recruiter) {
-        this.id = recruiter.getId();
-        this.firstName = recruiter.getUser().getFirstName();
-        this.lastName = recruiter.getUser().getLastName();
-        this.description = recruiter.getUser().getDescription();
+    public EmployerForm(final Employer employer) {
+        this.id = employer.getId();
+        this.firstName = employer.getUser().getFirstName();
+        this.lastName = employer.getUser().getLastName();
+        this.description = employer.getUser().getDescription();
     }
 
-    public Recruiter fillModel() {
-        Recruiter recruiter = new Recruiter();
-        recruiter.setId(id);
+    public Employer fillModel() {
+        Employer employer = new Employer();
+        employer.setId(id);
         User user = new User();
         user.setFirstName(firstName);
         user.setLastName(lastName);
@@ -34,9 +35,9 @@ public class RecruiterForm {
         if (!newPassword.isEmpty()) {
             user.setPassword(newPassword);
         }
-        recruiter.setUser(user);
+        employer.setUser(user);
 
-        return recruiter;
+        return employer;
     }
 
     public Long getId() {

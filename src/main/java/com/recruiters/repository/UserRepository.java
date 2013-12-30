@@ -45,6 +45,20 @@ public class UserRepository {
         return this.getUserMapper().findByUsername(username);
     }
 
+    /**
+     * Updating user
+     * @param user    User POJO
+     * @return true if update not fails, otherwise false
+     */
+    public Boolean update(final User user) {
+        try {
+            userMapper.update(user);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     public UserMapper getUserMapper() {
         return userMapper;
     }

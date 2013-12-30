@@ -1,6 +1,7 @@
 package com.recruiters.service;
 
 import com.recruiters.model.Applicant;
+import com.recruiters.model.ApplicantStatus;
 import com.recruiters.model.Bid;
 import com.recruiters.model.BidStatus;
 import com.recruiters.model.Deal;
@@ -16,7 +17,6 @@ import com.recruiters.repository.VacancyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -35,6 +35,8 @@ public class EmployerService {
     private BidRepository bidRepository = null;
     @Autowired
     private VacancyRepository vacancyRepository = null;
+    @Autowired
+    private UserRepository userRepository = null;
 
     /**
      * Finds Employer POJO instance by its user id
@@ -71,13 +73,13 @@ public class EmployerService {
      * Get applicant by its id and return it if it's related to current employer
      * otherwise return null
      * @param applicantId    Id of applicant
-     * @param employer       Employer POJO instance
+     * @param employerId     Id of employer
      * @return Applicant POJO instance
      */
-    public Applicant findApplicantById(final Long applicantId, final Employer employer) {
+    public Applicant findApplicantById(final Long applicantId, final Long employerId) {
 
         Applicant applicant = applicantRepository.findById(applicantId);
-        if (applicant.getDeal().getVacancy().getEmployer().getId().equals(employer.getId())) {
+        if (applicant.getDeal().getVacancy().getEmployer().getId().equals(employerId)) {
             return applicant;
         }
         return null;
@@ -171,5 +173,57 @@ public class EmployerService {
         this.bidRepository.updateBidStatus(bidId, BidStatus.REJECTED);
 
         return true;
+    }
+
+    /**
+     * Saving employer profile
+     * Logic looks like bullsh!t but I don't see another implementation w/o
+     * user being in session scope some level before
+     * @param employer    Employer POJO instance
+     * @return true if update is ok, otherwise false
+     */
+    public Boolean saveEmployerProfile(final Employer employer) {
+        Employer employerOld = employerRepository.findById(employer.getId());
+        employer.getUser().setId(employerOld.getUser().getId());
+        employer.getUser().setUsername(employerOld.getUser().getUsername());
+        if (employer.getUser().getPassword() == null) {
+            employer.getUser().setPassword(employerOld.getUser().getPassword());
+        }
+
+        return userRepository.update(employer.getUser());
+    }
+
+    /**
+     * Finds Employer POJO instance by its  id
+     * @param employerId    Employer Id
+     * @return Employer POJO instance
+     */
+    public Employer findEmployerById(final Long employerId) {
+
+        return employerRepository.findById(employerId);
+    }
+
+    /**
+     * Apply Applicant
+     * @param applicantId      Id of applicant
+     * @param employerId       Id of employer
+     * @return true if success, otherwise false
+     */
+    public Boolean applyApplicant(final Long applicantId, final Long employerId) {
+        //TODO deal should change its state or smth.
+
+        return applicantRepository.updateApplicantStatus(applicantId, ApplicantStatus.APPROVED, employerId);
+    }
+
+
+    /**
+     * Decline Applicant
+     * @param applicantId      Id of applicant
+     * @param employerId       Id of employer
+     * @return true if success, otherwise false
+     */
+    public Boolean declineApplicant(final Long applicantId, final Long employerId) {
+
+        return applicantRepository.updateApplicantStatus(applicantId, ApplicantStatus.REJECTED, employerId);
     }
 }

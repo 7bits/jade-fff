@@ -17,5 +17,5 @@ block append content
         a.btn.btn-link(href=applicant.testAnswerFile)=fmt.message("employer-employee-show.test")
     .row
       .col-md-6
-        a.btn.btn-success(href="#",data-toggle="confirmation", data-placement="left", data-original-title="", title="")=fmt.message("employer-employee-show.apply")
-        a.btn.btn-danger(href="#",data-toggle="confirmation", data-placement="left", data-original-title="", title="")=fmt.message("employer-employee-show.decline")
+        a.btn.btn-success(href="apply/" + applicant.id,data-toggle="confirmation", data-placement="left", data-original-title="", title="")=fmt.message("employer-employee-show.apply")
+        a.btn.btn-danger(href="decline/" + applicant.id,data-toggle="confirmation", data-placement="left", data-original-title="", title="")=fmt.message("employer-employee-show.decline")

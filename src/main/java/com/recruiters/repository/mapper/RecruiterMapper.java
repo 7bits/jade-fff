@@ -26,7 +26,7 @@ public interface RecruiterMapper {
     Recruiter findById(final Long recruiterId);
 
     @Select("SELECT recruiters.id, recruiters.user_id, " +
-            "users.firstname, users.lastname, users.username, users.password " +
+            "users.firstname, users.lastname, users.username, users.password, users.description  " +
             "FROM recruiters " +
             "RIGHT JOIN users ON users.id = recruiters.user_id " +
             "WHERE recruiters.user_id=#{userId}")
@@ -36,7 +36,8 @@ public interface RecruiterMapper {
             @Result(column = "firstname", property = "user.firstName"),
             @Result(column = "lastname", property = "user.lastName"),
             @Result(column = "username", property = "user.username"),
-            @Result(column = "password", property = "user.password")
+            @Result(column = "password", property = "user.password"),
+            @Result(column = "description", property = "user.description")
     })
     Recruiter findByUserId(final Long userId);
 

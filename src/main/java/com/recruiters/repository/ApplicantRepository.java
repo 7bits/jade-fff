@@ -1,6 +1,7 @@
 package com.recruiters.repository;
 
 import com.recruiters.model.Applicant;
+import com.recruiters.model.ApplicantStatus;
 import com.recruiters.repository.mapper.ApplicantMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -53,6 +54,26 @@ public class ApplicantRepository {
     public Boolean updateApplicant(final Applicant applicant) {
         try {
             applicantMapper.updateApplicant(applicant);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+
+    /**
+     * Method update Applicant status
+     * @param applicantId        Id of Applicant
+     * @param applicantStatus    New status for Applicant
+     * @return true if update was successful otherwise false
+     */
+    public Boolean updateApplicantStatus(
+            final Long applicantId,
+            final ApplicantStatus applicantStatus,
+            final Long employerId
+    ) {
+        try {
+            applicantMapper.updateStatus(applicantId, applicantStatus, employerId);
             return true;
         } catch (Exception e) {
             return false;
