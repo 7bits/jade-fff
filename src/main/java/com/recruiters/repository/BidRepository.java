@@ -1,6 +1,7 @@
 package com.recruiters.repository;
 
 import com.recruiters.model.Bid;
+import com.recruiters.model.BidStatus;
 import com.recruiters.model.Recruiter;
 import com.recruiters.model.Vacancy;
 import com.recruiters.repository.mapper.BidMapper;
@@ -65,6 +66,15 @@ public class BidRepository {
          } catch (Exception e) {
              return false;
          }
+    }
+
+    public Boolean updateBidStatus(final Long bidId, final BidStatus status) {
+        try {
+            bidMapper.updateBidStatus(bidId, status);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public BidMapper getBidMapper() {

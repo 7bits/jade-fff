@@ -15,7 +15,7 @@ block append content
 
     .row
       .col-md-6
-        .a.btn.btn-success(href="#",data-toggle="confirmation", data-placement="left", data-href= domain.getAbsoluteUrl() + "/employer-recruiter-show/apply", data-original-title="", title="")
+        a.btn.btn-success(href=domain.getAbsoluteUrl()+"/employer-recruiter-approve/" + bid.id, data-toggle="confirmation", data-placement="left", data-href= domain.getAbsoluteUrl() + "/employer-recruiter-show/apply", data-original-title="", title="")
           #{fmt.message("employer-recruiter-show.apply")}
-        .a.btn.btn-danger(href="#",data-toggle="confirmation", data-placement="left", data-href= domain.getAbsoluteUrl() + "/employer-recruiter-show/decline", data-original-title="", title="")
+        a.btn.btn-danger(href=domain.getAbsoluteUrl()+"/employer-recruiter-approve/" + bid.id, data-toggle="confirmation", data-placement="left", data-href= domain.getAbsoluteUrl() + "/employer-recruiter-show/decline", data-original-title="", title="")
           #{fmt.message("employer-recruiter-show.decline")}

@@ -1,6 +1,7 @@
 package com.recruiters.repository.mapper;
 
 import com.recruiters.model.Deal;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Many;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
@@ -119,4 +120,8 @@ public interface DealMapper {
             @Result(column = "lastname", property = "recruiter.user.lastName")
     })
     List<Deal> findActiveDealsByEmployerId(final Long employerId);
+
+    @Insert("INSERT INTO deals (vacancy_id, recruiter_id, status) " +
+            "SELECT v.id, b.recruiter_id, \"IN_PROGRESS\" FROM vacancies v inner join bids b on v.id = b.vacancy_id WHERE b.id = #{bidId}")
+    void create(final Long bidId);
 }

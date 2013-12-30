@@ -55,7 +55,7 @@ public class ShowVacancy {
 
 
     @RequestMapping(value = "recruiter-show-vacancy/{vacancyId}", method = RequestMethod.POST)
-    public @ResponseBody Boolean applyToVacancy(
+    public String applyToVacancy(
             @PathVariable final Long vacancyId,
             @RequestParam(value = "message", required = false) final String message,
             final HttpServletRequest request
@@ -67,7 +67,7 @@ public class ShowVacancy {
             successApplied = this.getRecruiterService().applyRecruiterToVacancy(recruiterId, vacancyId, message);
         }
 
-        return successApplied;
+        return "redirect:/recruiter-find-new-vacancies";
     }
 
 

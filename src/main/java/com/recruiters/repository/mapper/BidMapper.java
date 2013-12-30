@@ -1,11 +1,13 @@
 package com.recruiters.repository.mapper;
 
 import com.recruiters.model.Bid;
+import com.recruiters.model.BidStatus;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -123,4 +125,7 @@ public interface BidMapper {
     void createBid(@Param("recruiterId")final Long recruiterId,
                    @Param("vacancyId") final Long vacancyId,
                    @Param("message") final  String message);
+
+    @Update("UPDATE bids SET status = #{status} WHERE id = #{bidId} ")
+    void updateBidStatus(final Long bidId, final BidStatus status);
 }

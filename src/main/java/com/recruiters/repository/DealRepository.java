@@ -41,6 +41,16 @@ public class DealRepository {
         return dealMapper.findDealForEmployer(dealId, userId);
     }
 
+    public Boolean createDeal(final Long bidId) {
+
+        try {
+            dealMapper.create(bidId);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     public DealMapper getDealMapper() {
         return dealMapper;
     }

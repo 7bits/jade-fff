@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,19 +31,47 @@ public class EmployerRecruiterDeal {
      * @return model and view with data
      */
     @RequestMapping(value = "employer-recruiter-show/{bidId}")
-    public ModelAndView employerShowRecruiterBid(@PathVariable final Long bidId,
-                                                 final HttpServletRequest request) {
-
+    public ModelAndView employerShowRecruiterBid(
+            @PathVariable final Long bidId,
+            final HttpServletRequest request
+    ) {
         ModelAndView showBid = new ModelAndView("employer/employer-recruiter-show.jade");
         Long userId = userUtils.getCurrentUserId(request);
         Employer employer = employerService.findEmployerByUser(userId);
-
         if (employer != null) {
             Bid bid = employerService.findBidById(bidId, employer);
             showBid.addObject("bid", bid);
         }
 
         return showBid;
+    }
+
+    @RequestMapping(value = "employer-recruiter-approve/{bidId}", method = RequestMethod.GET)
+    public String approveRecruiterBid(
+            @PathVariable final Long bidId,
+            final HttpServletRequest request
+    ) {
+        Long userId = userUtils.getCurrentUserId(request);
+        Employer employer = employerService.findEmployerByUser(userId);
+        if (employer != null) {
+            employerService.approveRecruiterBid(bidId);
+        }
+
+        return "redirect:/employer-recruiter-search";
+    }
+
+    @RequestMapping(value = "employer-recruiter-decline/{bidId}", method = RequestMethod.GET)
+    public String declineRecruiterBid(
+            @PathVariable final Long bidId,
+            final HttpServletRequest request
+    ) {
+        Long userId = userUtils.getCurrentUserId(request);
+        Employer employer = employerService.findEmployerByUser(userId);
+        if (employer != null) {
+            employerService.declineRecruiterBid(bidId);
+        }
+
+        return "redirect:/employer-recruiter-search";
     }
 
     public EmployerService getEmployerService() {

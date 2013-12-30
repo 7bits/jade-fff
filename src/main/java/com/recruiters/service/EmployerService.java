@@ -2,6 +2,7 @@ package com.recruiters.service;
 
 import com.recruiters.model.Applicant;
 import com.recruiters.model.Bid;
+import com.recruiters.model.BidStatus;
 import com.recruiters.model.Deal;
 import com.recruiters.model.Employer;
 import com.recruiters.model.User;
@@ -155,5 +156,20 @@ public class EmployerService {
             return vacancy;
         }
         return null;
+    }
+
+    public Boolean approveRecruiterBid(final Long bidId) {
+        Boolean success = this.dealRepository.createDeal(bidId);
+        if (success) {
+            success = this.bidRepository.updateBidStatus(bidId, BidStatus.APPROVED);
+        }
+
+        return success;
+    }
+
+    public Boolean declineRecruiterBid(final Long bidId) {
+        this.bidRepository.updateBidStatus(bidId, BidStatus.REJECTED);
+
+        return true;
     }
 }

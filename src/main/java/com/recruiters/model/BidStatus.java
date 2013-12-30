@@ -8,7 +8,10 @@ public enum BidStatus {
     /** Status - active */
     ACTIVE (0, "Active"),
     /** Status - rejected */
-    REJECTED (1, "Rejected");
+    REJECTED (1, "Rejected"),
+    /** Status - approved */
+    APPROVED (2, "Approved");
+
 
     private final int order;
     private final String description;
