@@ -30,7 +30,7 @@ public class EmployerApplicantView {
      * @param request        Http request
      * @return model and view with applicant
      */
-    @RequestMapping(value = "employer-employee-show/{applicantId}", method = RequestMethod.GET)
+    @RequestMapping(value = "employer-applicant-show/{applicantId}", method = RequestMethod.GET)
     public ModelAndView employeeShow(
             @PathVariable final Long applicantId,
             final HttpServletRequest request
@@ -52,7 +52,7 @@ public class EmployerApplicantView {
      * @param request        Http request
      * @return model and view with applicant
      */
-    @RequestMapping(value = "employer-employee-show/apply/{applicantId}", method = RequestMethod.GET)
+    @RequestMapping(value = "employer-applicant-show/apply/{applicantId}", method = RequestMethod.GET)
     public String applicantApply(
             @PathVariable final Long applicantId,
             final HttpServletRequest request
