@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 public class Dashboard {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String routeByRole(final HttpServletRequest request, final HttpServletResponse response) {
+    public String routeByRole(final HttpServletRequest request) {
         if (request.isUserInRole("ROLE_RECRUITER")) {
             return "redirect:/recruiter-active-deals";
         }

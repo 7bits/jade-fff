@@ -3,6 +3,9 @@ package com.recruiters.repository;
 import com.recruiters.model.User;
 import com.recruiters.repository.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
  * Repository for working with recruiter
  */
 @Repository
-public class UserRepository {
+public class UserRepository implements UserDetailsService {
 
     @Autowired
     private UserMapper userMapper = null;
@@ -24,15 +27,6 @@ public class UserRepository {
     public User findUserByUsername(final String username) {
 
         return this.findByUsername(username);
-    }
-
-    /**
-     * Method must return user by given id
-     * @param id
-     * @return
-     */
-    public User findById(final Long id) {
-        return this.getUserMapper().findById(id);
     }
 
     /**
@@ -57,6 +51,13 @@ public class UserRepository {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
+        User user = this.findUserByUsername(username);
+
+        return user;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     public UserMapper getUserMapper() {

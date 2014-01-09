@@ -10,12 +10,11 @@ import org.apache.ibatis.annotations.Update;
  */
 public interface UserMapper  {
 
-    @Select("SELECT * FROM users WHERE username = #{userName}")
+    @Select("SELECT u.*,e.id as employerId, r.id as recruiterId FROM users u " +
+            "LEFT JOIN employers e ON e.user_id = u.id " +
+            "LEFT JOIN recruiters r ON r.user_id = u.id " +
+            "   WHERE username = #{userName}")
     User findByUsername(@Param("userName") String username);
-
-    @Select("SELECT * FROM users WHERE id = #{userId}")
-    User findById(@Param("id") Long userId);
-
 
     @Update("UPDATE users SET firstname=#{firstName}, " +
             "lastname=#{lastName}, description=#{description}, " +

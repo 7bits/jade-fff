@@ -46,7 +46,7 @@ public class RecruiterService {
      * @param id
      * @return
      */
-    public Recruiter findRecruiterById(final Long id) {
+    public Recruiter findRecruiter(final Long id) {
 
         return this.getRecruiterRepository().findById(id);
     }

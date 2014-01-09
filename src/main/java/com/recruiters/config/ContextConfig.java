@@ -1,72 +1,36 @@
 package com.recruiters.config;
 
-import org.apache.commons.dbcp.BasicDataSource;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.orm.jpa.JpaTransactionManager;
-import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-import org.springframework.orm.jpa.vendor.HibernateJpaDialect;
-import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
-import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.core.annotation.Order;
+import org.springframework.web.filter.CharacterEncodingFilter;
+import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-import javax.inject.Inject;
-import javax.persistence.EntityManagerFactory;
-import javax.sql.DataSource;
-import java.util.Properties;
+import javax.servlet.Filter;
 
+@Order(2)
+public class ContextConfig extends
+        AbstractAnnotationConfigDispatcherServletInitializer {
 
-@Configuration
-@PropertySource({ "classpath:jdbc.properties", "classpath:hibernate.properties" })
-@EnableJpaRepositories("com.recruiters")
-@ComponentScan("com.recruiters")
-public class ContextConfig {
+    @Override
+    protected Class<?>[] getRootConfigClasses() {
+        return new Class<?>[] { SecurityConfig.class, MyBatisConfig.class, JspConfig.class, JadeConfig.class };
+    }
 
-    @Inject
-    private org.springframework.core.env.Environment environment;
+    @Override
+    protected Class<?>[] getServletConfigClasses() {
+        return new Class<?>[] { WebMvcConfig.class };
+    }
 
-//    @Bean
-//    public DataSource dataSource() {
-//        BasicDataSource ds = new BasicDataSource();
-//        ds.setDriverClassName(environment.getProperty("recruiter-jdbc.driverClassName"));
-//        ds.setUrl(environment.getProperty("recruiter-jdbc.url"));
-//        ds.setUsername(environment.getProperty("recruiter-jdbc.username"));
-//        ds.setPassword(environment.getProperty("recruiter-jdbc.password"));
-//        ds.setMaxActive(Integer.valueOf(environment.getProperty("recruiter-jdbc.max-active")));
-//        ds.setMaxWait(Integer.valueOf(environment.getProperty("recruiter-jdbc.max-wait")));
-//        ds.setPoolPreparedStatements(true);
-//        ds.setDefaultAutoCommit(true);
-//        ds.setValidationQuery("SELECT 1");
-//        ds.setTestOnBorrow(true);
-//
-//        return ds;
-//    }
+    @Override
+    protected String[] getServletMappings() {
+        return new String[] { "/" };
+    }
 
-//    @Bean
-//    public EntityManagerFactory entityManagerFactory() {
-//
-//        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-//        vendorAdapter.setGenerateDdl(true);
-//        LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
-//        factory.setJpaVendorAdapter(vendorAdapter);
-//        factory.setPackagesToScan("com.recruiter");
-//        factory.setDataSource(dataSource());
-//        factory.setJpaDialect(new HibernateJpaDialect());
-//        Properties jpaProperties = new Properties();
-//        jpaProperties.setProperty("hibernate.hbm2ddl.auto", "update");
-//        factory.setJpaProperties(jpaProperties);
-//        factory.afterPropertiesSet();
-//
-//        return factory.getObject();
-//    }
+    @Override
+    protected Filter[] getServletFilters() {
 
-//    @Bean
-//    public PlatformTransactionManager transactionManager() {
-//
-//        JpaTransactionManager txManager = new JpaTransactionManager();
-//        txManager.setEntityManagerFactory(entityManagerFactory());
-//        return txManager;
-//    }
+        CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
+        characterEncodingFilter.setEncoding("UTF-8");
+        return new Filter[] { characterEncodingFilter};
+    }
+
 }

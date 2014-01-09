@@ -3,6 +3,7 @@ package com.recruiters.config;
 import com.recruiters.web.controller.interceptor.HandlerInterceptor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
@@ -17,6 +18,7 @@ import javax.inject.Inject;
 @Configuration
 @PropertySource("classpath:server.properties")
 @EnableWebMvc
+@ComponentScan(basePackages = { "com.recruiters" })
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
     @Inject
