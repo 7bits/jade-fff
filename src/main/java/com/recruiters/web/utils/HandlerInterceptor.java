@@ -1,4 +1,4 @@
-package com.recruiters.web.controller.interceptor;
+package com.recruiters.web.utils;
 
 import com.recruiters.service.utils.TemplateService;
 import com.recruiters.service.utils.SecurityService;
