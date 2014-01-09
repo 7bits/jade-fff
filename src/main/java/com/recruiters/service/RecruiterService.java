@@ -52,26 +52,6 @@ public class RecruiterService {
     }
 
     /**
-     * Method must return recruiter by given user id
-     * @param userId
-     * @return
-     */
-    public Recruiter findRecruiterByUserId(final Long userId) {
-
-        return this.getRecruiterRepository().findByUser(userId);
-    }
-
-    /**
-     * Method must return recruiter id by given user id
-     * @param userId
-     * @return
-     */
-    public Long findRecruiterIdByUserId(final Long userId) {
-
-        return this.getRecruiterRepository().findIdByUser(userId);
-    }
-
-    /**
      * Method must return all vacancies for this recruiter
      * @return
      */
@@ -103,9 +83,9 @@ public class RecruiterService {
      * @param userId
      * @return
      */
-    public List<Deal> findActiveDealsForRecruiter(final Long userId) {
+    public List<Deal> findActiveDealsForRecruiter(final Long recruiterId) {
 
-        return this.getDealRepository().findActiveDealsForRecruiter(userId);
+        return this.getDealRepository().findActiveDealsByRecruiterId(recruiterId);
     }
 
     /**
@@ -113,9 +93,9 @@ public class RecruiterService {
      * @param dealId  Id of deal
      * @return vacancy description
      */
-    public Deal findDealForRecruiter(final Long dealId, final Long userId) {
+    public Deal findDealForRecruiter(final Long dealId, final Long recruiterId) {
 
-        return this.getDealRepository().findDealForRecruiter(dealId, userId);
+        return this.getDealRepository().findDealByDealIdAndRecruiterId(dealId, recruiterId);
     }
 
     public Applicant findApplicant(final Long applicantId) {

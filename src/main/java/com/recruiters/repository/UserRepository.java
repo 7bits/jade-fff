@@ -57,7 +57,7 @@ public class UserRepository implements UserDetailsService {
     public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
         User user = this.findUserByUsername(username);
 
-        return user;  //To change body of implemented methods use File | Settings | File Templates.
+        return user;
     }
 
     public UserMapper getUserMapper() {

@@ -1,5 +1,6 @@
 package com.recruiters.web.controller.recruiter;
 
+import com.recruiters.model.User;
 import com.recruiters.service.RecruiterService;
 import com.recruiters.web.controller.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +28,10 @@ public class RecruiterDeals {
     @RequestMapping(value = "recruiter-active-deals", method = RequestMethod.GET)
     public ModelAndView showMyVacancies(final HttpServletRequest request) {
         ModelAndView activeDeals = new ModelAndView("recruiter/recruiter-active-deals.jade");
-        Long userId = userUtils.getCurrentUserId(request);
-        activeDeals.addObject("deals", getRecruiterService().findActiveDealsForRecruiter(userId));
+        User user = userUtils.getCurrentUser(request);
+        if (user.getRecruiterId() != null) {
+            activeDeals.addObject("deals", getRecruiterService().findActiveDealsForRecruiter(user.getRecruiterId()));
+        }
 
         return activeDeals;
     }

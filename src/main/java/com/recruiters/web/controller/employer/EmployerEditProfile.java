@@ -39,10 +39,13 @@ public class EmployerEditProfile {
     @RequestMapping(value = "employer-profile", method = RequestMethod.GET)
     public ModelAndView showEmployerProfile(final HttpServletRequest request) {
         ModelAndView employerProfile = new ModelAndView("employer/employer-profile.jade");
-        Long userId = userUtils.getCurrentUserId(request);
-        Employer employer = employerService.findEmployerByUser(userId);
-        EmployerForm employerForm = new EmployerForm(employer);
-        employerProfile.addObject("employerForm", employerForm);
+        User user = userUtils.getCurrentUser(request);
+        if (user.getEmployerId() != null) {
+            Employer employer = employerService.findEmployer(user.getEmployerId());
+            EmployerForm employerForm = new EmployerForm(employer);
+            employerProfile.addObject("employerForm", employerForm);
+        }
+
         return employerProfile;
     }
 
@@ -65,9 +68,11 @@ public class EmployerEditProfile {
 
             return model;
         }
-        User currentUser = userUtils.getCurrentUser(request);
-        Employer updatedEmployer = employerForm.fillModel(currentUser);
-        employerService.saveProfileForEmployer(updatedEmployer);
+        User user = userUtils.getCurrentUser(request);
+        if (user.getEmployerId() != null) {
+            Employer updatedEmployer = employerForm.fillModel(user);
+            employerService.saveProfileForEmployer(updatedEmployer);
+        }
 
         return new ModelAndView("redirect:/employer-progress-vacancies-list");
     }

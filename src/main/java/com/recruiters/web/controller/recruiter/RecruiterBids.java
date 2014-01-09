@@ -1,5 +1,6 @@
 package com.recruiters.web.controller.recruiter;
 
+import com.recruiters.model.User;
 import com.recruiters.service.RecruiterService;
 import com.recruiters.web.controller.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +28,9 @@ public class RecruiterBids {
     @RequestMapping(value = "recruiter-active-bids", method = RequestMethod.GET)
     public ModelAndView showRecruiterActiveBids(final HttpServletRequest request) {
         ModelAndView recruiterBids = new ModelAndView("recruiter/recruiter-active-bids.jade");
-        Long userId = userUtils.getCurrentUserId(request);
-        Long recruiterId = this.getRecruiterService().findRecruiterIdByUserId(userId);
-        if (recruiterId != null) {
-            recruiterBids.addObject("bids", getRecruiterService().findBidsForRecruiter(recruiterId));
+        User user = userUtils.getCurrentUser(request);
+        if (user.getRecruiterId() != null) {
+            recruiterBids.addObject("bids", getRecruiterService().findBidsForRecruiter(user.getRecruiterId()));
         }
 
         return recruiterBids;

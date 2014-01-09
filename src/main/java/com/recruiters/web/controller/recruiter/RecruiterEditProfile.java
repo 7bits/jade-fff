@@ -39,10 +39,13 @@ public class RecruiterEditProfile {
     @RequestMapping(value = "recruiter-profile", method = RequestMethod.GET)
     public ModelAndView showRecruiterProfile(final HttpServletRequest request) {
         ModelAndView recruiterProfile = new ModelAndView("recruiter/recruiter-profile.jade");
-        Long userId = userUtils.getCurrentUserId(request);
-        Recruiter recruiter = recruiterService.findRecruiterByUserId(userId);
-        RecruiterForm recruiterForm = new RecruiterForm(recruiter);
-        recruiterProfile.addObject("recruiterForm", recruiterForm);
+        User user = userUtils.getCurrentUser(request);
+        if (user.getRecruiterId() != null) {
+            Recruiter recruiter = recruiterService.findRecruiter(user.getRecruiterId());
+            RecruiterForm recruiterForm = new RecruiterForm(recruiter);
+            recruiterProfile.addObject("recruiterForm", recruiterForm);
+        }
+
         return recruiterProfile;
     }
 
@@ -65,9 +68,11 @@ public class RecruiterEditProfile {
 
             return model;
         }
-        User currentUser = userUtils.getCurrentUser(request);
-        Recruiter updatedRecruiter = recruiterForm.fillModel(currentUser);
-        recruiterService.saveProfileForRecruiter(updatedRecruiter);
+        User user = userUtils.getCurrentUser(request);
+        if (user.getRecruiterId() != null) {
+            Recruiter updatedRecruiter = recruiterForm.fillModel(user);
+            recruiterService.saveProfileForRecruiter(updatedRecruiter);
+        }
 
         return new ModelAndView("redirect:/recruiter-active-deals");
     }

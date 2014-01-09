@@ -90,5 +90,5 @@ public interface VacancyMapper {
             @Result(column = "firstname", property = "employer.user.firstName"),
             @Result(column = "lastname", property = "employer.user.lastName"),
     })
-    List<Vacancy> findEmployerVacanciesWithBidCount(final Long employerId);
+    List<Vacancy> findVacanciesByEmployerId(final Long employerId);
 }

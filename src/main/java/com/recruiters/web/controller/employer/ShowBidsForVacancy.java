@@ -2,6 +2,7 @@ package com.recruiters.web.controller.employer;
 
 import com.recruiters.model.Bid;
 import com.recruiters.model.Employer;
+import com.recruiters.model.User;
 import com.recruiters.model.Vacancy;
 import com.recruiters.service.EmployerService;
 import com.recruiters.web.controller.utils.UserUtils;
@@ -36,12 +37,10 @@ public class ShowBidsForVacancy {
                                               final HttpServletRequest request) {
 
         ModelAndView recruiterBids = new ModelAndView("employer/employer-show-recruiter-bids.jade");
-        Long userId = userUtils.getCurrentUserId(request);
-        Employer employer = employerService.findEmployerByUser(userId);
-
-        if (employer != null) {
-            List<Bid> bids = employerService.findBidsForVacancy(vacancyId, employer);
-            Vacancy vacancy = employerService.findVacancy(vacancyId, employer);
+        User user = userUtils.getCurrentUser(request);
+        if (user.getEmployerId() != null) {
+            List<Bid> bids = employerService.findBidsForVacancy(vacancyId, user.getEmployerId());
+            Vacancy vacancy = employerService.findVacancy(vacancyId, user.getEmployerId());
             recruiterBids.addObject("bids", bids);
             recruiterBids.addObject("vacancy", vacancy);
         }

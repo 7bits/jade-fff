@@ -2,6 +2,7 @@ package com.recruiters.web.controller.employer;
 
 import com.recruiters.model.Bid;
 import com.recruiters.model.Employer;
+import com.recruiters.model.User;
 import com.recruiters.service.EmployerService;
 import com.recruiters.web.controller.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,10 +37,9 @@ public class EmployerRecruiterDeal {
             final HttpServletRequest request
     ) {
         ModelAndView showBid = new ModelAndView("employer/employer-recruiter-show.jade");
-        Long userId = userUtils.getCurrentUserId(request);
-        Employer employer = employerService.findEmployerByUser(userId);
-        if (employer != null) {
-            Bid bid = employerService.findBid(bidId, employer);
+        User user = userUtils.getCurrentUser(request);
+        if (user.getEmployerId() != null) {
+            Bid bid = employerService.findBid(bidId, user.getEmployerId());
             showBid.addObject("bid", bid);
         }
 
@@ -51,9 +51,8 @@ public class EmployerRecruiterDeal {
             @PathVariable final Long bidId,
             final HttpServletRequest request
     ) {
-        Long userId = userUtils.getCurrentUserId(request);
-        Employer employer = employerService.findEmployerByUser(userId);
-        if (employer != null) {
+        User user = userUtils.getCurrentUser(request);
+        if (user.getEmployerId() != null) {
             employerService.approveBidForRecruiter(bidId);
         }
 
@@ -65,9 +64,8 @@ public class EmployerRecruiterDeal {
             @PathVariable final Long bidId,
             final HttpServletRequest request
     ) {
-        Long userId = userUtils.getCurrentUserId(request);
-        Employer employer = employerService.findEmployerByUser(userId);
-        if (employer != null) {
+        User user = userUtils.getCurrentUser(request);
+        if (user.getEmployerId() != null) {
             employerService.declineBidForRecruiter(bidId);
         }
 

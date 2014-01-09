@@ -66,7 +66,7 @@ public interface ApplicantMapper {
             @Result(column = "employer_id", property = "deal.vacancy.employer.id"),
             @Result(column = "recruiter_id", property = "deal.recruiter.id")
     })
-    List<Applicant> getApplicantsByDealId(final Long dealId);
+    List<Applicant> findApplicantsByDealId(final Long dealId);
 
     @Insert("INSERT INTO applicants (deal_id, first_name, last_name, description, " +
             "sex, age, resume_file, test_answer_file) " +

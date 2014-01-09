@@ -1,6 +1,7 @@
 package com.recruiters.web.controller.recruiter;
 
 
+import com.recruiters.model.User;
 import com.recruiters.model.Vacancy;
 import com.recruiters.service.RecruiterService;
 import com.recruiters.web.controller.utils.UserUtils;
@@ -51,11 +52,10 @@ public class ShowVacancy {
             @RequestParam(value = "message", required = false) final String message,
             final HttpServletRequest request
     ) {
-        Long userId = userUtils.getCurrentUserId(request);
-        Long recruiterId = this.getRecruiterService().findRecruiterIdByUserId(userId);
+        User user = userUtils.getCurrentUser(request);
         Boolean successApplied = false;
-        if (recruiterId != null) {
-            successApplied = this.getRecruiterService().applyRecruiterToVacancy(recruiterId, vacancyId, message);
+        if (user.getRecruiterId() != null) {
+            successApplied = this.getRecruiterService().applyRecruiterToVacancy(user.getRecruiterId(), vacancyId, message);
         }
 
         return "redirect:/recruiter-find-new-vacancies";

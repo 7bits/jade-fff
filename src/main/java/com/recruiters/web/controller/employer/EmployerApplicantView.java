@@ -2,6 +2,7 @@ package com.recruiters.web.controller.employer;
 
 import com.recruiters.model.Applicant;
 import com.recruiters.model.Employer;
+import com.recruiters.model.User;
 import com.recruiters.service.EmployerService;
 import com.recruiters.web.controller.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,10 +37,9 @@ public class EmployerApplicantView {
             final HttpServletRequest request
     ) {
         ModelAndView showApplicant = new ModelAndView("employer/employer-applicant-show.jade");
-        Long userId = userUtils.getCurrentUserId(request);
-        Employer employer = employerService.findEmployerByUser(userId);
-        if (employer != null) {
-            Applicant applicant = employerService.findApplicant(applicantId, employer.getId());
+        User user = userUtils.getCurrentUser(request);
+        if (user.getEmployerId() != null) {
+            Applicant applicant = employerService.findApplicant(applicantId, user.getEmployerId());
             showApplicant.addObject("applicant", applicant);
         }
 
@@ -57,9 +57,10 @@ public class EmployerApplicantView {
             @PathVariable final Long applicantId,
             final HttpServletRequest request
     ) {
-        Long userId = userUtils.getCurrentUserId(request);
-        Employer employer = employerService.findEmployerByUser(userId);
-        employerService.applyApplicant(applicantId, employer.getId());
+        User user = userUtils.getCurrentUser(request);
+        if (user.getEmployerId() != null) {
+            employerService.applyApplicant(applicantId, user.getEmployerId());
+        }
 
         return "redirect:/employer-progress-vacancies-list";
     }
@@ -76,12 +77,13 @@ public class EmployerApplicantView {
             @PathVariable final Long applicantId,
             final HttpServletRequest request
     ) {
-        Long userId = userUtils.getCurrentUserId(request);
-        Employer employer = employerService.findEmployerByUser(userId);
-        employerService.declineApplicant(applicantId, employer.getId());
-        Applicant applicant = employerService.findApplicant(applicantId, employer.getId());
+        User user = userUtils.getCurrentUser(request);
+        if (user.getEmployerId() != null) {
+            employerService.declineApplicant(applicantId, user.getEmployerId());
+            Applicant applicant = employerService.findApplicant(applicantId, user.getEmployerId());
+        }
 
-        return "redirect:/employer-progress-vacancy-show/" + applicant.getDeal().getId();
+        return "redirect:/employer-progress-vacancy-show";
     }
 
     public EmployerService getEmployerService() {

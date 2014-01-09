@@ -52,9 +52,9 @@ public class VacancyRepository {
      * @param employerId    Id of employer
      * @return List of vacancies
      */
-    public List<Vacancy> findEmployerVacanciesWithBidCount(final Long employerId) {
+    public List<Vacancy> findVacanciesByEmployerId(final Long employerId) {
 
-        return vacancyMapper.findEmployerVacanciesWithBidCount(employerId);
+        return vacancyMapper.findVacanciesByEmployerId(employerId);
     }
 
     public VacancyMapper getVacancyMapper() {

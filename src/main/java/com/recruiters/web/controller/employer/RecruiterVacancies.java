@@ -2,6 +2,7 @@ package com.recruiters.web.controller.employer;
 
 import com.recruiters.model.Deal;
 import com.recruiters.model.Employer;
+import com.recruiters.model.User;
 import com.recruiters.service.EmployerService;
 import com.recruiters.web.controller.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,11 +34,9 @@ public class RecruiterVacancies {
     public ModelAndView showEmployerDeals(final HttpServletRequest request) {
 
         ModelAndView myDeals = new ModelAndView("employer/employer-progress-vacancies-list.jade");
-        Long userId = userUtils.getCurrentUserId(request);
-        Employer employer = employerService.findEmployerByUser(userId);
-
-        if (employer != null) {
-            List<Deal> deals = employerService.findDealsForEmployer(employer);
+        User user = userUtils.getCurrentUser(request);
+        if (user.getEmployerId() != null) {
+            List<Deal> deals = employerService.findDealsForEmployer(user.getEmployerId());
             myDeals.addObject("deals", deals);
         }
 

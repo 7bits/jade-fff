@@ -2,6 +2,7 @@ package com.recruiters.config;
 
 import com.recruiters.repository.UserRepository;
 import com.recruiters.repository.mapper.UserMapper;
+import com.recruiters.web.utils.SuccessLoginHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +22,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserRepository userRepository;
 
+    @Bean
+    public SuccessLoginHandler successLoginHandler() {
+
+        return new SuccessLoginHandler(userRepository);
+    }
+
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
         http
@@ -32,6 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .passwordParameter("j_password")
                     .defaultSuccessUrl("/")
                     .failureUrl("/?error=true")
+                    .successHandler(successLoginHandler())
                     .permitAll()
                     .and()
                 .logout()
@@ -44,26 +52,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/employer*/**").hasRole("EMPLOYER")
                     .anyRequest().anonymous();
     }
-
-//    @Override
-//    protected void configure(final AuthenticationManagerBuilder registry) throws Exception {
-//        registry
-//                .authenticationProvider();
-//    }
-
-//    @Override
-//    protected void configure(final AuthenticationManagerBuilder registry) throws Exception {
-//        registry
-//                .inMemoryAuthentication()
-//                    .withUser("recruiter")
-//                        .password("123123")
-//                        .roles("RECRUITER")
-//                        .and()
-//                    .withUser("employer")
-//                        .password("123123")
-//                        .roles("EMPLOYER");
-//    }
-
 
     @Bean
     @Override

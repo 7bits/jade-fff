@@ -18,16 +18,16 @@ public class DealRepository {
 
     // TODO
     // param should be recruiter ID
-    public List<Deal> findActiveDealsForRecruiter(final Long userId) {
+    public List<Deal> findActiveDealsByRecruiterId(final Long recruiterId) {
 
-        return dealMapper.findActiveRecruiterDealsByUserId(userId);
+        return dealMapper.findActiveDealsByRecruiterId(recruiterId);
     }
 
     // TODO
     // param should be recruiter ID
-    public Deal findDealForRecruiter(final Long dealId, final Long userId) {
+    public Deal findDealByDealIdAndRecruiterId(final Long dealId, final Long recruiterId) {
 
-        return dealMapper.findDealForRecruiter(dealId, userId);
+        return dealMapper.findDealByDealIdAndRecruiterId(dealId, recruiterId);
     }
 
     /**
@@ -42,9 +42,9 @@ public class DealRepository {
 
     // TODO
     // param should be recruiter ID
-    public Deal findDealForEmployer(final Long dealId, final Long userId) {
+    public Deal findDealByIdAndEmployerId(final Long dealId, final Long employerId) {
 
-        return dealMapper.findDealForEmployer(dealId, userId);
+        return dealMapper.findDealByIdAndEmployerId(dealId, employerId);
     }
 
     public Boolean createDeal(final Long bidId) {

@@ -19,16 +19,6 @@ public class RecruiterRepository {
         return this.getRecruiterMapper().findById(recruiterId);
     }
 
-    public Long findIdByUser(final Long userId) {
-
-        return this.getRecruiterMapper().findRecruiterIdByUserId(userId);
-    }
-
-    public Recruiter findByUser(final Long userId) {
-
-        return this.getRecruiterMapper().findByUserId(userId);
-    }
-
     public RecruiterMapper getRecruiterMapper() {
         return recruiterMapper;
     }
