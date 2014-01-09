@@ -25,10 +25,9 @@ public class EmployerForm {
         this.description = employer.getUser().getDescription();
     }
 
-    public Employer fillModel() {
+    public Employer fillModel(final User user) {
         Employer employer = new Employer();
         employer.setId(id);
-        User user = new User();
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setDescription(description);

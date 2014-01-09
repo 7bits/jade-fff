@@ -2,6 +2,7 @@ package com.recruiters.web.controller.employer;
 
 import com.recruiters.model.Employer;
 import com.recruiters.model.Recruiter;
+import com.recruiters.model.User;
 import com.recruiters.service.EmployerService;
 import com.recruiters.service.RecruiterService;
 import com.recruiters.web.controller.utils.UserUtils;
@@ -50,12 +51,14 @@ public class EmployerEditProfile {
 
     /**
      * Controller for creating editing employer with method POST
-     * @param employerForm model attribute for employer
+     * @param request               Http Request
+     * @param employerForm          Model attribute for employer
      * @param bindingResult         BindingResult
      * @return model and view for editing employer with errors if any
      */
     @RequestMapping(value = "employer-profile", method = RequestMethod.POST)
     public ModelAndView editEmployer(
+            final HttpServletRequest request,
             @Valid @ModelAttribute("employerForm") final EmployerForm employerForm,
             final BindingResult bindingResult
     ) {
@@ -65,7 +68,9 @@ public class EmployerEditProfile {
 
             return model;
         }
-        employerService.saveEmployerProfile(employerForm.fillModel());
+        User currentUser = userUtils.getCurrentUser(request);
+        Employer updatedEmployer = employerForm.fillModel(currentUser);
+        employerService.saveEmployerProfile(updatedEmployer);
 
         return new ModelAndView("redirect:/employer-progress-vacancies-list");
     }

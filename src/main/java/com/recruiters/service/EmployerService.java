@@ -177,18 +177,10 @@ public class EmployerService {
 
     /**
      * Saving employer profile
-     * Logic looks like bullsh!t but I don't see another implementation w/o
-     * user being in session scope some level before
      * @param employer    Employer POJO instance
      * @return true if update is ok, otherwise false
      */
     public Boolean saveEmployerProfile(final Employer employer) {
-        Employer employerOld = employerRepository.findById(employer.getId());
-        employer.getUser().setId(employerOld.getUser().getId());
-        employer.getUser().setUsername(employerOld.getUser().getUsername());
-        if (employer.getUser().getPassword() == null) {
-            employer.getUser().setPassword(employerOld.getUser().getPassword());
-        }
 
         return userRepository.update(employer.getUser());
     }

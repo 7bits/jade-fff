@@ -4,18 +4,19 @@ block append content
   .container
     .row
       .col-md-6
-        h1=fmt.message("employer-employee-show.h1")
+        h1=fmt.message("employer-applicant-show.h1")
         h2 #{applicant.firstName} #{applicant.lastName}
         dl.dl-horizontal
-          dt=fmt.message("employer-employee-show.description")
+          dt=fmt.message("employer-applicant-show.description")
           dd #{applicant.description}
-          dt=fmt.message("employer-employee-show.sex")
+          dt=fmt.message("employer-applicant-show.sex")
           dd #{applicant.sex}
-          dt=fmt.message("employer-employee-show.age")
+          dt=fmt.message("employer-applicant-show.age")
           dd #{applicant.age}
-        a.btn.btn-link(href=applicant.resumeFile)=fmt.message("employer-employee-show.resume")
-        a.btn.btn-link(href=applicant.testAnswerFile)=fmt.message("employer-employee-show.test")
+        a.btn.btn-link(href=applicant.resumeFile)=fmt.message("employer-applicant-show.resume")
+        a.btn.btn-link(href=applicant.testAnswerFile)=fmt.message("employer-applicant-show.test")
     .row
       .col-md-6
-        a.btn.btn-success(href="apply/" + applicant.id,data-toggle="confirmation", data-placement="left", data-original-title="", title="")=fmt.message("employer-employee-show.apply")
-        a.btn.btn-danger(href="decline/" + applicant.id,data-toggle="confirmation", data-placement="left", data-original-title="", title="")=fmt.message("employer-employee-show.decline")
+        a.btn.btn-success(href="apply/" + applicant.id,data-toggle="confirmation", data-placement="left", data-original-title="", title="")=fmt.message("employer-applicant-show.apply")
+        a.btn.btn-danger(href="decline/" + applicant.id,data-toggle="confirmation", data-placement="left", data-original-title="", title="")=fmt.message("employer-applicant-show.decline")
+    a.btn.btn-link(href="../employer-progress-vacancy-show/" + applicant.deal.id)=fmt.message("employer-applicant-show.return")

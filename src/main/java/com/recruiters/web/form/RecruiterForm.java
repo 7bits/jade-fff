@@ -24,10 +24,9 @@ public class RecruiterForm {
         this.description = recruiter.getUser().getDescription();
     }
 
-    public Recruiter fillModel() {
+    public Recruiter fillModel(final User user) {
         Recruiter recruiter = new Recruiter();
         recruiter.setId(id);
-        User user = new User();
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setDescription(description);
