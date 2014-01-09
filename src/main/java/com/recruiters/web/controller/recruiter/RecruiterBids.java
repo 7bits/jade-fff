@@ -30,7 +30,7 @@ public class RecruiterBids {
         Long userId = userUtils.getCurrentUserId(request);
         Long recruiterId = this.getRecruiterService().findRecruiterIdByUserId(userId);
         if (recruiterId != null) {
-            recruiterBids.addObject("bids", getRecruiterService().findRecruiterBids(recruiterId));
+            recruiterBids.addObject("bids", getRecruiterService().findBidsForRecruiter(recruiterId));
         }
 
         return recruiterBids;

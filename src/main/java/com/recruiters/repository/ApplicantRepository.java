@@ -23,16 +23,6 @@ public class ApplicantRepository {
     }
 
     /**
-     *  Method must return list of applicants for given deal
-     * @param dealId
-     * @return
-     */
-    public List<Applicant> findApplicantsForDeal(final Long dealId) {
-
-        return applicantMapper.getApplicantsByDealId(dealId);
-    }
-
-    /**
      * Method must create Applicant model and add it to deal
      * @param applicant
      * @return <tt>true</tt> if model has been saved successful, <tt>false</tt> - otherwise

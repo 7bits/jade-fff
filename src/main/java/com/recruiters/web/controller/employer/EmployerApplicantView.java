@@ -39,7 +39,7 @@ public class EmployerApplicantView {
         Long userId = userUtils.getCurrentUserId(request);
         Employer employer = employerService.findEmployerByUser(userId);
         if (employer != null) {
-            Applicant applicant = employerService.findApplicantById(applicantId, employer.getId());
+            Applicant applicant = employerService.findApplicant(applicantId, employer.getId());
             showApplicant.addObject("applicant", applicant);
         }
 
@@ -79,7 +79,7 @@ public class EmployerApplicantView {
         Long userId = userUtils.getCurrentUserId(request);
         Employer employer = employerService.findEmployerByUser(userId);
         employerService.declineApplicant(applicantId, employer.getId());
-        Applicant applicant = employerService.findApplicantById(applicantId, employer.getId());
+        Applicant applicant = employerService.findApplicant(applicantId, employer.getId());
 
         return "redirect:/employer-progress-vacancy-show/" + applicant.getDeal().getId();
     }

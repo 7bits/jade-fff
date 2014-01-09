@@ -84,7 +84,7 @@ public class RecruiterService {
      * @param vacancyId    Id of vacancy for which we want to get full description
      * @return vacancy
      */
-    public Vacancy getVacancyById(final Long vacancyId) {
+    public Vacancy findVacancy(final Long vacancyId) {
 
         return this.getVacancyRepository().findById(vacancyId);
     }
@@ -93,9 +93,9 @@ public class RecruiterService {
      * Method must return list of recruiter bids.
      * @return
      */
-    public List<Bid> findRecruiterBids(final Long recruiterId) {
+    public List<Bid> findBidsForRecruiter(final Long recruiterId) {
 
-        return this.getBidRepository().findRecruiterBids(recruiterId);
+        return this.getBidRepository().findBidsByRecruiterId(recruiterId);
     }
 
     /**
@@ -118,7 +118,7 @@ public class RecruiterService {
         return this.getDealRepository().findDealForRecruiter(dealId, userId);
     }
 
-    public Applicant getApplicantById(final Long applicantId) {
+    public Applicant findApplicant(final Long applicantId) {
 
         return this.getApplicantRepository().findById(applicantId);
     }
@@ -130,7 +130,7 @@ public class RecruiterService {
      * @param testAnswerFile
      * @return
      */
-    public Boolean saveApplicantToVacancy(
+    public Boolean saveApplicant(
             final Applicant applicant,
             final MultipartFile resumeFile,
             final MultipartFile testAnswerFile
@@ -165,7 +165,7 @@ public class RecruiterService {
      * @param recruiter    Recruiter POJO instance
      * @return true if update is ok, otherwise false
      */
-    public Boolean saveRecruiterProfile(final Recruiter recruiter) {
+    public Boolean saveProfileForRecruiter(final Recruiter recruiter) {
 
         return userRepository.update(recruiter.getUser());
     }

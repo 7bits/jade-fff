@@ -34,7 +34,7 @@ public class BidRepository {
      * @param vacancyId    Vacancy Id
      * @return List of Bid POJO instances
      */
-    public List<Bid> findBidsForVacancy(final Long vacancyId) {
+    public List<Bid> findBidsByVacancyId(final Long vacancyId) {
 
         return bidMapper.findBidsForVacancy(vacancyId);
     }
@@ -43,23 +43,12 @@ public class BidRepository {
      * Method must return list of recruiter bids.
      * @return
      */
-    public List<Bid> findRecruiterBids(final Long recruiterId) {
+    public List<Bid> findBidsByRecruiterId(final Long recruiterId) {
 
         return bidMapper.findRecruiterBids(recruiterId);
     }
 
-    /**
-     * Find all bids for vacancies of exact employer
-     * @param employerId    Id of employer
-     * @return List of Bid POJO instances
-     */
-    public List<Bid> findBidsForEmployerVacancies(final Long employerId) {
-
-        return bidMapper.findBidsForEmployerVacancies(employerId);
-    }
-
     public Boolean createBid(final Long recruiterId, final Long vacancyId, final String message) {
-
          try {
              bidMapper.createBid(recruiterId, vacancyId, message);
              return true;

@@ -39,7 +39,7 @@ public class EmployerRecruiterDeal {
         Long userId = userUtils.getCurrentUserId(request);
         Employer employer = employerService.findEmployerByUser(userId);
         if (employer != null) {
-            Bid bid = employerService.findBidById(bidId, employer);
+            Bid bid = employerService.findBid(bidId, employer);
             showBid.addObject("bid", bid);
         }
 
@@ -54,7 +54,7 @@ public class EmployerRecruiterDeal {
         Long userId = userUtils.getCurrentUserId(request);
         Employer employer = employerService.findEmployerByUser(userId);
         if (employer != null) {
-            employerService.approveRecruiterBid(bidId);
+            employerService.approveBidForRecruiter(bidId);
         }
 
         return "redirect:/employer-recruiter-search";
@@ -68,7 +68,7 @@ public class EmployerRecruiterDeal {
         Long userId = userUtils.getCurrentUserId(request);
         Employer employer = employerService.findEmployerByUser(userId);
         if (employer != null) {
-            employerService.declineRecruiterBid(bidId);
+            employerService.declineBidForRecruiter(bidId);
         }
 
         return "redirect:/employer-recruiter-search";

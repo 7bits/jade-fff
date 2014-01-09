@@ -1,7 +1,6 @@
 package com.recruiters.web.controller.employer;
 
 import com.recruiters.model.Employer;
-import com.recruiters.model.User;
 import com.recruiters.model.Vacancy;
 import com.recruiters.service.EmployerService;
 import com.recruiters.web.controller.utils.UserUtils;
@@ -38,7 +37,7 @@ public class RecruiterSearch {
         Employer employer = employerService.findEmployerByUser(userId);
 
         if (employer != null) {
-            List<Vacancy> vacancies = employerService.findEmployerVacanciesWithBidCount(employer);
+            List<Vacancy> vacancies = employerService.findVacanciesForEmployer(employer);
             vacanciesBids.addObject("vacancies", vacancies);
         }
 

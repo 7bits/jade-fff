@@ -67,7 +67,7 @@ public class RecruiterEditProfile {
         }
         User currentUser = userUtils.getCurrentUser(request);
         Recruiter updatedRecruiter = recruiterForm.fillModel(currentUser);
-        recruiterService.saveRecruiterProfile(updatedRecruiter);
+        recruiterService.saveProfileForRecruiter(updatedRecruiter);
 
         return new ModelAndView("redirect:/recruiter-active-deals");
     }

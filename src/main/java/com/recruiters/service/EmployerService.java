@@ -6,7 +6,6 @@ import com.recruiters.model.Bid;
 import com.recruiters.model.BidStatus;
 import com.recruiters.model.Deal;
 import com.recruiters.model.Employer;
-import com.recruiters.model.User;
 import com.recruiters.model.Vacancy;
 import com.recruiters.repository.ApplicantRepository;
 import com.recruiters.repository.BidRepository;
@@ -16,6 +15,7 @@ import com.recruiters.repository.UserRepository;
 import com.recruiters.repository.VacancyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -53,9 +53,9 @@ public class EmployerService {
      * @param employer    Employer POJO instance
      * @return list of deals
      */
-    public List<Deal> findEmployerDeals(final Employer employer) {
+    public List<Deal> findDealsForEmployer(final Employer employer) {
 
-        return dealRepository.findActiveDealsForEmployer(employer.getId());
+        return dealRepository.findActiveDealsByEmployerId(employer.getId());
     }
 
     /**
@@ -64,7 +64,7 @@ public class EmployerService {
      * @param userId    Id of user
      * @return POJO Deal instance
      */
-    public Deal findDealById(final Long dealId, final Long userId) {
+    public Deal findDeal(final Long dealId, final Long userId) {
 
         return dealRepository.findDealForEmployer(dealId, userId);
     }
@@ -76,23 +76,13 @@ public class EmployerService {
      * @param employerId     Id of employer
      * @return Applicant POJO instance
      */
-    public Applicant findApplicantById(final Long applicantId, final Long employerId) {
+    public Applicant findApplicant(final Long applicantId, final Long employerId) {
 
         Applicant applicant = applicantRepository.findById(applicantId);
         if (applicant.getDeal().getVacancy().getEmployer().getId().equals(employerId)) {
             return applicant;
         }
         return null;
-    }
-
-    /**
-     * Get all active bids from DB for current employer
-     * @param employer    Employer POJO instance
-     * @return list of bids
-     */
-    public List<Bid> findEmployerBids(final Employer employer) {
-
-        return bidRepository.findBidsForEmployerVacancies(employer.getId());
     }
 
     /**
@@ -105,7 +95,7 @@ public class EmployerService {
 
         Vacancy vacancy = vacancyRepository.findById(vacancyId);
         if (vacancy.getEmployer().getId().equals(employer.getId())) {
-            return bidRepository.findBidsForVacancy(vacancyId);
+            return bidRepository.findBidsByVacancyId(vacancyId);
         }
         return null;
     }
@@ -116,7 +106,7 @@ public class EmployerService {
      * @param employer    Employer POJO instance
      * @return Bid POJO instance
      */
-    public Bid findBidById(final Long bidId, final Employer employer) {
+    public Bid findBid(final Long bidId, final Employer employer) {
 
         Bid bid = bidRepository.findById(bidId);
         if (bid.getVacancy().getEmployer().getId().equals(employer.getId())) {
@@ -126,22 +116,11 @@ public class EmployerService {
     }
 
     /**
-     * Find all vacancies for exact employer
-     * @param employer    Employer POJO instance
-     * @return List of vacancies
-     */
-    public List<Vacancy> findEmployerVacancies(final Employer employer) {
-
-        return vacancyRepository.findEmployerVacancies(employer.getId());
-    }
-
-
-    /**
      * Find all vacancies for exact employer with count of bids for each
      * @param employer    Employer POJO instance
      * @return List of vacancies
      */
-    public List<Vacancy> findEmployerVacanciesWithBidCount(final Employer employer) {
+    public List<Vacancy> findVacanciesForEmployer(final Employer employer) {
 
         return vacancyRepository.findEmployerVacanciesWithBidCount(employer.getId());
     }
@@ -152,7 +131,7 @@ public class EmployerService {
      * @param employer     Employer POJO instance
      * @return Vacancy POJO instance
      */
-    public Vacancy findVacancyById(final Long vacancyId, final Employer employer) {
+    public Vacancy findVacancy(final Long vacancyId, final Employer employer) {
         Vacancy vacancy = vacancyRepository.findById(vacancyId);
         if (vacancy.getEmployer().getId().equals(employer.getId())) {
             return vacancy;
@@ -160,17 +139,26 @@ public class EmployerService {
         return null;
     }
 
-    public Boolean approveRecruiterBid(final Long bidId) {
+    @Transactional(rollbackFor = Throwable.class)
+    public Boolean approveBidForRecruiter(final Long bidId) {
         Boolean success = this.dealRepository.createDeal(bidId);
         if (success) {
-            success = this.bidRepository.updateBidStatus(bidId, BidStatus.APPROVED);
+            try {
+                success = this.bidRepository.updateBidStatus(bidId, BidStatus.APPROVED);
+            } catch (Exception e) {
+
+            }
         }
 
         return success;
     }
 
-    public Boolean declineRecruiterBid(final Long bidId) {
-        this.bidRepository.updateBidStatus(bidId, BidStatus.REJECTED);
+    public Boolean declineBidForRecruiter(final Long bidId) {
+        try {
+            this.bidRepository.updateBidStatus(bidId, BidStatus.REJECTED);
+        } catch (Exception e) {
+
+        }
 
         return true;
     }
@@ -180,7 +168,7 @@ public class EmployerService {
      * @param employer    Employer POJO instance
      * @return true if update is ok, otherwise false
      */
-    public Boolean saveEmployerProfile(final Employer employer) {
+    public Boolean saveProfileForEmployer(final Employer employer) {
 
         return userRepository.update(employer.getUser());
     }

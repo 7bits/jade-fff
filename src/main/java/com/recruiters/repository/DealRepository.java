@@ -16,11 +16,15 @@ public class DealRepository {
     @Autowired
     private DealMapper dealMapper = null;
 
+    // TODO
+    // param should be recruiter ID
     public List<Deal> findActiveDealsForRecruiter(final Long userId) {
 
         return dealMapper.findActiveRecruiterDealsByUserId(userId);
     }
 
+    // TODO
+    // param should be recruiter ID
     public Deal findDealForRecruiter(final Long dealId, final Long userId) {
 
         return dealMapper.findDealForRecruiter(dealId, userId);
@@ -31,11 +35,13 @@ public class DealRepository {
      * @param employerId    Id of employer
      * @return List of POJO Deal instances
      */
-    public List<Deal> findActiveDealsForEmployer(final Long employerId) {
+    public List<Deal> findActiveDealsByEmployerId(final Long employerId) {
 
         return dealMapper.findActiveDealsByEmployerId(employerId);
     }
 
+    // TODO
+    // param should be recruiter ID
     public Deal findDealForEmployer(final Long dealId, final Long userId) {
 
         return dealMapper.findDealForEmployer(dealId, userId);

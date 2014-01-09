@@ -41,7 +41,7 @@ public class ShowBidsForVacancy {
 
         if (employer != null) {
             List<Bid> bids = employerService.findBidsForVacancy(vacancyId, employer);
-            Vacancy vacancy = employerService.findVacancyById(vacancyId, employer);
+            Vacancy vacancy = employerService.findVacancy(vacancyId, employer);
             recruiterBids.addObject("bids", bids);
             recruiterBids.addObject("vacancy", vacancy);
         }

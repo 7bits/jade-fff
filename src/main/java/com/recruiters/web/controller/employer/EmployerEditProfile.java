@@ -1,13 +1,10 @@
 package com.recruiters.web.controller.employer;
 
 import com.recruiters.model.Employer;
-import com.recruiters.model.Recruiter;
 import com.recruiters.model.User;
 import com.recruiters.service.EmployerService;
-import com.recruiters.service.RecruiterService;
 import com.recruiters.web.controller.utils.UserUtils;
 import com.recruiters.web.form.EmployerForm;
-import com.recruiters.web.form.RecruiterForm;
 import com.recruiters.web.validator.EmployerFormValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -70,7 +67,7 @@ public class EmployerEditProfile {
         }
         User currentUser = userUtils.getCurrentUser(request);
         Employer updatedEmployer = employerForm.fillModel(currentUser);
-        employerService.saveEmployerProfile(updatedEmployer);
+        employerService.saveProfileForEmployer(updatedEmployer);
 
         return new ModelAndView("redirect:/employer-progress-vacancies-list");
     }

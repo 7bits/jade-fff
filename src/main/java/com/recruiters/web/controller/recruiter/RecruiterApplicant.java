@@ -64,7 +64,7 @@ public class RecruiterApplicant {
             return model;
         }
         // need some time for research
-        this.getRecruiterService().saveApplicantToVacancy(
+        this.getRecruiterService().saveApplicant(
                 applicantForm.fillModel(), applicantForm.getResumeFile(), applicantForm.getTestAnswerFile()
         );
         Long dealId = applicantForm.getDealId();
@@ -80,7 +80,7 @@ public class RecruiterApplicant {
     @RequestMapping(value = "recruiter-edit-applicant/{applicantId}", method = RequestMethod.GET)
     public ModelAndView editApplicant(@PathVariable final Long applicantId) {
         ModelAndView editApplicant = new ModelAndView("recruiter/recruiter-edit-applicant.jade");
-        ApplicantForm applicantForm = new ApplicantForm(this.getRecruiterService().getApplicantById(applicantId));
+        ApplicantForm applicantForm = new ApplicantForm(this.getRecruiterService().findApplicant(applicantId));
 
         editApplicant.addObject("applicantForm", applicantForm);
 
@@ -106,7 +106,7 @@ public class RecruiterApplicant {
         }
         // TODO
         // need some time for research
-        this.getRecruiterService().saveApplicantToVacancy(
+        this.getRecruiterService().saveApplicant(
                 applicantForm.fillModel(), applicantForm.getResumeFile(), applicantForm.getTestAnswerFile()
         );
         Long dealId = applicantForm.getDealId();
