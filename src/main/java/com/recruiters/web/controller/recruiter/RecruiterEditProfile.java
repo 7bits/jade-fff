@@ -48,12 +48,14 @@ public class RecruiterEditProfile {
 
     /**
      * Controller for creating editing recruiter with method POST
-     * @param recruiterForm model attribute for recruiter
+     * @param request               Http Request
+     * @param recruiterForm         Model attribute for recruiter
      * @param bindingResult         BindingResult
      * @return model and view for editing recruiter with errors if any
      */
     @RequestMapping(value = "recruiter-profile", method = RequestMethod.POST)
     public ModelAndView editRecruiter(
+            final HttpServletRequest request,
             @Valid @ModelAttribute("recruiterForm") final RecruiterForm recruiterForm,
             final BindingResult bindingResult
     ) {
@@ -63,7 +65,9 @@ public class RecruiterEditProfile {
 
             return model;
         }
-        recruiterService.saveRecruiterProfile(recruiterForm.fillModel());
+        User currentUser = userUtils.getCurrentUser(request);
+        Recruiter updatedRecruiter = recruiterForm.fillModel(currentUser);
+        recruiterService.saveRecruiterProfile(updatedRecruiter);
 
         return new ModelAndView("redirect:/recruiter-active-deals");
     }

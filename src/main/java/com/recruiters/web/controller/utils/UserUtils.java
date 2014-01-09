@@ -17,10 +17,9 @@ public class UserUtils {
     private UserRepository userRepository = null;
 
     /**
-     * Detached user getter, should be combined with equal getter
-     * in RecruiterService Class in future
+     * Finds user by session info and returns its id
      * @param request Http request
-     * @return User POJO instance
+     * @return User id
      */
     public Long getCurrentUserId(final HttpServletRequest request) {
 
@@ -31,5 +30,22 @@ public class UserUtils {
             userId = user.getId();
         }
         return userId;
+    }
+
+
+    /**
+     * Finds user by session info
+     * @param request Http request
+     * @return User POJO instance
+     */
+    public User getCurrentUser(final HttpServletRequest request) {
+
+        Long userId = null;
+        /*TODO: Remove DB usage, put user to the session*/
+        User user = userRepository.findUserByUsername(request.getUserPrincipal().getName());
+        if (user != null) {
+            return user;
+        }
+        return null;
     }
 }
