@@ -72,21 +72,21 @@ public interface ApplicantMapper {
             "sex, age, resume_file, test_answer_file) " +
             "VALUES (#{deal.id}, #{firstName}, #{lastName}, #{description}, " +
             "#{sex}, #{age}, #{resumeFile}, #{testAnswerFile})")
-    void createApplicant(final Applicant applicant);
+    void create(final Applicant applicant);
 
     @Update("UPDATE applicants SET first_name=#{firstName}, " +
             "last_name=#{lastName}, description=#{description}, " +
             "sex=#{sex}, age=#{age}, " +
             "resume_file=#{resumeFile}, test_answer_file=#{testAnswerFile} " +
             "WHERE id=#{id}")
-    void updateApplicant(final Applicant applicant);
+    void update(final Applicant applicant);
 
     @Update("UPDATE applicants SET status=#{status} " +
             "WHERE id=#{applicantId} and applicants.deal_id IN " +
             "(SELECT deals.id FROM deals " +
             "INNER JOIN vacancies ON vacancies.id = deals.vacancy_id " +
             "WHERE vacancies.employer_id=#{employerId})")
-    void updateStatus(@Param("applicantId")final Long applicantId,
-                      @Param("status")final ApplicantStatus applicantStatus,
+    void updateStatus(@Param("applicantId") final Long applicantId,
+                      @Param("status") final ApplicantStatus applicantStatus,
                       @Param("employerId") final Long employerId);
 }

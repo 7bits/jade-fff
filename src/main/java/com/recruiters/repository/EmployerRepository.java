@@ -16,17 +16,7 @@ public class EmployerRepository {
 
     public Employer findById(final Long id) {
 
-        return this.getEmployerMapper().findById(id);
-    }
-
-    /**
-     * Returns Employer POJO by its User id
-     * @param userId    User id
-     * @return Employer POJO
-     */
-    public Employer findEmployerByUser(final Long userId) {
-
-        return this.getEmployerMapper().getByUserId(userId);
+        return employerMapper.findById(id);
     }
 
     public EmployerMapper getEmployerMapper() {

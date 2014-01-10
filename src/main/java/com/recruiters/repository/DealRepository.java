@@ -16,18 +16,14 @@ public class DealRepository {
     @Autowired
     private DealMapper dealMapper = null;
 
-    // TODO
-    // param should be recruiter ID
     public List<Deal> findActiveDealsByRecruiterId(final Long recruiterId) {
 
         return dealMapper.findActiveDealsByRecruiterId(recruiterId);
     }
 
-    // TODO
-    // param should be recruiter ID
-    public Deal findDealByDealIdAndRecruiterId(final Long dealId, final Long recruiterId) {
+    public Deal findByDealIdAndRecruiterId(final Long dealId, final Long recruiterId) {
 
-        return dealMapper.findDealByDealIdAndRecruiterId(dealId, recruiterId);
+        return dealMapper.findByDealIdAndRecruiterId(dealId, recruiterId);
     }
 
     /**
@@ -40,14 +36,12 @@ public class DealRepository {
         return dealMapper.findActiveDealsByEmployerId(employerId);
     }
 
-    // TODO
-    // param should be recruiter ID
-    public Deal findDealByIdAndEmployerId(final Long dealId, final Long employerId) {
+    public Deal findByIdAndEmployerId(final Long dealId, final Long employerId) {
 
-        return dealMapper.findDealByIdAndEmployerId(dealId, employerId);
+        return dealMapper.findByIdAndEmployerId(dealId, employerId);
     }
 
-    public Boolean createDeal(final Long bidId) {
+    public Boolean create(final Long bidId) {
 
         try {
             dealMapper.create(bidId);

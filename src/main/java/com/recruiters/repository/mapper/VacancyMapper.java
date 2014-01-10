@@ -50,25 +50,6 @@ public interface VacancyMapper {
     })
     List<Vacancy> findAvailableVacanciesForRecruiter();
 
-    @Select("SELECT vacancies.*, users.firstname, users.lastname " +
-            "FROM vacancies " +
-            "INNER JOIN employers ON employers.id = vacancies.employer_id " +
-            "INNER JOIN users  ON employers.user_id=users.id " +
-            "WHERE vacancies.employer_id=#{employerId}")
-    @Results({
-            @Result(column = "id", property = "id"),
-            @Result(column = "employer_id", property = "employer.id"),
-            @Result(column = "title", property = "title"),
-            @Result(column = "description", property = "description"),
-            @Result(column = "salary", property = "salary"),
-            @Result(column = "creation_date", property = "creationDate"),
-            @Result(column = "expiration_date", property = "expirationDate"),
-            @Result(column = "test_file", property = "testFile"),
-            @Result(column = "firstname", property = "employer.user.firstName"),
-            @Result(column = "lastname", property = "employer.user.lastName"),
-    })
-    List<Vacancy> findEmployerVacancies(final Long employerId);
-
     @Select("SELECT vacancies.*, count(bids.id) as bid_count, " +
             "users.firstname, users.lastname " +
             "FROM vacancies " +

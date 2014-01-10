@@ -16,7 +16,7 @@ public class RecruiterRepository {
 
     public Recruiter findById(final Long recruiterId) {
 
-        return this.getRecruiterMapper().findById(recruiterId);
+        return recruiterMapper.findById(recruiterId);
     }
 
     public RecruiterMapper getRecruiterMapper() {

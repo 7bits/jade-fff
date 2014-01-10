@@ -2,8 +2,6 @@ package com.recruiters.repository;
 
 import com.recruiters.model.Bid;
 import com.recruiters.model.BidStatus;
-import com.recruiters.model.Recruiter;
-import com.recruiters.model.Vacancy;
 import com.recruiters.repository.mapper.BidMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -36,7 +34,7 @@ public class BidRepository {
      */
     public List<Bid> findBidsByVacancyId(final Long vacancyId) {
 
-        return bidMapper.findBidsForVacancy(vacancyId);
+        return bidMapper.findBidsByVacancyId(vacancyId);
     }
 
     /**
@@ -45,21 +43,21 @@ public class BidRepository {
      */
     public List<Bid> findBidsByRecruiterId(final Long recruiterId) {
 
-        return bidMapper.findRecruiterBids(recruiterId);
+        return bidMapper.findBidsByRecruiterId(recruiterId);
     }
 
-    public Boolean createBid(final Long recruiterId, final Long vacancyId, final String message) {
+    public Boolean create(final Long recruiterId, final Long vacancyId, final String message) {
          try {
-             bidMapper.createBid(recruiterId, vacancyId, message);
+             bidMapper.create(recruiterId, vacancyId, message);
              return true;
          } catch (Exception e) {
              return false;
          }
     }
 
-    public Boolean updateBidStatus(final Long bidId, final BidStatus status) {
+    public Boolean updateStatus(final Long bidId, final BidStatus status) {
         try {
-            bidMapper.updateBidStatus(bidId, status);
+            bidMapper.updateStatus(bidId, status);
             return true;
         } catch (Exception e) {
             return false;
