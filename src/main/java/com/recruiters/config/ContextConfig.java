@@ -1,7 +1,6 @@
 package com.recruiters.config;
 
 import org.springframework.core.annotation.Order;
-import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.multipart.support.MultipartFilter;
@@ -19,10 +18,11 @@ import java.io.File;
 @Order(2)
 public class ContextConfig extends AbstractAnnotationConfigDispatcherServletInitializer {
 
-    /**
-     * Max upload file size 10 MB
-     */
+    /** Max upload file size 10 MB */
     private static final int MAX_UPLOAD_FILE_SIZE = 10485760;
+
+    /** Upload path */
+    private static final String UPLOAD_PATH = "/home/sevenbits/Downloads";
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
@@ -45,23 +45,22 @@ public class ContextConfig extends AbstractAnnotationConfigDispatcherServletInit
     }
 
     @Override
-    protected void registerDispatcherServlet(ServletContext servletContext) {
+    protected void registerDispatcherServlet(final ServletContext servletContext) {
         super.registerDispatcherServlet(servletContext);
-
         servletContext.addListener(new HttpSessionEventPublisher());
-
     }
 
     @Override
-    protected void customizeRegistration(ServletRegistration.Dynamic registration) {
-
-        File uploadDirectory = new File("/home/sevenbits/");
-
+    protected void customizeRegistration(final ServletRegistration.Dynamic registration) {
+        File uploadDirectory = new File(UPLOAD_PATH);
         MultipartConfigElement multipartConfigElement =
-                new MultipartConfigElement(uploadDirectory.getAbsolutePath(),
-                        MAX_UPLOAD_FILE_SIZE, MAX_UPLOAD_FILE_SIZE * 2, MAX_UPLOAD_FILE_SIZE / 2);
+                new MultipartConfigElement(
+                        uploadDirectory.getAbsolutePath(),
+                        MAX_UPLOAD_FILE_SIZE,
+                        MAX_UPLOAD_FILE_SIZE * 2,
+                        MAX_UPLOAD_FILE_SIZE / 2
+                );
 
         registration.setMultipartConfig(multipartConfigElement);
-
     }
 }
