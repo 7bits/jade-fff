@@ -15,6 +15,7 @@ import com.recruiters.repository.UserRepository;
 import com.recruiters.repository.VacancyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -22,6 +23,7 @@ import java.util.List;
 /**
  */
 @Service
+@Transactional(rollbackFor = Throwable.class)
 public class RecruiterService {
 
     @Autowired
@@ -80,7 +82,7 @@ public class RecruiterService {
 
     /**
      * Method must return list of vacancies. Each of vacancies has deal for this recruiter
-     * @param userId
+     * @param recruiterId
      * @return
      */
     public List<Deal> findActiveDealsForRecruiter(final Long recruiterId) {
@@ -95,7 +97,7 @@ public class RecruiterService {
      */
     public Deal findDealForRecruiter(final Long dealId, final Long recruiterId) {
 
-        return this.getDealRepository().findDealByDealIdAndRecruiterId(dealId, recruiterId);
+        return this.getDealRepository().findByDealIdAndRecruiterId(dealId, recruiterId);
     }
 
     public Applicant findApplicant(final Long applicantId) {
@@ -122,9 +124,9 @@ public class RecruiterService {
         applicant.setTestAnswerFile(fileNameForTestAnswers);
 
         if (applicant.getId().equals(0L)) {
-            return this.getApplicantRepository().createApplicant(applicant);
+            return this.getApplicantRepository().create(applicant);
         } else {
-            return this.getApplicantRepository().updateApplicant(applicant);
+            return this.getApplicantRepository().update(applicant);
         }
     }
 
@@ -137,7 +139,7 @@ public class RecruiterService {
      */
     public Boolean applyRecruiterToVacancy(final Long recruiterId, final Long vacancyId, final String message) {
 
-        return this.getBidRepository().createBid(recruiterId, vacancyId, message);
+        return this.getBidRepository().create(recruiterId, vacancyId, message);
     }
 
     /**
