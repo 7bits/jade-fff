@@ -116,7 +116,7 @@ public class RecruiterApplicant {
     }
 
     @InitBinder("applicantForm")
-    protected void initSurveyListFormBinder(final WebDataBinder binder) {
+    protected void applicantFormBinder(final WebDataBinder binder) {
         binder.setValidator(this.getApplicantFormValidator());
     }
 

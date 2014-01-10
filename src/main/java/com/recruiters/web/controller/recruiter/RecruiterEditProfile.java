@@ -79,7 +79,7 @@ public class RecruiterEditProfile {
 
 
     @InitBinder("recruiterForm")
-    protected void initSurveyListFormBinder(final WebDataBinder binder) {
+    protected void recruiterFormBinder(final WebDataBinder binder) {
         binder.setValidator(recruiterFormValidator);
     }
 
