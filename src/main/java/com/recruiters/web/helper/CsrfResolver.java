@@ -1,7 +1,6 @@
 package com.recruiters.web.helper;
 
 import org.springframework.security.web.csrf.CsrfToken;
-import org.springframework.security.web.csrf.DefaultCsrfToken;
 
 import javax.servlet.http.HttpServletRequest;
 

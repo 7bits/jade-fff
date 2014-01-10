@@ -2,8 +2,6 @@ package com.recruiters.repository;
 
 import com.recruiters.model.Bid;
 import com.recruiters.model.BidStatus;
-import com.recruiters.model.Recruiter;
-import com.recruiters.model.Vacancy;
 import com.recruiters.repository.mapper.BidMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;

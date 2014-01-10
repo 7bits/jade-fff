@@ -1,7 +1,6 @@
 package com.recruiters.config;
 
 import com.recruiters.repository.UserRepository;
-import com.recruiters.repository.mapper.UserMapper;
 import com.recruiters.web.utils.SuccessLoginHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -50,6 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/recruiter*/**").hasRole("RECRUITER")
                     .antMatchers("/employer*/**").hasRole("EMPLOYER")
                     .anyRequest().anonymous();
+
     }
 
     @Bean

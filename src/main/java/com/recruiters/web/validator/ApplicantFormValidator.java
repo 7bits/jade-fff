@@ -1,7 +1,6 @@
 package com.recruiters.web.validator;
 
 import com.recruiters.web.form.ApplicantForm;
-import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;

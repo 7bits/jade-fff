@@ -6,8 +6,6 @@ import com.recruiters.repository.mapper.ApplicantMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 /**
  * Repository for working with applicant
  */

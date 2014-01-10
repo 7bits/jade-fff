@@ -12,15 +12,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.annotation.MultipartConfig;
 import javax.validation.Valid;
 
 /**
  * Controller Class for R61 "Edit or create applicant"
  */
 @Controller
+@MultipartConfig(location = "/upload", maxFileSize = 10485760L)
 public class RecruiterApplicant {
 
     @Autowired

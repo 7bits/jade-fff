@@ -56,5 +56,6 @@ html
                         Вакансии с рекрутёром
                   li(role="presentation", class="divider")
                   li(role="presentation")
-                    a(href=domain.getAbsoluteUrl() + "/j_spring_security_logout", role="menuitem", tabindex="-1").
-                      Выйти
+                    form(action=domain.getAbsoluteUrl() + "/j_spring_security_logout", method="post")
+                      input.btn.btn-link(type="submit", name="submit", value="Выйти")
+                      input(type="hidden", name=csrf.getParameterName(), value=csrf.getToken())
