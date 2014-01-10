@@ -21,9 +21,9 @@ public class DealRepository {
         return dealMapper.findActiveDealsByRecruiterId(recruiterId);
     }
 
-    public Deal findDealByDealIdAndRecruiterId(final Long dealId, final Long recruiterId) {
+    public Deal findByDealIdAndRecruiterId(final Long dealId, final Long recruiterId) {
 
-        return dealMapper.findDealByDealIdAndRecruiterId(dealId, recruiterId);
+        return dealMapper.findByDealIdAndRecruiterId(dealId, recruiterId);
     }
 
     /**
@@ -36,12 +36,12 @@ public class DealRepository {
         return dealMapper.findActiveDealsByEmployerId(employerId);
     }
 
-    public Deal findDealByIdAndEmployerId(final Long dealId, final Long employerId) {
+    public Deal findByIdAndEmployerId(final Long dealId, final Long employerId) {
 
-        return dealMapper.findDealByIdAndEmployerId(dealId, employerId);
+        return dealMapper.findByIdAndEmployerId(dealId, employerId);
     }
 
-    public Boolean createDeal(final Long bidId) {
+    public Boolean create(final Long bidId) {
 
         try {
             dealMapper.create(bidId);

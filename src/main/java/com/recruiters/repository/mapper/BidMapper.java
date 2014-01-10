@@ -40,7 +40,7 @@ public interface BidMapper {
             @Result(column = "firstname", property = "recruiter.user.firstName"),
             @Result(column = "lastname", property = "recruiter.user.lastName")
     })
-    List<Bid> findRecruiterBids(final Long recruiterId);
+    List<Bid> findBidsByRecruiterId(final Long recruiterId);
 
     @Select("SELECT bids.id, bids.message, bids.status, " +
             "vacancies.id as vacancy_id,  vacancies.employer_id, vacancies.title, " +
@@ -118,14 +118,14 @@ public interface BidMapper {
             @Result(column = "firstname", property = "recruiter.user.firstName"),
             @Result(column = "lastname", property = "recruiter.user.lastName")
     })
-    List<Bid> findBidsForVacancy(final Long vacancyId);
+    List<Bid> findBidsByVacancyId(final Long vacancyId);
 
     @Insert("INSERT INTO bids (vacancy_id, recruiter_id, message) " +
             "VALUES (#{vacancyId}, #{recruiterId}, #{message})")
-    void createBid(@Param("recruiterId")final Long recruiterId,
-                   @Param("vacancyId") final Long vacancyId,
-                   @Param("message") final  String message);
+    void create(@Param("recruiterId") final Long recruiterId,
+                @Param("vacancyId") final Long vacancyId,
+                @Param("message") final String message);
 
     @Update("UPDATE bids SET status = #{status} WHERE id = #{bidId} ")
-    void updateBidStatus(final Long bidId, final BidStatus status);
+    void updateStatus(final Long bidId, final BidStatus status);
 }

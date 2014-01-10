@@ -25,9 +25,9 @@ public class ApplicantRepository {
      * @param applicant
      * @return <tt>true</tt> if model has been saved successful, <tt>false</tt> - otherwise
      */
-    public Boolean createApplicant(final Applicant applicant) {
+    public Boolean create(final Applicant applicant) {
         try {
-            applicantMapper.createApplicant(applicant);
+            applicantMapper.create(applicant);
             return true;
         } catch (Exception e) {
             return false;
@@ -39,9 +39,9 @@ public class ApplicantRepository {
      * @param applicant
      * @return <tt>true</tt> if model has been saved successful, <tt>false</tt> - otherwise
      */
-    public Boolean updateApplicant(final Applicant applicant) {
+    public Boolean update(final Applicant applicant) {
         try {
-            applicantMapper.updateApplicant(applicant);
+            applicantMapper.update(applicant);
             return true;
         } catch (Exception e) {
             return false;
@@ -55,7 +55,7 @@ public class ApplicantRepository {
      * @param applicantStatus    New status for Applicant
      * @return true if update was successful otherwise false
      */
-    public Boolean updateApplicantStatus(
+    public Boolean updateStatus(
             final Long applicantId,
             final ApplicantStatus applicantStatus,
             final Long employerId

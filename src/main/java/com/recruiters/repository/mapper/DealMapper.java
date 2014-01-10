@@ -41,7 +41,7 @@ public interface DealMapper {
             @Result(property = "applicants", column = "id", javaType = List.class,
                     many = @Many(select = "com.recruiters.repository.mapper.ApplicantMapper.findApplicantsByDealId"))
     })
-    Deal findDealByDealIdAndRecruiterId(@Param(value = "dealId") final Long dealId, @Param(value = "recruiterId") final Long recruiterId);
+    Deal findByDealIdAndRecruiterId(@Param(value = "dealId") final Long dealId, @Param(value = "recruiterId") final Long recruiterId);
 
     @Select("SELECT deals.id, deals.status, " +
             "vacancies.id as vacancy_id, vacancies.employer_id, vacancies.title, " +
@@ -69,7 +69,7 @@ public interface DealMapper {
             @Result(property = "applicants", column = "id", javaType = List.class,
                     many = @Many(select = "com.recruiters.repository.mapper.ApplicantMapper.findApplicantsByDealId"))
     })
-    Deal findDealByIdAndEmployerId(@Param(value = "dealId") final Long dealId, @Param(value = "employerId") final Long employerId);
+    Deal findByIdAndEmployerId(@Param(value = "dealId") final Long dealId, @Param(value = "employerId") final Long employerId);
 
     @Select("SELECT deals.id, deals.status, " +
             "vacancies.id as vacancy_id,  vacancies.employer_id, vacancies.title, " +

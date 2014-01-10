@@ -15,6 +15,7 @@ import com.recruiters.repository.UserRepository;
 import com.recruiters.repository.VacancyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -22,6 +23,7 @@ import java.util.List;
  * Service Class for Employer
  */
 @Service
+@Transactional(rollbackFor = Throwable.class)
 public class EmployerService {
 
     @Autowired
@@ -55,7 +57,7 @@ public class EmployerService {
      */
     public Deal findDeal(final Long dealId, final Long employerId) {
 
-        return dealRepository.findDealByIdAndEmployerId(dealId, employerId);
+        return dealRepository.findByIdAndEmployerId(dealId, employerId);
     }
 
     /**
@@ -129,9 +131,9 @@ public class EmployerService {
     }
 
     public Boolean approveBidForRecruiter(final Long bidId) {
-        Boolean success = this.dealRepository.createDeal(bidId);
+        Boolean success = this.dealRepository.create(bidId);
         if (success) {
-                success = this.bidRepository.updateBidStatus(bidId, BidStatus.APPROVED);
+                success = this.bidRepository.updateStatus(bidId, BidStatus.APPROVED);
         }
 
         return success;
@@ -139,7 +141,7 @@ public class EmployerService {
 
     public Boolean declineBidForRecruiter(final Long bidId) {
         try {
-            this.bidRepository.updateBidStatus(bidId, BidStatus.REJECTED);
+            this.bidRepository.updateStatus(bidId, BidStatus.REJECTED);
         } catch (Exception e) {
 
         }
@@ -176,7 +178,7 @@ public class EmployerService {
     public Boolean applyApplicant(final Long applicantId, final Long employerId) {
         //TODO deal should change its state or smth.
 
-        return applicantRepository.updateApplicantStatus(applicantId, ApplicantStatus.APPROVED, employerId);
+        return applicantRepository.updateStatus(applicantId, ApplicantStatus.APPROVED, employerId);
     }
 
     /**
@@ -187,6 +189,6 @@ public class EmployerService {
      */
     public Boolean declineApplicant(final Long applicantId, final Long employerId) {
 
-        return applicantRepository.updateApplicantStatus(applicantId, ApplicantStatus.REJECTED, employerId);
+        return applicantRepository.updateStatus(applicantId, ApplicantStatus.REJECTED, employerId);
     }
 }

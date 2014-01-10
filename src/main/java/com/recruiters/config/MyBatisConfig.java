@@ -11,6 +11,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.inject.Inject;
 
@@ -20,6 +21,7 @@ import javax.inject.Inject;
 @EnableJpaRepositories("com.recruiters")
 @ComponentScan("com.recruiters")
 @MapperScan("com.recruiters.repository.mapper")
+@EnableTransactionManagement
 public class MyBatisConfig {
 
     @Inject

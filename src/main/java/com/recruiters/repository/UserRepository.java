@@ -20,16 +20,6 @@ public class UserRepository implements UserDetailsService {
     private UserMapper userMapper = null;
 
     /**
-     * Method must return user model by credentials of request
-     * @param username
-     * @return
-     */
-    public User findUserByUsername(final String username) {
-
-        return this.findByUsername(username);
-    }
-
-    /**
      * Returns User POJO instance by username
      * @param username Username
      * @return User POJO instance
@@ -55,9 +45,8 @@ public class UserRepository implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
-        User user = this.findUserByUsername(username);
 
-        return user;
+       return this.findByUsername(username);
     }
 
     public UserMapper getUserMapper() {

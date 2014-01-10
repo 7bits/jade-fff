@@ -38,16 +38,6 @@ public class VacancyRepository {
 
     /**
      * Find vacancies of exact employer by its id
-     * @param employerId    Id of employer
-     * @return List of vacancies
-     */
-    public List<Vacancy> findEmployerVacancies(final Long employerId) {
-
-        return vacancyMapper.findEmployerVacancies(employerId);
-    }
-
-    /**
-     * Find vacancies of exact employer by its id
      * with count of bids for each
      * @param employerId    Id of employer
      * @return List of vacancies
