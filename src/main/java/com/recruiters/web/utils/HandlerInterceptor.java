@@ -2,6 +2,7 @@ package com.recruiters.web.utils;
 
 import com.recruiters.service.utils.TemplateService;
 import com.recruiters.service.utils.SecurityService;
+import com.recruiters.web.helper.CsrfResolver;
 import com.recruiters.web.helper.MessageResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -30,6 +31,8 @@ public class HandlerInterceptor extends HandlerInterceptorAdapter {
     static final String MODEL_ERRORS_NAME = "errors";
     /** Message resolver Helper name */
     static final String MODEL_MESSAGE_RESOLVER_NAME = "fmt";
+    /** CSRF resolver Helper name */
+    static final String CSRF_RESOLVER_NAME = "csrf";
 
     private String protocol = null;
     private String server = null;
@@ -82,6 +85,9 @@ public class HandlerInterceptor extends HandlerInterceptorAdapter {
 
             // Message resolver added
             mav.addObject(MODEL_MESSAGE_RESOLVER_NAME, new MessageResolver(messageSource));
+
+            // CSRF Token Resolver
+            mav.addObject(CSRF_RESOLVER_NAME, new CsrfResolver(request));
         }
     }
 

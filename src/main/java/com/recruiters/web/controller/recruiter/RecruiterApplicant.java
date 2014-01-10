@@ -21,7 +21,6 @@ import javax.validation.Valid;
  * Controller Class for R61 "Edit or create applicant"
  */
 @Controller
-@SessionAttributes("applicantForm")
 public class RecruiterApplicant {
 
     @Autowired
@@ -116,7 +115,7 @@ public class RecruiterApplicant {
     }
 
     @InitBinder("applicantForm")
-    protected void initSurveyListFormBinder(final WebDataBinder binder) {
+    protected void applicantFormBinder(final WebDataBinder binder) {
         binder.setValidator(this.getApplicantFormValidator());
     }
 

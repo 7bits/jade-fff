@@ -28,5 +28,6 @@ block append content
             #{errors.newPassword}
           .form-group
             input(type="hidden", id="id", name="id", value=recruiterForm.id)
+            input(type="hidden", name=csrf.getParameterName(), value=csrf.getToken())
             #{errors.id}
           input.btn.btn-success(type="submit", name="submit", value=fmt.message("profile.submit"))=fmt.message("profile.submit")
