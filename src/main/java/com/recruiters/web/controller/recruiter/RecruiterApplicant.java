@@ -21,7 +21,6 @@ import javax.validation.Valid;
  * Controller Class for R61 "Edit or create applicant"
  */
 @Controller
-@MultipartConfig(location = "/upload", maxFileSize = 10485760L)
 public class RecruiterApplicant {
 
     @Autowired

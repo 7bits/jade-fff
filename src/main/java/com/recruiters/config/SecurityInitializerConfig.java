@@ -20,7 +20,6 @@ public class SecurityInitializerConfig extends AbstractSecurityWebApplicationIni
     protected void beforeSpringSecurityFilterChain(final ServletContext servletContext) {
         CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
         characterEncodingFilter.setEncoding("UTF-8");
-        MultipartFilter multipartFilter = new MultipartFilter();
-        insertFilters(servletContext, characterEncodingFilter, multipartFilter);
+        insertFilters(servletContext, characterEncodingFilter);
     }
 }
