@@ -2,6 +2,7 @@ package com.recruiters.repository;
 
 import com.recruiters.model.Vacancy;
 import com.recruiters.repository.mapper.VacancyMapper;
+import org.mybatis.spring.MyBatisSystemException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -21,9 +22,16 @@ public class VacancyRepository {
      * @param vacancyId
      * @return
      */
-    public Vacancy findById(final Long vacancyId) {
+    public Vacancy findById(final Long vacancyId)
+            throws RepositoryGeneralException, RepositoryTechnicalException {
+        try {
 
-        return vacancyMapper.findById(vacancyId);
+            return vacancyMapper.findById(vacancyId);
+        } catch (MyBatisSystemException e) {
+            throw new RepositoryTechnicalException("Database connection error: ", e);
+        } catch (Exception e) {
+            throw new RepositoryGeneralException("General database error: ", e);
+        }
     }
 
     /**

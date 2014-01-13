@@ -3,6 +3,7 @@ package com.recruiters.repository;
 import com.recruiters.model.Bid;
 import com.recruiters.model.BidStatus;
 import com.recruiters.repository.mapper.BidMapper;
+import org.mybatis.spring.MyBatisSystemException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -32,9 +33,16 @@ public class BidRepository {
      * @param vacancyId    Vacancy Id
      * @return List of Bid POJO instances
      */
-    public List<Bid> findBidsByVacancyId(final Long vacancyId) {
+    public List<Bid> findBidsByVacancyId(final Long vacancyId)
+            throws RepositoryGeneralException, RepositoryTechnicalException {
+        try {
 
-        return bidMapper.findBidsByVacancyId(vacancyId);
+            return bidMapper.findBidsByVacancyId(vacancyId);
+        } catch (MyBatisSystemException e) {
+            throw new RepositoryTechnicalException("Database connection error: ", e);
+        } catch (Exception e) {
+            throw new RepositoryGeneralException("General database error: ", e);
+        }
     }
 
     /**

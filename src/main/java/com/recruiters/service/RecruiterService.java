@@ -67,8 +67,11 @@ public class RecruiterService {
      * @return vacancy
      */
     public Vacancy findVacancy(final Long vacancyId) {
-
-        return this.getVacancyRepository().findById(vacancyId);
+        try {
+            return this.getVacancyRepository().findById(vacancyId);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     /**

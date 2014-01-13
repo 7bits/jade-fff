@@ -35,6 +35,7 @@ public class DealRepository {
     public List<Deal> findActiveDealsByEmployerId(final Long employerId)
             throws RepositoryGeneralException, RepositoryTechnicalException {
         try {
+
             return dealMapper.findActiveDealsByEmployerId(employerId);
         } catch (MyBatisSystemException e) {
             throw new RepositoryTechnicalException("Database connection error: ", e);
