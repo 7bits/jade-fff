@@ -4,6 +4,9 @@ import com.recruiters.model.Deal;
 import com.recruiters.model.Employer;
 import com.recruiters.model.User;
 import com.recruiters.service.EmployerService;
+import com.recruiters.service.ServiceGeneralException;
+import com.recruiters.service.ServiceSecurityException;
+import com.recruiters.service.ServiceTechnicalException;
 import com.recruiters.web.controller.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,10 +37,18 @@ public class RecruiterVacancies {
     public ModelAndView showEmployerDeals(final HttpServletRequest request) {
 
         ModelAndView myDeals = new ModelAndView("employer/employer-progress-vacancies-list.jade");
-        User user = userUtils.getCurrentUser(request);
-        if (user.getEmployerId() != null) {
+        try {
+            User user = userUtils.getCurrentUser(request);
+//        if (user.getEmployerId() != null) {
             List<Deal> deals = employerService.findDealsForEmployer(user.getEmployerId());
             myDeals.addObject("deals", deals);
+//        }
+        } catch (ServiceTechnicalException e) {
+            // 500
+        } catch (ServiceSecurityException e) {
+            // 403
+        } catch (Exception e) {
+            // 500
         }
 
         return myDeals;

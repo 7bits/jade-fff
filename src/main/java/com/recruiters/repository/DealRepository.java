@@ -2,6 +2,7 @@ package com.recruiters.repository;
 
 import com.recruiters.model.Deal;
 import com.recruiters.repository.mapper.DealMapper;
+import org.mybatis.spring.MyBatisSystemException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -32,11 +33,13 @@ public class DealRepository {
      * @return List of POJO Deal instances
      */
     public List<Deal> findActiveDealsByEmployerId(final Long employerId)
-            throws RepositoryGeneralException {
+            throws RepositoryGeneralException, RepositoryTechnicalException {
         try {
             return dealMapper.findActiveDealsByEmployerId(employerId);
+        } catch (MyBatisSystemException e) {
+            throw new RepositoryTechnicalException("Database connection error: ", e);
         } catch (Exception e) {
-            throw new RepositoryGeneralException(e);
+            throw new RepositoryGeneralException("General database error: ", e);
         }
     }
 

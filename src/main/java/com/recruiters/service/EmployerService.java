@@ -11,8 +11,11 @@ import com.recruiters.repository.ApplicantRepository;
 import com.recruiters.repository.BidRepository;
 import com.recruiters.repository.DealRepository;
 import com.recruiters.repository.EmployerRepository;
+import com.recruiters.repository.RepositoryGeneralException;
+import com.recruiters.repository.RepositoryTechnicalException;
 import com.recruiters.repository.UserRepository;
 import com.recruiters.repository.VacancyRepository;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -43,9 +46,15 @@ public class EmployerService {
     private UserRepository userRepository = null;
     @Autowired
     private PlatformTransactionManager txManager = null;
-
+    /** Transaction settings object */
     private DefaultTransactionDefinition def = null;
+    /** Logger */
+    private final Logger log = Logger.getLogger(EmployerService.class);
 
+    /**
+     * Default constructor
+     * Configuring default transaction settings here
+     */
     public EmployerService() {
         def = new DefaultTransactionDefinition();
         def.setName("EmployerTxService");
@@ -57,12 +66,20 @@ public class EmployerService {
      * @param employerId    Employer ID
      * @return list of deals
      */
-    public List<Deal> findDealsForEmployer(final Long employerId) {
+    public List<Deal> findDealsForEmployer(final Long employerId)
+            throws ServiceTechnicalException, ServiceSecurityException, ServiceGeneralException{
         try {
+            if (employerId == null) {
+                log.warn("Service security exception: employerId is null");
+                throw new ServiceSecurityException("Service security exception: employerId is null");
+            }
             return dealRepository.findActiveDealsByEmployerId(employerId);
+        } catch (RepositoryTechnicalException e) {
+            log.warn("Service technical exception: " + e);
+            throw new ServiceTechnicalException("Service technical exception: ", e);
         } catch (Exception e) {
-            // throw here
-            return null;
+            log.warn("Service general exception: " + e);
+            throw new ServiceGeneralException("Service general exception: ", e);
         }
     }
 
