@@ -35,7 +35,8 @@ public interface VacancyMapper {
             "FROM vacancies " +
             "INNER JOIN employers ON employers.id = vacancies.employer_id " +
             "INNER JOIN users  ON employers.user_id=users.id " +
-            "WHERE status=\"ACTIVE\"")
+            "WHERE status='ACTIVE' " +
+            "AND NOT EXISTS (SELECT * FROM bids b WHERE b.vacancy_id = vacancies.id AND b.recruiter_id = #{recruiterId}) ")
     @Results({
             @Result(column = "id", property = "id"),
             @Result(column = "employer_id", property = "employer.id"),
@@ -48,7 +49,7 @@ public interface VacancyMapper {
             @Result(column = "firstname", property = "employer.user.firstName"),
             @Result(column = "lastname", property = "employer.user.lastName"),
     })
-    List<Vacancy> findAvailableVacanciesForRecruiter();
+    List<Vacancy> findAvailableVacanciesForRecruiter(final Long recruiterId);
 
     @Select("SELECT vacancies.*, count(bids.id) as bid_count, " +
             "users.firstname, users.lastname " +

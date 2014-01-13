@@ -57,9 +57,9 @@ public class RecruiterService {
      * Method must return all vacancies for this recruiter
      * @return
      */
-    public List<Vacancy> findAvailableVacanciesForRecruiter() {
+    public List<Vacancy> findAvailableVacanciesForRecruiter(final Long recruiterId) {
 
-        return this.getVacancyRepository().findAvailableVacanciesForRecruiter();
+        return this.getVacancyRepository().findAvailableVacanciesForRecruiter(recruiterId);
     }
 
     /**

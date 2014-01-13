@@ -38,10 +38,10 @@ public class VacancyRepository {
      * Method must return all vacancies for this recruiter
      * @return
      */
-    public List<Vacancy> findAvailableVacanciesForRecruiter() {
+    public List<Vacancy> findAvailableVacanciesForRecruiter(final Long recruiterId) {
 
         /*TODO: Use recruiterId to know bids and deals*/
-        return vacancyMapper.findAvailableVacanciesForRecruiter();
+        return vacancyMapper.findAvailableVacanciesForRecruiter(recruiterId);
     }
 
     /**
