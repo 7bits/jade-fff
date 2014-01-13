@@ -1,0 +1,13 @@
+!!! 5
+html
+  head
+    title= pageName
+    block head
+      script(src=domain.getAbsoluteUrl() + '/resources/js/lib/bootstrap.min.js')
+      link(href=domain.getAbsoluteUrl() + '/resources/stylesheets/lib/bootstrap.min.css', rel='stylesheet', type='text/css')
+      link(href=domain.getAbsoluteUrl() + '/resources/stylesheets/lib/bootstrap-theme.min.css', rel='stylesheet', type='text/css')
+      link(href=domain.getAbsoluteUrl() + '/resources/stylesheets/form.css', rel='stylesheet', type='text/css')
+  body
+    block content
+      .container
+        h2.form-signin-heading Error 404! Sorry, the page you requested could not be found.
