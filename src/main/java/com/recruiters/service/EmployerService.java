@@ -155,9 +155,21 @@ public class EmployerService {
      * @param employerId    Employer ID
      * @return List of vacancies
      */
-    public List<Vacancy> findVacanciesForEmployer(final Long employerId) {
-
-        return vacancyRepository.findVacanciesByEmployerId(employerId);
+    public List<Vacancy> findVacanciesForEmployer(final Long employerId)
+            throws ServiceTechnicalException, ServiceSecurityException, ServiceGeneralException {
+        try {
+            if (employerId == null) {
+                log.warn("Service security exception: employerId is null");
+                throw new ServiceSecurityException("Service security exception: employerId is null");
+            }
+            return vacancyRepository.findVacanciesByEmployerId(employerId);
+        } catch (RepositoryTechnicalException e) {
+            log.warn("Service technical exception: " + e);
+            throw new ServiceTechnicalException("Service technical exception: ", e);
+        } catch (Exception e) {
+            log.warn("Service general exception: " + e);
+            throw new ServiceGeneralException("Service general exception: ", e);
+        }
     }
 
     /**

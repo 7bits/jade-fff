@@ -50,9 +50,16 @@ public class VacancyRepository {
      * @param employerId    Id of employer
      * @return List of vacancies
      */
-    public List<Vacancy> findVacanciesByEmployerId(final Long employerId) {
+    public List<Vacancy> findVacanciesByEmployerId(final Long employerId)
+            throws RepositoryGeneralException, RepositoryTechnicalException {
+        try {
 
-        return vacancyMapper.findVacanciesByEmployerId(employerId);
+            return vacancyMapper.findVacanciesByEmployerId(employerId);
+        } catch (MyBatisSystemException e) {
+            throw new RepositoryTechnicalException("Database connection error: ", e);
+        } catch (Exception e) {
+            throw new RepositoryGeneralException("General database error: ", e);
+        }
     }
 
     public VacancyMapper getVacancyMapper() {

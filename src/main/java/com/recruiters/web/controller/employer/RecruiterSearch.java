@@ -4,6 +4,8 @@ import com.recruiters.model.Employer;
 import com.recruiters.model.User;
 import com.recruiters.model.Vacancy;
 import com.recruiters.service.EmployerService;
+import com.recruiters.service.ServiceSecurityException;
+import com.recruiters.service.ServiceTechnicalException;
 import com.recruiters.web.controller.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,10 +36,16 @@ public class RecruiterSearch {
     public ModelAndView employerVacanciesBids(final HttpServletRequest request) {
 
         ModelAndView vacanciesBids = new ModelAndView("employer/employer-recruiter-search");
-        User user = userUtils.getCurrentUser(request);
-        if (user.getEmployerId() != null) {
+        try {
+            User user = userUtils.getCurrentUser(request);
             List<Vacancy> vacancies = employerService.findVacanciesForEmployer(user.getEmployerId());
             vacanciesBids.addObject("vacancies", vacancies);
+        } catch (ServiceTechnicalException e) {
+            // 500
+        } catch (ServiceSecurityException e) {
+            // 403
+        } catch (Exception e) {
+            // 500
         }
 
         return vacanciesBids;
