@@ -39,10 +39,8 @@ public class RecruiterVacancies {
         ModelAndView myDeals = new ModelAndView("employer/employer-progress-vacancies-list.jade");
         try {
             User user = userUtils.getCurrentUser(request);
-//        if (user.getEmployerId() != null) {
             List<Deal> deals = employerService.findDealsForEmployer(user.getEmployerId());
             myDeals.addObject("deals", deals);
-//        }
         } catch (ServiceTechnicalException e) {
             // 500
         } catch (ServiceSecurityException e) {
