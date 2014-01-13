@@ -89,9 +89,28 @@ public class EmployerService {
      * @param employerId    Id of employer
      * @return POJO Deal instance
      */
-    public Deal findDeal(final Long dealId, final Long employerId) {
+    public Deal findDeal(final Long dealId, final Long employerId)
+            throws ServiceTechnicalException, ServiceSecurityException, ServiceGeneralException {
+        try {
+            if (employerId == null) {
+                log.warn("Service security exception: employerId is null");
+                throw new ServiceSecurityException("Service security exception: employerId is null");
+            }
+            Deal deal = dealRepository.findByIdAndEmployerId(dealId, employerId);
+            if (!deal.getVacancy().getEmployer().getId().equals(employerId)) {
+                log.warn("Service security exception: employerId and dealId belongs to different employers");
+                throw new ServiceSecurityException("Service security exception: " +
+                        " employerId and dealId belongs to different employers");
+            }
 
-        return dealRepository.findByIdAndEmployerId(dealId, employerId);
+            return deal;
+        } catch (RepositoryTechnicalException e) {
+            log.warn("Service technical exception: " + e);
+            throw new ServiceTechnicalException("Service technical exception: ", e);
+        } catch (Exception e) {
+            log.warn("Service general exception: " + e);
+            throw new ServiceGeneralException("Service general exception: ", e);
+        }
     }
 
     /**

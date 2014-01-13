@@ -44,9 +44,16 @@ public class DealRepository {
         }
     }
 
-    public Deal findByIdAndEmployerId(final Long dealId, final Long employerId) {
+    public Deal findByIdAndEmployerId(final Long dealId, final Long employerId)
+            throws RepositoryGeneralException, RepositoryTechnicalException {
+        try {
 
-        return dealMapper.findByIdAndEmployerId(dealId, employerId);
+            return dealMapper.findByIdAndEmployerId(dealId, employerId);
+        } catch (MyBatisSystemException e) {
+            throw new RepositoryTechnicalException("Database connection error: ", e);
+        } catch (Exception e) {
+            throw new RepositoryGeneralException("General database error: ", e);
+        }
     }
 
     public Boolean create(final Long bidId) {

@@ -1,7 +1,10 @@
 package com.recruiters.web.controller.employer;
 
+import com.recruiters.model.Deal;
 import com.recruiters.model.User;
 import com.recruiters.service.EmployerService;
+import com.recruiters.service.ServiceSecurityException;
+import com.recruiters.service.ServiceTechnicalException;
 import com.recruiters.web.controller.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,9 +39,16 @@ public class EmployerVacancyShow {
     ) {
 
         ModelAndView vacancyProgress =  new ModelAndView("employer/employer-progress-vacancy-show.jade");
-        User user = userUtils.getCurrentUser(request);
-        if (user.getEmployerId() != null) {
-            vacancyProgress.addObject("deal", employerService.findDeal(dealId, user.getEmployerId()));
+        try {
+            User user = userUtils.getCurrentUser(request);
+            Deal deal = employerService.findDeal(dealId, user.getEmployerId());
+            vacancyProgress.addObject("deal", deal);
+        } catch (ServiceTechnicalException e) {
+            // 500
+        } catch (ServiceSecurityException e) {
+            // 403
+        } catch (Exception e) {
+            // 500
         }
 
         return vacancyProgress;
