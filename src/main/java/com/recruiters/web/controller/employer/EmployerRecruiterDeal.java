@@ -4,6 +4,8 @@ import com.recruiters.model.Bid;
 import com.recruiters.model.Employer;
 import com.recruiters.model.User;
 import com.recruiters.service.EmployerService;
+import com.recruiters.service.ServiceSecurityException;
+import com.recruiters.service.ServiceTechnicalException;
 import com.recruiters.web.controller.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Controller for C5 "Show recruiter info to employer"
@@ -34,13 +37,20 @@ public class EmployerRecruiterDeal {
     @RequestMapping(value = "employer-recruiter-show/{bidId}")
     public ModelAndView employerShowRecruiterBid(
             @PathVariable final Long bidId,
-            final HttpServletRequest request
-    ) {
+            final HttpServletRequest request,
+            final HttpServletResponse response
+    ) throws Exception {
         ModelAndView showBid = new ModelAndView("employer/employer-recruiter-show.jade");
-        User user = userUtils.getCurrentUser(request);
-        if (user.getEmployerId() != null) {
+        try {
+            User user = userUtils.getCurrentUser(request);
             Bid bid = employerService.findBid(bidId, user.getEmployerId());
             showBid.addObject("bid", bid);
+        } catch (ServiceTechnicalException e) {
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        } catch (ServiceSecurityException e) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN);
+        } catch (Exception e) {
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
 
         return showBid;

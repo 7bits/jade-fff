@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -35,8 +36,11 @@ public class ShowBidsForVacancy {
      * @return model and view with data
      */
     @RequestMapping(value = "employer-show-recruiter-bids/{vacancyId}")
-    public ModelAndView employerVacanciesBids(@PathVariable final Long vacancyId,
-                                              final HttpServletRequest request) {
+    public ModelAndView employerVacanciesBids(
+            @PathVariable final Long vacancyId,
+            final HttpServletRequest request,
+            final HttpServletResponse response
+    ) throws Exception {
 
         ModelAndView recruiterBids = new ModelAndView("employer/employer-show-recruiter-bids.jade");
         try {
@@ -46,11 +50,11 @@ public class ShowBidsForVacancy {
             recruiterBids.addObject("bids", bids);
             recruiterBids.addObject("vacancy", vacancy);
         } catch (ServiceTechnicalException e) {
-            // 500
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         } catch (ServiceSecurityException e) {
-            // 403
+            response.sendError(HttpServletResponse.SC_FORBIDDEN);
         } catch (Exception e) {
-            // 500
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
 
         return recruiterBids;

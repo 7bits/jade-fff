@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -33,7 +34,10 @@ public class RecruiterSearch {
      * @return model and view with data
      */
     @RequestMapping(value = "employer-recruiter-search")
-    public ModelAndView employerVacanciesBids(final HttpServletRequest request) {
+    public ModelAndView employerVacanciesBids(
+            final HttpServletRequest request,
+            final HttpServletResponse response
+    ) throws Exception {
 
         ModelAndView vacanciesBids = new ModelAndView("employer/employer-recruiter-search");
         try {
@@ -41,12 +45,13 @@ public class RecruiterSearch {
             List<Vacancy> vacancies = employerService.findVacanciesForEmployer(user.getEmployerId());
             vacanciesBids.addObject("vacancies", vacancies);
         } catch (ServiceTechnicalException e) {
-            // 500
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         } catch (ServiceSecurityException e) {
-            // 403
+            response.sendError(HttpServletResponse.SC_FORBIDDEN);
         } catch (Exception e) {
-            // 500
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
+
 
         return vacanciesBids;
     }

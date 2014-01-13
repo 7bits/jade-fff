@@ -23,9 +23,16 @@ public class BidRepository {
      * @param bidId    Id of bid
      * @return Bid POJO instance
      */
-    public Bid findById(final Long bidId) {
+    public Bid findById(final Long bidId)
+            throws RepositoryGeneralException, RepositoryTechnicalException {
+        try {
 
-        return bidMapper.findById(bidId);
+            return bidMapper.findById(bidId);
+        } catch (MyBatisSystemException e) {
+            throw new RepositoryTechnicalException("Database connection error: ", e);
+        } catch (Exception e) {
+            throw new RepositoryGeneralException("General database error: ", e);
+        }
     }
 
     /**

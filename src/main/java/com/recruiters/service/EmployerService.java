@@ -77,7 +77,9 @@ public class EmployerService {
         } catch (RepositoryTechnicalException e) {
             log.warn("Service technical exception: " + e);
             throw new ServiceTechnicalException("Service technical exception: ", e);
-        } catch (Exception e) {
+        } catch (ServiceSecurityException e) {
+            throw e;
+        }  catch (Exception e) {
             log.warn("Service general exception: " + e);
             throw new ServiceGeneralException("Service general exception: ", e);
         }
@@ -97,16 +99,18 @@ public class EmployerService {
                 throw new ServiceSecurityException("Service security exception: employerId is null");
             }
             Deal deal = dealRepository.findByIdAndEmployerId(dealId, employerId);
-            if (!deal.getVacancy().getEmployer().getId().equals(employerId)) {
-                log.warn("Service security exception: employerId and dealId belongs to different employers");
+            if (deal == null) {
+                log.warn("Service security exception: deal is null");
                 throw new ServiceSecurityException("Service security exception: " +
-                        " employerId and dealId belongs to different employers");
+                        " deal is null");
             }
 
             return deal;
         } catch (RepositoryTechnicalException e) {
             log.warn("Service technical exception: " + e);
             throw new ServiceTechnicalException("Service technical exception: ", e);
+        } catch (ServiceSecurityException e) {
+            throw e;
         } catch (Exception e) {
             log.warn("Service general exception: " + e);
             throw new ServiceGeneralException("Service general exception: ", e);
@@ -148,7 +152,9 @@ public class EmployerService {
         } catch (RepositoryTechnicalException e) {
             log.warn("Service technical exception: " + e);
             throw new ServiceTechnicalException("Service technical exception: ", e);
-        } catch (Exception e) {
+        } catch (ServiceSecurityException e) {
+            throw e;
+        }  catch (Exception e) {
             log.warn("Service general exception: " + e);
             throw new ServiceGeneralException("Service general exception: ", e);
         }
@@ -160,13 +166,25 @@ public class EmployerService {
      * @param employerId    Employer ID
      * @return Bid POJO instance
      */
-    public Bid findBid(final Long bidId, final Long employerId) {
+    public Bid findBid(final Long bidId, final Long employerId)
+            throws ServiceTechnicalException, ServiceSecurityException, ServiceGeneralException {
+        try {
+            Bid bid = bidRepository.findById(bidId);
+            if (bid.getVacancy().getEmployer().getId().equals(employerId)) {
 
-        Bid bid = bidRepository.findById(bidId);
-        if (bid.getVacancy().getEmployer().getId().equals(employerId)) {
-            return bid;
+                return bid;
+            }
+            log.warn("Service security exception: bidId and employerId belongs to different employers");
+            throw new ServiceSecurityException("Service security exception: employerId is null");
+        } catch (RepositoryTechnicalException e) {
+            log.warn("Service technical exception: " + e);
+            throw new ServiceTechnicalException("Service technical exception: ", e);
+        } catch (ServiceSecurityException e) {
+            throw e;
+        }  catch (Exception e) {
+            log.warn("Service general exception: " + e);
+            throw new ServiceGeneralException("Service general exception: ", e);
         }
-        return null;
     }
 
     /**
@@ -185,7 +203,9 @@ public class EmployerService {
         } catch (RepositoryTechnicalException e) {
             log.warn("Service technical exception: " + e);
             throw new ServiceTechnicalException("Service technical exception: ", e);
-        } catch (Exception e) {
+        } catch (ServiceSecurityException e) {
+            throw e;
+        }  catch (Exception e) {
             log.warn("Service general exception: " + e);
             throw new ServiceGeneralException("Service general exception: ", e);
         }
@@ -210,7 +230,9 @@ public class EmployerService {
         } catch (RepositoryTechnicalException e) {
             log.warn("Service technical exception: " + e);
             throw new ServiceTechnicalException("Service technical exception: ", e);
-        } catch (Exception e) {
+        } catch (ServiceSecurityException e) {
+            throw e;
+        }  catch (Exception e) {
             log.warn("Service general exception: " + e);
             throw new ServiceGeneralException("Service general exception: ", e);
         }

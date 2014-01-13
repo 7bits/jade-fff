@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -34,7 +35,10 @@ public class RecruiterVacancies {
      * @return model and view with vacancies
      */
     @RequestMapping(value = "employer-progress-vacancies-list", method = RequestMethod.GET)
-    public ModelAndView showEmployerDeals(final HttpServletRequest request) {
+    public ModelAndView showEmployerDeals(
+            final HttpServletRequest request,
+            final HttpServletResponse response
+    ) throws Exception {
 
         ModelAndView myDeals = new ModelAndView("employer/employer-progress-vacancies-list.jade");
         try {
@@ -42,11 +46,11 @@ public class RecruiterVacancies {
             List<Deal> deals = employerService.findDealsForEmployer(user.getEmployerId());
             myDeals.addObject("deals", deals);
         } catch (ServiceTechnicalException e) {
-            // 500
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         } catch (ServiceSecurityException e) {
-            // 403
+            response.sendError(HttpServletResponse.SC_FORBIDDEN);
         } catch (Exception e) {
-            // 500
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
 
         return myDeals;
