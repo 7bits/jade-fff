@@ -70,15 +70,17 @@ public class BidRepository {
          }
     }
 
-    public Boolean updateStatus(final Long bidId, final BidStatus status)
-            throws RepositoryGeneralException {
+    public Long updateStatus(final Long bidId, final BidStatus status)
+            throws RepositoryGeneralException, RepositoryTechnicalException {
         try {
+
             bidMapper.updateStatus(bidId, status);
-            return true;
+            return bidId;
+        } catch (MyBatisSystemException e) {
+            throw new RepositoryTechnicalException("Database connection error: ", e);
         } catch (Exception e) {
-            return false;
+            throw new RepositoryGeneralException("General database error: ", e);
         }
-//        throw new RepositoryGeneralException(new Exception());
     }
 
     public BidMapper getBidMapper() {

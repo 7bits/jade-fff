@@ -56,13 +56,16 @@ public class DealRepository {
         }
     }
 
-    public Boolean create(final Long bidId) {
-
+    public Long create(final Long bidId)
+            throws RepositoryGeneralException, RepositoryTechnicalException {
         try {
+
             dealMapper.create(bidId);
-            return true;
+            return bidId;
+        } catch (MyBatisSystemException e) {
+            throw new RepositoryTechnicalException("Database connection error: ", e);
         } catch (Exception e) {
-            return false;
+            throw new RepositoryGeneralException("General database error: ", e);
         }
     }
 

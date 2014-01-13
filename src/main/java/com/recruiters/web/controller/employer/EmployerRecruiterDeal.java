@@ -59,11 +59,18 @@ public class EmployerRecruiterDeal {
     @RequestMapping(value = "employer-recruiter-approve/{bidId}", method = RequestMethod.GET)
     public String approveRecruiterBid(
             @PathVariable final Long bidId,
-            final HttpServletRequest request
-    ) {
-        User user = userUtils.getCurrentUser(request);
-        if (user.getEmployerId() != null) {
-            employerService.approveBidForRecruiter(bidId);
+            final HttpServletRequest request,
+            final HttpServletResponse response
+    ) throws Exception {
+        try {
+            User user = userUtils.getCurrentUser(request);
+            employerService.approveBidForRecruiter(bidId, user.getEmployerId());
+        } catch (ServiceTechnicalException e) {
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        } catch (ServiceSecurityException e) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN);
+        } catch (Exception e) {
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
 
         return "redirect:/employer-recruiter-search";
@@ -72,11 +79,18 @@ public class EmployerRecruiterDeal {
     @RequestMapping(value = "employer-recruiter-decline/{bidId}", method = RequestMethod.GET)
     public String declineRecruiterBid(
             @PathVariable final Long bidId,
-            final HttpServletRequest request
-    ) {
-        User user = userUtils.getCurrentUser(request);
-        if (user.getEmployerId() != null) {
-            employerService.declineBidForRecruiter(bidId);
+            final HttpServletRequest request,
+            final HttpServletResponse response
+    ) throws Exception {
+        try {
+            User user = userUtils.getCurrentUser(request);
+            employerService.declineBidForRecruiter(bidId, user.getEmployerId());
+        } catch (ServiceTechnicalException e) {
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        } catch (ServiceSecurityException e) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN);
+        } catch (Exception e) {
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
 
         return "redirect:/employer-recruiter-search";

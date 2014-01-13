@@ -226,7 +226,8 @@ public class EmployerService {
                 return vacancy;
             }
             log.warn("Service security exception: vacancyId and employerId belongs to different employers");
-            throw new ServiceSecurityException("Service security exception: employerId is null");
+            throw new ServiceSecurityException("Service security exception: " +
+                    "vacancyId and employerId belongs to different employers");
         } catch (RepositoryTechnicalException e) {
             log.warn("Service technical exception: " + e);
             throw new ServiceTechnicalException("Service technical exception: ", e);
@@ -238,32 +239,55 @@ public class EmployerService {
         }
     }
 
-    public Boolean approveBidForRecruiter(final Long bidId) {
-
+    public Long approveBidForRecruiter(final Long bidId, final Long employerId)
+            throws ServiceTechnicalException, ServiceSecurityException, ServiceGeneralException {
         TransactionStatus status = null;
         try {
-            status = txManager.getTransaction(def);
-            this.dealRepository.create(bidId);
-            this.bidRepository.updateStatus(bidId, BidStatus.APPROVED);
-            txManager.commit(status);
-            return true;
-        } catch (Exception e) {
+            Bid bid = bidRepository.findById(bidId);
+            if (bid.getVacancy().getEmployer().getId().equals(employerId)) {
+                status = txManager.getTransaction(def);
+                this.dealRepository.create(bidId);
+                this.bidRepository.updateStatus(bidId, BidStatus.APPROVED);
+                txManager.commit(status);
+                return bidId;
+            }
+            log.warn("Service security exception: bidId and employerId belongs to different employers");
+            throw new ServiceSecurityException("Service security exception: " +
+                    "bidId and employerId belongs to different employers");
+        } catch (RepositoryTechnicalException e) {
+            log.warn("Service technical exception: " + e);
+            throw new ServiceTechnicalException("Service technical exception: ", e);
+        } catch (ServiceSecurityException e) {
+            throw e;
+        }  catch (Exception e) {
             if (status != null) {
                 txManager.rollback(status);
             }
-            // Should be throw blahblah
-            return null;
+            log.warn("Service general exception: " + e);
+            throw new ServiceGeneralException("Service general exception: ", e);
         }
     }
 
-    public Boolean declineBidForRecruiter(final Long bidId) {
+    public Long declineBidForRecruiter(final Long bidId, final Long employerId)
+            throws ServiceTechnicalException, ServiceSecurityException, ServiceGeneralException {
         try {
-            this.bidRepository.updateStatus(bidId, BidStatus.REJECTED);
-        } catch (Exception e) {
-
+            Bid bid = bidRepository.findById(bidId);
+            if (bid.getVacancy().getEmployer().getId().equals(employerId)) {
+                this.bidRepository.updateStatus(bidId, BidStatus.REJECTED);
+                return bidId;
+            }
+            log.warn("Service security exception: bidId and employerId belongs to different employers");
+            throw new ServiceSecurityException("Service security exception: " +
+                    "bidId and employerId belongs to different employers");
+        } catch (RepositoryTechnicalException e) {
+            log.warn("Service technical exception: " + e);
+            throw new ServiceTechnicalException("Service technical exception: ", e);
+        } catch (ServiceSecurityException e) {
+            throw e;
+        }  catch (Exception e) {
+            log.warn("Service general exception: " + e);
+            throw new ServiceGeneralException("Service general exception: ", e);
         }
-
-        return true;
     }
 
     /**

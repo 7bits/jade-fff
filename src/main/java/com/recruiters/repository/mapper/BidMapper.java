@@ -127,5 +127,5 @@ public interface BidMapper {
                 @Param("message") final String message);
 
     @Update("UPDATE bids SET status = #{status} WHERE id = #{bidId} ")
-    void updateStatus(final Long bidId, final BidStatus status);
+    void updateStatus(@Param(value = "bidId") final Long bidId, @Param(value = "status") final BidStatus status);
 }
