@@ -6,7 +6,20 @@ package com.recruiters.service;
  */
 public class ServiceGeneralException extends Exception {
 
+    /**
+     * Exception with message only
+     * @param message    String message
+     */
     public ServiceGeneralException(final String message) {
         super(message);
+    }
+
+    /**
+     * Exception with message and cause of Exception
+     * @param message    String message
+     * @param e          Exception
+     */
+    public ServiceGeneralException(final String message, final Exception e) {
+        super(message, e);
     }
 }
