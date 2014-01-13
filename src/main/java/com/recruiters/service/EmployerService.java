@@ -11,19 +11,25 @@ import com.recruiters.repository.ApplicantRepository;
 import com.recruiters.repository.BidRepository;
 import com.recruiters.repository.DealRepository;
 import com.recruiters.repository.EmployerRepository;
+import com.recruiters.repository.RepositoryGeneralException;
+import com.recruiters.repository.RepositoryTechnicalException;
 import com.recruiters.repository.UserRepository;
 import com.recruiters.repository.VacancyRepository;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Service Class for Employer
  */
 @Service
-@Transactional(rollbackFor = Throwable.class)
 public class EmployerService {
 
     @Autowired
@@ -38,15 +44,43 @@ public class EmployerService {
     private VacancyRepository vacancyRepository = null;
     @Autowired
     private UserRepository userRepository = null;
+    @Autowired
+    private PlatformTransactionManager txManager = null;
+    /** Transaction settings object */
+    private DefaultTransactionDefinition def = null;
+    /** Logger */
+    private final Logger log = Logger.getLogger(EmployerService.class);
+
+    /**
+     * Default constructor
+     * Configuring default transaction settings here
+     */
+    public EmployerService() {
+        def = new DefaultTransactionDefinition();
+        def.setName("EmployerTxService");
+        def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+    }
 
     /**
      * Get all active deals from DB for current employer
      * @param employerId    Employer ID
      * @return list of deals
      */
-    public List<Deal> findDealsForEmployer(final Long employerId) {
-
-        return dealRepository.findActiveDealsByEmployerId(employerId);
+    public List<Deal> findDealsForEmployer(final Long employerId)
+            throws ServiceTechnicalException, ServiceSecurityException, ServiceGeneralException {
+        try {
+            if (employerId == null) {
+                log.warn("Service security exception: employerId is null");
+                throw new ServiceSecurityException("Service security exception: employerId is null");
+            }
+            return dealRepository.findActiveDealsByEmployerId(employerId);
+        } catch (RepositoryTechnicalException e) {
+            log.warn("Service technical exception: " + e);
+            throw new ServiceTechnicalException("Service technical exception: ", e);
+        } catch (Exception e) {
+            log.warn("Service general exception: " + e);
+            throw new ServiceGeneralException("Service general exception: ", e);
+        }
     }
 
     /**
@@ -55,9 +89,28 @@ public class EmployerService {
      * @param employerId    Id of employer
      * @return POJO Deal instance
      */
-    public Deal findDeal(final Long dealId, final Long employerId) {
+    public Deal findDeal(final Long dealId, final Long employerId)
+            throws ServiceTechnicalException, ServiceSecurityException, ServiceGeneralException {
+        try {
+            if (employerId == null) {
+                log.warn("Service security exception: employerId is null");
+                throw new ServiceSecurityException("Service security exception: employerId is null");
+            }
+            Deal deal = dealRepository.findByIdAndEmployerId(dealId, employerId);
+            if (!deal.getVacancy().getEmployer().getId().equals(employerId)) {
+                log.warn("Service security exception: employerId and dealId belongs to different employers");
+                throw new ServiceSecurityException("Service security exception: " +
+                        " employerId and dealId belongs to different employers");
+            }
 
-        return dealRepository.findByIdAndEmployerId(dealId, employerId);
+            return deal;
+        } catch (RepositoryTechnicalException e) {
+            log.warn("Service technical exception: " + e);
+            throw new ServiceTechnicalException("Service technical exception: ", e);
+        } catch (Exception e) {
+            log.warn("Service general exception: " + e);
+            throw new ServiceGeneralException("Service general exception: ", e);
+        }
     }
 
     /**
@@ -82,13 +135,23 @@ public class EmployerService {
      * @param employerId    Employer ID
      * @return list of bids
      */
-    public List<Bid> findBidsForVacancy(final Long vacancyId, final Long employerId) {
+    public List<Bid> findBidsForVacancy(final Long vacancyId, final Long employerId)
+            throws ServiceTechnicalException, ServiceSecurityException, ServiceGeneralException {
+        try {
+            Vacancy vacancy = vacancyRepository.findById(vacancyId);
+            if (vacancy.getEmployer().getId().equals(employerId)) {
 
-        Vacancy vacancy = vacancyRepository.findById(vacancyId);
-        if (vacancy.getEmployer().getId().equals(employerId)) {
-            return bidRepository.findBidsByVacancyId(vacancyId);
+                return bidRepository.findBidsByVacancyId(vacancyId);
+            }
+            log.warn("Service security exception: bidId and vacancyId belongs to different employers");
+            throw new ServiceSecurityException("Service security exception: employerId is null");
+        } catch (RepositoryTechnicalException e) {
+            log.warn("Service technical exception: " + e);
+            throw new ServiceTechnicalException("Service technical exception: ", e);
+        } catch (Exception e) {
+            log.warn("Service general exception: " + e);
+            throw new ServiceGeneralException("Service general exception: ", e);
         }
-        return null;
     }
 
     /**
@@ -111,9 +174,21 @@ public class EmployerService {
      * @param employerId    Employer ID
      * @return List of vacancies
      */
-    public List<Vacancy> findVacanciesForEmployer(final Long employerId) {
-
-        return vacancyRepository.findVacanciesByEmployerId(employerId);
+    public List<Vacancy> findVacanciesForEmployer(final Long employerId)
+            throws ServiceTechnicalException, ServiceSecurityException, ServiceGeneralException {
+        try {
+            if (employerId == null) {
+                log.warn("Service security exception: employerId is null");
+                throw new ServiceSecurityException("Service security exception: employerId is null");
+            }
+            return vacancyRepository.findVacanciesByEmployerId(employerId);
+        } catch (RepositoryTechnicalException e) {
+            log.warn("Service technical exception: " + e);
+            throw new ServiceTechnicalException("Service technical exception: ", e);
+        } catch (Exception e) {
+            log.warn("Service general exception: " + e);
+            throw new ServiceGeneralException("Service general exception: ", e);
+        }
     }
 
     /**
@@ -122,21 +197,41 @@ public class EmployerService {
      * @param employerId     Employer ID
      * @return Vacancy POJO instance
      */
-    public Vacancy findVacancy(final Long vacancyId, final Long employerId) {
-        Vacancy vacancy = vacancyRepository.findById(vacancyId);
-        if (vacancy.getEmployer().getId().equals(employerId)) {
-            return vacancy;
+    public Vacancy findVacancy(final Long vacancyId, final Long employerId)
+            throws ServiceTechnicalException, ServiceSecurityException, ServiceGeneralException {
+        try {
+            Vacancy vacancy = vacancyRepository.findById(vacancyId);
+            if (vacancy.getEmployer().getId().equals(employerId)) {
+
+                return vacancy;
+            }
+            log.warn("Service security exception: vacancyId and employerId belongs to different employers");
+            throw new ServiceSecurityException("Service security exception: employerId is null");
+        } catch (RepositoryTechnicalException e) {
+            log.warn("Service technical exception: " + e);
+            throw new ServiceTechnicalException("Service technical exception: ", e);
+        } catch (Exception e) {
+            log.warn("Service general exception: " + e);
+            throw new ServiceGeneralException("Service general exception: ", e);
         }
-        return null;
     }
 
     public Boolean approveBidForRecruiter(final Long bidId) {
-        Boolean success = this.dealRepository.create(bidId);
-        if (success) {
-                success = this.bidRepository.updateStatus(bidId, BidStatus.APPROVED);
-        }
 
-        return success;
+        TransactionStatus status = null;
+        try {
+            status = txManager.getTransaction(def);
+            this.dealRepository.create(bidId);
+            this.bidRepository.updateStatus(bidId, BidStatus.APPROVED);
+            txManager.commit(status);
+            return true;
+        } catch (Exception e) {
+            if (status != null) {
+                txManager.rollback(status);
+            }
+            // Should be throw blahblah
+            return null;
+        }
     }
 
     public Boolean declineBidForRecruiter(final Long bidId) {

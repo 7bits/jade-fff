@@ -5,6 +5,8 @@ import com.recruiters.model.Employer;
 import com.recruiters.model.User;
 import com.recruiters.model.Vacancy;
 import com.recruiters.service.EmployerService;
+import com.recruiters.service.ServiceSecurityException;
+import com.recruiters.service.ServiceTechnicalException;
 import com.recruiters.web.controller.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,12 +39,18 @@ public class ShowBidsForVacancy {
                                               final HttpServletRequest request) {
 
         ModelAndView recruiterBids = new ModelAndView("employer/employer-show-recruiter-bids.jade");
-        User user = userUtils.getCurrentUser(request);
-        if (user.getEmployerId() != null) {
+        try {
+            User user = userUtils.getCurrentUser(request);
             List<Bid> bids = employerService.findBidsForVacancy(vacancyId, user.getEmployerId());
             Vacancy vacancy = employerService.findVacancy(vacancyId, user.getEmployerId());
             recruiterBids.addObject("bids", bids);
             recruiterBids.addObject("vacancy", vacancy);
+        } catch (ServiceTechnicalException e) {
+            // 500
+        } catch (ServiceSecurityException e) {
+            // 403
+        } catch (Exception e) {
+            // 500
         }
 
         return recruiterBids;
