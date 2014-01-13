@@ -15,15 +15,18 @@ import com.recruiters.repository.UserRepository;
 import com.recruiters.repository.VacancyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Service Class for Employer
  */
 @Service
-@Transactional(rollbackFor = Throwable.class)
 public class EmployerService {
 
     @Autowired
@@ -38,6 +41,16 @@ public class EmployerService {
     private VacancyRepository vacancyRepository = null;
     @Autowired
     private UserRepository userRepository = null;
+    @Autowired
+    private PlatformTransactionManager txManager = null;
+
+    private DefaultTransactionDefinition def = null;
+
+    public EmployerService() {
+        def = new DefaultTransactionDefinition();
+        def.setName("EmployerTxService");
+        def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+    }
 
     /**
      * Get all active deals from DB for current employer
@@ -45,8 +58,12 @@ public class EmployerService {
      * @return list of deals
      */
     public List<Deal> findDealsForEmployer(final Long employerId) {
-
-        return dealRepository.findActiveDealsByEmployerId(employerId);
+        try {
+            return dealRepository.findActiveDealsByEmployerId(employerId);
+        } catch (Exception e) {
+            // throw here
+            return null;
+        }
     }
 
     /**
@@ -131,12 +148,21 @@ public class EmployerService {
     }
 
     public Boolean approveBidForRecruiter(final Long bidId) {
-        Boolean success = this.dealRepository.create(bidId);
-        if (success) {
-                success = this.bidRepository.updateStatus(bidId, BidStatus.APPROVED);
-        }
 
-        return success;
+        TransactionStatus status = null;
+        try {
+            status = txManager.getTransaction(def);
+            this.dealRepository.create(bidId);
+            this.bidRepository.updateStatus(bidId, BidStatus.APPROVED);
+            txManager.commit(status);
+            return true;
+        } catch (Exception e) {
+            if (status != null) {
+                txManager.rollback(status);
+            }
+            // Should be throw blahblah
+            return null;
+        }
     }
 
     public Boolean declineBidForRecruiter(final Long bidId) {

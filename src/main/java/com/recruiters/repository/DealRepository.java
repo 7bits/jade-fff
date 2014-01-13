@@ -31,9 +31,13 @@ public class DealRepository {
      * @param employerId    Id of employer
      * @return List of POJO Deal instances
      */
-    public List<Deal> findActiveDealsByEmployerId(final Long employerId) {
-
-        return dealMapper.findActiveDealsByEmployerId(employerId);
+    public List<Deal> findActiveDealsByEmployerId(final Long employerId)
+            throws RepositoryGeneralException {
+        try {
+            return dealMapper.findActiveDealsByEmployerId(employerId);
+        } catch (Exception e) {
+            throw new RepositoryGeneralException(e);
+        }
     }
 
     public Deal findByIdAndEmployerId(final Long dealId, final Long employerId) {

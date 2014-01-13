@@ -55,13 +55,15 @@ public class BidRepository {
          }
     }
 
-    public Boolean updateStatus(final Long bidId, final BidStatus status) {
+    public Boolean updateStatus(final Long bidId, final BidStatus status)
+            throws RepositoryGeneralException {
         try {
             bidMapper.updateStatus(bidId, status);
             return true;
         } catch (Exception e) {
             return false;
         }
+//        throw new RepositoryGeneralException(new Exception());
     }
 
     public BidMapper getBidMapper() {
