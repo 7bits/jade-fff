@@ -34,12 +34,16 @@ public class UserRepository implements UserDetailsService {
      * @param user    User POJO
      * @return true if update not fails, otherwise false
      */
-    public Boolean update(final User user) {
+    public User update(final User user) throws RepositoryException {
+        if (user == null) {
+            throw new RepositoryException("user is null");
+        }
         try {
+
             userMapper.update(user);
-            return true;
+            return user;
         } catch (Exception e) {
-            return false;
+            throw new RepositoryException("General database error: ", e);
         }
     }
 

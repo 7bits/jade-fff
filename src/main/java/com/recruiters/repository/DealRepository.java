@@ -2,7 +2,6 @@ package com.recruiters.repository;
 
 import com.recruiters.model.Deal;
 import com.recruiters.repository.mapper.DealMapper;
-import org.mybatis.spring.MyBatisSystemException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -17,14 +16,17 @@ public class DealRepository {
     @Autowired
     private DealMapper dealMapper = null;
 
-    public List<Deal> findActiveDealsByRecruiterId(final Long recruiterId) {
+    public List<Deal> findActiveDealsByRecruiterId(final Long recruiterId)
+            throws  RepositoryException {
+        if (recruiterId == null) {
+            throw new RepositoryException("recruiterId is null");
+        }
+        try {
 
-        return dealMapper.findActiveDealsByRecruiterId(recruiterId);
-    }
-
-    public Deal findByDealIdAndRecruiterId(final Long dealId, final Long recruiterId) {
-
-        return dealMapper.findByDealIdAndRecruiterId(dealId, recruiterId);
+            return dealMapper.findActiveDealsByRecruiterId(recruiterId);
+        } catch (Exception e) {
+            throw new RepositoryException("General database error: ", e);
+        }
     }
 
     /**
@@ -33,39 +35,41 @@ public class DealRepository {
      * @return List of POJO Deal instances
      */
     public List<Deal> findActiveDealsByEmployerId(final Long employerId)
-            throws RepositoryGeneralException, RepositoryTechnicalException {
+            throws RepositoryException {
+        if (employerId == null) {
+            throw new RepositoryException("employerId is null");
+        }
         try {
 
             return dealMapper.findActiveDealsByEmployerId(employerId);
-        } catch (MyBatisSystemException e) {
-            throw new RepositoryTechnicalException("Database connection error: ", e);
         } catch (Exception e) {
-            throw new RepositoryGeneralException("General database error: ", e);
+            throw new RepositoryException("General database error: ", e);
         }
     }
 
-    public Deal findByIdAndEmployerId(final Long dealId, final Long employerId)
-            throws RepositoryGeneralException, RepositoryTechnicalException {
+    public Deal findById(final Long dealId)
+            throws RepositoryException {
+        if (dealId == null) {
+            throw new RepositoryException("dealId is null");
+        }
         try {
 
-            return dealMapper.findByIdAndEmployerId(dealId, employerId);
-        } catch (MyBatisSystemException e) {
-            throw new RepositoryTechnicalException("Database connection error: ", e);
+            return dealMapper.findById(dealId);
         } catch (Exception e) {
-            throw new RepositoryGeneralException("General database error: ", e);
+            throw new RepositoryException("General database error: ", e);
         }
     }
 
-    public Long create(final Long bidId)
-            throws RepositoryGeneralException, RepositoryTechnicalException {
+    public Long create(final Long bidId) throws RepositoryException {
+        if (bidId == null) {
+            throw new RepositoryException("bidId is null");
+        }
         try {
 
             dealMapper.create(bidId);
             return bidId;
-        } catch (MyBatisSystemException e) {
-            throw new RepositoryTechnicalException("Database connection error: ", e);
         } catch (Exception e) {
-            throw new RepositoryGeneralException("General database error: ", e);
+            throw new RepositoryException("General database error: ", e);
         }
     }
 

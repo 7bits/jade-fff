@@ -2,12 +2,10 @@ package com.recruiters.web.controller.employer;
 
 import com.recruiters.model.Deal;
 import com.recruiters.model.User;
-import com.recruiters.service.EmployerService;
-import com.recruiters.service.ServiceSecurityException;
-import com.recruiters.service.ServiceTechnicalException;
+import com.recruiters.service.*;
+import com.recruiters.service.SecurityException;
 import com.recruiters.web.controller.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +14,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 /**
  * Controller for C70 "Show progress of vacancy "
@@ -47,11 +44,9 @@ public class EmployerVacancyShow {
             User user = userUtils.getCurrentUser(request);
             Deal deal = employerService.findDeal(dealId, user.getEmployerId());
             vacancyProgress.addObject("deal", deal);
-        } catch (ServiceTechnicalException e) {
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-        } catch (ServiceSecurityException e) {
+        } catch (SecurityException e) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
-        } catch (Exception e) {
+        } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
 

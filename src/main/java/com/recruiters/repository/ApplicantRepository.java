@@ -15,9 +15,16 @@ public class ApplicantRepository {
     @Autowired
     private ApplicantMapper applicantMapper = null;
 
-    public Applicant findById(final Long applicantId) {
+    public Applicant findById(final Long applicantId) throws RepositoryException {
+        if (applicantId == null) {
+            throw new RepositoryException("applicantId is null");
+        }
+        try {
 
-        return applicantMapper.findById(applicantId);
+            return applicantMapper.findById(applicantId);
+        } catch (Exception e) {
+            throw new RepositoryException("General database error: ", e);
+        }
     }
 
     /**
@@ -25,12 +32,16 @@ public class ApplicantRepository {
      * @param applicant
      * @return <tt>true</tt> if model has been saved successful, <tt>false</tt> - otherwise
      */
-    public Boolean create(final Applicant applicant) {
+    public Applicant create(final Applicant applicant) throws RepositoryException {
+        if (applicant == null) {
+            throw new RepositoryException("applicant is null");
+        }
         try {
+
             applicantMapper.create(applicant);
-            return true;
+            return applicant;
         } catch (Exception e) {
-            return false;
+            throw new RepositoryException("General database error: ", e);
         }
     }
 
@@ -39,12 +50,16 @@ public class ApplicantRepository {
      * @param applicant
      * @return <tt>true</tt> if model has been saved successful, <tt>false</tt> - otherwise
      */
-    public Boolean update(final Applicant applicant) {
+    public Applicant update(final Applicant applicant) throws RepositoryException {
+        if (applicant == null) {
+            throw new RepositoryException("applicant is null");
+        }
         try {
+
             applicantMapper.update(applicant);
-            return true;
+            return applicant;
         } catch (Exception e) {
-            return false;
+            throw new RepositoryException("General database error: ", e);
         }
     }
 
@@ -55,16 +70,20 @@ public class ApplicantRepository {
      * @param applicantStatus    New status for Applicant
      * @return true if update was successful otherwise false
      */
-    public Boolean updateStatus(
+    public Long updateStatus(
             final Long applicantId,
             final ApplicantStatus applicantStatus,
             final Long employerId
-    ) {
+    ) throws RepositoryException {
+        if (applicantId == null) {
+            throw new RepositoryException("applicantId is null");
+        }
         try {
             applicantMapper.updateStatus(applicantId, applicantStatus, employerId);
-            return true;
+
+            return applicantId;
         } catch (Exception e) {
-            return false;
+            throw new RepositoryException("General database error: ", e);
         }
     }
 
