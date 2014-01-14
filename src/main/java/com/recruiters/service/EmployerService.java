@@ -84,8 +84,8 @@ public class EmployerService {
     public Deal findDeal(final Long dealId, final Long employerId)
             throws SecurityException, ServiceException {
         try {
-            Deal deal = dealRepository.findByIdAndEmployerId(dealId, employerId);
-            if (deal != null) {
+            Deal deal = dealRepository.findById(dealId);
+            if (deal.getVacancy().getEmployer().getId().equals(employerId)) {
                 return deal;
             }
         } catch (Exception e) {

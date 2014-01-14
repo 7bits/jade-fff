@@ -2,7 +2,6 @@ package com.recruiters.repository;
 
 import com.recruiters.model.Deal;
 import com.recruiters.repository.mapper.DealMapper;
-import org.mybatis.spring.MyBatisSystemException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -45,14 +44,14 @@ public class DealRepository {
         }
     }
 
-    public Deal findByIdAndEmployerId(final Long dealId, final Long employerId)
+    public Deal findById(final Long dealId)
             throws RepositoryException {
-        if (dealId == null || employerId == null) {
-            throw new RepositoryException("dealId or employerId is null");
+        if (dealId == null) {
+            throw new RepositoryException("dealId is null");
         }
         try {
 
-            return dealMapper.findByIdAndEmployerId(dealId, employerId);
+            return dealMapper.findById(dealId);
         } catch (Exception e) {
             throw new RepositoryException("General database error: ", e);
         }

@@ -53,7 +53,7 @@ public interface DealMapper {
             "INNER JOIN recruiters ON recruiters.id=deals.recruiter_id " +
             "INNER JOIN employers ON employers.id = vacancies.employer_id " +
             "INNER JOIN users ON recruiters.user_id=users.id " +
-            "WHERE deals.id=#{dealId} and employers.id=#{employerId}")
+            "WHERE deals.id=#{dealId}")
     @Results({
             @Result(column = "id", property = "id", javaType = Long.class),
             @Result(column = "status", property = "status"),
@@ -69,7 +69,7 @@ public interface DealMapper {
             @Result(property = "applicants", column = "id", javaType = List.class,
                     many = @Many(select = "com.recruiters.repository.mapper.ApplicantMapper.findApplicantsByDealId"))
     })
-    Deal findByIdAndEmployerId(@Param(value = "dealId") final Long dealId, @Param(value = "employerId") final Long employerId);
+    Deal findById(@Param(value = "dealId") final Long dealId);
 
     @Select("SELECT deals.id, deals.status, " +
             "vacancies.id as vacancy_id,  vacancies.employer_id, vacancies.title, " +
