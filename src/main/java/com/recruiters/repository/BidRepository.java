@@ -56,9 +56,16 @@ public class BidRepository {
      * Method must return list of recruiter bids.
      * @return
      */
-    public List<Bid> findBidsByRecruiterId(final Long recruiterId) {
+    public List<Bid> findBidsByRecruiterId(final Long recruiterId) throws RepositoryException {
+        if (recruiterId == null) {
+            throw new RepositoryException("vacancyId is null");
+        }
+        try {
 
-        return bidMapper.findBidsByRecruiterId(recruiterId);
+            return bidMapper.findBidsByRecruiterId(recruiterId);
+        } catch (Exception e) {
+            throw new RepositoryException("General database error: ", e);
+        }
     }
 
     public Boolean create(final Long recruiterId, final Long vacancyId, final String message) {

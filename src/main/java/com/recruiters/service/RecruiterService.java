@@ -89,9 +89,15 @@ public class RecruiterService {
      * Method must return list of recruiter bids.
      * @return
      */
-    public List<Bid> findBidsForRecruiter(final Long recruiterId) {
+    public List<Bid> findBidsForRecruiter(final Long recruiterId)
+        throws ServiceException {
+            try {
 
-        return this.getBidRepository().findBidsByRecruiterId(recruiterId);
+                return bidRepository.findBidsByRecruiterId(recruiterId);
+            } catch (Exception e) {
+                log.warn("Recruiter Service general exception: " + e);
+                throw new ServiceException("Recruiter Service general exception: ", e);
+            }
     }
 
     /**
