@@ -17,6 +17,8 @@ import org.springframework.validation.Validator;
 public class EmployerFormValidator implements Validator {
     @Autowired
     private EmployerService employerService = null;
+    /** Minimum password length, checked */
+    private static final Integer MINIMUM_PASSWORD_LENGTH = 6;
 
     public EmployerFormValidator() {}
 
@@ -35,12 +37,12 @@ public class EmployerFormValidator implements Validator {
         } catch (ServiceException e) {
             ValidationUtils.rejectIfEmptyOrWhitespace(errors, "id", "ServiceException.employerForm.id");
         }
-        if (!employerForm.getNewPassword().isEmpty()) {
+        if (!employerForm.getNewPassword().isEmpty() && employer != null) {
             if (employerForm.getOldPassword().isEmpty()) {
                 errors.rejectValue("oldPassword", "NotEmpty.employerForm.oldPassword");
             } else if (!employerForm.getOldPassword().equals(employer.getUser().getPassword())) {
                 errors.rejectValue("oldPassword", "NotEqual.employerForm.oldPassword");
-            } else if (employerForm.getNewPassword().length() < 6){
+            } else if (employerForm.getNewPassword().length() < MINIMUM_PASSWORD_LENGTH) {
                 errors.rejectValue("newPassword", "Short.employerForm.newPassword");
             }
         }
