@@ -15,6 +15,7 @@ import com.recruiters.repository.RecruiterRepository;
 import com.recruiters.repository.RepositoryException;
 import com.recruiters.repository.UserRepository;
 import com.recruiters.repository.VacancyRepository;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,6 +45,8 @@ public class RecruiterService {
     private RecruiterRepository recruiterRepository = null;
     @Autowired
     private BidRepository bidRepository = null;
+    /** Logger */
+    private final Logger log = Logger.getLogger(RecruiterService.class);
 
     /**
      * Method must return recruiter by given id
@@ -59,9 +62,15 @@ public class RecruiterService {
      * Method must return all vacancies for this recruiter
      * @return
      */
-    public List<Vacancy> findAvailableVacanciesForRecruiter(final Long recruiterId) {
+    public List<Vacancy> findAvailableVacanciesForRecruiter(final Long recruiterId)
+            throws ServiceException {
+        try {
 
-        return this.getVacancyRepository().findAvailableVacanciesForRecruiter(recruiterId);
+            return vacancyRepository.findAvailableVacanciesForRecruiter(recruiterId);
+        } catch (Exception e) {
+            log.warn("Service general exception: " + e);
+            throw new ServiceException("Service general exception: ", e);
+        }
     }
 
     /**

@@ -1,7 +1,9 @@
 package com.recruiters.web.controller.recruiter;
 
 import com.recruiters.model.User;
+import com.recruiters.model.Vacancy;
 import com.recruiters.service.RecruiterService;
+import com.recruiters.service.ServiceException;
 import com.recruiters.web.controller.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * Controller Class for R11 "Show active vacancies"
@@ -27,11 +31,19 @@ public class AllAvailableVacancies {
      * @return model and view with list of active vacancies
      */
     @RequestMapping(value = "recruiter-find-new-vacancies", method = RequestMethod.GET)
-    public ModelAndView showAllAvailableVacancies(final HttpServletRequest request) {
-
+    public ModelAndView showAllAvailableVacancies(
+            final HttpServletRequest request,
+            final HttpServletResponse response
+    ) throws Exception {
         ModelAndView allAvailableVacancies = new ModelAndView("recruiter/recruiter-find-new-vacancies.jade");
-        User user = userUtils.getCurrentUser(request);
-        allAvailableVacancies.addObject("vacancies", getRecruiterService().findAvailableVacanciesForRecruiter(user.getRecruiterId()));
+        try {
+            User user = userUtils.getCurrentUser(request);
+            List<Vacancy> vacancies = recruiterService
+                    .findAvailableVacanciesForRecruiter(user.getRecruiterId());
+            allAvailableVacancies.addObject("vacancies", vacancies);
+        } catch (ServiceException e) {
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
 
         return allAvailableVacancies;
     }

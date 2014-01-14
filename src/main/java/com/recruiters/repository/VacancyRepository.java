@@ -38,10 +38,17 @@ public class VacancyRepository {
      * Method must return all vacancies for this recruiter
      * @return
      */
-    public List<Vacancy> findAvailableVacanciesForRecruiter(final Long recruiterId) {
+    public List<Vacancy> findAvailableVacanciesForRecruiter(final Long recruiterId)
+            throws RepositoryException {
+        if (recruiterId == null) {
+            throw new RepositoryException("recruiterId is null");
+        }
+        try {
 
-        /*TODO: Use recruiterId to know bids and deals*/
-        return vacancyMapper.findAvailableVacanciesForRecruiter(recruiterId);
+            return vacancyMapper.findAvailableVacanciesForRecruiter(recruiterId);
+        } catch (Exception e) {
+            throw new RepositoryException("General database error: ", e);
+        }
     }
 
     /**
