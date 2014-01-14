@@ -22,7 +22,7 @@ block append content
         p
           #{deal.recruiter.user.firstName} #{deal.recruiter.user.lastName}
           .tools
-            a.btn.btn-danger(href="#",data-toggle="confirmation", data-placement="left", data-original-title="", title="").
+            a.btn.btn-danger(href=domain.getAbsoluteUrl() + "/employer-fire-recruiter/" + deal.id).
               #{fmt.message("employer-progress-vacancy-show.recruiter.decline")}
     h2=fmt.message("employer-progress-vacancy-show.applicants.h2")
     .row

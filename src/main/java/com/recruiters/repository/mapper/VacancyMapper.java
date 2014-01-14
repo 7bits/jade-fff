@@ -56,7 +56,14 @@ public interface VacancyMapper {
             "INNER JOIN employers ON employers.id = vacancies.employer_id " +
             "INNER JOIN users  ON employers.user_id=users.id " +
             "WHERE vacancies.status like 'ACTIVE' " +
-            "AND NOT EXISTS (SELECT * FROM bids b WHERE b.vacancy_id = vacancies.id AND b.recruiter_id = #{recruiterId}) ")
+            "AND ( " +
+            "   NOT EXISTS ( " +
+            "       SELECT * FROM bids b WHERE b.vacancy_id = vacancies.id AND b.recruiter_id = #{recruiterId} AND b.status <> 'REJECTED' " +
+            "   ) " +
+            "   AND NOT EXISTS (" +
+            "       SELECT * FROM deals d WHERE d.vacancy_id = vacancies.id AND d.recruiter_id = #{recruiterId} AND d.status <> 'FIRED' " +
+            "   ) " +
+            ") ")
     @Results({
             @Result(column = "id", property = "id"),
             @Result(column = "employer_id", property = "employer.id"),

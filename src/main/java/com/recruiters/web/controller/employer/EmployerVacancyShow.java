@@ -38,7 +38,6 @@ public class EmployerVacancyShow {
             final HttpServletRequest request,
             final HttpServletResponse response
     ) throws Exception {
-
         ModelAndView vacancyProgress =  new ModelAndView("employer/employer-progress-vacancy-show.jade");
         try {
             User user = userUtils.getCurrentUser(request);
@@ -53,12 +52,30 @@ public class EmployerVacancyShow {
         return vacancyProgress;
     }
 
-    /*TODO:: replace this and add make real*/
-    @RequestMapping(value = "employer-vacancy-create", method = RequestMethod.GET)
-    public ModelAndView createVacancyForEmployer() {
+    /**
+     * action for fire recruiter by employer
+     * @param dealId Id of corresponding deal
+     * @param request    Http request
+     * @return model and view with single deal
+     */
+    @RequestMapping(value = "employer-fire-recruiter/{dealId}", method = RequestMethod.GET)
+    public String fireRecruiter(
+            @PathVariable final Long dealId,
+            final HttpServletRequest request,
+            final HttpServletResponse response
+    ) throws Exception {
+        try {
+            User user = userUtils.getCurrentUser(request);
+            employerService.fireRecruiter(dealId, user.getEmployerId());
+        } catch (SecurityException e) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN);
+        } catch (ServiceException e) {
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
 
-        return new ModelAndView("employer/vacancy-create.jade");
+        return "redirect:/";
     }
+
 
     public EmployerService getEmployerService() {
         return employerService;

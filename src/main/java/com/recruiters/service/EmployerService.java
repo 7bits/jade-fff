@@ -335,4 +335,28 @@ public class EmployerService {
         throw new SecurityException("Employer Service security exception: " +
                 "employerId and applicantId belongs to different employers");
     }
+
+    /**
+     * fire recruiter from vacancy
+     * @param dealId Id of deal
+     * @param employerId Id of employer
+     * @return true if success, otherwise false
+     */
+    public Long fireRecruiter(final Long dealId, final Long employerId)
+            throws SecurityException, ServiceException {
+        try {
+            Deal deal = dealRepository.findById(dealId);
+            if (deal.getVacancy().getEmployer().getId().equals(employerId)) {
+                return dealRepository.updateStatus(dealId, DealStatus.FIRED);
+            }
+        } catch (Exception e) {
+            log.warn("Employer Service general exception: ", e);
+            throw new ServiceException("Employer Service general exception: ", e);
+        }
+        log.warn("Employer Service security exception: " +
+                "employerId and dealId belongs to different employers");
+        throw new SecurityException("Employer Service security exception: " +
+                "employerId and dealId belongs to different employers");
+    }
+
 }
