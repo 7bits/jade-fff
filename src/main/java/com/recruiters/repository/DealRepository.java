@@ -33,39 +33,41 @@ public class DealRepository {
      * @return List of POJO Deal instances
      */
     public List<Deal> findActiveDealsByEmployerId(final Long employerId)
-            throws RepositoryGeneralException, RepositoryTechnicalException {
+            throws RepositoryException {
+        if (employerId == null) {
+            throw new RepositoryException("employerId is null");
+        }
         try {
 
             return dealMapper.findActiveDealsByEmployerId(employerId);
-        } catch (MyBatisSystemException e) {
-            throw new RepositoryTechnicalException("Database connection error: ", e);
         } catch (Exception e) {
-            throw new RepositoryGeneralException("General database error: ", e);
+            throw new RepositoryException("General database error: ", e);
         }
     }
 
     public Deal findByIdAndEmployerId(final Long dealId, final Long employerId)
-            throws RepositoryGeneralException, RepositoryTechnicalException {
+            throws RepositoryException {
+        if (dealId == null || employerId == null) {
+            throw new RepositoryException("dealId or employerId is null");
+        }
         try {
 
             return dealMapper.findByIdAndEmployerId(dealId, employerId);
-        } catch (MyBatisSystemException e) {
-            throw new RepositoryTechnicalException("Database connection error: ", e);
         } catch (Exception e) {
-            throw new RepositoryGeneralException("General database error: ", e);
+            throw new RepositoryException("General database error: ", e);
         }
     }
 
-    public Long create(final Long bidId)
-            throws RepositoryGeneralException, RepositoryTechnicalException {
+    public Long create(final Long bidId) throws RepositoryException {
+        if (bidId == null) {
+            throw new RepositoryException("bidId is null");
+        }
         try {
 
             dealMapper.create(bidId);
             return bidId;
-        } catch (MyBatisSystemException e) {
-            throw new RepositoryTechnicalException("Database connection error: ", e);
         } catch (Exception e) {
-            throw new RepositoryGeneralException("General database error: ", e);
+            throw new RepositoryException("General database error: ", e);
         }
     }
 

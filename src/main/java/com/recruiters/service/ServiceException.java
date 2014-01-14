@@ -1,16 +1,16 @@
-package com.recruiters.repository;
+package com.recruiters.service;
 
 /**
- * General purpose exception for Repository Layer
+ * General purpose exception for Service Layer
  * is thrown when no other Exceptions are suitable
  */
-public class RepositoryGeneralException extends Exception {
+public class ServiceException extends Exception {
 
     /**
      * Exception with message only
      * @param message    String message
      */
-    public RepositoryGeneralException(final String message) {
+    public ServiceException(final String message) {
         super(message);
     }
 
@@ -19,7 +19,7 @@ public class RepositoryGeneralException extends Exception {
      * @param message    String message
      * @param e          Exception
      */
-    public RepositoryGeneralException(final String message, final Exception e) {
+    public ServiceException(final String message, final Exception e) {
         super(message, e);
     }
 }

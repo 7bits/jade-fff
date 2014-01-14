@@ -23,15 +23,15 @@ public class BidRepository {
      * @param bidId    Id of bid
      * @return Bid POJO instance
      */
-    public Bid findById(final Long bidId)
-            throws RepositoryGeneralException, RepositoryTechnicalException {
+    public Bid findById(final Long bidId) throws RepositoryException {
+        if (bidId == null) {
+            throw new RepositoryException("bidId is null");
+        }
         try {
 
             return bidMapper.findById(bidId);
-        } catch (MyBatisSystemException e) {
-            throw new RepositoryTechnicalException("Database connection error: ", e);
         } catch (Exception e) {
-            throw new RepositoryGeneralException("General database error: ", e);
+            throw new RepositoryException("General database error: ", e);
         }
     }
 
@@ -40,15 +40,15 @@ public class BidRepository {
      * @param vacancyId    Vacancy Id
      * @return List of Bid POJO instances
      */
-    public List<Bid> findBidsByVacancyId(final Long vacancyId)
-            throws RepositoryGeneralException, RepositoryTechnicalException {
+    public List<Bid> findBidsByVacancyId(final Long vacancyId) throws RepositoryException {
+        if (vacancyId == null) {
+            throw new RepositoryException("vacancyId is null");
+        }
         try {
 
             return bidMapper.findBidsByVacancyId(vacancyId);
-        } catch (MyBatisSystemException e) {
-            throw new RepositoryTechnicalException("Database connection error: ", e);
         } catch (Exception e) {
-            throw new RepositoryGeneralException("General database error: ", e);
+            throw new RepositoryException("General database error: ", e);
         }
     }
 
@@ -71,15 +71,16 @@ public class BidRepository {
     }
 
     public Long updateStatus(final Long bidId, final BidStatus status)
-            throws RepositoryGeneralException, RepositoryTechnicalException {
+            throws RepositoryException {
+        if (bidId == null || status == null) {
+            throw new RepositoryException("bidId or status is null");
+        }
         try {
-
             bidMapper.updateStatus(bidId, status);
+
             return bidId;
-        } catch (MyBatisSystemException e) {
-            throw new RepositoryTechnicalException("Database connection error: ", e);
         } catch (Exception e) {
-            throw new RepositoryGeneralException("General database error: ", e);
+            throw new RepositoryException("General database error: ", e);
         }
     }
 

@@ -1,16 +1,15 @@
 package com.recruiters.repository;
 
 /**
- * Technical purposes exception for Repository Layer
- * is thrown when there are technical issues with data
+ * General purpose exception for Repository Layer
  */
-public class RepositoryTechnicalException extends Exception {
+public class RepositoryException extends Exception {
 
     /**
      * Exception with message only
      * @param message    String message
      */
-    public RepositoryTechnicalException(final String message) {
+    public RepositoryException(final String message) {
         super(message);
     }
 
@@ -19,7 +18,7 @@ public class RepositoryTechnicalException extends Exception {
      * @param message    String message
      * @param e          Exception
      */
-    public RepositoryTechnicalException(final String message, final Exception e) {
+    public RepositoryException(final String message, final Exception e) {
         super(message, e);
     }
 }

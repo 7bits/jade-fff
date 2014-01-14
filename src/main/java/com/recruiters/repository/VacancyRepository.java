@@ -22,15 +22,15 @@ public class VacancyRepository {
      * @param vacancyId
      * @return
      */
-    public Vacancy findById(final Long vacancyId)
-            throws RepositoryGeneralException, RepositoryTechnicalException {
+    public Vacancy findById(final Long vacancyId) throws RepositoryException {
+        if (vacancyId == null) {
+            throw new RepositoryException("vacancyId is null");
+        }
         try {
 
             return vacancyMapper.findById(vacancyId);
-        } catch (MyBatisSystemException e) {
-            throw new RepositoryTechnicalException("Database connection error: ", e);
         } catch (Exception e) {
-            throw new RepositoryGeneralException("General database error: ", e);
+            throw new RepositoryException("General database error: ", e);
         }
     }
 
@@ -51,14 +51,15 @@ public class VacancyRepository {
      * @return List of vacancies
      */
     public List<Vacancy> findVacanciesByEmployerId(final Long employerId)
-            throws RepositoryGeneralException, RepositoryTechnicalException {
+            throws RepositoryException {
+        if (employerId == null) {
+            throw new RepositoryException("employerId is null");
+        }
         try {
 
             return vacancyMapper.findVacanciesByEmployerId(employerId);
-        } catch (MyBatisSystemException e) {
-            throw new RepositoryTechnicalException("Database connection error: ", e);
         } catch (Exception e) {
-            throw new RepositoryGeneralException("General database error: ", e);
+            throw new RepositoryException("General database error: ", e);
         }
     }
 

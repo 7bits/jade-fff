@@ -1,11 +1,9 @@
 package com.recruiters.web.controller.employer;
 
-import com.recruiters.model.Employer;
 import com.recruiters.model.User;
 import com.recruiters.model.Vacancy;
-import com.recruiters.service.EmployerService;
-import com.recruiters.service.ServiceSecurityException;
-import com.recruiters.service.ServiceTechnicalException;
+import com.recruiters.service.*;
+import com.recruiters.service.SecurityException;
 import com.recruiters.web.controller.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -44,11 +42,7 @@ public class RecruiterSearch {
             User user = userUtils.getCurrentUser(request);
             List<Vacancy> vacancies = employerService.findVacanciesForEmployer(user.getEmployerId());
             vacanciesBids.addObject("vacancies", vacancies);
-        } catch (ServiceTechnicalException e) {
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-        } catch (ServiceSecurityException e) {
-            response.sendError(HttpServletResponse.SC_FORBIDDEN);
-        } catch (Exception e) {
+        } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
 
