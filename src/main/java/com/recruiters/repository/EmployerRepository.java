@@ -12,11 +12,18 @@ import org.springframework.stereotype.Repository;
 public class EmployerRepository {
 
     @Autowired
-    EmployerMapper employerMapper = null;
+    private EmployerMapper employerMapper = null;
 
-    public Employer findById(final Long id) {
+    public Employer findById(final Long employerId) throws RepositoryException {
+        if (employerId == null) {
+            throw new RepositoryException("employerId is null");
+        }
+        try {
 
-        return employerMapper.findById(id);
+            return employerMapper.findById(employerId);
+        } catch (Exception e) {
+            throw new RepositoryException("General database error: ", e);
+        }
     }
 
     public EmployerMapper getEmployerMapper() {

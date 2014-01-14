@@ -6,6 +6,7 @@ import com.recruiters.model.Bid;
 import com.recruiters.model.BidStatus;
 import com.recruiters.model.Deal;
 import com.recruiters.model.Employer;
+import com.recruiters.model.User;
 import com.recruiters.model.Vacancy;
 import com.recruiters.repository.ApplicantRepository;
 import com.recruiters.repository.BidRepository;
@@ -242,9 +243,14 @@ public class EmployerService {
      * @param employer    Employer POJO instance
      * @return true if update is ok, otherwise false
      */
-    public Boolean saveProfileForEmployer(final Employer employer) {
+    public User saveProfileForEmployer(final Employer employer) throws ServiceException {
+        try {
 
-        return userRepository.update(employer.getUser());
+            return userRepository.update(employer.getUser());
+        } catch (Exception e) {
+            log.warn("Service general exception: " + e);
+            throw new ServiceException("Service general exception: ", e);
+        }
     }
 
     /**
@@ -252,9 +258,14 @@ public class EmployerService {
      * @param employerId    Employer Id
      * @return Employer POJO instance
      */
-    public Employer findEmployer(final Long employerId) {
+    public Employer findEmployer(final Long employerId) throws ServiceException {
+        try {
 
-        return employerRepository.findById(employerId);
+            return employerRepository.findById(employerId);
+        } catch (Exception e) {
+            log.warn("Service general exception: " + e);
+            throw new ServiceException("Service general exception: ", e);
+        }
     }
 
     /**

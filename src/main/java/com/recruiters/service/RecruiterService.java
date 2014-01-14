@@ -4,6 +4,7 @@ import com.recruiters.model.Applicant;
 import com.recruiters.model.Bid;
 import com.recruiters.model.Deal;
 import com.recruiters.model.Recruiter;
+import com.recruiters.model.User;
 import com.recruiters.model.Vacancy;
 import com.recruiters.repository.ApplicantRepository;
 import com.recruiters.repository.BidRepository;
@@ -11,6 +12,7 @@ import com.recruiters.repository.DealRepository;
 import com.recruiters.repository.EmployerRepository;
 import com.recruiters.repository.FileRepository;
 import com.recruiters.repository.RecruiterRepository;
+import com.recruiters.repository.RepositoryException;
 import com.recruiters.repository.UserRepository;
 import com.recruiters.repository.VacancyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -150,9 +152,12 @@ public class RecruiterService {
      * @param recruiter    Recruiter POJO instance
      * @return true if update is ok, otherwise false
      */
-    public Boolean saveProfileForRecruiter(final Recruiter recruiter) {
-
-        return userRepository.update(recruiter.getUser());
+    public User saveProfileForRecruiter(final Recruiter recruiter) {
+        try {
+            return userRepository.update(recruiter.getUser());
+        } catch (RepositoryException e) {
+            return null;
+        }
     }
 
     public FileRepository getFileRepository() {

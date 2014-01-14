@@ -2,6 +2,7 @@ package com.recruiters.web.validator;
 
 import com.recruiters.model.Employer;
 import com.recruiters.service.EmployerService;
+import com.recruiters.service.ServiceException;
 import com.recruiters.web.form.EmployerForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -28,7 +29,12 @@ public class EmployerFormValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "NotEmpty.employerForm.firstName");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "NotEmpty.employerForm.lastName");
         EmployerForm employerForm = (EmployerForm) object;
-        Employer employer = employerService.findEmployer(employerForm.getId());
+        Employer employer = null;
+        try {
+            employer = employerService.findEmployer(employerForm.getId());
+        } catch (ServiceException e) {
+            ValidationUtils.rejectIfEmptyOrWhitespace(errors, "id", "ServiceException.employerForm.id");
+        }
         if (!employerForm.getNewPassword().isEmpty()) {
             if (employerForm.getOldPassword().isEmpty()) {
                 errors.rejectValue("oldPassword", "NotEmpty.employerForm.oldPassword");
