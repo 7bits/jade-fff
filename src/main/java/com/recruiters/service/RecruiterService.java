@@ -105,9 +105,15 @@ public class RecruiterService {
      * @param recruiterId
      * @return
      */
-    public List<Deal> findActiveDealsForRecruiter(final Long recruiterId) {
+    public List<Deal> findActiveDealsForRecruiter(final Long recruiterId)
+            throws ServiceException {
+        try {
 
-        return this.getDealRepository().findActiveDealsByRecruiterId(recruiterId);
+            return dealRepository.findActiveDealsByRecruiterId(recruiterId);
+        } catch (Exception e) {
+            log.warn("Recruiter Service general exception: " + e);
+            throw new ServiceException("Recruiter Service general exception: ", e);
+        }
     }
 
     /**

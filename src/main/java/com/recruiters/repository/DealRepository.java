@@ -16,9 +16,17 @@ public class DealRepository {
     @Autowired
     private DealMapper dealMapper = null;
 
-    public List<Deal> findActiveDealsByRecruiterId(final Long recruiterId) {
+    public List<Deal> findActiveDealsByRecruiterId(final Long recruiterId)
+            throws  RepositoryException {
+        if (recruiterId == null) {
+            throw new RepositoryException("recruiterId is null");
+        }
+        try {
 
-        return dealMapper.findActiveDealsByRecruiterId(recruiterId);
+            return dealMapper.findActiveDealsByRecruiterId(recruiterId);
+        } catch (Exception e) {
+            throw new RepositoryException("General database error: ", e);
+        }
     }
 
     public Deal findByDealIdAndRecruiterId(final Long dealId, final Long recruiterId) {
