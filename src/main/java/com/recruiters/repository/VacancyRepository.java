@@ -35,6 +35,27 @@ public class VacancyRepository {
     }
 
     /**
+     * Method return vacancy with active bid by id and recruiter id
+     * @param vacancyId
+     * @param recruiterId
+     * @return
+     */
+    public Vacancy findWithActiveBidByIdAndRecruiterId(
+            final Long vacancyId,
+            final Long recruiterId
+    ) throws RepositoryException {
+        if (vacancyId == null || recruiterId == null) {
+            throw new RepositoryException("vacancyId or recruiterId is null");
+        }
+        try {
+
+            return vacancyMapper.findWithActiveBidByIdAndRecruiterId(vacancyId, recruiterId);
+        } catch (Exception e) {
+            throw new RepositoryException("General database error: ", e);
+        }
+    }
+
+    /**
      * Method must return all vacancies for this recruiter
      * @return
      */

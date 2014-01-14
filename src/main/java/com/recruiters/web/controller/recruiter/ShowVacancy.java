@@ -73,6 +73,28 @@ public class ShowVacancy {
         return "redirect:/recruiter-find-new-vacancies";
     }
 
+    /**
+     * Controller for "Show vacancy from active bids"
+     * @return model and view with one vacancy
+     */
+    @RequestMapping(value = "recruiter-show-bid-vacancy/{vacancyId}", method = RequestMethod.GET)
+    public ModelAndView showBidVacancyById(
+            @PathVariable final Long vacancyId,
+            final HttpServletRequest request,
+            final HttpServletResponse response
+    ) throws Exception {
+        ModelAndView showVacancy = new ModelAndView("recruiter/recruiter-show-bid-vacancy.jade");
+        try {
+            User user = userUtils.getCurrentUser(request);
+            Vacancy vacancy = recruiterService.findVacancyWithActiveBid(vacancyId, user.getRecruiterId());
+            showVacancy.addObject("vacancy", vacancy);
+        } catch (ServiceException e) {
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
+
+        return showVacancy;
+    }
+
 
     public RecruiterService getRecruiterService() {
         return recruiterService;

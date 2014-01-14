@@ -94,6 +94,22 @@ public class RecruiterService {
     }
 
     /**
+     * @param vacancyId  Id of vacancy for which we want to get full description
+     * @param recruiterId Id of recruiter
+     * @return vacancy
+     */
+    public Vacancy findVacancyWithActiveBid(final Long vacancyId, final Long recruiterId)
+            throws ServiceException {
+        try {
+
+            return vacancyRepository.findWithActiveBidByIdAndRecruiterId(vacancyId, recruiterId);
+        } catch (Exception e) {
+            log.warn("Recruiter Service general exception: ", e);
+            throw new ServiceException("Recruiter Service general exception: ", e);
+        }
+    }
+
+    /**
      * Method must return list of recruiter bids.
      * @return
      */

@@ -1,0 +1,18 @@
+extends ../layout
+
+block append content
+  .container
+    h1 Просмотр вакансии
+    dl.dl-horizontal
+      dt Наименование
+      dd #{vacancy.title}
+      dt Описание
+      dd #{vacancy.description}
+      dt Диапазон з/п
+      dd #{vacancy.salary}
+      dt Дата создания
+      dd #{vacancy.creationDate}
+      dt Дата окончания
+      dd #{vacancy.expirationDate}
+      dt Статус
+      dd На рассмотрении у работодателя
