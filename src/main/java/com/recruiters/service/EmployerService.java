@@ -70,7 +70,7 @@ public class EmployerService {
 
             return dealRepository.findActiveDealsByEmployerId(employerId);
         } catch (Exception e) {
-            log.warn("Employer Service general exception: " + e);
+            log.warn("Employer Service general exception: ", e);
             throw new ServiceException("Employer Service general exception: ", e);
         }
     }
@@ -89,7 +89,7 @@ public class EmployerService {
                 return deal;
             }
         } catch (Exception e) {
-            log.warn("Employer Service general exception: " + e);
+            log.warn("Employer Service general exception: ", e);
             throw new ServiceException("Employer Service general exception: ", e);
         }
         log.warn("Employer Service security exception: deal belongs to different employer");
@@ -113,7 +113,7 @@ public class EmployerService {
                 return applicant;
             }
         } catch (Exception e) {
-            log.warn("Employer Service general exception: " + e);
+            log.warn("Employer Service general exception: ", e);
             throw new ServiceException("Employer Service general exception: ", e);
         }
         log.warn("Employer Service security exception: applicantId and employerId belongs to different employers");
@@ -136,7 +136,7 @@ public class EmployerService {
                 return bidRepository.findBidsByVacancyId(vacancyId);
             }
         } catch (Exception e) {
-            log.warn("Employer Service general exception: " + e);
+            log.warn("Employer Service general exception: ", e);
             throw new ServiceException("Employer Service general exception: ", e);
         }
         log.warn("Employer Service security exception: employerId and vacancyId belongs to different employers");
@@ -159,7 +159,7 @@ public class EmployerService {
                 return bid;
             }
         } catch (Exception e) {
-            log.warn("Employer Service general exception: " + e);
+            log.warn("Employer Service general exception: ", e);
             throw new ServiceException("Employer Service general exception: ", e);
         }
         log.warn("Employer Service security exception: bidId and employerId belongs to different employers");
@@ -177,7 +177,7 @@ public class EmployerService {
 
             return vacancyRepository.findVacanciesByEmployerId(employerId);
         } catch (Exception e) {
-            log.warn("Employer Service general exception: " + e);
+            log.warn("Employer Service general exception: ", e);
             throw new ServiceException("Employer Service general exception: ", e);
         }
     }
@@ -197,7 +197,7 @@ public class EmployerService {
                 return vacancy;
             }
         } catch (Exception e) {
-            log.warn("Employer Service general exception: " + e);
+            log.warn("Employer Service general exception: ", e);
             throw new ServiceException("Employer Service general exception: ", e);
         }
         log.warn("Employer Service security exception: vacancyId and employerId belongs to different employers");
@@ -221,7 +221,7 @@ public class EmployerService {
             if (status != null) {
                 txManager.rollback(status);
             }
-            log.warn("Employer Service general exception: " + e);
+            log.warn("Employer Service general exception: ", e);
             throw new ServiceException("Employer Service general exception: ", e);
         }
         log.warn("Employer Service security exception: bidId and employerId belongs to different employers");
@@ -238,7 +238,7 @@ public class EmployerService {
                 return bidId;
             }
         } catch (Exception e) {
-            log.warn("Employer Service general exception: " + e);
+            log.warn("Employer Service general exception: ", e);
             throw new ServiceException("Employer Service general exception: ", e);
         }
         log.warn("Employer Service security exception: bidId and employerId belongs to different employers");
@@ -258,7 +258,7 @@ public class EmployerService {
                 return userRepository.update(employer.getUser());
             }
         } catch (Exception e) {
-            log.warn("Employer Service general exception: " + e);
+            log.warn("Employer Service general exception: ", e);
             throw new ServiceException("Employer Service general exception: ", e);
         }
         log.warn("Employer Service security exception: " +
@@ -277,7 +277,7 @@ public class EmployerService {
 
             return employerRepository.findById(employerId);
         } catch (Exception e) {
-            log.warn("Employer Service general exception: " + e);
+            log.warn("Employer Service general exception: ", e);
             throw new ServiceException("Employer Service general exception: ", e);
         }
     }
@@ -298,7 +298,7 @@ public class EmployerService {
                         ApplicantStatus.APPROVED, employerId);
             }
         } catch (Exception e) {
-            log.warn("Employer Service general exception: " + e);
+            log.warn("Employer Service general exception: ", e);
             throw new ServiceException("Employer Service general exception: ", e);
         }
         log.warn("Employer Service security exception: " +
@@ -323,7 +323,7 @@ public class EmployerService {
                         ApplicantStatus.REJECTED, employerId);
             }
         } catch (Exception e) {
-            log.warn("Employer Service general exception: " + e);
+            log.warn("Employer Service general exception: ", e);
             throw new ServiceException("Employer Service general exception: ", e);
         }
         log.warn("Employer Employer Service security exception: " +
