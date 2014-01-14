@@ -82,11 +82,14 @@ public class RecruiterService {
      * @param vacancyId    Id of vacancy for which we want to get full description
      * @return vacancy
      */
-    public Vacancy findVacancy(final Long vacancyId) {
+    public Vacancy findVacancy(final Long vacancyId)
+            throws ServiceException {
         try {
-            return this.getVacancyRepository().findById(vacancyId);
+
+            return vacancyRepository.findById(vacancyId);
         } catch (Exception e) {
-            return null;
+            log.warn("Recruiter Service general exception: ", e);
+            throw new ServiceException("Recruiter Service general exception: ", e);
         }
     }
 
@@ -204,9 +207,18 @@ public class RecruiterService {
      * @param message
      * @return
      */
-    public Boolean applyRecruiterToVacancy(final Long recruiterId, final Long vacancyId, final String message) {
+    public Long applyRecruiterToVacancy(
+            final Long recruiterId,
+            final Long vacancyId,
+            final String message
+    ) throws ServiceException {
+        try {
 
-        return this.getBidRepository().create(recruiterId, vacancyId, message);
+            return bidRepository.create(recruiterId, vacancyId, message);
+        } catch (Exception e) {
+            log.warn("Recruiter Service general exception: ", e);
+            throw new ServiceException("Recruiter Service general exception: ", e);
+        }
     }
 
     /**

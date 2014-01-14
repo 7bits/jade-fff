@@ -68,13 +68,21 @@ public class BidRepository {
         }
     }
 
-    public Boolean create(final Long recruiterId, final Long vacancyId, final String message) {
-         try {
-             bidMapper.create(recruiterId, vacancyId, message);
-             return true;
-         } catch (Exception e) {
-             return false;
-         }
+    public Long create(
+            final Long recruiterId,
+            final Long vacancyId,
+            final String message
+    ) throws RepositoryException {
+        if (recruiterId == null || vacancyId == null || message == null) {
+            throw new RepositoryException("recruiterId or vacancyId or message is null");
+        }
+        try {
+            bidMapper.create(recruiterId, vacancyId, message);
+
+            return vacancyId;
+        } catch (Exception e) {
+            throw new RepositoryException("General database error: ", e);
+        }
     }
 
     public Long updateStatus(final Long bidId, final BidStatus status)

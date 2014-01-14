@@ -4,6 +4,7 @@ package com.recruiters.web.controller.recruiter;
 import com.recruiters.model.User;
 import com.recruiters.model.Vacancy;
 import com.recruiters.service.RecruiterService;
+import com.recruiters.service.ServiceException;
 import com.recruiters.web.controller.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 
 /**
@@ -32,10 +34,18 @@ public class ShowVacancy {
      * @return model and view with one vacancy
      */
     @RequestMapping(value = "recruiter-show-vacancy/{vacancyId}", method = RequestMethod.GET)
-    public ModelAndView showVacancyById(@PathVariable final Long vacancyId, final HttpServletRequest request) {
+    public ModelAndView showVacancyById(
+            @PathVariable final Long vacancyId,
+            final HttpServletRequest request,
+            final HttpServletResponse response
+    ) throws Exception {
         ModelAndView showVacancy = new ModelAndView("recruiter/recruiter-show-vacancy.jade");
-        Vacancy vacancy = this.getRecruiterService().findVacancy(vacancyId);
-        showVacancy.addObject("vacancy", vacancy);
+        try {
+            Vacancy vacancy = recruiterService.findVacancy(vacancyId);
+            showVacancy.addObject("vacancy", vacancy);
+        } catch (ServiceException e) {
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
 
         return showVacancy;
     }
@@ -50,12 +60,14 @@ public class ShowVacancy {
     public String applyToVacancy(
             @PathVariable final Long vacancyId,
             @RequestParam(value = "message", required = false) final String message,
-            final HttpServletRequest request
-    ) {
-        User user = userUtils.getCurrentUser(request);
-        Boolean successApplied = false;
-        if (user.getRecruiterId() != null) {
-            successApplied = this.getRecruiterService().applyRecruiterToVacancy(user.getRecruiterId(), vacancyId, message);
+            final HttpServletRequest request,
+            final HttpServletResponse response
+    ) throws  Exception {
+        try {
+            User user = userUtils.getCurrentUser(request);
+            recruiterService.applyRecruiterToVacancy(user.getRecruiterId(), vacancyId, message);
+        } catch (ServiceException e) {
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
 
         return "redirect:/recruiter-find-new-vacancies";
