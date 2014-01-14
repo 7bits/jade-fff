@@ -30,6 +30,6 @@ block append content
             input(type="hidden", id="dealId", name="dealId", value=applicantForm.dealId)
             input(type="hidden", id="id", name="id", value=applicantForm.id)
             input(type="hidden", name=csrf.getParameterName(), value=csrf.getToken())
-          input.btn.btn-success(type="submit", name="submit", value="Добавить") Добавить
+          input.btn.btn-success(type="submit", name="submit", value="Добавить") Сохранить
           a.btn.btn-link(href="#")
             a(href=domain.getAbsoluteUrl() + "/recruiter-show-in-progress-vacancy/" + applicantForm.dealId) К описанию вакансии
