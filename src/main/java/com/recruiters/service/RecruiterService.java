@@ -53,9 +53,15 @@ public class RecruiterService {
      * @param id
      * @return
      */
-    public Recruiter findRecruiter(final Long id) {
+    public Recruiter findRecruiter(final Long id) throws ServiceException {
 
-        return this.getRecruiterRepository().findById(id);
+        try {
+
+            return recruiterRepository.findById(id);
+        } catch (Exception e) {
+            log.warn("Recruiter Service general exception: " + e);
+            throw new ServiceException("Recruiter Service general exception: ", e);
+        }
     }
 
     /**
@@ -197,12 +203,20 @@ public class RecruiterService {
      * @param recruiter    Recruiter POJO instance
      * @return true if update is ok, otherwise false
      */
-    public User saveProfileForRecruiter(final Recruiter recruiter) {
-        try {
-            return userRepository.update(recruiter.getUser());
-        } catch (RepositoryException e) {
-            return null;
-        }
+    public User saveProfileForRecruiter(final Recruiter recruiter, final Long recruiterId)
+        throws ServiceException, SecurityException {
+            try {
+                if (recruiter.getId().equals(recruiterId)) {
+                    return userRepository.update(recruiter.getUser());
+                }
+            } catch (Exception e) {
+                log.warn("Recruiter Service general exception: " + e);
+                throw new ServiceException("Recruiter Service general exception: ", e);
+            }
+            log.warn("Recruiter Service security exception: " +
+                    "recruiter and recruiterId belongs to different recruiters");
+            throw new SecurityException("Recruiter Service security exception: " +
+                    "recruiter and recruiterId belongs to different recruiters");
     }
 
     public FileRepository getFileRepository() {
