@@ -68,8 +68,8 @@ public class RecruiterService {
 
             return vacancyRepository.findAvailableVacanciesForRecruiter(recruiterId);
         } catch (Exception e) {
-            log.warn("Service general exception: " + e);
-            throw new ServiceException("Service general exception: ", e);
+            log.warn("Recruiter Service general exception: " + e);
+            throw new ServiceException("Recruiter Service general exception: ", e);
         }
     }
 
@@ -114,12 +114,21 @@ public class RecruiterService {
         return this.getDealRepository().findByDealIdAndRecruiterId(dealId, recruiterId);
     }
 
-    public Applicant findApplicant(final Long applicantId) {
+    public Applicant findApplicant(final Long applicantId, final Long recruiterId)
+            throws SecurityException, ServiceException {
         try {
-            return this.getApplicantRepository().findById(applicantId);
+            Applicant applicant = applicantRepository.findById(applicantId);
+            if (applicant.getDeal().getRecruiter().getId().equals(recruiterId)) {
+                return applicant;
+            }
         } catch (Exception e) {
-            return null;
+            log.warn("Recruiter Service general exception: " + e);
+            throw new ServiceException("Recruiter Service general exception: ", e);
         }
+        log.warn("Recruiter Service security exception: " +
+                "applicantId and recruiterId belongs to different recruiter");
+        throw new SecurityException("Recruiter Service security exception: " +
+                "applicantId and recruiterId belongs to different recruiter");
     }
 
     /**
@@ -129,22 +138,34 @@ public class RecruiterService {
      * @param testAnswerFile
      * @return
      */
-    public Boolean saveApplicant(
+    public Applicant saveApplicant(
             final Applicant applicant,
             final MultipartFile resumeFile,
-            final MultipartFile testAnswerFile
-    ) {
-        /*TODO: Make FileService instead of FileRepository and use it in Web-layer. Use file names at this method */
-        String fileNameForResume =  this.getFileRepository().saveFile(resumeFile);
-        String fileNameForTestAnswers = this.getFileRepository().saveFile(testAnswerFile);
-        applicant.setResumeFile(fileNameForResume);
-        applicant.setTestAnswerFile(fileNameForTestAnswers);
-
-        if (applicant.getId().equals(0L)) {
-            return this.getApplicantRepository().create(applicant);
-        } else {
-            return this.getApplicantRepository().update(applicant);
+            final MultipartFile testAnswerFile,
+            final Long recruiterId
+    ) throws SecurityException, ServiceException {
+        try {
+            Deal deal = dealRepository.findById(applicant.getDeal().getId());
+            if (deal.getRecruiter().getId().equals(recruiterId)) {
+                /* TODO: Make FileService instead of FileRepository and use it in Web-layer.
+                Use file names at this method */
+                String fileNameForResume =  this.getFileRepository().saveFile(resumeFile);
+                String fileNameForTestAnswers = this.getFileRepository().saveFile(testAnswerFile);
+                applicant.setResumeFile(fileNameForResume);
+                applicant.setTestAnswerFile(fileNameForTestAnswers);
+                if (applicant.getId().equals(0L)) {
+                    return this.getApplicantRepository().create(applicant);
+                } else {
+                    return this.getApplicantRepository().update(applicant);
+                }
+            }
+        } catch (Exception e) {
+            log.warn("Recruiter Service general exception: " + e);
+            throw new ServiceException("Recruiter Service general exception: ", e);
         }
+        log.warn("Recruiter Service security exception: deal belongs to different recruiter");
+        throw new SecurityException("Recruiter Service security exception: " +
+                " deal belongs to different recruiter");
     }
 
     /**

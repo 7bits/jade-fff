@@ -32,12 +32,16 @@ public class ApplicantRepository {
      * @param applicant
      * @return <tt>true</tt> if model has been saved successful, <tt>false</tt> - otherwise
      */
-    public Boolean create(final Applicant applicant) {
+    public Applicant create(final Applicant applicant) throws RepositoryException {
+        if (applicant == null) {
+            throw new RepositoryException("applicant is null");
+        }
         try {
+
             applicantMapper.create(applicant);
-            return true;
+            return applicant;
         } catch (Exception e) {
-            return false;
+            throw new RepositoryException("General database error: ", e);
         }
     }
 
@@ -46,12 +50,16 @@ public class ApplicantRepository {
      * @param applicant
      * @return <tt>true</tt> if model has been saved successful, <tt>false</tt> - otherwise
      */
-    public Boolean update(final Applicant applicant) {
+    public Applicant update(final Applicant applicant) throws RepositoryException {
+        if (applicant == null) {
+            throw new RepositoryException("applicant is null");
+        }
         try {
+
             applicantMapper.update(applicant);
-            return true;
+            return applicant;
         } catch (Exception e) {
-            return false;
+            throw new RepositoryException("General database error: ", e);
         }
     }
 

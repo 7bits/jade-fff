@@ -1,6 +1,10 @@
 package com.recruiters.web.controller.recruiter;
 
-import com.recruiters.service.RecruiterService;
+import com.recruiters.model.Applicant;
+import com.recruiters.model.User;
+import com.recruiters.service.*;
+import com.recruiters.service.SecurityException;
+import com.recruiters.web.controller.utils.UserUtils;
 import com.recruiters.web.form.ApplicantForm;
 import com.recruiters.web.validator.ApplicantFormValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 /**
@@ -25,7 +31,8 @@ public class RecruiterApplicant {
 
     @Autowired
     private RecruiterService recruiterService = null;
-
+    @Autowired
+    private UserUtils userUtils = null;
     @Autowired
     private ApplicantFormValidator applicantFormValidator = null;
 
@@ -34,7 +41,9 @@ public class RecruiterApplicant {
      * @return model and view with empty applicant
      */
     @RequestMapping(value = "recruiter-add-applicant/{dealId}", method = RequestMethod.GET)
-    public ModelAndView addApplicant(@PathVariable final Long dealId) {
+    public ModelAndView addApplicant(
+            @PathVariable final Long dealId
+    ) {
 
         ModelAndView addApplicant = new ModelAndView("recruiter/recruiter-add-applicant.jade");
         ApplicantForm applicantForm = new ApplicantForm();
@@ -54,22 +63,36 @@ public class RecruiterApplicant {
     @RequestMapping(value = "recruiter-add-applicant/{dealId}", method = RequestMethod.POST)
     public ModelAndView createApplicant(
             @Valid @ModelAttribute("applicantForm") final ApplicantForm applicantForm,
-            final BindingResult bindingResult
-    ) {
+            final BindingResult bindingResult,
+            final HttpServletRequest request,
+            final HttpServletResponse response
+    ) throws Exception {
         if (bindingResult.hasErrors()) {
             ModelAndView model = new ModelAndView("recruiter/recruiter-add-applicant.jade");
             model.addObject("applicantForm", applicantForm);
 
             return model;
         }
-        // TODO
-        // need some time for research
-        this.getRecruiterService().saveApplicant(
-                applicantForm.fillModel(), applicantForm.getResumeFile(), applicantForm.getTestAnswerFile()
-        );
-        Long dealId = applicantForm.getDealId();
+        try {
+            User user = userUtils.getCurrentUser(request);
+            // TODO
+            // need some time for research
+            this.getRecruiterService().saveApplicant(
+                    applicantForm.fillModel(),
+                    applicantForm.getResumeFile(),
+                    applicantForm.getTestAnswerFile(),
+                    user.getRecruiterId()
+            );
+            Long dealId = applicantForm.getDealId();
 
-        return new ModelAndView("redirect:/recruiter-show-in-progress-vacancy/" + dealId);
+            return new ModelAndView("redirect:/recruiter-show-in-progress-vacancy/" + dealId);
+        } catch (SecurityException e) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN);
+        } catch (ServiceException e) {
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
+
+        return null;
     }
 
     /**
@@ -78,11 +101,22 @@ public class RecruiterApplicant {
      * @return Model and View filled with applicant data
      */
     @RequestMapping(value = "recruiter-edit-applicant/{applicantId}", method = RequestMethod.GET)
-    public ModelAndView editApplicant(@PathVariable final Long applicantId) {
+    public ModelAndView editApplicant(
+            @PathVariable final Long applicantId,
+            final HttpServletRequest request,
+            final HttpServletResponse response
+    ) throws Exception {
         ModelAndView editApplicant = new ModelAndView("recruiter/recruiter-edit-applicant.jade");
-        ApplicantForm applicantForm = new ApplicantForm(this.getRecruiterService().findApplicant(applicantId));
-
-        editApplicant.addObject("applicantForm", applicantForm);
+        try {
+            User user = userUtils.getCurrentUser(request);
+            Applicant applicant = recruiterService.findApplicant(applicantId, user.getRecruiterId());
+            ApplicantForm applicantForm = new ApplicantForm(applicant);
+            editApplicant.addObject("applicantForm", applicantForm);
+        } catch (SecurityException e) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN);
+        } catch (ServiceException e) {
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
 
         return editApplicant;
     }
@@ -97,21 +131,34 @@ public class RecruiterApplicant {
     @RequestMapping(value = "recruiter-edit-applicant/{applicantId}", method = RequestMethod.POST)
     public ModelAndView updateApplicant(
             @Valid @ModelAttribute("applicantForm") final ApplicantForm applicantForm,
-            final BindingResult bindingResult
-    ) {
+            final BindingResult bindingResult,
+            final HttpServletRequest request,
+            final HttpServletResponse response
+    ) throws Exception {
         if (bindingResult.hasErrors()) {
             ModelAndView model = new ModelAndView("recruiter/recruiter-edit-applicant.jade");
             model.addObject("applicantForm", applicantForm);
             return model;
         }
-        // TODO
-        // need some time for research
-        this.getRecruiterService().saveApplicant(
-                applicantForm.fillModel(), applicantForm.getResumeFile(), applicantForm.getTestAnswerFile()
-        );
-        Long dealId = applicantForm.getDealId();
+        try {
+            User user = userUtils.getCurrentUser(request);
+            // TODO
+            // need some time for research
+            this.getRecruiterService().saveApplicant(
+                    applicantForm.fillModel(),
+                    applicantForm.getResumeFile(),
+                    applicantForm.getTestAnswerFile(),
+                    user.getRecruiterId()
+            );
+            Long dealId = applicantForm.getDealId();
+            return new ModelAndView("redirect:/recruiter-show-in-progress-vacancy/" + dealId);
+        } catch (SecurityException e) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN);
+        } catch (ServiceException e) {
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
 
-        return new ModelAndView("redirect:/recruiter-show-in-progress-vacancy/" + dealId);
+        return null;
     }
 
     @InitBinder("applicantForm")
@@ -133,5 +180,13 @@ public class RecruiterApplicant {
 
     public void setApplicantFormValidator(final ApplicantFormValidator applicantFormValidator) {
         this.applicantFormValidator = applicantFormValidator;
+    }
+
+    public UserUtils getUserUtils() {
+        return userUtils;
+    }
+
+    public void setUserUtils(final UserUtils userUtils) {
+        this.userUtils = userUtils;
     }
 }
