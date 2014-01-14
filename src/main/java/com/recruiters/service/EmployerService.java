@@ -12,7 +12,6 @@ import com.recruiters.repository.ApplicantRepository;
 import com.recruiters.repository.BidRepository;
 import com.recruiters.repository.DealRepository;
 import com.recruiters.repository.EmployerRepository;
-import com.recruiters.repository.RepositoryException;
 import com.recruiters.repository.UserRepository;
 import com.recruiters.repository.VacancyRepository;
 import org.apache.log4j.Logger;
@@ -71,8 +70,8 @@ public class EmployerService {
 
             return dealRepository.findActiveDealsByEmployerId(employerId);
         } catch (Exception e) {
-            log.warn("Service general exception: " + e);
-            throw new ServiceException("Service general exception: ", e);
+            log.warn("Employer Service general exception: " + e);
+            throw new ServiceException("Employer Service general exception: ", e);
         }
     }
 
@@ -90,11 +89,11 @@ public class EmployerService {
                 return deal;
             }
         } catch (Exception e) {
-            log.warn("Service general exception: " + e);
-            throw new ServiceException("Service general exception: ", e);
+            log.warn("Employer Service general exception: " + e);
+            throw new ServiceException("Employer Service general exception: ", e);
         }
-        log.warn("Service security exception: deal belongs to different employer");
-        throw new SecurityException("Service security exception: " +
+        log.warn("Employer Service security exception: deal belongs to different employer");
+        throw new SecurityException("Employer Service security exception: " +
                 " deal belongs to different employer");
     }
 
@@ -114,11 +113,11 @@ public class EmployerService {
                 return applicant;
             }
         } catch (Exception e) {
-            log.warn("Service general exception: " + e);
-            throw new ServiceException("Service general exception: ", e);
+            log.warn("Employer Service general exception: " + e);
+            throw new ServiceException("Employer Service general exception: ", e);
         }
-        log.warn("Service security exception: applicantId and employerId belongs to different employers");
-        throw new SecurityException("Service security exception: " +
+        log.warn("Employer Service security exception: applicantId and employerId belongs to different employers");
+        throw new SecurityException("Employer Service security exception: " +
                 "applicantId and employerId belongs to different employers");
     }
 
@@ -137,11 +136,11 @@ public class EmployerService {
                 return bidRepository.findBidsByVacancyId(vacancyId);
             }
         } catch (Exception e) {
-            log.warn("Service general exception: " + e);
-            throw new ServiceException("Service general exception: ", e);
+            log.warn("Employer Service general exception: " + e);
+            throw new ServiceException("Employer Service general exception: ", e);
         }
-        log.warn("Service security exception: employerId and vacancyId belongs to different employers");
-        throw new SecurityException("Service security exception: " +
+        log.warn("Employer Service security exception: employerId and vacancyId belongs to different employers");
+        throw new SecurityException("Employer Service security exception: " +
                 "employerId and vacancyId belongs to different employers");
     }
 
@@ -160,11 +159,11 @@ public class EmployerService {
                 return bid;
             }
         } catch (Exception e) {
-            log.warn("Service general exception: " + e);
-            throw new ServiceException("Service general exception: ", e);
+            log.warn("Employer Service general exception: " + e);
+            throw new ServiceException("Employer Service general exception: ", e);
         }
-        log.warn("Service security exception: bidId and employerId belongs to different employers");
-        throw new SecurityException("Service security exception: employerId is null");
+        log.warn("Employer Service security exception: bidId and employerId belongs to different employers");
+        throw new SecurityException("Employer Service security exception: employerId is null");
     }
 
     /**
@@ -178,8 +177,8 @@ public class EmployerService {
 
             return vacancyRepository.findVacanciesByEmployerId(employerId);
         } catch (Exception e) {
-            log.warn("Service general exception: " + e);
-            throw new ServiceException("Service general exception: ", e);
+            log.warn("Employer Service general exception: " + e);
+            throw new ServiceException("Employer Service general exception: ", e);
         }
     }
 
@@ -198,11 +197,11 @@ public class EmployerService {
                 return vacancy;
             }
         } catch (Exception e) {
-            log.warn("Service general exception: " + e);
-            throw new ServiceException("Service general exception: ", e);
+            log.warn("Employer Service general exception: " + e);
+            throw new ServiceException("Employer Service general exception: ", e);
         }
-        log.warn("Service security exception: vacancyId and employerId belongs to different employers");
-        throw new SecurityException("Service security exception: " +
+        log.warn("Employer Service security exception: vacancyId and employerId belongs to different employers");
+        throw new SecurityException("Employer Service security exception: " +
                 "vacancyId and employerId belongs to different employers");
     }
 
@@ -222,11 +221,11 @@ public class EmployerService {
             if (status != null) {
                 txManager.rollback(status);
             }
-            log.warn("Service general exception: " + e);
-            throw new ServiceException("Service general exception: ", e);
+            log.warn("Employer Service general exception: " + e);
+            throw new ServiceException("Employer Service general exception: ", e);
         }
-        log.warn("Service security exception: bidId and employerId belongs to different employers");
-        throw new SecurityException("Service security exception: " +
+        log.warn("Employer Service security exception: bidId and employerId belongs to different employers");
+        throw new SecurityException("Employer Service security exception: " +
                 "bidId and employerId belongs to different employers");
     }
 
@@ -239,11 +238,11 @@ public class EmployerService {
                 return bidId;
             }
         } catch (Exception e) {
-            log.warn("Service general exception: " + e);
-            throw new ServiceException("Service general exception: ", e);
+            log.warn("Employer Service general exception: " + e);
+            throw new ServiceException("Employer Service general exception: ", e);
         }
-        log.warn("Service security exception: bidId and employerId belongs to different employers");
-        throw new SecurityException("Service security exception: " +
+        log.warn("Employer Service security exception: bidId and employerId belongs to different employers");
+        throw new SecurityException("Employer Service security exception: " +
                 "bidId and employerId belongs to different employers");
     }
 
@@ -257,8 +256,8 @@ public class EmployerService {
 
             return userRepository.update(employer.getUser());
         } catch (Exception e) {
-            log.warn("Service general exception: " + e);
-            throw new ServiceException("Service general exception: ", e);
+            log.warn("Employer Service general exception: " + e);
+            throw new ServiceException("Employer Service general exception: ", e);
         }
     }
 
@@ -272,8 +271,8 @@ public class EmployerService {
 
             return employerRepository.findById(employerId);
         } catch (Exception e) {
-            log.warn("Service general exception: " + e);
-            throw new ServiceException("Service general exception: ", e);
+            log.warn("Employer Service general exception: " + e);
+            throw new ServiceException("Employer Service general exception: ", e);
         }
     }
 
@@ -293,11 +292,12 @@ public class EmployerService {
                         ApplicantStatus.APPROVED, employerId);
             }
         } catch (Exception e) {
-            log.warn("Service general exception: " + e);
-            throw new ServiceException("Service general exception: ", e);
+            log.warn("Employer Service general exception: " + e);
+            throw new ServiceException("Employer Service general exception: ", e);
         }
-        log.warn("Service security exception: employerId and applicantId belongs to different employers");
-        throw new SecurityException("Service security exception: " +
+        log.warn("Employer Service security exception: " +
+                "employerId and applicantId belongs to different employers");
+        throw new SecurityException("Employer Service security exception: " +
                 "employerId and applicantId belongs to different employers");
     }
 
@@ -317,11 +317,12 @@ public class EmployerService {
                         ApplicantStatus.REJECTED, employerId);
             }
         } catch (Exception e) {
-            log.warn("Service general exception: " + e);
-            throw new ServiceException("Service general exception: ", e);
+            log.warn("Employer Service general exception: " + e);
+            throw new ServiceException("Employer Service general exception: ", e);
         }
-        log.warn("Service security exception: employerId and applicantId belongs to different employers");
-        throw new SecurityException("Service security exception: " +
+        log.warn("Employer Employer Service security exception: " +
+                "employerId and applicantId belongs to different employers");
+        throw new SecurityException("Employer Service security exception: " +
                 "employerId and applicantId belongs to different employers");
     }
 }
