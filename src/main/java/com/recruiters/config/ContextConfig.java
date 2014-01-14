@@ -18,11 +18,11 @@ import java.io.File;
 @Order(2)
 public class ContextConfig extends AbstractAnnotationConfigDispatcherServletInitializer {
 
-    /** Max upload file size 10 MB */
-    private static final int MAX_UPLOAD_FILE_SIZE = 10485760;
-
-    /** Upload path */
-    private static final String UPLOAD_PATH = "/home/sevenbits/Downloads";
+//    /** Max upload file size 10 MB */
+//    private static final int MAX_UPLOAD_FILE_SIZE = 10485760;
+//
+//    /** Upload path */
+//    private static final String UPLOAD_PATH = "/Users/admin/Downloads/";
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
@@ -52,15 +52,8 @@ public class ContextConfig extends AbstractAnnotationConfigDispatcherServletInit
 
     @Override
     protected void customizeRegistration(final ServletRegistration.Dynamic registration) {
-        File uploadDirectory = new File(UPLOAD_PATH);
         MultipartConfigElement multipartConfigElement =
-                new MultipartConfigElement(
-                        uploadDirectory.getAbsolutePath(),
-                        MAX_UPLOAD_FILE_SIZE,
-                        MAX_UPLOAD_FILE_SIZE * 2,
-                        MAX_UPLOAD_FILE_SIZE / 2
-                );
-
-        registration.setMultipartConfig(multipartConfigElement);
+                new MultipartConfigElement("");
+       registration.setMultipartConfig(multipartConfigElement);
     }
 }

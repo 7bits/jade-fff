@@ -16,6 +16,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 
 import javax.inject.Inject;
+import javax.servlet.MultipartConfigElement;
+import java.io.File;
 
 @Configuration
 @PropertySource("classpath:server.properties")
@@ -51,11 +53,8 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         ReloadableResourceBundleMessageSource messageSource =
                 new ReloadableResourceBundleMessageSource();
         messageSource.setBasenames("/WEB-INF/messages/messages");
-        // if true, the key of the message will be displayed if the key is not
-        // found, instead of throwing a NoSuchMessageException
         messageSource.setUseCodeAsDefaultMessage(true);
         messageSource.setDefaultEncoding("UTF-8");
-        // # -1 : never reload, 0 always reload
         messageSource.setCacheSeconds(0);
         return messageSource;
     }

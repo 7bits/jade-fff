@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -17,7 +18,7 @@ import javax.inject.Inject;
 
 
 @Configuration
-@PropertySource({ "classpath:jdbc.properties", "classpath:hibernate.properties" })
+@PropertySource("classpath:jdbc.properties")
 @EnableJpaRepositories("com.recruiters")
 @ComponentScan("com.recruiters")
 @MapperScan("com.recruiters.repository.mapper")
@@ -25,7 +26,7 @@ import javax.inject.Inject;
 public class MyBatisConfig {
 
     @Inject
-    private org.springframework.core.env.Environment environment;
+    private Environment environment;
 
     @Bean
     public javax.sql.DataSource dataSource() {
