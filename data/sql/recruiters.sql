@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 28, 2013 at 12:56 PM
+-- Generation Time: Jan 14, 2014 at 06:59 PM
 -- Server version: 5.5.34
 -- PHP Version: 5.3.10-1ubuntu3.8
 
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `applicants` (
   `status` varchar(50) NOT NULL DEFAULT 'IN_PROGRESS',
   PRIMARY KEY (`id`),
   KEY `deal` (`deal_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `applicants`
@@ -49,7 +49,8 @@ CREATE TABLE IF NOT EXISTS `applicants` (
 
 INSERT INTO `applicants` (`id`, `deal_id`, `first_name`, `last_name`, `description`, `sex`, `age`, `resume_file`, `test_answer_file`, `status`) VALUES
 (1, 1, 'Александр', 'Иванов', 'Программирую даже во сне', 'Мужской', 34, '#', '#', 'IN_PROGRESS'),
-(2, 1, 'Павел', 'Никифоров', 'Круто программирует на всём', 'Мужской', 45, '#', '#', 'IN_PROGRESS');
+(2, 1, 'Павел', 'Никифоров', 'Круто программирует на всём', 'Мужской', 45, '#', '#', 'IN_PROGRESS'),
+(3, 2, 'Михаил', 'Луценко', 'Чиню любые трубы: пластик', 'Мужской', 42, '#', '#', 'IN_PROGRESS');
 
 -- --------------------------------------------------------
 
@@ -67,7 +68,7 @@ CREATE TABLE IF NOT EXISTS `bids` (
   PRIMARY KEY (`id`),
   KEY `vacancy_id` (`vacancy_id`),
   KEY `recruiter_id` (`recruiter_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `bids`
@@ -78,7 +79,8 @@ INSERT INTO `bids` (`id`, `vacancy_id`, `recruiter_id`, `message`, `status`) VAL
 (2, 1, 2, 'Какие то другие условия.', 'ACTIVE'),
 (3, 1, 3, 'Условия Условия Условия Условия Условия Условия Условия Условия " +                 "Условия Условия Условия Условия Условия Условия Условия Условия Условия Условия', 'ACTIVE'),
 (4, 2, 1, 'Кто не согласен с условиями тот не прав. Условия такие хорошие', 'ACTIVE'),
-(5, 2, 2, 'Грех не отказаться от условий под дулом пистолета', 'ACTIVE');
+(5, 2, 2, 'Грех не отказаться от условий под дулом пистолета', 'ACTIVE'),
+(6, 4, 1, 'Блабла', 'ACTIVE');
 
 -- --------------------------------------------------------
 
@@ -95,14 +97,15 @@ CREATE TABLE IF NOT EXISTS `deals` (
   PRIMARY KEY (`id`),
   KEY `vacancy_id` (`vacancy_id`),
   KEY `recruiter_id` (`recruiter_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `deals`
 --
 
 INSERT INTO `deals` (`id`, `vacancy_id`, `recruiter_id`, `status`) VALUES
-(1, 3, 1, 'IN_PROGRESS');
+(1, 3, 1, 'IN_PROGRESS'),
+(2, 2, 2, 'IN_PROGRESS');
 
 -- --------------------------------------------------------
 
@@ -172,13 +175,13 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `password`, `firstname`, `lastname`) VALUES
-(1, 'recruiter', '123123', 'Павел', 'Петров'),
-(2, 'employer', '123123', 'Артём', 'Иванов'),
-(3, 'test1', 'test1', 'Иван', 'Петров'),
-(4, 'test2', 'test2', 'Владимир', 'Потанин'),
-(5, 'test3', 'test3', 'Алексей', 'Никонов'),
-(6, 'test4', 'test4', 'Игорь', 'Голованов');
+INSERT INTO `users` (`id`, `username`, `password`, `firstname`, `lastname`, `description`) VALUES
+(1, 'recruiter', '123123', 'Павел', 'Потапов', 'Лучший рекрутер на правом берегу Иртыша '),
+(2, 'employer', '123123', 'Артём', 'Иванов', 'ОАО "Шанс"'),
+(3, 'test1', 'test1', 'Алексей', 'Пивоваров', 'Нахожу новых кандидатов быстрее света'),
+(4, 'test2', 'test2', 'Владимир', 'Афанасьев', 'Рекрутерское агенство "Новая работа"'),
+(5, 'test3', 'test3', 'Михаил', 'Никонов', 'ИП Никонов М.В.'),
+(6, 'test4', 'test4', 'Игорь', 'Голованов', 'ООО "Верхняя Пышма"');
 
 -- --------------------------------------------------------
 
@@ -199,7 +202,7 @@ CREATE TABLE IF NOT EXISTS `vacancies` (
   `status` varchar(50) NOT NULL DEFAULT 'ACTIVE',
   PRIMARY KEY (`id`),
   KEY `employer_id` (`employer_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `vacancies`
@@ -209,7 +212,9 @@ INSERT INTO `vacancies` (`id`, `employer_id`, `title`, `description`, `salary`, 
 (1, 1, 'Лесоруб', 'Должен уметь рубить лес', '10тыс.-15тыс. руб.', '2013-12-28 04:36:42', '2014-01-08 17:00:00', '#', 'ACTIVE'),
 (2, 1, 'Сантехник', 'Не должен пить!', '20 000 руб', '2013-12-28 04:36:40', '2014-01-30 17:00:00', '#', 'ACTIVE'),
 (3, 1, 'Программист', 'Уметь программировать на С++', '100500 руб.', '2013-12-28 04:36:38', '2014-01-14 17:00:00', '#', 'ACTIVE'),
-(4, 1, 'Банщик', 'Парит и шпарит', 'берет банными вениками', '2013-12-28 04:36:38', '2014-01-14 17:00:00', '#', 'ACTIVE');
+(4, 2, 'Банщик', 'Парит и шпарит', 'берет банными вениками', '2014-01-14 11:43:41', '2014-01-14 17:00:00', '#', 'ACTIVE'),
+(5, 2, 'Водитель', 'Водитель маршрутного такси на полный рабочий день.', '30000 - 40000', '2014-01-14 11:44:43', '2014-01-30 17:00:00', '#', 'ACTIVE'),
+(6, 3, 'Токарь', 'Токарь 3-го разряда', '15000-20000', '2014-01-14 11:45:38', '2014-01-30 17:00:00', '#', 'ACTIVE');
 
 --
 -- Constraints for dumped tables
