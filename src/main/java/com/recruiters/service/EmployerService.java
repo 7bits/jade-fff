@@ -105,13 +105,21 @@ public class EmployerService {
      * @param employerId     Id of employer
      * @return Applicant POJO instance
      */
-    public Applicant findApplicant(final Long applicantId, final Long employerId) {
+    public Applicant findApplicant(final Long applicantId, final Long employerId)
+            throws  SecurityException, ServiceException {
+        try {
+            Applicant applicant = applicantRepository.findById(applicantId);
+            if (applicant.getDeal().getVacancy().getEmployer().getId().equals(employerId)) {
 
-        Applicant applicant = applicantRepository.findById(applicantId);
-        if (applicant.getDeal().getVacancy().getEmployer().getId().equals(employerId)) {
-            return applicant;
+                return applicant;
+            }
+        } catch (Exception e) {
+            log.warn("Service general exception: " + e);
+            throw new ServiceException("Service general exception: ", e);
         }
-        return null;
+        log.warn("Service security exception: applicantId and employerId belongs to different employers");
+        throw new SecurityException("Service security exception: " +
+                "applicantId and employerId belongs to different employers");
     }
 
     /**
@@ -132,8 +140,9 @@ public class EmployerService {
             log.warn("Service general exception: " + e);
             throw new ServiceException("Service general exception: ", e);
         }
-        log.warn("Service security exception: bidId and vacancyId belongs to different employers");
-        throw new SecurityException("Service security exception: employerId is null");
+        log.warn("Service security exception: employerId and vacancyId belongs to different employers");
+        throw new SecurityException("Service security exception: " +
+                "employerId and vacancyId belongs to different employers");
     }
 
     /**
@@ -274,10 +283,22 @@ public class EmployerService {
      * @param employerId       Id of employer
      * @return true if success, otherwise false
      */
-    public Boolean applyApplicant(final Long applicantId, final Long employerId) {
-        //TODO deal should change its state or smth.
+    public Long applyApplicant(final Long applicantId, final Long employerId)
+            throws SecurityException, ServiceException {
+        try {
+            Applicant applicant = applicantRepository.findById(applicantId);
+            if (applicant.getDeal().getVacancy().getEmployer().getId().equals(employerId)) {
 
-        return applicantRepository.updateStatus(applicantId, ApplicantStatus.APPROVED, employerId);
+                return applicantRepository.updateStatus(applicantId,
+                        ApplicantStatus.APPROVED, employerId);
+            }
+        } catch (Exception e) {
+            log.warn("Service general exception: " + e);
+            throw new ServiceException("Service general exception: ", e);
+        }
+        log.warn("Service security exception: employerId and applicantId belongs to different employers");
+        throw new SecurityException("Service security exception: " +
+                "employerId and applicantId belongs to different employers");
     }
 
     /**
@@ -286,8 +307,21 @@ public class EmployerService {
      * @param employerId       Id of employer
      * @return true if success, otherwise false
      */
-    public Boolean declineApplicant(final Long applicantId, final Long employerId) {
+    public Long declineApplicant(final Long applicantId, final Long employerId)
+            throws SecurityException, ServiceException {
+        try {
+            Applicant applicant = applicantRepository.findById(applicantId);
+            if (applicant.getDeal().getVacancy().getEmployer().getId().equals(employerId)) {
 
-        return applicantRepository.updateStatus(applicantId, ApplicantStatus.REJECTED, employerId);
+                return applicantRepository.updateStatus(applicantId,
+                        ApplicantStatus.REJECTED, employerId);
+            }
+        } catch (Exception e) {
+            log.warn("Service general exception: " + e);
+            throw new ServiceException("Service general exception: ", e);
+        }
+        log.warn("Service security exception: employerId and applicantId belongs to different employers");
+        throw new SecurityException("Service security exception: " +
+                "employerId and applicantId belongs to different employers");
     }
 }

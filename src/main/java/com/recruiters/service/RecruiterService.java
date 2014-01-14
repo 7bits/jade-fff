@@ -106,8 +106,11 @@ public class RecruiterService {
     }
 
     public Applicant findApplicant(final Long applicantId) {
-
-        return this.getApplicantRepository().findById(applicantId);
+        try {
+            return this.getApplicantRepository().findById(applicantId);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     /**
