@@ -1,10 +1,8 @@
 package com.recruiters.repository.mapper;
 
 import com.recruiters.model.Vacancy;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.Select;
+import com.recruiters.model.VacancyStatus;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -37,6 +35,7 @@ public interface VacancyMapper {
             "INNER JOIN employers ON employers.id = vacancies.employer_id " +
             "INNER JOIN users  ON employers.user_id=users.id " +
             "WHERE vacancies.id = #{vacancyId} " +
+            "AND status like 'ACTIVE' " +
             "AND EXISTS (SELECT * FROM bids b WHERE b.vacancy_id = vacancies.id AND b.recruiter_id = #{recruiterId})")
     @Results({
             @Result(column = "id", property = "id"),
@@ -56,7 +55,7 @@ public interface VacancyMapper {
             "FROM vacancies " +
             "INNER JOIN employers ON employers.id = vacancies.employer_id " +
             "INNER JOIN users  ON employers.user_id=users.id " +
-            "WHERE status='ACTIVE' " +
+            "WHERE vacancies.status like 'ACTIVE' " +
             "AND NOT EXISTS (SELECT * FROM bids b WHERE b.vacancy_id = vacancies.id AND b.recruiter_id = #{recruiterId}) ")
     @Results({
             @Result(column = "id", property = "id"),
@@ -79,6 +78,7 @@ public interface VacancyMapper {
             "INNER JOIN users  ON employers.user_id=users.id " +
             "LEFT JOIN bids ON bids.vacancy_id=vacancies.id AND bids.status like 'ACTIVE' " +
             "WHERE vacancies.employer_id=#{employerId} " +
+            "AND vacancies.status like 'ACTIVE' " +
             "GROUP BY vacancies.id")
     @Results({
             @Result(column = "id", property = "id"),
@@ -94,4 +94,7 @@ public interface VacancyMapper {
             @Result(column = "lastname", property = "employer.user.lastName")
     })
     List<Vacancy> findVacanciesByEmployerId(final Long employerId);
+
+    @Update("UPDATE vacancies SET status = #{status} WHERE id = #{vacancyId} ")
+    void updateStatus(@Param(value = "vacancyId") final Long vacancyId, @Param(value = "status") final VacancyStatus status);
 }

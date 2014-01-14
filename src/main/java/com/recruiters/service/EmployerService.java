@@ -1,13 +1,6 @@
 package com.recruiters.service;
 
-import com.recruiters.model.Applicant;
-import com.recruiters.model.ApplicantStatus;
-import com.recruiters.model.Bid;
-import com.recruiters.model.BidStatus;
-import com.recruiters.model.Deal;
-import com.recruiters.model.Employer;
-import com.recruiters.model.User;
-import com.recruiters.model.Vacancy;
+import com.recruiters.model.*;
 import com.recruiters.repository.ApplicantRepository;
 import com.recruiters.repository.BidRepository;
 import com.recruiters.repository.DealRepository;
@@ -290,14 +283,25 @@ public class EmployerService {
      */
     public Long applyApplicant(final Long applicantId, final Long employerId)
             throws SecurityException, ServiceException {
+        TransactionStatus status = null;
         try {
             Applicant applicant = applicantRepository.findById(applicantId);
             if (applicant.getDeal().getVacancy().getEmployer().getId().equals(employerId)) {
-
-                return applicantRepository.updateStatus(applicantId,
-                        ApplicantStatus.APPROVED, employerId);
+                status = txManager.getTransaction(def);
+                applicantRepository.updateStatus(
+                        applicantId,
+                        ApplicantStatus.APPROVED,
+                        employerId
+                );
+                vacancyRepository.updateStatus(applicant.getDeal().getVacancy().getId(), VacancyStatus.ARCHIVED);
+                dealRepository.updateStatus(applicant.getDeal().getId(), DealStatus.CLOSED);
+                txManager.commit(status);
+                return applicantId;
             }
         } catch (Exception e) {
+            if (status != null) {
+                txManager.rollback(status);
+            }
             log.warn("Employer Service general exception: ", e);
             throw new ServiceException("Employer Service general exception: ", e);
         }

@@ -1,6 +1,7 @@
 package com.recruiters.repository;
 
 import com.recruiters.model.Vacancy;
+import com.recruiters.model.VacancyStatus;
 import com.recruiters.repository.mapper.VacancyMapper;
 import org.mybatis.spring.MyBatisSystemException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,6 +91,21 @@ public class VacancyRepository {
             throw new RepositoryException("General database error: ", e);
         }
     }
+
+    public Long updateStatus(final Long vacancyId, final VacancyStatus status)
+            throws RepositoryException {
+        if (vacancyId == null || status == null) {
+            throw new RepositoryException("vacancyId or status is null");
+        }
+        try {
+            vacancyMapper.updateStatus(vacancyId, status);
+
+            return vacancyId;
+        } catch (Exception e) {
+            throw new RepositoryException("General database error: ", e);
+        }
+    }
+
 
     public VacancyMapper getVacancyMapper() {
         return vacancyMapper;

@@ -8,7 +8,9 @@ public enum DealStatus {
     /** Status - in progress */
     IN_PROGRESS (0, "In progress"),
     /** Status - fired */
-    FIRED (1, "Fired");
+    FIRED (1, "Fired"),
+    /** Status - closed */
+    CLOSED (2, "Closed");
 
     private final int order;
     private final String description;

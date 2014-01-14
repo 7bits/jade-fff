@@ -1,12 +1,8 @@
 package com.recruiters.repository.mapper;
 
 import com.recruiters.model.Deal;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Many;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.Select;
+import com.recruiters.model.DealStatus;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -100,4 +96,7 @@ public interface DealMapper {
     @Insert("INSERT INTO deals (vacancy_id, recruiter_id, status) " +
             "SELECT v.id, b.recruiter_id, \"IN_PROGRESS\" FROM vacancies v inner join bids b on v.id = b.vacancy_id WHERE b.id = #{bidId}")
     void create(final Long bidId);
+
+    @Update("UPDATE deals SET status = #{status} WHERE id = #{dealId} ")
+    void updateStatus(@Param(value = "dealId") final Long dealId, @Param(value = "status") final DealStatus status);
 }

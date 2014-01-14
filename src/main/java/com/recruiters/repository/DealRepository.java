@@ -1,6 +1,7 @@
 package com.recruiters.repository;
 
 import com.recruiters.model.Deal;
+import com.recruiters.model.DealStatus;
 import com.recruiters.repository.mapper.DealMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -72,6 +73,21 @@ public class DealRepository {
             throw new RepositoryException("General database error: ", e);
         }
     }
+
+    public Long updateStatus(final Long dealId, final DealStatus status)
+            throws RepositoryException {
+        if (dealId == null || status == null) {
+            throw new RepositoryException("dealId or status is null");
+        }
+        try {
+            dealMapper.updateStatus(dealId, status);
+
+            return dealId;
+        } catch (Exception e) {
+            throw new RepositoryException("General database error: ", e);
+        }
+    }
+
 
     public DealMapper getDealMapper() {
         return dealMapper;
