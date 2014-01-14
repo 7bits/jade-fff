@@ -1,7 +1,9 @@
 package com.recruiters.web.controller.recruiter;
 
+import com.recruiters.model.Deal;
 import com.recruiters.model.User;
-import com.recruiters.service.RecruiterService;
+import com.recruiters.service.*;
+import com.recruiters.service.SecurityException;
 import com.recruiters.web.controller.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Controller Class for R6 "Show in progress vacancy"
@@ -24,12 +27,20 @@ public class ShowInProgressVacancy {
     private RecruiterService recruiterService = null;
 
     @RequestMapping(value = "recruiter-show-in-progress-vacancy/{dealId}", method = RequestMethod.GET)
-    public ModelAndView showInProgressVacancy(@PathVariable final Long dealId, final HttpServletRequest request) {
-
+    public ModelAndView showInProgressVacancy(
+            @PathVariable final Long dealId,
+            final HttpServletRequest request,
+            final HttpServletResponse response
+    ) throws Exception {
         ModelAndView vacancyInProgress = new ModelAndView("recruiter/recruiter-show-in-progress-vacancy.jade");
-        User user = userUtils.getCurrentUser(request);
-        if (user.getRecruiterId() != null) {
-            vacancyInProgress.addObject("deal", this.getRecruiterService().findDealForRecruiter(dealId, user.getRecruiterId()));
+        try {
+            User user = userUtils.getCurrentUser(request);
+            Deal deal = recruiterService.findDealForRecruiter(dealId, user.getRecruiterId());
+            vacancyInProgress.addObject("deal", deal);
+        } catch (ServiceException e) {
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        } catch (SecurityException e) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN);
         }
 
         return vacancyInProgress;

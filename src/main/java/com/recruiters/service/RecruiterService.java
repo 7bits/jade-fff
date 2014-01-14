@@ -12,7 +12,6 @@ import com.recruiters.repository.DealRepository;
 import com.recruiters.repository.EmployerRepository;
 import com.recruiters.repository.FileRepository;
 import com.recruiters.repository.RecruiterRepository;
-import com.recruiters.repository.RepositoryException;
 import com.recruiters.repository.UserRepository;
 import com.recruiters.repository.VacancyRepository;
 import org.apache.log4j.Logger;
@@ -127,9 +126,21 @@ public class RecruiterService {
      * @param dealId  Id of deal
      * @return vacancy description
      */
-    public Deal findDealForRecruiter(final Long dealId, final Long recruiterId) {
-
-        return this.getDealRepository().findByDealIdAndRecruiterId(dealId, recruiterId);
+    public Deal findDealForRecruiter(final Long dealId, final Long recruiterId)
+        throws SecurityException, ServiceException {
+            try {
+                Deal deal = dealRepository.findById(dealId);
+                if (deal.getRecruiter().getId().equals(recruiterId)) {
+                    return deal;
+                }
+            } catch (Exception e) {
+                log.warn("Recruiter Service general exception: ", e);
+                throw new ServiceException("Recruiter Service general exception: ", e);
+            }
+            log.warn("Recruiter Service security exception: " +
+                    "dealId and recruiterId belongs to different recruiter");
+            throw new SecurityException("Recruiter Service security exception: " +
+                    "dealId and recruiterId belongs to different recruiter");
     }
 
     public Applicant findApplicant(final Long applicantId, final Long recruiterId)

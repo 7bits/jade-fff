@@ -19,53 +19,29 @@ public interface DealMapper {
             "vacancies.id as vacancy_id, vacancies.employer_id, vacancies.title, " +
             "vacancies.description, vacancies.salary, vacancies.creation_date, " +
             "recruiters.id as recruiter_id, " +
-            "users.firstname, users.lastname " +
+            "u1.firstname as recruiter_firstname, u1.lastname as recruiter_lastname, " +
+            "u2.firstname as employer_firstname, u2.lastname as employer_lastname " +
             "FROM deals " +
             "INNER JOIN vacancies ON vacancies.id=deals.vacancy_id " +
             "INNER JOIN recruiters ON recruiters.id=deals.recruiter_id " +
             "INNER JOIN employers ON employers.id = vacancies.employer_id " +
-            "INNER JOIN users ON employers.user_id=users.id " +
-            "WHERE deals.id=#{dealId} and recruiters.id=#{recruiterId}")
-    @Results({
-            @Result(column = "id", property = "id", javaType = Long.class),
-            @Result(column = "status", property = "status"),
-            @Result(column = "vacancy_id", property = "vacancy.id"),
-            @Result(column = "employer_id", property = "vacancy.employer.id"),
-            @Result(column = "title", property = "vacancy.title"),
-            @Result(column = "description", property = "vacancy.description"),
-            @Result(column = "salary", property = "vacancy.salary"),
-            @Result(column = "creation_date", property = "vacancy.creationDate"),
-            @Result(column = "recruiter_id", property = "recruiter.id"),
-            @Result(column = "firstname", property = "vacancy.employer.user.firstName"),
-            @Result(column = "lastname", property = "vacancy.employer.user.lastName"),
-            @Result(property = "applicants", column = "id", javaType = List.class,
-                    many = @Many(select = "com.recruiters.repository.mapper.ApplicantMapper.findApplicantsByDealId"))
-    })
-    Deal findByDealIdAndRecruiterId(@Param(value = "dealId") final Long dealId, @Param(value = "recruiterId") final Long recruiterId);
-
-    @Select("SELECT deals.id, deals.status, " +
-            "vacancies.id as vacancy_id, vacancies.employer_id, vacancies.title, " +
-            "vacancies.description, vacancies.salary, vacancies.creation_date, " +
-            "recruiters.id as recruiter_id, " +
-            "users.firstname, users.lastname " +
-            "FROM deals " +
-            "INNER JOIN vacancies ON vacancies.id=deals.vacancy_id " +
-            "INNER JOIN recruiters ON recruiters.id=deals.recruiter_id " +
-            "INNER JOIN employers ON employers.id = vacancies.employer_id " +
-            "INNER JOIN users ON recruiters.user_id=users.id " +
+            "INNER JOIN users u1 ON recruiters.user_id=u1.id " +
+            "INNER JOIN users u2 ON employers.user_id=u2.id " +
             "WHERE deals.id=#{dealId}")
     @Results({
             @Result(column = "id", property = "id", javaType = Long.class),
             @Result(column = "status", property = "status"),
             @Result(column = "vacancy_id", property = "vacancy.id"),
             @Result(column = "employer_id", property = "vacancy.employer.id"),
+            @Result(column = "employer_firstname", property = "vacancy.employer.user.firstName"),
+            @Result(column = "employer_lastname", property = "vacancy.employer.user.lastName"),
             @Result(column = "title", property = "vacancy.title"),
             @Result(column = "description", property = "vacancy.description"),
             @Result(column = "salary", property = "vacancy.salary"),
             @Result(column = "creation_date", property = "vacancy.creationDate"),
             @Result(column = "recruiter_id", property = "recruiter.id"),
-            @Result(column = "firstname", property = "recruiter.user.firstName"),
-            @Result(column = "lastname", property = "recruiter.user.lastName"),
+            @Result(column = "recruiter_firstname", property = "recruiter.user.firstName"),
+            @Result(column = "recruiter_lastname", property = "recruiter.user.lastName"),
             @Result(property = "applicants", column = "id", javaType = List.class,
                     many = @Many(select = "com.recruiters.repository.mapper.ApplicantMapper.findApplicantsByDealId"))
     })

@@ -29,11 +29,6 @@ public class DealRepository {
         }
     }
 
-    public Deal findByDealIdAndRecruiterId(final Long dealId, final Long recruiterId) {
-
-        return dealMapper.findByDealIdAndRecruiterId(dealId, recruiterId);
-    }
-
     /**
      * Lists all active deals for exact Employer
      * @param employerId    Id of employer
