@@ -251,14 +251,20 @@ public class EmployerService {
      * @param employer    Employer POJO instance
      * @return true if update is ok, otherwise false
      */
-    public User saveProfileForEmployer(final Employer employer) throws ServiceException {
+    public User saveProfileForEmployer(final Employer employer, final Long employerId)
+            throws ServiceException, SecurityException {
         try {
-
-            return userRepository.update(employer.getUser());
+            if (employer.getId().equals(employerId)) {
+                return userRepository.update(employer.getUser());
+            }
         } catch (Exception e) {
             log.warn("Employer Service general exception: " + e);
             throw new ServiceException("Employer Service general exception: ", e);
         }
+        log.warn("Employer Service security exception: " +
+                "employer and employerId belongs to different employers");
+        throw new SecurityException("Employer Service security exception: " +
+                "employer and employerId belongs to different employers");
     }
 
     /**

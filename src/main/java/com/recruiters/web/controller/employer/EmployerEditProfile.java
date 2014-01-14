@@ -79,9 +79,11 @@ public class EmployerEditProfile {
         try {
             User user = userUtils.getCurrentUser(request);
             Employer updatedEmployer = employerForm.fillModel(user);
-            employerService.saveProfileForEmployer(updatedEmployer);
+            employerService.saveProfileForEmployer(updatedEmployer, user.getEmployerId());
         } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        } catch (SecurityException e) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN);
         }
 
         return new ModelAndView("redirect:/employer-progress-vacancies-list");
