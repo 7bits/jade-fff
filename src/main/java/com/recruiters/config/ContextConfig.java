@@ -10,19 +10,12 @@ import javax.servlet.Filter;
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRegistration;
-import java.io.File;
 
 /**
  *  Second order configs
  */
 @Order(2)
 public class ContextConfig extends AbstractAnnotationConfigDispatcherServletInitializer {
-
-//    /** Max upload file size 10 MB */
-//    private static final int MAX_UPLOAD_FILE_SIZE = 10485760;
-//
-//    /** Upload path */
-//    private static final String UPLOAD_PATH = "/Users/admin/Downloads/";
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
