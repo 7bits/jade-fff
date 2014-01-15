@@ -39,22 +39,31 @@ Architecture
 As this application were build with DDD approach we will explain its architecture from frontend layer to backend
  up to repository backend layer: the same way it was building.
 
-Frontend:
+## Frontend
 
-Jade Templates
+### Jade Templates
 We've used Jade Templates instead of JSP because Jade is more modern technology saving your time on duplicating
   XML-like dialect which is too excessive for human use. As disadvantage you loose all JSTL tags and should
   implement any of them if you need in your application and provide a way Java could interact with them from
   templates.
 
-CSS and CoffeeScript
+### CSS and CoffeeScript
 It's a simple and fast alternative to CSS and Javascript having no drawbacks except need of compiling on every
  application rebuild.
 
-Bootstrap
+### Bootstrap
 Bootstrap is nice for building demonstration applications until while design is not ready for production. It
  looks fine and usually there are no issues with moving from it to production-ready design.
 
-Backend:
+## Backend
+
+### Java Spring
+Blah.
+
+### Spring Security
+Blah.
+
+### MyBatis
+Blah.
 
 
