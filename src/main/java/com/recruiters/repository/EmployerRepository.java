@@ -20,8 +20,8 @@ public class EmployerRepository {
      * Find and return employer instance by its id
      * @param employerId    Id of recruiter
      * @return Employer instance
-     * @throws RepositoryException if input parameters are incorrect or there
-     * are any technical issues
+     * @throws RepositoryException if input parameter is incorrect or there
+     * were any technical issues
      */
     public Employer findById(final Long employerId) throws RepositoryException {
         if (employerId == null) {
