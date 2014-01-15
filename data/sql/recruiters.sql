@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS `bids` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `vacancy_id` bigint(20) NOT NULL,
   `recruiter_id` bigint(20) NOT NULL,
-  `message` varchar(255) NOT NULL,
+  `message` varchar(255) DEFAULT NULL,
   `status` varchar(50) NOT NULL DEFAULT 'ACTIVE',
   PRIMARY KEY (`id`),
   KEY `vacancy_id` (`vacancy_id`),

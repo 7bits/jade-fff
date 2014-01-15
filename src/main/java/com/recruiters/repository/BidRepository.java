@@ -73,8 +73,8 @@ public class BidRepository {
             final Long vacancyId,
             final String message
     ) throws RepositoryException {
-        if (recruiterId == null || vacancyId == null || message == null) {
-            throw new RepositoryException("recruiterId or vacancyId or message is null");
+        if (recruiterId == null || vacancyId == null) {
+            throw new RepositoryException("recruiterId or vacancyId is null");
         }
         try {
             bidMapper.create(recruiterId, vacancyId, message);
