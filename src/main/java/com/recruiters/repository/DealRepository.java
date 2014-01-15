@@ -102,7 +102,7 @@ public class DealRepository {
     }
 
     /**
-     * Set new status for deal
+     * Update status of Deal
      * @param dealId    Id of deal
      * @param status    New status of deal
      * @return Id of deal, which status we've modified

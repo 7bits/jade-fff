@@ -106,7 +106,7 @@ public class VacancyRepository {
     }
 
     /**
-     * Update Status of vacancy
+     * Update Status of Vacancy
      * @param vacancyId    Id of vacancy
      * @param status       New status
      * @return Id of vacancy updated if there were no any technical issues

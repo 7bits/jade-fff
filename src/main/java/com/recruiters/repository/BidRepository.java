@@ -105,7 +105,7 @@ public class BidRepository {
     }
 
     /**
-     * Set new status for bid
+     * Update status of Bid
      * @param bidId     Id of bid
      * @param status    New status of bid
      * @return Id of bid, which status we've modified
