@@ -33,7 +33,7 @@ public class RecruiterApplicant {
     /** Recruiter Service provides all Recruiter related methods */
     @Autowired
     private RecruiterService recruiterService = null;
-    /** User utils for obtaining any user information */
+    /** User utils for obtaining any session user information */
     @Autowired
     private UserUtils userUtils = null;
     /** Validator for Applicant Form */

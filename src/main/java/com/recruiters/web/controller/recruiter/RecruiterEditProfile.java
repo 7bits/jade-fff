@@ -27,7 +27,7 @@ import javax.validation.Valid;
 @Controller
 public class RecruiterEditProfile {
 
-    /** User utils for obtaining any user information */
+    /** User utils for obtaining any session user information */
     @Autowired
     private UserUtils userUtils = null;
     /** Recruiter Service provides all Recruiter related methods */

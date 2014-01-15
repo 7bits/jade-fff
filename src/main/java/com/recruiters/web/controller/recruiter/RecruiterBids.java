@@ -21,7 +21,7 @@ import java.util.List;
 @Controller
 public class RecruiterBids {
 
-    /** User utils for obtaining any user information */
+    /** User utils for obtaining any session user information */
     @Autowired
     private UserUtils userUtils = null;
     /** Recruiter Service provides all Recruiter related methods */
