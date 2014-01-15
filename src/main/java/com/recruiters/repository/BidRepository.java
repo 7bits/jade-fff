@@ -10,18 +10,22 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * Repository for working with bid
+ * Repository implementing all methods related to
+ * Bid Entity manipulations with MyBatis
  */
 @Repository
 public class BidRepository {
 
+    /** MyBatis Bid Mapper */
     @Autowired
     private BidMapper bidMapper = null;
 
     /**
-     * Get Bid by its id
+     * Find and return bid by its id
      * @param bidId    Id of bid
      * @return Bid POJO instance
+     * @throws RepositoryException if input parameter is incorrect or there
+     * were any technical issues
      */
     public Bid findById(final Long bidId) throws RepositoryException {
         if (bidId == null) {
@@ -36,9 +40,11 @@ public class BidRepository {
     }
 
     /**
-     * Find all bids for exact vacancy
-     * @param vacancyId    Vacancy Id
-     * @return List of Bid POJO instances
+     * Find and return all bids for certain vacancy
+     * @param vacancyId    Id of vacancy
+     * @return List of Bid instances, which belongs to exact vacancy
+     * @throws RepositoryException if input parameter is incorrect or there
+     * were any technical issues
      */
     public List<Bid> findBidsByVacancyId(final Long vacancyId) throws RepositoryException {
         if (vacancyId == null) {
@@ -53,8 +59,11 @@ public class BidRepository {
     }
 
     /**
-     * Method must return list of recruiter bids.
-     * @return
+     * Find and return all  bids for certain recruiter
+     * @param recruiterId    Id of recruiter
+     * @return List of Bid instances, which belongs to exact recruiter
+     * @throws RepositoryException if input parameter is incorrect or there
+     * were any technical issues
      */
     public List<Bid> findBidsByRecruiterId(final Long recruiterId) throws RepositoryException {
         if (recruiterId == null) {
@@ -68,6 +77,16 @@ public class BidRepository {
         }
     }
 
+    /**
+     * Create bid from certain vacancy, applying to it Recruiter
+     * with custom message
+     * @param recruiterId    Id of recruiter
+     * @param vacancyId      Id of vacancy
+     * @param message        Custom message, may be null
+     * @return Id of vacancy which belongs to new bid
+     * @throws RepositoryException if input parameters are incorrect or there
+     * were any technical issues
+     */
     public Long create(
             final Long recruiterId,
             final Long vacancyId,
@@ -85,6 +104,14 @@ public class BidRepository {
         }
     }
 
+    /**
+     * Set new status for bid
+     * @param bidId     Id of bid
+     * @param status    New status of bid
+     * @return Id of bid, which status we've modified
+     * @throws RepositoryException if input parameters are incorrect or there
+     * were any technical issues
+     */
     public Long updateStatus(final Long bidId, final BidStatus status)
             throws RepositoryException {
         if (bidId == null || status == null) {
