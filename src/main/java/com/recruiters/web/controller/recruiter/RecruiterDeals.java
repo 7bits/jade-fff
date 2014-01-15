@@ -21,13 +21,22 @@ import java.util.List;
 @Controller
 public class RecruiterDeals {
 
+    /** User utils for obtaining any session user information */
     @Autowired
     private UserUtils userUtils = null;
+    /** Recruiter Service provides all Recruiter related methods */
     @Autowired
     private RecruiterService recruiterService = null;
     /**
-     * Controller for "in progress vacancies"
-     * @return model and view with list of active vacancies
+     * Controller for "In progress vacancies"
+     * Displays all active deals for current recruiter
+     * @param request        Http Request
+     * @param response       Http Response
+     * @return model and view with list of all current recruiter deals,
+     * Internal Server Error page if something is wrong with obtaining
+     * data due to technical or any other reasons
+     * @throws Exception in very rare circumstances: it should be runtime
+     * or servlet Exception to be thrown
      */
     @RequestMapping(value = "recruiter-active-deals", method = RequestMethod.GET)
     public ModelAndView showMyVacancies(
@@ -52,5 +61,13 @@ public class RecruiterDeals {
 
     public void setRecruiterService(final RecruiterService recruiterService) {
         this.recruiterService = recruiterService;
+    }
+
+    public UserUtils getUserUtils() {
+        return userUtils;
+    }
+
+    public void setUserUtils(final UserUtils userUtils) {
+        this.userUtils = userUtils;
     }
 }

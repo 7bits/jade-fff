@@ -10,18 +10,22 @@ import org.springframework.stereotype.Repository;
 import java.util.*;
 
 /**
- * Repository for working with vacancy
+ * Repository implementing all methods related to
+ * Vacancy Entity manipulations with Mybatis
  */
 @Repository
 public class VacancyRepository {
 
+    /** MyBatis Vacancy Mapper */
     @Autowired
     private VacancyMapper vacancyMapper = null;
 
     /**
-     * Method return vacancy by id
-     * @param vacancyId
-     * @return
+     * Find and return Vacancy instance by its id
+     * @param vacancyId    Id of vacancy
+     * @return Vacancy instance
+     * @throws RepositoryException if input parameter is incorrect or there
+     * were any technical issues
      */
     public Vacancy findById(final Long vacancyId) throws RepositoryException {
         if (vacancyId == null) {
@@ -36,10 +40,13 @@ public class VacancyRepository {
     }
 
     /**
-     * Method return vacancy with active bid by id and recruiter id
-     * @param vacancyId
-     * @param recruiterId
-     * @return
+     * Find and return List of Vacancy instances having bids from
+     * certain recruiter
+     * @param vacancyId      Id of vacancy
+     * @param recruiterId    Id of recruiter
+     * @return List of vacancies having bids from exact recruiter
+     * @throws RepositoryException if input parameters are incorrect or there
+     * were any technical issues
      */
     public Vacancy findWithActiveBidByIdAndRecruiterId(
             final Long vacancyId,
@@ -57,8 +64,12 @@ public class VacancyRepository {
     }
 
     /**
-     * Method must return all vacancies for this recruiter
-     * @return
+     * Find and return List of Vacancy instances available for apply for
+     * this recruiter
+     * @param recruiterId    Id of recruiter
+     * @return List of vacancies with no bids and deals from certain recruiter
+     * @throws RepositoryException if input parameter is incorrect or there
+     * were any technical issues
      */
     public List<Vacancy> findAvailableVacanciesForRecruiter(final Long recruiterId)
             throws RepositoryException {
@@ -74,10 +85,12 @@ public class VacancyRepository {
     }
 
     /**
-     * Find vacancies of exact employer by its id
-     * with count of bids for each
+     * Find and return List of Vacancy instances of certain employer
+     * with filled number of bids for each of it
      * @param employerId    Id of employer
-     * @return List of vacancies
+     * @return List of employers vacancies with count of bids
+     * @throws RepositoryException if input parameter is incorrect or there
+     * were any technical issues
      */
     public List<Vacancy> findVacanciesByEmployerId(final Long employerId)
             throws RepositoryException {
@@ -92,6 +105,14 @@ public class VacancyRepository {
         }
     }
 
+    /**
+     * Update Status of Vacancy
+     * @param vacancyId    Id of vacancy
+     * @param status       New status
+     * @return Id of vacancy updated if there were no any technical issues
+     * @throws RepositoryException if input parameters are incorrect or there
+     * were any technical issues
+     */
     public Long updateStatus(final Long vacancyId, final VacancyStatus status)
             throws RepositoryException {
         if (vacancyId == null || status == null) {
@@ -105,7 +126,6 @@ public class VacancyRepository {
             throw new RepositoryException("General database error: ", e);
         }
     }
-
 
     public VacancyMapper getVacancyMapper() {
         return vacancyMapper;

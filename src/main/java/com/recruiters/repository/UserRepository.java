@@ -11,28 +11,41 @@ import org.springframework.stereotype.Repository;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Repository for working with recruiter
+ * Repository implementing all methods related to
+ * User Entity manipulations with MyBatis
  */
 @Repository
 public class UserRepository implements UserDetailsService {
 
+    /** MyBatis User Mapper */
     @Autowired
     private UserMapper userMapper = null;
 
     /**
-     * Returns User POJO instance by username
-     * @param username Username
+     * Find User and return User POJO instance by username
+     * @param username    User username
      * @return User POJO instance
+     * @throws RepositoryException if input parameter is incorrect or there
+     * were any technical issues
      */
-    public User findByUsername(final String username) {
+    public User findByUsername(final String username) throws RepositoryException {
+        if (username == null) {
+            throw new RepositoryException("username is null");
+        }
+        try {
 
-        return this.getUserMapper().findByUsername(username);
+            return userMapper.findByUsername(username);
+        } catch (Exception e) {
+            throw new RepositoryException("General database error: ", e);
+        }
     }
 
     /**
-     * Updating user
-     * @param user    User POJO
-     * @return true if update not fails, otherwise false
+     * Update user and return its instance
+     * @param user    User POJO instance
+     * @return User POJO instance if there were no any technical issues
+     * @throws RepositoryException if input parameter is incorrect or there
+     * were any technical issues
      */
     public User update(final User user) throws RepositoryException {
         if (user == null) {
@@ -47,10 +60,27 @@ public class UserRepository implements UserDetailsService {
         }
     }
 
+    /**
+     * Obtain User Details by username
+     * Required by Spring Security
+     * @param username    User username
+     * @return UserDetails type user details
+     * @throws UsernameNotFoundException if username was not found or there
+     * were any technical issues while obtaining it
+     */
     @Override
-    public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
-
-       return this.findByUsername(username);
+    public UserDetails loadUserByUsername(final String username)
+            throws UsernameNotFoundException {
+        try {
+            UserDetails userDetails = this.findByUsername(username);
+            if (userDetails != null) {
+                return userDetails;
+            }
+        } catch (Exception e) {
+            throw new UsernameNotFoundException("User details cannot be obtained " +
+                    "because of error: ", e);
+        }
+        throw new UsernameNotFoundException("There are no user details for this username");
     }
 
     public UserMapper getUserMapper() {

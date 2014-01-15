@@ -27,16 +27,26 @@ import javax.validation.Valid;
 @Controller
 public class RecruiterEditProfile {
 
+    /** User utils for obtaining any session user information */
     @Autowired
     private UserUtils userUtils = null;
+    /** Recruiter Service provides all Recruiter related methods */
     @Autowired
     private RecruiterService recruiterService = null;
+    /** Validator for Recruiter Form */
     @Autowired
     private RecruiterFormValidator recruiterFormValidator = null;
 
     /**
-     * Controller for "Recruiter Profile"
-     * @return model and view with Recruiter Profile
+     * Controller for "Recruiter Profile" with method GET
+     * Display recruiter profile with ability to edit it
+     * @param request        Http Request
+     * @param response       Http Response
+     * @return model and view with Recruiter Profile, Internal Server Error
+     * page if something is wrong with obtaining data due to technical or
+     * any other reasons
+     * @throws Exception in very rare circumstances: it should be runtime
+     * or servlet Exception to be thrown
      */
     @RequestMapping(value = "recruiter-profile", method = RequestMethod.GET)
     public ModelAndView showRecruiterProfile(
@@ -57,11 +67,18 @@ public class RecruiterEditProfile {
     }
 
     /**
-     * Controller for creating editing recruiter with method POST
+     * Controller for editing recruiter profile with method POST
      * @param request               Http Request
+     * @param response              Http Response
      * @param recruiterForm         Model attribute for recruiter
      * @param bindingResult         BindingResult
-     * @return model and view for editing recruiter with errors if any
+     * @return model and view for editing recruiter with errors if any,
+     * otherwise redirects to recruiter deals page, Forbidden page if deal
+     * requested is not related to current recruiter, Internal Server Error
+     * page if something is wrong with obtaining data due to technical or
+     * any other reasons
+     * @throws Exception in very rare circumstances: it should be runtime
+     * or servlet Exception to be thrown
      */
     @RequestMapping(value = "recruiter-profile", method = RequestMethod.POST)
     public ModelAndView editRecruiter(
@@ -89,7 +106,10 @@ public class RecruiterEditProfile {
         return new ModelAndView("redirect:/recruiter-active-deals");
     }
 
-
+    /**
+     * Binding default validator to "Recruiter Form" validator
+     * @param binder    Spring Web Data Binder
+     */
     @InitBinder("recruiterForm")
     protected void recruiterFormBinder(final WebDataBinder binder) {
         binder.setValidator(recruiterFormValidator);
@@ -101,5 +121,21 @@ public class RecruiterEditProfile {
 
     public void setRecruiterService(final RecruiterService recruiterService) {
         this.recruiterService = recruiterService;
+    }
+
+    public UserUtils getUserUtils() {
+        return userUtils;
+    }
+
+    public void setUserUtils(final UserUtils userUtils) {
+        this.userUtils = userUtils;
+    }
+
+    public RecruiterFormValidator getRecruiterFormValidator() {
+        return recruiterFormValidator;
+    }
+
+    public void setRecruiterFormValidator(final RecruiterFormValidator recruiterFormValidator) {
+        this.recruiterFormValidator = recruiterFormValidator;
     }
 }

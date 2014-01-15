@@ -1,5 +1,6 @@
 package com.recruiters.web.utils;
 
+import com.recruiters.repository.RepositoryException;
 import com.recruiters.repository.UserRepository;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -26,8 +27,14 @@ public class SuccessLoginHandler implements AuthenticationSuccessHandler {
             final HttpServletResponse response,
             final Authentication authentication
     ) throws IOException, ServletException {
-
-        request.getSession().setAttribute("currentUser", userRepository.findByUsername(authentication.getName()));
+        try {
+            request.getSession().setAttribute(
+                    "currentUser",
+                    userRepository.findByUsername(authentication.getName())
+            );
+        } catch (RepositoryException e) {
+            throw new IOException("Cannot obtain user information: ", e);
+        }
         response.sendRedirect(request.getContextPath() + "/");
     }
 

@@ -21,11 +21,26 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class ShowInProgressVacancy {
 
+    /** User utils for obtaining any session user information */
     @Autowired
     private UserUtils userUtils = null;
+    /** Recruiter Service provides all Recruiter related methods */
     @Autowired
     private RecruiterService recruiterService = null;
 
+    /**
+     * Controller for R6 "Show in progress vacancy"
+     * Displays deal for certain vacancy
+     * @param dealId      Id of deal to display
+     * @param request     Http Request
+     * @param response    Http Response
+     * @return model and view with deal, Forbidden page if deal requested
+     * is not related to current recruiter, Internal Server Error page if
+     * something is wrong with obtaining data due to technical or any
+     * other reasons
+     * @throws Exception in very rare circumstances: it should be runtime
+     * or servlet Exception to be thrown
+     */
     @RequestMapping(value = "recruiter-show-in-progress-vacancy/{dealId}", method = RequestMethod.GET)
     public ModelAndView showInProgressVacancy(
             @PathVariable final Long dealId,
@@ -52,5 +67,13 @@ public class ShowInProgressVacancy {
 
     public void setRecruiterService(final RecruiterService recruiterService) {
         this.recruiterService = recruiterService;
+    }
+
+    public UserUtils getUserUtils() {
+        return userUtils;
+    }
+
+    public void setUserUtils(final UserUtils userUtils) {
+        this.userUtils = userUtils;
     }
 }

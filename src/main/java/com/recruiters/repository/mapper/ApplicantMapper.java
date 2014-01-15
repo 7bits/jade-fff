@@ -82,11 +82,7 @@ public interface ApplicantMapper {
     void update(final Applicant applicant);
 
     @Update("UPDATE applicants SET status=#{status} " +
-            "WHERE id=#{applicantId} and applicants.deal_id IN " +
-            "(SELECT deals.id FROM deals " +
-            "INNER JOIN vacancies ON vacancies.id = deals.vacancy_id " +
-            "WHERE vacancies.employer_id=#{employerId})")
+            "WHERE id=#{applicantId} and applicants.deal_id")
     void updateStatus(@Param("applicantId") final Long applicantId,
-                      @Param("status") final ApplicantStatus applicantStatus,
-                      @Param("employerId") final Long employerId);
+                      @Param("status") final ApplicantStatus applicantStatus);
 }

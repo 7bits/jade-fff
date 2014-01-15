@@ -6,14 +6,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 /**
- * Repository for working with employer
+ * Repository implementing all methods related to
+ * Employer Entity manipulations with MyBatis
  */
 @Repository
 public class EmployerRepository {
 
+    /** MyBatis Employer Mapper */
     @Autowired
     private EmployerMapper employerMapper = null;
 
+    /**
+     * Find and return employer instance by its id
+     * @param employerId    Id of recruiter
+     * @return Employer instance
+     * @throws RepositoryException if input parameter is incorrect or there
+     * were any technical issues
+     */
     public Employer findById(final Long employerId) throws RepositoryException {
         if (employerId == null) {
             throw new RepositoryException("employerId is null");

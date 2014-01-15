@@ -24,14 +24,24 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class ShowVacancy {
 
+    /** User utils for obtaining any session user information */
     @Autowired
     private UserUtils userUtils = null;
+    /** Recruiter Service provides all Recruiter related methods */
     @Autowired
     private RecruiterService recruiterService = null;
 
     /**
      * Controller for R2 "Show vacancy"
-     * @return model and view with one vacancy
+     * Displays certain vacancy with method GET
+     * @param vacancyId    Vacancy id
+     * @param request      Http Request
+     * @param response     Http Response
+     * @return model and view with vacancy, Internal Server Error page if
+     * something is wrong with obtaining data due to technical or any
+     * other reasons
+     * @throws Exception in very rare circumstances: it should be runtime
+     * or servlet Exception to be thrown
      */
     @RequestMapping(value = "recruiter-show-vacancy/{vacancyId}", method = RequestMethod.GET)
     public ModelAndView showVacancyById(
@@ -52,10 +62,17 @@ public class ShowVacancy {
 
     /**
      * Controller for R2 "Show vacancy"
-     * @return model and view with one vacancy
+     * Accepts apply to vacancy with method POST
+     * @param vacancyId    Vacancy id
+     * @param message      Custom message assigned to bid, no required
+     * @param request      Http Request
+     * @param response     Http Response
+     * @return redirects to page with vacancies available for bid, Internal
+     * Server Error page if something is wrong with obtaining data due to
+     * technical or any other reasons
+     * @throws Exception in very rare circumstances: it should be runtime
+     * or servlet Exception to be thrown
      */
-
-
     @RequestMapping(value = "recruiter-show-vacancy/{vacancyId}", method = RequestMethod.POST)
     public String applyToVacancy(
             @PathVariable final Long vacancyId,
@@ -74,8 +91,16 @@ public class ShowVacancy {
     }
 
     /**
-     * Controller for "Show vacancy from active bids"
-     * @return model and view with one vacancy
+     * Controller for "Show vacancy with active bid"
+     * Displays certain vacancy with bid on it
+     * @param vacancyId    Vacancy id
+     * @param request      Http Request
+     * @param response     Http Response
+     * @return model and view with vacancy and bid status, Internal Server Error
+     * page if something is wrong with obtaining data due to technical or any
+     * other reasons
+     * @throws Exception in very rare circumstances: it should be runtime
+     * or servlet Exception to be thrown
      */
     @RequestMapping(value = "recruiter-show-bid-vacancy/{vacancyId}", method = RequestMethod.GET)
     public ModelAndView showBidVacancyById(
@@ -102,5 +127,13 @@ public class ShowVacancy {
 
     public void setRecruiterService(final RecruiterService recruiterService) {
         this.recruiterService = recruiterService;
+    }
+
+    public UserUtils getUserUtils() {
+        return userUtils;
+    }
+
+    public void setUserUtils(final UserUtils userUtils) {
+        this.userUtils = userUtils;
     }
 }
