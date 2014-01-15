@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * Controller Class for R12 "My vacancies"
+ * Bid views for recruiter
  */
 @Controller
 public class RecruiterBids {
@@ -27,8 +27,8 @@ public class RecruiterBids {
     /** Recruiter Service provides all Recruiter related methods */
     @Autowired
     private RecruiterService recruiterService = null;
+
     /**
-     * Controller for R2 "My vacancies"
      * Displays all bids of current recruiter
      * @param request        Http Request
      * @param response       Http Response

@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 /**
- * Controller Class for "Recruiter Profile"
+ * Recruiter profile view and edit
  */
 @Controller
 public class RecruiterEditProfile {

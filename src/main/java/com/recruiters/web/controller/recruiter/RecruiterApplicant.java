@@ -24,8 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 /**
- * Controller Class for R61 "Edit or create applicant"
- * Edit Applicant, Create Applicant controllers here
+ * Edit and create Applicant by recruiter
  */
 @Controller
 public class RecruiterApplicant {

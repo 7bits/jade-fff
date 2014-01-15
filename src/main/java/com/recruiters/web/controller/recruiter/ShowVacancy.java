@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 
 
 /**
- * Controller Class for R2 "Show Vacancy"
+ * Shows vacancy for recruiter
  */
 @Controller
 public class ShowVacancy {
@@ -32,7 +32,6 @@ public class ShowVacancy {
     private RecruiterService recruiterService = null;
 
     /**
-     * Controller for R2 "Show vacancy"
      * Displays certain vacancy with method GET
      * @param vacancyId    Vacancy id
      * @param request      Http Request
@@ -61,7 +60,6 @@ public class ShowVacancy {
     }
 
     /**
-     * Controller for R2 "Show vacancy"
      * Accepts apply to vacancy with method POST
      * @param vacancyId    Vacancy id
      * @param message      Custom message assigned to bid, no required
@@ -91,7 +89,6 @@ public class ShowVacancy {
     }
 
     /**
-     * Controller for "Show vacancy with active bid"
      * Displays certain vacancy with bid on it
      * @param vacancyId    Vacancy id
      * @param request      Http Request

@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * Controller Class for "In progress vacancies"
+ * Shows deals for recruiter
  */
 @Controller
 public class RecruiterDeals {
@@ -27,8 +27,8 @@ public class RecruiterDeals {
     /** Recruiter Service provides all Recruiter related methods */
     @Autowired
     private RecruiterService recruiterService = null;
+
     /**
-     * Controller for "In progress vacancies"
      * Displays all active deals for current recruiter
      * @param request        Http Request
      * @param response       Http Response
