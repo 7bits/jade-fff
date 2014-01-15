@@ -297,12 +297,11 @@ public class EmployerService {
             Applicant applicant = applicantRepository.findById(applicantId);
             if (applicant.getDeal().getVacancy().getEmployer().getId().equals(employerId)) {
                 status = txManager.getTransaction(def);
-                applicantRepository.updateStatus(
-                        applicantId,
-                        ApplicantStatus.APPROVED,
-                        employerId
+                applicantRepository.updateStatus(applicantId, ApplicantStatus.APPROVED);
+                vacancyRepository.updateStatus(
+                        applicant.getDeal().getVacancy().getId(),
+                        VacancyStatus.ARCHIVED
                 );
-                vacancyRepository.updateStatus(applicant.getDeal().getVacancy().getId(), VacancyStatus.ARCHIVED);
                 dealRepository.updateStatus(applicant.getDeal().getId(), DealStatus.CLOSED);
                 txManager.commit(status);
                 return applicantId;
@@ -332,8 +331,7 @@ public class EmployerService {
             Applicant applicant = applicantRepository.findById(applicantId);
             if (applicant.getDeal().getVacancy().getEmployer().getId().equals(employerId)) {
 
-                return applicantRepository.updateStatus(applicantId,
-                        ApplicantStatus.REJECTED, employerId);
+                return applicantRepository.updateStatus(applicantId, ApplicantStatus.REJECTED);
             }
         } catch (Exception e) {
             log.warn("Employer Service general exception: ", e);

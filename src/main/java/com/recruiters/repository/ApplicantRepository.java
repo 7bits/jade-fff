@@ -7,14 +7,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 /**
- * Repository for working with applicant
+ * Repository implementing all methods related to
+ * Applicant Entity manipulations with MyBatis
  */
 @Repository
 public class ApplicantRepository {
 
+    /** MyBatis Applicant Mapper */
     @Autowired
     private ApplicantMapper applicantMapper = null;
 
+    /**
+     * Find and return Applicant by its id
+     * @param applicantId    Id of Applicant
+     * @return Applicant POJO instance
+     * @throws RepositoryException if input parameter is incorrect or there
+     * were any technical issues
+     */
     public Applicant findById(final Long applicantId) throws RepositoryException {
         if (applicantId == null) {
             throw new RepositoryException("applicantId is null");
@@ -28,9 +37,11 @@ public class ApplicantRepository {
     }
 
     /**
-     * Method must create Applicant model and add it to deal
-     * @param applicant
-     * @return <tt>true</tt> if model has been saved successful, <tt>false</tt> - otherwise
+     * Create new Applicant
+     * @param applicant    Applicant POJO instance
+     * @return Applicant if it was successfully created
+     * @throws RepositoryException if input parameter is incorrect or there
+     * were any technical issues
      */
     public Applicant create(final Applicant applicant) throws RepositoryException {
         if (applicant == null) {
@@ -46,9 +57,11 @@ public class ApplicantRepository {
     }
 
     /**
-     * Method must update Applicant model added to deal
-     * @param applicant
-     * @return <tt>true</tt> if model has been saved successful, <tt>false</tt> - otherwise
+     * Update existing Applicant
+     * @param applicant    Applicant POJO instance
+     * @return Applicant if it was successfully updated
+     * @throws RepositoryException if input parameter is incorrect or there
+     * were any technical issues
      */
     public Applicant update(final Applicant applicant) throws RepositoryException {
         if (applicant == null) {
@@ -63,23 +76,23 @@ public class ApplicantRepository {
         }
     }
 
-
     /**
-     * Method update Applicant status
+     * Update status of Applicant
      * @param applicantId        Id of Applicant
-     * @param applicantStatus    New status for Applicant
-     * @return true if update was successful otherwise false
+     * @param applicantStatus    New status of Applicant
+     * @return Id of applicant, which status we've modified
+     * @throws RepositoryException if input parameters are incorrect or there
+     * were any technical issues
      */
     public Long updateStatus(
             final Long applicantId,
-            final ApplicantStatus applicantStatus,
-            final Long employerId
+            final ApplicantStatus applicantStatus
     ) throws RepositoryException {
         if (applicantId == null) {
             throw new RepositoryException("applicantId is null");
         }
         try {
-            applicantMapper.updateStatus(applicantId, applicantStatus, employerId);
+            applicantMapper.updateStatus(applicantId, applicantStatus);
 
             return applicantId;
         } catch (Exception e) {
