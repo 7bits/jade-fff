@@ -17,18 +17,27 @@ import java.util.List;
 
 /**
  * Controller Class for R11 "Show active vacancies"
+ * Should show only vacancies without bids and deals
  */
 @Controller
 public class AllAvailableVacancies {
 
+    /** Recruiter Service provides all Recruiter related methods */
     @Autowired
     private RecruiterService recruiterService = null;
+    /** User utils for obtaining any user information */
     @Autowired
     private UserUtils userUtils = null;
 
     /**
      * Controller for R11 "Active vacancies list"
-     * @return model and view with list of active vacancies
+     * @param request    Http Request
+     * @param response   Http Response
+     * @return model and view with list of vacancies available for bidding,
+     * Internal Server Error page if something is wrong with obtaining data
+     * due to technical or any other reasons
+     * @throws Exception in very rare circumstances: it should be runtime
+     * or servlet Exception to be thrown
      */
     @RequestMapping(value = "recruiter-find-new-vacancies", method = RequestMethod.GET)
     public ModelAndView showAllAvailableVacancies(
