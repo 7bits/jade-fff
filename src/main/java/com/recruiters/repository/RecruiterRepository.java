@@ -6,14 +6,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 /**
- * Repository for working with recruiter
+ * Repository implementing all methods related to
+ * Applicant Entity manipulations
  */
 @Repository
 public class RecruiterRepository {
 
+    /** MyBatis Recruiter Mapper */
     @Autowired
     private RecruiterMapper recruiterMapper = null;
 
+    /**
+     * Find and return recruiter instance by its id
+     * @param recruiterId    Id of recruiter
+     * @return Recruiter instance
+     * @throws RepositoryException if input parameters are incorrect or there
+     * are any technical issues
+     */
     public Recruiter findById(final Long recruiterId) throws RepositoryException {
         if (recruiterId == null) {
             throw new RepositoryException("recruiterId is null");
