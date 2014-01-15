@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Controller Class for R6 "Show in progress vacancy"
+ * Show progress of vacancy (deal) for recruiter
  */
 @Controller
 public class ShowInProgressVacancy {
@@ -29,7 +29,6 @@ public class ShowInProgressVacancy {
     private RecruiterService recruiterService = null;
 
     /**
-     * Controller for R6 "Show in progress vacancy"
      * Displays deal for certain vacancy
      * @param dealId      Id of deal to display
      * @param request     Http Request

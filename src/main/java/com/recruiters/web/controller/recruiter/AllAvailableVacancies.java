@@ -16,8 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * Controller Class for R11 "Show active vacancies"
- * Should show only vacancies without bids and deals
+ * Vacancies views for recruiter
  */
 @Controller
 public class AllAvailableVacancies {
@@ -30,7 +29,7 @@ public class AllAvailableVacancies {
     private UserUtils userUtils = null;
 
     /**
-     * Controller for R11 "Active vacancies list"
+     * Shows vacancies without bids and deals for recruiter
      * @param request    Http Request
      * @param response   Http Response
      * @return model and view with list of vacancies available for bidding,

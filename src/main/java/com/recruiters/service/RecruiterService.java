@@ -66,7 +66,7 @@ public class RecruiterService {
 
             return recruiterRepository.findById(id);
         } catch (Exception e) {
-            log.warn("Recruiter Service general exception: ", e);
+            log.error("Recruiter Service general exception: ", e);
             throw new ServiceException("Recruiter Service general exception: ", e);
         }
     }
@@ -85,7 +85,7 @@ public class RecruiterService {
 
             return vacancyRepository.findAvailableVacanciesForRecruiter(recruiterId);
         } catch (Exception e) {
-            log.warn("Recruiter Service general exception: ", e);
+            log.error("Recruiter Service general exception: ", e);
             throw new ServiceException("Recruiter Service general exception: ", e);
         }
     }
@@ -104,7 +104,7 @@ public class RecruiterService {
 
             return vacancyRepository.findById(vacancyId);
         } catch (Exception e) {
-            log.warn("Recruiter Service general exception: ", e);
+            log.error("Recruiter Service general exception: ", e);
             throw new ServiceException("Recruiter Service general exception: ", e);
         }
     }
@@ -123,7 +123,7 @@ public class RecruiterService {
 
             return vacancyRepository.findWithActiveBidByIdAndRecruiterId(vacancyId, recruiterId);
         } catch (Exception e) {
-            log.warn("Recruiter Service general exception: ", e);
+            log.error("Recruiter Service general exception: ", e);
             throw new ServiceException("Recruiter Service general exception: ", e);
         }
     }
@@ -141,7 +141,7 @@ public class RecruiterService {
 
                 return bidRepository.findBidsByRecruiterId(recruiterId);
             } catch (Exception e) {
-                log.warn("Recruiter Service general exception: ", e);
+                log.error("Recruiter Service general exception: ", e);
                 throw new ServiceException("Recruiter Service general exception: ", e);
             }
     }
@@ -159,7 +159,7 @@ public class RecruiterService {
 
             return dealRepository.findActiveDealsByRecruiterId(recruiterId);
         } catch (Exception e) {
-            log.warn("Recruiter Service general exception: ", e);
+            log.error("Recruiter Service general exception: ", e);
             throw new ServiceException("Recruiter Service general exception: ", e);
         }
     }
@@ -184,10 +184,10 @@ public class RecruiterService {
                     return deal;
                 }
             } catch (Exception e) {
-                log.warn("Recruiter Service general exception: ", e);
+                log.error("Recruiter Service general exception: ", e);
                 throw new ServiceException("Recruiter Service general exception: ", e);
             }
-            log.warn("Recruiter Service security exception: " +
+            log.error("Recruiter Service security exception: " +
                     "dealId and recruiterId belongs to different recruiter");
             throw new SecurityException("Recruiter Service security exception: " +
                     "dealId and recruiterId belongs to different recruiter");
@@ -213,10 +213,10 @@ public class RecruiterService {
                 return applicant;
             }
         } catch (Exception e) {
-            log.warn("Recruiter Service general exception: ", e);
+            log.error("Recruiter Service general exception: ", e);
             throw new ServiceException("Recruiter Service general exception: ", e);
         }
-        log.warn("Recruiter Service security exception: " +
+        log.error("Recruiter Service security exception: " +
                 "applicantId and recruiterId belongs to different recruiter");
         throw new SecurityException("Recruiter Service security exception: " +
                 "applicantId and recruiterId belongs to different recruiter");
@@ -258,10 +258,10 @@ public class RecruiterService {
                 }
             }
         } catch (Exception e) {
-            log.warn("Recruiter Service general exception: ", e);
+            log.error("Recruiter Service general exception: ", e);
             throw new ServiceException("Recruiter Service general exception: ", e);
         }
-        log.warn("Recruiter Service security exception: deal belongs to different recruiter");
+        log.error("Recruiter Service security exception: deal belongs to different recruiter");
         throw new SecurityException("Recruiter Service security exception: " +
                 " deal belongs to different recruiter");
     }
@@ -281,10 +281,9 @@ public class RecruiterService {
             final String message
     ) throws ServiceException {
         try {
-
             return bidRepository.create(recruiterId, vacancyId, message);
         } catch (Exception e) {
-            log.warn("Recruiter Service general exception: ", e);
+            log.error("Recruiter Service general exception: ", e);
             throw new ServiceException("Recruiter Service general exception: ", e);
         }
     }
@@ -307,10 +306,10 @@ public class RecruiterService {
                     return userRepository.update(recruiter.getUser());
                 }
             } catch (Exception e) {
-                log.warn("Recruiter Service general exception: ", e);
+                log.error("Recruiter Service general exception: ", e);
                 throw new ServiceException("Recruiter Service general exception: ", e);
             }
-            log.warn("Recruiter Service security exception: " +
+            log.error("Recruiter Service security exception: " +
                     "recruiter and recruiterId belongs to different recruiters");
             throw new SecurityException("Recruiter Service security exception: " +
                     "recruiter and recruiterId belongs to different recruiters");
