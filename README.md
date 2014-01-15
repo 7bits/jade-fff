@@ -22,7 +22,6 @@ Using technologies:
 About
 -----
 This project was started as an attempt of using DDD (Domain Driven Design) ideology with Java Web technologies.
- DDD was initially more RoR (Ruby on Rails ) ideology but our team decided to take a try of it with Java.
  DDD offers more business oriented application building approach than traditional methods.
 
 Also we have used MyBatis ORM instead of more usual for Java Spring web applications Hibernate, because we've
