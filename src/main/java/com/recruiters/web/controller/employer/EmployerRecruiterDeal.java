@@ -48,6 +48,8 @@ public class EmployerRecruiterDeal {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
         } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        } catch (NotFoundException e) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
 
         return showBid;

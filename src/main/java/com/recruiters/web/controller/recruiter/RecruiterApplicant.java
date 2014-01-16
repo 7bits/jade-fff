@@ -132,6 +132,8 @@ public class RecruiterApplicant {
             editApplicant.addObject("applicantForm", applicantForm);
         } catch (SecurityException e) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
+        } catch (NotFoundException e) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
         } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }

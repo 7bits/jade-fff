@@ -106,13 +106,21 @@ public class RecruiterService {
      * repository or any other possible error
      */
     public Vacancy findVacancy(final Long vacancyId)
-            throws ServiceException {
+            throws ServiceException, NotFoundException {
+        Vacancy vacancy;
         try {
-            return vacancyRepository.findById(vacancyId);
+            vacancy = vacancyRepository.findById(vacancyId);
+            if (vacancy != null) {
+                return vacancy;
+            }
         } catch (Exception e) {
             log.error(SERVICE_EXCEPTION_MESSAGE, e);
             throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
         }
+        String notFoundMessage = NOT_FOUND_EXCEPTION_MESSAGE_PART1 + Vacancy.class.getSimpleName() +
+                NOT_FOUND_EXCEPTION_MESSAGE_PART2;
+        log.error(notFoundMessage);
+        throw new NotFoundException(notFoundMessage);
     }
 
     /**
@@ -138,12 +146,12 @@ public class RecruiterService {
             throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
         }
         if (bid == null) {
-            String notFoundMessage = NOT_FOUND_EXCEPTION_MESSAGE_PART1 + "bid" +
+            String notFoundMessage = NOT_FOUND_EXCEPTION_MESSAGE_PART1 + Bid.class.getSimpleName() +
                     NOT_FOUND_EXCEPTION_MESSAGE_PART2;
             log.error(notFoundMessage);
-            throw new SecurityException(notFoundMessage);
+            throw new NotFoundException(notFoundMessage);
         }
-        String securityMessage = SECURITY_EXCEPTION_MESSAGE_PART1 + bid.getClass().getName() +
+        String securityMessage = SECURITY_EXCEPTION_MESSAGE_PART1 + Bid.class.getSimpleName() +
                 SECURITY_EXCEPTION_MESSAGE_PART2;
         log.error(securityMessage);
         throw new SecurityException(securityMessage);
@@ -196,18 +204,26 @@ public class RecruiterService {
      * repository or any other possible error
      */
     public Deal findDealForRecruiter(final Long dealId, final Long recruiterId)
-            throws SecurityException, ServiceException {
+            throws SecurityException, ServiceException, NotFoundException {
         Deal deal;
         try {
             deal = dealRepository.findById(dealId);
-            if (deal.getRecruiter().getId().equals(recruiterId)) {
-                return deal;
+            if (deal != null) {
+                if (deal.getRecruiter().getId().equals(recruiterId)) {
+                    return deal;
+                }
             }
         } catch (Exception e) {
             log.error(SERVICE_EXCEPTION_MESSAGE, e);
             throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
         }
-        String securityMessage = SECURITY_EXCEPTION_MESSAGE_PART1 + deal.getClass().getName() +
+        if (deal == null) {
+            String notFoundMessage = NOT_FOUND_EXCEPTION_MESSAGE_PART1 + Deal.class.getSimpleName() +
+                    NOT_FOUND_EXCEPTION_MESSAGE_PART2;
+            log.error(notFoundMessage);
+            throw new NotFoundException(notFoundMessage);
+        }
+        String securityMessage = SECURITY_EXCEPTION_MESSAGE_PART1 + Deal.class.getSimpleName() +
                 SECURITY_EXCEPTION_MESSAGE_PART2;
         log.error(securityMessage);
         throw new SecurityException(securityMessage);
@@ -226,18 +242,26 @@ public class RecruiterService {
      * repository or any other possible error
      */
     public Applicant findApplicant(final Long applicantId, final Long recruiterId)
-            throws SecurityException, ServiceException {
+            throws SecurityException, ServiceException, NotFoundException {
         Applicant applicant;
         try {
             applicant = applicantRepository.findById(applicantId);
-            if (applicant.getDeal().getRecruiter().getId().equals(recruiterId)) {
-                return applicant;
+            if (applicant != null) {
+                if (applicant.getDeal().getRecruiter().getId().equals(recruiterId)) {
+                    return applicant;
+                }
             }
         } catch (Exception e) {
             log.error(SERVICE_EXCEPTION_MESSAGE, e);
             throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
         }
-        String securityMessage = SECURITY_EXCEPTION_MESSAGE_PART1 + applicant.getClass().getName() +
+        if (applicant == null) {
+            String notFoundMessage = NOT_FOUND_EXCEPTION_MESSAGE_PART1 + Applicant.class.getSimpleName() +
+                    NOT_FOUND_EXCEPTION_MESSAGE_PART2;
+            log.error(notFoundMessage);
+            throw new NotFoundException(notFoundMessage);
+        }
+        String securityMessage = SECURITY_EXCEPTION_MESSAGE_PART1 + Applicant.class.getSimpleName() +
                 SECURITY_EXCEPTION_MESSAGE_PART2;
         log.error(securityMessage);
         throw new SecurityException(securityMessage);
@@ -283,7 +307,7 @@ public class RecruiterService {
             log.error(SERVICE_EXCEPTION_MESSAGE, e);
             throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
         }
-        String securityMessage = SECURITY_EXCEPTION_MESSAGE_PART1 + deal.getClass().getName() +
+        String securityMessage = SECURITY_EXCEPTION_MESSAGE_PART1 + Deal.class.getSimpleName() +
                 SECURITY_EXCEPTION_MESSAGE_PART2;
         log.error(securityMessage);
         throw new SecurityException(securityMessage);
@@ -332,7 +356,7 @@ public class RecruiterService {
             log.error(SERVICE_EXCEPTION_MESSAGE, e);
             throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
         }
-        String securityMessage = SECURITY_EXCEPTION_MESSAGE_PART1 + recruiter.getClass().getName() +
+        String securityMessage = SECURITY_EXCEPTION_MESSAGE_PART1 + Recruiter.class.getSimpleName() +
                 SECURITY_EXCEPTION_MESSAGE_PART2;
         log.error(securityMessage);
         throw new SecurityException(securityMessage);
