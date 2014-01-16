@@ -50,6 +50,15 @@ public class EmployerService {
     private DefaultTransactionDefinition def = null;
     /** Logger */
     private final Logger log = Logger.getLogger(EmployerService.class);
+    /** Tx definition name */
+    private static final String TX_NAME = "EmployerTxService";
+    /** Default message for ServiceException */
+    private static final String SERVICE_EXCEPTION_MESSAGE = "Employer Service general exception: ";
+    /** Default message for SecurityException, part 1 */
+    private static final String SECURITY_EXCEPTION_MESSAGE_PART1 = "Employer Service security exception: ";
+    /** Default message for SecurityException, part 2 */
+    private static final String SECURITY_EXCEPTION_MESSAGE_PART2 = " belongs to different employer";
+
 
     /**
      * Default constructor
@@ -57,7 +66,7 @@ public class EmployerService {
      */
     public EmployerService() {
         def = new DefaultTransactionDefinition();
-        def.setName("EmployerTxService");
+        def.setName(TX_NAME);
         def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
     }
 
@@ -72,8 +81,8 @@ public class EmployerService {
 
             return dealRepository.findActiveDealsByEmployerId(employerId);
         } catch (Exception e) {
-            log.error("Employer Service general exception: ", e);
-            throw new ServiceException("Employer Service general exception: ", e);
+            log.error(SERVICE_EXCEPTION_MESSAGE, e);
+            throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
         }
     }
 
@@ -85,18 +94,20 @@ public class EmployerService {
      */
     public Deal findDeal(final Long dealId, final Long employerId)
             throws SecurityException, ServiceException {
+        Deal deal;
         try {
-            Deal deal = dealRepository.findById(dealId);
+            deal = dealRepository.findById(dealId);
             if (deal.getVacancy().getEmployer().getId().equals(employerId)) {
                 return deal;
             }
         } catch (Exception e) {
-            log.error("Employer Service general exception: ", e);
-            throw new ServiceException("Employer Service general exception: ", e);
+            log.error(SERVICE_EXCEPTION_MESSAGE, e);
+            throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
         }
-        log.error("Employer Service security exception: deal belongs to different employer");
-        throw new SecurityException("Employer Service security exception: " +
-                " deal belongs to different employer");
+        String securityMessage = SECURITY_EXCEPTION_MESSAGE_PART1 + deal.getClass().getName() +
+                SECURITY_EXCEPTION_MESSAGE_PART2;
+        log.error(securityMessage);
+        throw new SecurityException(securityMessage);
     }
 
     /**
@@ -108,19 +119,21 @@ public class EmployerService {
      */
     public Applicant findApplicant(final Long applicantId, final Long employerId)
             throws  SecurityException, ServiceException {
+        Applicant applicant;
         try {
-            Applicant applicant = applicantRepository.findById(applicantId);
+            applicant = applicantRepository.findById(applicantId);
             if (applicant.getDeal().getVacancy().getEmployer().getId().equals(employerId)) {
 
                 return applicant;
             }
         } catch (Exception e) {
-            log.error("Employer Service general exception: ", e);
-            throw new ServiceException("Employer Service general exception: ", e);
+            log.error(SERVICE_EXCEPTION_MESSAGE, e);
+            throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
         }
-        log.error("Employer Service security exception: applicantId and employerId belongs to different employers");
-        throw new SecurityException("Employer Service security exception: " +
-                "applicantId and employerId belongs to different employers");
+        String securityMessage = SECURITY_EXCEPTION_MESSAGE_PART1 + applicant.getClass().getName() +
+                SECURITY_EXCEPTION_MESSAGE_PART2;
+        log.error(securityMessage);
+        throw new SecurityException(securityMessage);
     }
 
     /**
@@ -131,19 +144,21 @@ public class EmployerService {
      */
     public List<Bid> findBidsForVacancy(final Long vacancyId, final Long employerId)
             throws  SecurityException, ServiceException {
+        Vacancy vacancy;
         try {
-            Vacancy vacancy = vacancyRepository.findById(vacancyId);
+            vacancy = vacancyRepository.findById(vacancyId);
             if (vacancy.getEmployer().getId().equals(employerId)) {
 
                 return bidRepository.findBidsByVacancyId(vacancyId);
             }
         } catch (Exception e) {
-            log.error("Employer Service general exception: ", e);
-            throw new ServiceException("Employer Service general exception: ", e);
+            log.error(SERVICE_EXCEPTION_MESSAGE, e);
+            throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
         }
-        log.error("Employer Service security exception: employerId and vacancyId belongs to different employers");
-        throw new SecurityException("Employer Service security exception: " +
-                "employerId and vacancyId belongs to different employers");
+        String securityMessage = SECURITY_EXCEPTION_MESSAGE_PART1 + vacancy.getClass().getName() +
+                SECURITY_EXCEPTION_MESSAGE_PART2;
+        log.error(securityMessage);
+        throw new SecurityException(securityMessage);
     }
 
     /**
@@ -154,18 +169,21 @@ public class EmployerService {
      */
     public Bid findBid(final Long bidId, final Long employerId)
             throws SecurityException, ServiceException {
+        Bid bid;
         try {
-            Bid bid = bidRepository.findById(bidId);
+            bid = bidRepository.findById(bidId);
             if (bid.getVacancy().getEmployer().getId().equals(employerId)) {
 
                 return bid;
             }
         } catch (Exception e) {
-            log.error("Employer Service general exception: ", e);
-            throw new ServiceException("Employer Service general exception: ", e);
+            log.error(SERVICE_EXCEPTION_MESSAGE, e);
+            throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
         }
-        log.error("Employer Service security exception: bidId and employerId belongs to different employers");
-        throw new SecurityException("Employer Service security exception: employerId is null");
+        String securityMessage = SECURITY_EXCEPTION_MESSAGE_PART1 + bid.getClass().getName() +
+                SECURITY_EXCEPTION_MESSAGE_PART2;
+        log.error(securityMessage);
+        throw new SecurityException(securityMessage);
     }
 
     /**
@@ -178,8 +196,8 @@ public class EmployerService {
         try {
             return vacancyRepository.findVacanciesByEmployerId(employerId);
         } catch (Exception e) {
-            log.error("Employer Service general exception: ", e);
-            throw new ServiceException("Employer Service general exception: ", e);
+            log.error(SERVICE_EXCEPTION_MESSAGE, e);
+            throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
         }
     }
 
@@ -191,18 +209,20 @@ public class EmployerService {
      */
     public Vacancy findVacancy(final Long vacancyId, final Long employerId)
             throws SecurityException, ServiceException {
+        Vacancy vacancy;
         try {
-            Vacancy vacancy = vacancyRepository.findById(vacancyId);
+            vacancy = vacancyRepository.findById(vacancyId);
             if (vacancy.getEmployer().getId().equals(employerId)) {
                 return vacancy;
             }
         } catch (Exception e) {
-            log.error("Employer Service general exception: ", e);
-            throw new ServiceException("Employer Service general exception: ", e);
+            log.error(SERVICE_EXCEPTION_MESSAGE, e);
+            throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
         }
-        log.error("Employer Service security exception: vacancyId and employerId belongs to different employers");
-        throw new SecurityException("Employer Service security exception: " +
-                "vacancyId and employerId belongs to different employers");
+        String securityMessage = SECURITY_EXCEPTION_MESSAGE_PART1 + vacancy.getClass().getName() +
+                SECURITY_EXCEPTION_MESSAGE_PART2;
+        log.error(securityMessage);
+        throw new SecurityException(securityMessage);
     }
 
     /**
@@ -218,8 +238,9 @@ public class EmployerService {
     public Long approveBidForRecruiter(final Long bidId, final Long employerId)
             throws SecurityException, ServiceException {
         TransactionStatus status = null;
+        Bid bid;
         try {
-            Bid bid = bidRepository.findById(bidId);
+            bid = bidRepository.findById(bidId);
             if (bid.getVacancy().getEmployer().getId().equals(employerId)) {
                 status = txManager.getTransaction(def);
                 this.dealRepository.create(bidId);
@@ -231,29 +252,32 @@ public class EmployerService {
             if (status != null) {
                 txManager.rollback(status);
             }
-            log.error("Employer Service general exception: ", e);
-            throw new ServiceException("Employer Service general exception: ", e);
+            log.error(SERVICE_EXCEPTION_MESSAGE, e);
+            throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
         }
-        log.error("Employer Service security exception: bidId and employerId belongs to different employers");
-        throw new SecurityException("Employer Service security exception: " +
-                "bidId and employerId belongs to different employers");
+        String securityMessage = SECURITY_EXCEPTION_MESSAGE_PART1 + bid.getClass().getName() +
+                SECURITY_EXCEPTION_MESSAGE_PART2;
+        log.error(securityMessage);
+        throw new SecurityException(securityMessage);
     }
 
     public Long declineBidForRecruiter(final Long bidId, final Long employerId)
             throws SecurityException, ServiceException {
+        Bid bid;
         try {
-            Bid bid = bidRepository.findById(bidId);
+            bid = bidRepository.findById(bidId);
             if (bid.getVacancy().getEmployer().getId().equals(employerId)) {
                 this.bidRepository.updateStatus(bidId, BidStatus.REJECTED);
                 return bidId;
             }
         } catch (Exception e) {
-            log.error("Employer Service general exception: ", e);
-            throw new ServiceException("Employer Service general exception: ", e);
+            log.error(SERVICE_EXCEPTION_MESSAGE, e);
+            throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
         }
-        log.error("Employer Service security exception: bidId and employerId belongs to different employers");
-        throw new SecurityException("Employer Service security exception: " +
-                "bidId and employerId belongs to different employers");
+        String securityMessage = SECURITY_EXCEPTION_MESSAGE_PART1 + bid.getClass().getName() +
+                SECURITY_EXCEPTION_MESSAGE_PART2;
+        log.error(securityMessage);
+        throw new SecurityException(securityMessage);
     }
 
     /**
@@ -268,13 +292,13 @@ public class EmployerService {
                 return userRepository.update(employer.getUser());
             }
         } catch (Exception e) {
-            log.error("Employer Service general exception: ", e);
-            throw new ServiceException("Employer Service general exception: ", e);
+            log.error(SERVICE_EXCEPTION_MESSAGE, e);
+            throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
         }
-        log.error("Employer Service security exception: " +
-                "employer and employerId belongs to different employers");
-        throw new SecurityException("Employer Service security exception: " +
-                "employer and employerId belongs to different employers");
+        String securityMessage = SECURITY_EXCEPTION_MESSAGE_PART1 + employer.getClass().getName() +
+                SECURITY_EXCEPTION_MESSAGE_PART2;
+        log.error(securityMessage);
+        throw new SecurityException(securityMessage);
     }
 
     /**
@@ -286,8 +310,8 @@ public class EmployerService {
         try {
             return employerRepository.findById(employerId);
         } catch (Exception e) {
-            log.error("Employer Service general exception: ", e);
-            throw new ServiceException("Employer Service general exception: ", e);
+            log.error(SERVICE_EXCEPTION_MESSAGE, e);
+            throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
         }
     }
 
@@ -300,8 +324,9 @@ public class EmployerService {
     public Long applyApplicant(final Long applicantId, final Long employerId)
             throws SecurityException, ServiceException {
         TransactionStatus status = null;
+        Applicant applicant;
         try {
-            Applicant applicant = applicantRepository.findById(applicantId);
+            applicant = applicantRepository.findById(applicantId);
             if (applicant.getDeal().getVacancy().getEmployer().getId().equals(employerId)) {
                 status = txManager.getTransaction(def);
                 applicantRepository.updateStatus(applicantId, ApplicantStatus.APPROVED);
@@ -317,13 +342,13 @@ public class EmployerService {
             if (status != null) {
                 txManager.rollback(status);
             }
-            log.error("Employer Service general exception: ", e);
-            throw new ServiceException("Employer Service general exception: ", e);
+            log.error(SERVICE_EXCEPTION_MESSAGE, e);
+            throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
         }
-        log.error("Employer Service security exception: " +
-                "employerId and applicantId belongs to different employers");
-        throw new SecurityException("Employer Service security exception: " +
-                "employerId and applicantId belongs to different employers");
+        String securityMessage = SECURITY_EXCEPTION_MESSAGE_PART1 + applicant.getClass().getName() +
+                SECURITY_EXCEPTION_MESSAGE_PART2;
+        log.error(securityMessage);
+        throw new SecurityException(securityMessage);
     }
 
     /**
@@ -334,20 +359,21 @@ public class EmployerService {
      */
     public Long declineApplicant(final Long applicantId, final Long employerId)
             throws SecurityException, ServiceException {
+        Applicant applicant;
         try {
-            Applicant applicant = applicantRepository.findById(applicantId);
+            applicant = applicantRepository.findById(applicantId);
             if (applicant.getDeal().getVacancy().getEmployer().getId().equals(employerId)) {
 
                 return applicantRepository.updateStatus(applicantId, ApplicantStatus.REJECTED);
             }
         } catch (Exception e) {
-            log.error("Employer Service general exception: ", e);
-            throw new ServiceException("Employer Service general exception: ", e);
+            log.error(SERVICE_EXCEPTION_MESSAGE, e);
+            throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
         }
-        log.error("Employer Employer Service security exception: " +
-                "employerId and applicantId belongs to different employers");
-        throw new SecurityException("Employer Service security exception: " +
-                "employerId and applicantId belongs to different employers");
+        String securityMessage = SECURITY_EXCEPTION_MESSAGE_PART1 + applicant.getClass().getName() +
+                SECURITY_EXCEPTION_MESSAGE_PART2;
+        log.error(securityMessage);
+        throw new SecurityException(securityMessage);
     }
 
     /**
@@ -358,19 +384,19 @@ public class EmployerService {
      */
     public Long fireRecruiter(final Long dealId, final Long employerId)
             throws SecurityException, ServiceException {
+        Deal deal;
         try {
-            Deal deal = dealRepository.findById(dealId);
+            deal = dealRepository.findById(dealId);
             if (deal.getVacancy().getEmployer().getId().equals(employerId)) {
                 return dealRepository.updateStatus(dealId, DealStatus.FIRED);
             }
         } catch (Exception e) {
-            log.error("Employer Service general exception: ", e);
-            throw new ServiceException("Employer Service general exception: ", e);
+            log.error(SERVICE_EXCEPTION_MESSAGE, e);
+            throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
         }
-        log.error("Employer Service security exception: " +
-                "employerId and dealId belongs to different employers");
-        throw new SecurityException("Employer Service security exception: " +
-                "employerId and dealId belongs to different employers");
+        String securityMessage = SECURITY_EXCEPTION_MESSAGE_PART1 + deal.getClass().getName() +
+                SECURITY_EXCEPTION_MESSAGE_PART2;
+        log.error(securityMessage);
+        throw new SecurityException(securityMessage);
     }
-
 }

@@ -52,6 +52,12 @@ public class RecruiterService {
     private BidRepository bidRepository = null;
     /** Logger */
     private final Logger log = Logger.getLogger(RecruiterService.class);
+    /** Default message for ServiceException */
+    private static final String SERVICE_EXCEPTION_MESSAGE = "Recruiter Service general exception: ";
+    /** Default message for SecurityException, part 1 */
+    private static final String SECURITY_EXCEPTION_MESSAGE_PART1 = "Recruiter Service security exception: ";
+    /** Default message for SecurityException, part 2 */
+    private static final String SECURITY_EXCEPTION_MESSAGE_PART2 = " belongs to different recruiter";
 
     /**
      * Find and return Recruiter instance by its id
@@ -64,8 +70,8 @@ public class RecruiterService {
         try {
             return recruiterRepository.findById(id);
         } catch (Exception e) {
-            log.error("Recruiter Service general exception: ", e);
-            throw new ServiceException("Recruiter Service general exception: ", e);
+            log.error(SERVICE_EXCEPTION_MESSAGE, e);
+            throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
         }
     }
 
@@ -82,8 +88,8 @@ public class RecruiterService {
         try {
             return vacancyRepository.findAvailableVacanciesForRecruiter(recruiterId);
         } catch (Exception e) {
-            log.error("Recruiter Service general exception: ", e);
-            throw new ServiceException("Recruiter Service general exception: ", e);
+            log.error(SERVICE_EXCEPTION_MESSAGE, e);
+            throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
         }
     }
 
@@ -100,8 +106,8 @@ public class RecruiterService {
         try {
             return vacancyRepository.findById(vacancyId);
         } catch (Exception e) {
-            log.error("Recruiter Service general exception: ", e);
-            throw new ServiceException("Recruiter Service general exception: ", e);
+            log.error(SERVICE_EXCEPTION_MESSAGE, e);
+            throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
         }
     }
 
@@ -115,8 +121,9 @@ public class RecruiterService {
      */
     public Bid findActiveBid(final Long bidId, final Long recruiterId)
             throws ServiceException, SecurityException, NotFoundException {
+        Bid bid;
         try {
-            Bid bid = bidRepository.findActiveBidById(bidId, recruiterId);
+            bid = bidRepository.findActiveBidById(bidId, recruiterId);
             if (bid != null) {
                 if (bid.getRecruiter().getId().equals(recruiterId)) {
                     return bid;
@@ -125,15 +132,17 @@ public class RecruiterService {
                 throw new NotFoundException("Recruiter Service notFound exception: " +
                         "Requested bid not found");
             }
-            throw new SecurityException("Recruiter Service security exception: " +
-                    "applicantId and recruiterId belongs to different recruiter");
+            String securityMessage = SECURITY_EXCEPTION_MESSAGE_PART1 + bid.getClass().getName() +
+                    SECURITY_EXCEPTION_MESSAGE_PART2;
+            log.error(securityMessage);
+            throw new SecurityException(securityMessage);
         } catch (NotFoundException e) {
             throw e;
         } catch (SecurityException e) {
             throw e;
         } catch (Exception e) {
-            log.error("Recruiter Service general exception: ", e);
-            throw new ServiceException("Recruiter Service general exception: ", e);
+            log.error(SERVICE_EXCEPTION_MESSAGE, e);
+            throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
         }
     }
 
@@ -149,8 +158,8 @@ public class RecruiterService {
         try {
             return bidRepository.findBidsByRecruiterId(recruiterId);
         } catch (Exception e) {
-            log.error("Recruiter Service general exception: ", e);
-            throw new ServiceException("Recruiter Service general exception: ", e);
+            log.error(SERVICE_EXCEPTION_MESSAGE, e);
+            throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
         }
     }
 
@@ -166,8 +175,8 @@ public class RecruiterService {
         try {
             return dealRepository.findActiveDealsByRecruiterId(recruiterId);
         } catch (Exception e) {
-            log.error("Recruiter Service general exception: ", e);
-            throw new ServiceException("Recruiter Service general exception: ", e);
+            log.error(SERVICE_EXCEPTION_MESSAGE, e);
+            throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
         }
     }
 
@@ -185,19 +194,20 @@ public class RecruiterService {
      */
     public Deal findDealForRecruiter(final Long dealId, final Long recruiterId)
             throws SecurityException, ServiceException {
+        Deal deal;
         try {
-            Deal deal = dealRepository.findById(dealId);
+            deal = dealRepository.findById(dealId);
             if (deal.getRecruiter().getId().equals(recruiterId)) {
                 return deal;
             }
         } catch (Exception e) {
-            log.error("Recruiter Service general exception: ", e);
-            throw new ServiceException("Recruiter Service general exception: ", e);
+            log.error(SERVICE_EXCEPTION_MESSAGE, e);
+            throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
         }
-        log.error("Recruiter Service security exception: " +
-                "dealId and recruiterId belongs to different recruiter");
-        throw new SecurityException("Recruiter Service security exception: " +
-                "dealId and recruiterId belongs to different recruiter");
+        String securityMessage = SECURITY_EXCEPTION_MESSAGE_PART1 + deal.getClass().getName() +
+                SECURITY_EXCEPTION_MESSAGE_PART2;
+        log.error(securityMessage);
+        throw new SecurityException(securityMessage);
     }
 
     /**
@@ -214,19 +224,20 @@ public class RecruiterService {
      */
     public Applicant findApplicant(final Long applicantId, final Long recruiterId)
             throws SecurityException, ServiceException {
+        Applicant applicant;
         try {
-            Applicant applicant = applicantRepository.findById(applicantId);
+            applicant = applicantRepository.findById(applicantId);
             if (applicant.getDeal().getRecruiter().getId().equals(recruiterId)) {
                 return applicant;
             }
         } catch (Exception e) {
-            log.error("Recruiter Service general exception: ", e);
-            throw new ServiceException("Recruiter Service general exception: ", e);
+            log.error(SERVICE_EXCEPTION_MESSAGE, e);
+            throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
         }
-        log.error("Recruiter Service security exception: " +
-                "applicantId and recruiterId belongs to different recruiter");
-        throw new SecurityException("Recruiter Service security exception: " +
-                "applicantId and recruiterId belongs to different recruiter");
+        String securityMessage = SECURITY_EXCEPTION_MESSAGE_PART1 + applicant.getClass().getName() +
+                SECURITY_EXCEPTION_MESSAGE_PART2;
+        log.error(securityMessage);
+        throw new SecurityException(securityMessage);
     }
 
     /**
@@ -249,8 +260,9 @@ public class RecruiterService {
             final MultipartFile testAnswerFile,
             final Long recruiterId
     ) throws SecurityException, ServiceException {
+        Deal deal;
         try {
-            Deal deal = dealRepository.findById(applicant.getDeal().getId());
+            deal = dealRepository.findById(applicant.getDeal().getId());
             if (deal.getRecruiter().getId().equals(recruiterId)) {
                 /* TODO: Make FileService instead of FileRepository and use it in Web-layer.
                 Use file names at this method */
@@ -265,12 +277,13 @@ public class RecruiterService {
                 }
             }
         } catch (Exception e) {
-            log.error("Recruiter Service general exception: ", e);
-            throw new ServiceException("Recruiter Service general exception: ", e);
+            log.error(SERVICE_EXCEPTION_MESSAGE, e);
+            throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
         }
-        log.error("Recruiter Service security exception: deal belongs to different recruiter");
-        throw new SecurityException("Recruiter Service security exception: " +
-                " deal belongs to different recruiter");
+        String securityMessage = SECURITY_EXCEPTION_MESSAGE_PART1 + deal.getClass().getName() +
+                SECURITY_EXCEPTION_MESSAGE_PART2;
+        log.error(securityMessage);
+        throw new SecurityException(securityMessage);
     }
 
     /**
@@ -290,8 +303,8 @@ public class RecruiterService {
         try {
             return bidRepository.create(recruiterId, vacancyId, message);
         } catch (Exception e) {
-            log.error("Recruiter Service general exception: ", e);
-            throw new ServiceException("Recruiter Service general exception: ", e);
+            log.error(SERVICE_EXCEPTION_MESSAGE, e);
+            throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
         }
     }
 
@@ -313,13 +326,13 @@ public class RecruiterService {
                 return userRepository.update(recruiter.getUser());
             }
         } catch (Exception e) {
-            log.error("Recruiter Service general exception: ", e);
-            throw new ServiceException("Recruiter Service general exception: ", e);
+            log.error(SERVICE_EXCEPTION_MESSAGE, e);
+            throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
         }
-        log.error("Recruiter Service security exception: " +
-                "recruiter and recruiterId belongs to different recruiters");
-        throw new SecurityException("Recruiter Service security exception: " +
-                "recruiter and recruiterId belongs to different recruiters");
+        String securityMessage = SECURITY_EXCEPTION_MESSAGE_PART1 + recruiter.getClass().getName() +
+                SECURITY_EXCEPTION_MESSAGE_PART2;
+        log.error(securityMessage);
+        throw new SecurityException(securityMessage);
     }
 
     public FileRepository getFileRepository() {
