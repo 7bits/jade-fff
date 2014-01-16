@@ -1,7 +1,10 @@
 package com.recruiters.web.helper;
 
 import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;
+
+import java.util.Locale;
 
 /**
  * Jade Helper for resolving messages by code
@@ -10,11 +13,13 @@ import org.springframework.stereotype.Component;
 public class MessageResolver {
     // Cannot be autowired
     private MessageSource messageSource;
+    private Locale locale;
 
     public MessageResolver() {}
 
-    public MessageResolver(final MessageSource messageSource) {
+    public MessageResolver(final MessageSource messageSource, final Locale locale) {
         this.messageSource = messageSource;
+        this.locale = locale;
     }
 
     /**
@@ -25,7 +30,7 @@ public class MessageResolver {
     public String message(final String code) {
 
         try {
-            return messageSource.getMessage(code, null, null);
+            return messageSource.getMessage(code, null, locale);
         } catch (Exception e) {
             return code;
         }

@@ -10,11 +10,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -84,7 +86,8 @@ public class HandlerInterceptor extends HandlerInterceptorAdapter {
             mav.addObject(MODEL_ERRORS_NAME, errors);
 
             // Message resolver added
-            mav.addObject(MODEL_MESSAGE_RESOLVER_NAME, new MessageResolver(messageSource));
+            Locale locale = RequestContextUtils.getLocale(request);
+            mav.addObject(MODEL_MESSAGE_RESOLVER_NAME, new MessageResolver(messageSource, locale));
 
             // CSRF Token Resolver
             mav.addObject(CSRF_RESOLVER_NAME, new CsrfResolver(request));
