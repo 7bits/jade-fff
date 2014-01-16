@@ -10,6 +10,10 @@ public class Recruiter {
     public Recruiter() {
     }
 
+    public Recruiter(final Long id) {
+        this.id = id;
+    }
+
     public Recruiter(final Long id, final User user) {
         this.id = id;
         this.user = user;

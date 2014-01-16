@@ -84,7 +84,7 @@ public class DealRepository {
     /**
      * Create deal from bid, do not touch bid
      * @param bidId    Id of bid
-     * @return Id of bid which translates to new deal
+     * @return Id of created deal
      * @throws RepositoryException if input parameter is incorrect or there
      * were any technical issues
      */
@@ -93,9 +93,10 @@ public class DealRepository {
             throw new RepositoryException("bidId is null");
         }
         try {
+            Deal deal = new Deal();
+            dealMapper.create(bidId, deal);
 
-            dealMapper.create(bidId);
-            return bidId;
+            return deal.getId();
         } catch (Exception e) {
             throw new RepositoryException("General database error: ", e);
         }

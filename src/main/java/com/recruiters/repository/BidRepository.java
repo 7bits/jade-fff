@@ -2,6 +2,8 @@ package com.recruiters.repository;
 
 import com.recruiters.model.Bid;
 import com.recruiters.model.BidStatus;
+import com.recruiters.model.Recruiter;
+import com.recruiters.model.Vacancy;
 import com.recruiters.repository.mapper.BidMapper;
 import org.mybatis.spring.MyBatisSystemException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,7 +85,7 @@ public class BidRepository {
      * @param recruiterId    Id of recruiter
      * @param vacancyId      Id of vacancy
      * @param message        Custom message, may be null
-     * @return Id of vacancy which belongs to new bid
+     * @return Id of created bid
      * @throws RepositoryException if input parameters are incorrect or there
      * were any technical issues
      */
@@ -96,9 +98,10 @@ public class BidRepository {
             throw new RepositoryException("recruiterId or vacancyId is null");
         }
         try {
-            bidMapper.create(recruiterId, vacancyId, message);
+            Bid bid = new Bid(null, new Vacancy(vacancyId), new Recruiter(recruiterId), message);
+            bidMapper.create(bid);
 
-            return vacancyId;
+            return bid.getId();
         } catch (Exception e) {
             throw new RepositoryException("General database error: ", e);
         }

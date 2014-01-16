@@ -271,7 +271,7 @@ public class RecruiterService {
      * @param recruiterId    Id of recruiter
      * @param vacancyId      Id of vacancy
      * @param message        Message recruiter is applied with
-     * @return VacancyId if there were not technical issues
+     * @return Id of bid created, if there were not technical issues
      * @throws ServiceException if Repository cannot process request
      * or any other possible error
      */

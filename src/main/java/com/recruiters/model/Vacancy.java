@@ -20,6 +20,10 @@ public class Vacancy {
     public Vacancy() {
     }
 
+    public Vacancy(final Long id) {
+        this.id = id;
+    }
+
     public Vacancy(final Long id, final Employer employer, final String title, final String description, final Date creationDate) {
         this.id = id;
         this.employer = employer;

@@ -94,8 +94,11 @@ public interface DealMapper {
     List<Deal> findActiveDealsByEmployerId(final Long employerId);
 
     @Insert("INSERT INTO deals (vacancy_id, recruiter_id, status) " +
-            "SELECT v.id, b.recruiter_id, \"IN_PROGRESS\" FROM vacancies v inner join bids b on v.id = b.vacancy_id WHERE b.id = #{bidId}")
-    void create(final Long bidId);
+            "SELECT v.id, b.recruiter_id, \"IN_PROGRESS\" FROM vacancies v " +
+            "INNER JOIN bids b on v.id = b.vacancy_id " +
+            "WHERE b.id = #{bidId}")
+    @Options(useGeneratedKeys = true, keyProperty = "deal.id", keyColumn = "id")
+    void create(final Long bidId, final Deal deal);
 
     @Update("UPDATE deals SET status = #{status} WHERE id = #{dealId} ")
     void updateStatus(@Param(value = "dealId") final Long dealId, @Param(value = "status") final DealStatus status);

@@ -3,6 +3,7 @@ package com.recruiters.repository.mapper;
 import com.recruiters.model.Bid;
 import com.recruiters.model.BidStatus;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
@@ -122,10 +123,9 @@ public interface BidMapper {
     List<Bid> findBidsByVacancyId(final Long vacancyId);
 
     @Insert("INSERT INTO bids (vacancy_id, recruiter_id, message) " +
-            "VALUES (#{vacancyId}, #{recruiterId}, #{message})")
-    void create(@Param("recruiterId") final Long recruiterId,
-                @Param("vacancyId") final Long vacancyId,
-                @Param("message") final String message);
+            "VALUES (#{vacancy.id}, #{recruiter.id}, #{message})")
+    @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
+    void create(final Bid bid);
 
     @Update("UPDATE bids SET status = #{status} WHERE id = #{bidId} ")
     void updateStatus(@Param(value = "bidId") final Long bidId, @Param(value = "status") final BidStatus status);
