@@ -58,6 +58,10 @@ public class RecruiterService {
     private static final String SECURITY_EXCEPTION_MESSAGE_PART1 = "Recruiter Service security exception: ";
     /** Default message for SecurityException, part 2 */
     private static final String SECURITY_EXCEPTION_MESSAGE_PART2 = " belongs to different recruiter";
+    /** Default message for NotFoundException, part 1 */
+    private static final String NOT_FOUND_EXCEPTION_MESSAGE_PART1 = "Recruiter Service not found exception: ";
+    /** Default message for NotFoundException, part 2 */
+    private static final String NOT_FOUND_EXCEPTION_MESSAGE_PART2 = " was not found";
 
     /**
      * Find and return Recruiter instance by its id
@@ -128,22 +132,21 @@ public class RecruiterService {
                 if (bid.getRecruiter().getId().equals(recruiterId)) {
                     return bid;
                 }
-            } else {
-                throw new NotFoundException("Recruiter Service notFound exception: " +
-                        "Requested bid not found");
             }
-            String securityMessage = SECURITY_EXCEPTION_MESSAGE_PART1 + bid.getClass().getName() +
-                    SECURITY_EXCEPTION_MESSAGE_PART2;
-            log.error(securityMessage);
-            throw new SecurityException(securityMessage);
-        } catch (NotFoundException e) {
-            throw e;
-        } catch (SecurityException e) {
-            throw e;
         } catch (Exception e) {
             log.error(SERVICE_EXCEPTION_MESSAGE, e);
             throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
         }
+        if (bid == null) {
+            String notFoundMessage = NOT_FOUND_EXCEPTION_MESSAGE_PART1 + "bid" +
+                    NOT_FOUND_EXCEPTION_MESSAGE_PART2;
+            log.error(notFoundMessage);
+            throw new SecurityException(notFoundMessage);
+        }
+        String securityMessage = SECURITY_EXCEPTION_MESSAGE_PART1 + bid.getClass().getName() +
+                SECURITY_EXCEPTION_MESSAGE_PART2;
+        log.error(securityMessage);
+        throw new SecurityException(securityMessage);
     }
 
     /**
