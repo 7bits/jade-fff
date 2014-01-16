@@ -110,18 +110,17 @@ public class RecruiterService {
     }
 
     /**
-     * Find and return Vacancy with active bid assigned
-     * @param vacancyId      Id of vacancy
+     * Find and return active Bid by id and recruiter id
+     * @param bidId      Id of bid
      * @param recruiterId    Id of recruiter requesting information
-     * @return Vacancy instance
-     * @throws ServiceException if cannot obtain Vacancy instance from
+     * @return Bid instance
+     * @throws ServiceException if cannot obtain Bid instance from
      * repository or any other possible error
      */
-    public Vacancy findVacancyWithActiveBid(final Long vacancyId, final Long recruiterId)
+    public Bid findActiveBid(final Long bidId, final Long recruiterId)
             throws ServiceException {
         try {
-
-            return vacancyRepository.findWithActiveBidByIdAndRecruiterId(vacancyId, recruiterId);
+            return bidRepository.findActiveBidByIdAndRecruiterId(bidId, recruiterId);
         } catch (Exception e) {
             log.error("Recruiter Service general exception: ", e);
             throw new ServiceException("Recruiter Service general exception: ", e);
