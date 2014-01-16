@@ -71,8 +71,7 @@ public interface BidMapper {
             @Result(column = "firstname", property = "recruiter.user.firstName"),
             @Result(column = "lastname", property = "recruiter.user.lastName")
     })
-    Bid findActiveBidByIdAndRecruiterId(@Param(value = "bidId") final Long bidId,
-                                        @Param(value = "recruiterId") final Long recruiterId);
+    Bid findActiveBidById(@Param(value = "bidId") final Long bidId);
 
     @Select("SELECT bids.id, bids.message, bids.status, " +
             "vacancies.id as vacancy_id,  vacancies.employer_id, vacancies.title, " +

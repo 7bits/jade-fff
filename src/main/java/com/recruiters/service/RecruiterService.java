@@ -61,9 +61,7 @@ public class RecruiterService {
      * repository or any other possible error
      */
     public Recruiter findRecruiter(final Long id) throws ServiceException {
-
         try {
-
             return recruiterRepository.findById(id);
         } catch (Exception e) {
             log.error("Recruiter Service general exception: ", e);
@@ -82,7 +80,6 @@ public class RecruiterService {
     public List<Vacancy> findAvailableVacanciesForRecruiter(final Long recruiterId)
             throws ServiceException {
         try {
-
             return vacancyRepository.findAvailableVacanciesForRecruiter(recruiterId);
         } catch (Exception e) {
             log.error("Recruiter Service general exception: ", e);
@@ -101,7 +98,6 @@ public class RecruiterService {
     public Vacancy findVacancy(final Long vacancyId)
             throws ServiceException {
         try {
-
             return vacancyRepository.findById(vacancyId);
         } catch (Exception e) {
             log.error("Recruiter Service general exception: ", e);
@@ -111,16 +107,30 @@ public class RecruiterService {
 
     /**
      * Find and return active Bid by id and recruiter id
-     * @param bidId      Id of bid
-     * @param recruiterId    Id of recruiter requesting information
+     * @param bidId Id of bid
+     * @param recruiterId Id of recruiter requesting information
      * @return Bid instance
      * @throws ServiceException if cannot obtain Bid instance from
      * repository or any other possible error
      */
     public Bid findActiveBid(final Long bidId, final Long recruiterId)
-            throws ServiceException {
+            throws ServiceException, SecurityException, NotFoundException {
         try {
-            return bidRepository.findActiveBidByIdAndRecruiterId(bidId, recruiterId);
+            Bid bid = bidRepository.findActiveBidById(bidId, recruiterId);
+            if (bid != null) {
+                if (bid.getRecruiter().getId().equals(recruiterId)) {
+                    return bid;
+                }
+            } else {
+                throw new NotFoundException("Recruiter Service notFound exception: " +
+                        "Requested bid not found");
+            }
+            throw new SecurityException("Recruiter Service security exception: " +
+                    "applicantId and recruiterId belongs to different recruiter");
+        } catch (NotFoundException e) {
+            throw e;
+        } catch (SecurityException e) {
+            throw e;
         } catch (Exception e) {
             log.error("Recruiter Service general exception: ", e);
             throw new ServiceException("Recruiter Service general exception: ", e);
@@ -135,14 +145,13 @@ public class RecruiterService {
      * repository or any other possible error
      */
     public List<Bid> findBidsForRecruiter(final Long recruiterId)
-        throws ServiceException {
-            try {
-
-                return bidRepository.findBidsByRecruiterId(recruiterId);
-            } catch (Exception e) {
-                log.error("Recruiter Service general exception: ", e);
-                throw new ServiceException("Recruiter Service general exception: ", e);
-            }
+            throws ServiceException {
+        try {
+            return bidRepository.findBidsByRecruiterId(recruiterId);
+        } catch (Exception e) {
+            log.error("Recruiter Service general exception: ", e);
+            throw new ServiceException("Recruiter Service general exception: ", e);
+        }
     }
 
     /**
@@ -155,7 +164,6 @@ public class RecruiterService {
     public List<Deal> findActiveDealsForRecruiter(final Long recruiterId)
             throws ServiceException {
         try {
-
             return dealRepository.findActiveDealsByRecruiterId(recruiterId);
         } catch (Exception e) {
             log.error("Recruiter Service general exception: ", e);
@@ -176,20 +184,20 @@ public class RecruiterService {
      * repository or any other possible error
      */
     public Deal findDealForRecruiter(final Long dealId, final Long recruiterId)
-        throws SecurityException, ServiceException {
-            try {
-                Deal deal = dealRepository.findById(dealId);
-                if (deal.getRecruiter().getId().equals(recruiterId)) {
-                    return deal;
-                }
-            } catch (Exception e) {
-                log.error("Recruiter Service general exception: ", e);
-                throw new ServiceException("Recruiter Service general exception: ", e);
+            throws SecurityException, ServiceException {
+        try {
+            Deal deal = dealRepository.findById(dealId);
+            if (deal.getRecruiter().getId().equals(recruiterId)) {
+                return deal;
             }
-            log.error("Recruiter Service security exception: " +
-                    "dealId and recruiterId belongs to different recruiter");
-            throw new SecurityException("Recruiter Service security exception: " +
-                    "dealId and recruiterId belongs to different recruiter");
+        } catch (Exception e) {
+            log.error("Recruiter Service general exception: ", e);
+            throw new ServiceException("Recruiter Service general exception: ", e);
+        }
+        log.error("Recruiter Service security exception: " +
+                "dealId and recruiterId belongs to different recruiter");
+        throw new SecurityException("Recruiter Service security exception: " +
+                "dealId and recruiterId belongs to different recruiter");
     }
 
     /**
@@ -299,19 +307,19 @@ public class RecruiterService {
      * or any other possible error
      */
     public User saveProfileForRecruiter(final Recruiter recruiter, final Long recruiterId)
-        throws ServiceException, SecurityException {
-            try {
-                if (recruiter.getId().equals(recruiterId)) {
-                    return userRepository.update(recruiter.getUser());
-                }
-            } catch (Exception e) {
-                log.error("Recruiter Service general exception: ", e);
-                throw new ServiceException("Recruiter Service general exception: ", e);
+            throws ServiceException, SecurityException {
+        try {
+            if (recruiter.getId().equals(recruiterId)) {
+                return userRepository.update(recruiter.getUser());
             }
-            log.error("Recruiter Service security exception: " +
-                    "recruiter and recruiterId belongs to different recruiters");
-            throw new SecurityException("Recruiter Service security exception: " +
-                    "recruiter and recruiterId belongs to different recruiters");
+        } catch (Exception e) {
+            log.error("Recruiter Service general exception: ", e);
+            throw new ServiceException("Recruiter Service general exception: ", e);
+        }
+        log.error("Recruiter Service security exception: " +
+                "recruiter and recruiterId belongs to different recruiters");
+        throw new SecurityException("Recruiter Service security exception: " +
+                "recruiter and recruiterId belongs to different recruiters");
     }
 
     public FileRepository getFileRepository() {
