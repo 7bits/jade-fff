@@ -2,13 +2,13 @@ extends ../layout
 
 block append content
   .container
-    h1 Поиск новых вакансий
+    h1=fmt.message("recruiter-find-new-vacancies.h1")
     table.table.table-striped
       thead
         tr
-          th Наименование
-          th Описание
-          th Дата создания
+          th=fmt.message("recruiter-find-new-vacancies.table.name")
+          th=fmt.message("recruiter-find-new-vacancies.table.description")
+          th=fmt.message("recruiter-find-new-vacancies.table.date")
           th
       tbody
         for vacancy in vacancies
@@ -17,5 +17,4 @@ block append content
             td #{vacancy.description}
             td #{vacancy.creationDate}
             td
-              a.btn.btn-link(href=domain.getAbsoluteUrl() + "/recruiter-show-vacancy/" + vacancy.id).
-                Подробнее
+              a.btn.btn-link(href=domain.getAbsoluteUrl() + "/recruiter-show-vacancy/" + vacancy.id)=fmt.message("recruiter-find-new-vacancies.more")
