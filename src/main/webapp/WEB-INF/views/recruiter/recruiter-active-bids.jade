@@ -2,14 +2,14 @@ extends ../layout
 
 block append content
   .container
-    h1 Мои заявки
+    h1=fmt.message("recruiter-active-bids.h1")
     table.table.table-striped
       thead
         tr
-          th Наименование
-          th Описание
-          th Статус
-          th Дата создания
+          th=fmt.message("recruiter-active-bids.table.name")
+          th=fmt.message("recruiter-active-bids.table.description")
+          th=fmt.message("recruiter-active-bids.table.status")
+          th=fmt.message("recruiter-active-bids.table.date")
           th
       tbody
         for bid in bids
@@ -19,5 +19,4 @@ block append content
             td #{bid.status}
             td #{bid.vacancy.creationDate}
             td
-              a.btn.btn-link(href=domain.getAbsoluteUrl() + "/recruiter-show-bid-vacancy/" + bid.vacancy.id).
-                Подробнее
+              a.btn.btn-link(href=domain.getAbsoluteUrl() + "/recruiter-show-bid-vacancy/" + bid.vacancy.id)=fmt.message("recruiter-active-bids.more")
