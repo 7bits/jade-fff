@@ -207,6 +207,16 @@ public class EmployerService {
                 "vacancyId and employerId belongs to different employers");
     }
 
+    /**
+     * Approve bid for Recruiter. Creates appropriate deal.
+     * @param bidId         Id of bid
+     * @param employerId    Id of employer
+     * @return id of created deal
+     * @throws SecurityException if bid not belongs to
+     * employer requested method
+     * @throws ServiceException if Repository cannot process request
+     * or any other possible error
+     */
     public Long approveBidForRecruiter(final Long bidId, final Long employerId)
             throws SecurityException, ServiceException {
         TransactionStatus status = null;
