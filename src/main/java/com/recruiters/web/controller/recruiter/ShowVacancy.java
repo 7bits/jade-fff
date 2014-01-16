@@ -4,8 +4,7 @@ package com.recruiters.web.controller.recruiter;
 import com.recruiters.model.Bid;
 import com.recruiters.model.User;
 import com.recruiters.model.Vacancy;
-import com.recruiters.service.RecruiterService;
-import com.recruiters.service.ServiceException;
+import com.recruiters.service.*;
 import com.recruiters.web.controller.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -111,6 +110,10 @@ public class ShowVacancy {
             User user = userUtils.getCurrentUser(request);
             Bid bid = recruiterService.findActiveBid(bidId, user.getRecruiterId());
             showBidVacancy.addObject("bid", bid);
+        } catch (com.recruiters.service.SecurityException e) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN);
+        } catch (NotFoundException e) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
         } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }

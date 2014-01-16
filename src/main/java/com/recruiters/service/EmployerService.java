@@ -176,7 +176,6 @@ public class EmployerService {
     public List<Vacancy> findVacanciesForEmployer(final Long employerId)
             throws ServiceException {
         try {
-
             return vacancyRepository.findVacanciesByEmployerId(employerId);
         } catch (Exception e) {
             log.error("Employer Service general exception: ", e);
@@ -195,7 +194,6 @@ public class EmployerService {
         try {
             Vacancy vacancy = vacancyRepository.findById(vacancyId);
             if (vacancy.getEmployer().getId().equals(employerId)) {
-
                 return vacancy;
             }
         } catch (Exception e) {
@@ -286,7 +284,6 @@ public class EmployerService {
      */
     public Employer findEmployer(final Long employerId) throws ServiceException {
         try {
-
             return employerRepository.findById(employerId);
         } catch (Exception e) {
             log.error("Employer Service general exception: ", e);

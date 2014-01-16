@@ -5,7 +5,6 @@ import com.recruiters.model.BidStatus;
 import com.recruiters.model.Recruiter;
 import com.recruiters.model.Vacancy;
 import com.recruiters.repository.mapper.BidMapper;
-import org.mybatis.spring.MyBatisSystemException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -87,7 +86,7 @@ public class BidRepository {
      * @throws RepositoryException if input parameters are incorrect or there
      * were any technical issues
      */
-    public Bid findActiveBidByIdAndRecruiterId(
+    public Bid findActiveBidById(
             final Long bidId,
             final Long recruiterId
     ) throws RepositoryException {
@@ -95,7 +94,7 @@ public class BidRepository {
             throw new RepositoryException("bidId or recruiterId is null");
         }
         try {
-            return bidMapper.findActiveBidByIdAndRecruiterId(bidId, recruiterId);
+            return bidMapper.findActiveBidById(bidId);
         } catch (Exception e) {
             throw new RepositoryException("General database error: ", e);
         }
