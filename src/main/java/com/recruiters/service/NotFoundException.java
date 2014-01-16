@@ -2,8 +2,8 @@ package com.recruiters.service;
 
 /**
  * NotFound exception for Service Layer
- * is thrown when there are not found something
- * with performing service request
+ * is thrown when something is not found
+ * when performing service request
  */
 public class NotFoundException extends Exception {
 
