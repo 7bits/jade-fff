@@ -2,25 +2,25 @@ extends ../layout
 
 block append content
   .container
-    h1 Просмотр вакансии
+    h1=fmt.message("recruiter-show-vacancy.h1")
     dl.dl-horizontal
-      dt Наименование
+      dt=fmt.message("recruiter-show-vacancy.dt.title")
       dd #{vacancy.title}
-      dt Описание
+      dt=fmt.message("recruiter-show-vacancy.dt.description")
       dd #{vacancy.description}
-      dt Диапазон з/п
+      dt=fmt.message("recruiter-show-vacancy.dt.salary")
       dd #{vacancy.salary}
-      dt Дата создания
+      dt=fmt.message("recruiter-show-vacancy.dt.creationDate")
       dd #{vacancy.creationDate}
-      dt Дата окончания
+      dt=fmt.message("recruiter-show-vacancy.dt.expirationDate")
       dd #{vacancy.expirationDate}
 
     form(name="", action="", method="post")
       .row
         .col-md-6
-          textarea(class="form-control js-message-for-bid", name="message", placeholder="Условия работы", rows="4")
+          textarea(class="form-control js-message-for-bid", name="message", placeholder=fmt.message("recruiter-show-vacancy.terms"), rows="4")
 
       .btn-row
         input(type="hidden", name=csrf.getParameterName(), value=csrf.getToken())
-        input.btn.btn-primary(type="submit", name="submit", value="Предложить свои услуги")
-        a.btn.btn-link(href=domain.getAbsoluteUrl() + "/recruiter-find-new-vacancies") К списку вакансий
+        input.btn.btn-primary(type="submit", name="submit", value=fmt.message("recruiter-show-vacancy.apply"))
+        a.btn.btn-link(href=domain.getAbsoluteUrl() + "/recruiter-find-new-vacancies")=fmt.message("recruiter-show-vacancy.back")
