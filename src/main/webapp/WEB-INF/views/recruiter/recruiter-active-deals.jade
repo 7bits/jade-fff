@@ -2,14 +2,14 @@ extends ../layout
 
 block append content
   .container
-    h1 Вакансии в работе
+    h1=fmt.message("recruiter-active-deals.h1")
     table.table.table-striped
       thead
         tr
-          th Наименование
-          th Описание
-          th Статус
-          th Дата создания
+          th=fmt.message("recruiter-active-deals.table.name")
+          th=fmt.message("recruiter-active-deals.table.description")
+          th=fmt.message("recruiter-active-deals.table.status")
+          th=fmt.message("recruiter-active-deals.table.date")
           th
       tbody
         for deal in deals
@@ -19,5 +19,4 @@ block append content
             td #{deal.status}
             td #{deal.vacancy.creationDate}
             td
-              a.btn.btn-link(href=domain.getAbsoluteUrl() + "/recruiter-show-in-progress-vacancy/" + deal.id).
-                Подробнее
+              a.btn.btn-link(href=domain.getAbsoluteUrl() + "/recruiter-show-in-progress-vacancy/" + deal.id)=fmt.message("recruiter-active-deals.more")
