@@ -50,9 +50,11 @@ public interface BidMapper {
             "users.firstname, users.lastname " +
             "FROM bids " +
             "INNER JOIN vacancies ON vacancies.id=bids.vacancy_id " +
-            "INNER JOIN recruiters  ON recruiters.id=bids.recruiter_id " +
+            "INNER JOIN recruiters ON recruiters.id=bids.recruiter_id " +
             "INNER JOIN users ON recruiters.user_id=users.id " +
-            "WHERE vacancies.employer_id=#{employerId}")
+            "WHERE bids.id=#{bidId} " +
+            "AND vacancies.status like 'ACTIVE' " +
+            "AND bids.status like 'ACTIVE' ")
     @Results({
             @Result(column = "id", property = "id"),
             @Result(column = "message", property = "message"),
@@ -67,7 +69,7 @@ public interface BidMapper {
             @Result(column = "firstname", property = "recruiter.user.firstName"),
             @Result(column = "lastname", property = "recruiter.user.lastName")
     })
-    List<Bid> findBidsForEmployerVacancies(final Long employerId);
+    Bid findActiveBidByIdAndRecruiterId(@Param(value = "bidId") final Long bidId, @Param(value = "recruiterId") final Long recruiterId);
 
     @Select("SELECT bids.id, bids.message, bids.status, " +
             "vacancies.id as vacancy_id,  vacancies.employer_id, vacancies.title, " +

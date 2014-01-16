@@ -1,6 +1,7 @@
 package com.recruiters.web.controller.recruiter;
 
 
+import com.recruiters.model.Bid;
 import com.recruiters.model.User;
 import com.recruiters.model.Vacancy;
 import com.recruiters.service.RecruiterService;
@@ -90,7 +91,7 @@ public class ShowVacancy {
 
     /**
      * Displays certain vacancy with bid on it
-     * @param vacancyId    Vacancy id
+     * @param bidId    Bd id
      * @param request      Http Request
      * @param response     Http Response
      * @return model and view with vacancy and bid status, Internal Server Error
@@ -99,24 +100,23 @@ public class ShowVacancy {
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
-    @RequestMapping(value = "recruiter-show-bid-vacancy/{vacancyId}", method = RequestMethod.GET)
+    @RequestMapping(value = "recruiter-show-bid-vacancy/{bidId}", method = RequestMethod.GET)
     public ModelAndView showBidVacancyById(
-            @PathVariable final Long vacancyId,
+            @PathVariable final Long bidId,
             final HttpServletRequest request,
             final HttpServletResponse response
     ) throws Exception {
-        ModelAndView showVacancy = new ModelAndView("recruiter/recruiter-show-bid-vacancy.jade");
+        ModelAndView showBidVacancy = new ModelAndView("recruiter/recruiter-show-bid-vacancy.jade");
         try {
             User user = userUtils.getCurrentUser(request);
-            Vacancy vacancy = recruiterService.findVacancyWithActiveBid(vacancyId, user.getRecruiterId());
-            showVacancy.addObject("vacancy", vacancy);
+            Bid bid = recruiterService.findActiveBid(bidId, user.getRecruiterId());
+            showBidVacancy.addObject("bid", bid);
         } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
 
-        return showVacancy;
+        return showBidVacancy;
     }
-
 
     public RecruiterService getRecruiterService() {
         return recruiterService;

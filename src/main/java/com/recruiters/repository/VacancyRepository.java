@@ -32,32 +32,7 @@ public class VacancyRepository {
             throw new RepositoryException("vacancyId is null");
         }
         try {
-
             return vacancyMapper.findById(vacancyId);
-        } catch (Exception e) {
-            throw new RepositoryException("General database error: ", e);
-        }
-    }
-
-    /**
-     * Find and return List of Vacancy instances having bids from
-     * certain recruiter
-     * @param vacancyId      Id of vacancy
-     * @param recruiterId    Id of recruiter
-     * @return List of vacancies having bids from exact recruiter
-     * @throws RepositoryException if input parameters are incorrect or there
-     * were any technical issues
-     */
-    public Vacancy findWithActiveBidByIdAndRecruiterId(
-            final Long vacancyId,
-            final Long recruiterId
-    ) throws RepositoryException {
-        if (vacancyId == null || recruiterId == null) {
-            throw new RepositoryException("vacancyId or recruiterId is null");
-        }
-        try {
-
-            return vacancyMapper.findWithActiveBidByIdAndRecruiterId(vacancyId, recruiterId);
         } catch (Exception e) {
             throw new RepositoryException("General database error: ", e);
         }
