@@ -2,33 +2,33 @@ extends ../layout
 
 block append content
   .container
-    h1 Вакансия, по которой идёт работа
+    h1=fmt.message("recruiter-show-in-progress-vacancy.h1")
     .row
       .col-md-8
         h2
         dl.dl-horizontal
-          dt Наименование
+          dt=fmt.message("recruiter-show-in-progress-vacancy.dt.title")
           dd #{deal.vacancy.title}
-          dt Описание
+          dt=fmt.message("recruiter-show-in-progress-vacancy.dt.description")
           dd #{deal.vacancy.description}
-          dt Диапазон з/п
+          dt=fmt.message("recruiter-show-in-progress-vacancy.dt.salary")
           dd #{deal.vacancy.salary}
-          dt Дата создания
+          dt=fmt.message("recruiter-show-in-progress-vacancy.dt.creationDate")
           dd #{deal.vacancy.creationDate}
-          dt Дата окончания
+          dt=fmt.message("recruiter-show-in-progress-vacancy.dt.expirationDate")
           dd #{deal.vacancy.expirationDate}
       .col-md-4
-        h2 Работодатель
+        h2=fmt.message("recruiter-show-in-progress-vacancy.employer")
         p #{deal.vacancy.employer.user.firstName} #{deal.vacancy.employer.user.lastName}
 
-    h2 Список кандидатов
+    h2=fmt.message("recruiter-show-in-progress-vacancy.h2")
     table.table.table-striped
       thead
         tr
-          th Имя
-          th Фамилия
-          th Статус
-          th Дата создания
+          th=fmt.message("recruiter-show-in-progress-vacancy.table.firstName")
+          th=fmt.message("recruiter-show-in-progress-vacancy.table.lastName")
+          th=fmt.message("recruiter-show-in-progress-vacancy.table.status")
+          th=fmt.message("recruiter-show-in-progress-vacancy.table.creationDate")
           th
       if deal.applicants
         for applicant in deal.applicants
@@ -39,7 +39,6 @@ block append content
             td #{deal.vacancy.creationDate}
             td
               if applicant.status != 'REJECTED'
-                a.btn.btn-link.pull-right(href= domain.getAbsoluteUrl() + "/recruiter-edit-applicant/" + applicant.id).
-                  Изменить
+                a.btn.btn-link.pull-right(href= domain.getAbsoluteUrl() + "/recruiter-edit-applicant/" + applicant.id)=fmt.message("recruiter-show-in-progress-vacancy.table.change")
 
-    a.btn.btn-success(href= domain.getAbsoluteUrl() + "/recruiter-add-applicant/" + deal.id) Предложить нового кандидата
+    a.btn.btn-success(href= domain.getAbsoluteUrl() + "/recruiter-add-applicant/" + deal.id)=fmt.message("recruiter-show-in-progress-vacancy.add")
