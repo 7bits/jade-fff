@@ -13,7 +13,7 @@ public interface DealMapper {
 
     @Select("SELECT deals.id, deals.status, " +
             "vacancies.id as vacancy_id, vacancies.employer_id, vacancies.title, " +
-            "vacancies.description, vacancies.salary, vacancies.creation_date, " +
+            "vacancies.description, vacancies.salary, vacancies.creation_date, vacancies.expiration_date, " +
             "recruiters.id as recruiter_id, " +
             "u1.firstname as recruiter_firstname, u1.lastname as recruiter_lastname, " +
             "u2.firstname as employer_firstname, u2.lastname as employer_lastname " +
@@ -35,6 +35,7 @@ public interface DealMapper {
             @Result(column = "description", property = "vacancy.description"),
             @Result(column = "salary", property = "vacancy.salary"),
             @Result(column = "creation_date", property = "vacancy.creationDate"),
+            @Result(column = "expiration_date", property = "vacancy.expirationDate"),
             @Result(column = "recruiter_id", property = "recruiter.id"),
             @Result(column = "recruiter_firstname", property = "recruiter.user.firstName"),
             @Result(column = "recruiter_lastname", property = "recruiter.user.lastName"),
