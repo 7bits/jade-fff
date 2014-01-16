@@ -2,17 +2,17 @@ extends ../layout
 
 block append content
   .container
-    h1 Просмотр вакансии
+    h1=fmt.message("recruiter-show-bid-vacancy.h1")
     dl.dl-horizontal
-      dt Наименование
+      dt=fmt.message("recruiter-show-bid-vacancy.dt.title")
       dd #{vacancy.title}
-      dt Описание
+      dt=fmt.message("recruiter-show-bid-vacancy.dt.description")
       dd #{vacancy.description}
-      dt Диапазон з/п
+      dt=fmt.message("recruiter-show-bid-vacancy.dt.salary")
       dd #{vacancy.salary}
-      dt Дата создания
+      dt=fmt.message("recruiter-show-bid-vacancy.dt.creationDate")
       dd #{vacancy.creationDate}
-      dt Дата окончания
+      dt=fmt.message("recruiter-show-bid-vacancy.dt.expirationDate")
       dd #{vacancy.expirationDate}
-      dt Статус
-      dd На рассмотрении у работодателя
+      dt=fmt.message("recruiter-show-bid-vacancy.dt.status")
+      dd #{vacancy.status}
