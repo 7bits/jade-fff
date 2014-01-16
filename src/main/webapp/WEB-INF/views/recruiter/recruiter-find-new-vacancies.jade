@@ -15,6 +15,6 @@ block append content
           tr
             td #{vacancy.title}
             td #{vacancy.description}
-            td #{vacancy.creationDate}
+            td #{fmt.date(vacancy.creationDate)}
             td
               a.btn.btn-link(href=domain.getAbsoluteUrl() + "/recruiter-show-vacancy/" + vacancy.id)=fmt.message("recruiter-find-new-vacancies.more")

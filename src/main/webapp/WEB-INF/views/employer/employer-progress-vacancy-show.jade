@@ -14,9 +14,9 @@ block append content
           dt=fmt.message("employer-progress-vacancy-show.dt.salary")
           dd #{deal.vacancy.salary}
           dt=fmt.message("employer-progress-vacancy-show.dt.creation")
-          dd #{deal.vacancy.creationDate}
+          dd #{fmt.date(deal.vacancy.creationDate)}
           dt=fmt.message("employer-progress-vacancy-show.dt.expiration")
-          dd #{deal.vacancy.expirationDate}
+          dd #{fmt.date(deal.vacancy.expirationDate)}
       .col-md-4
         h2=fmt.message("employer-progress-vacancy-show.recruiter.h2")
         p

@@ -14,9 +14,9 @@ block append content
           dt=fmt.message("recruiter-show-in-progress-vacancy.dt.salary")
           dd #{deal.vacancy.salary}
           dt=fmt.message("recruiter-show-in-progress-vacancy.dt.creationDate")
-          dd #{deal.vacancy.creationDate}
+          dd #{fmt.date(deal.vacancy.creationDate)}
           dt=fmt.message("recruiter-show-in-progress-vacancy.dt.expirationDate")
-          dd #{deal.vacancy.expirationDate}
+          dd #{fmt.date(deal.vacancy.expirationDate)}
       .col-md-4
         h2=fmt.message("recruiter-show-in-progress-vacancy.employer")
         p #{deal.vacancy.employer.user.firstName} #{deal.vacancy.employer.user.lastName}
@@ -36,7 +36,7 @@ block append content
             td #{applicant.firstName}
             td #{applicant.lastName}
             td #{applicant.status}
-            td #{deal.vacancy.creationDate}
+            td #{fmt.date(deal.vacancy.creationDate)}
             td
               if applicant.status != 'REJECTED'
                 a.btn.btn-link.pull-right(href= domain.getAbsoluteUrl() + "/recruiter-edit-applicant/" + applicant.id)=fmt.message("recruiter-show-in-progress-vacancy.table.change")

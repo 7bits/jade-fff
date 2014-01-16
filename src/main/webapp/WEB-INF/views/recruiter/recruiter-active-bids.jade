@@ -17,6 +17,6 @@ block append content
             td #{bid.vacancy.title}
             td #{bid.vacancy.description}
             td #{bid.status}
-            td #{bid.vacancy.creationDate}
+            td #{fmt.date(bid.vacancy.creationDate)}
             td
               a.btn.btn-link(href=domain.getAbsoluteUrl() + "/recruiter-show-bid-vacancy/" + bid.vacancy.id)=fmt.message("recruiter-active-bids.more")

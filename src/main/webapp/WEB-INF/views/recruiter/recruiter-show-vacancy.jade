@@ -11,9 +11,9 @@ block append content
       dt=fmt.message("recruiter-show-vacancy.dt.salary")
       dd #{vacancy.salary}
       dt=fmt.message("recruiter-show-vacancy.dt.creationDate")
-      dd #{vacancy.creationDate}
+      dd #{fmt.date(vacancy.creationDate)}
       dt=fmt.message("recruiter-show-vacancy.dt.expirationDate")
-      dd #{vacancy.expirationDate}
+      dd #{fmt.date(vacancy.expirationDate)}
 
     form(name="", action="", method="post")
       .row
