@@ -23,7 +23,7 @@ html
         .container
           .navbar-header
             a.navbar-brand(href=domain.getAbsoluteUrl()).
-              Имя и логотип проекта
+              #{fmt.message("layout.logo")}
           .navbar-collapse.collapse
             ul.nav.navbar-nav.navbar-right
               li#fat-menu.dropdown
@@ -34,28 +34,28 @@ html
                   if security.isUserInRole("ROLE_RECRUITER")
                     li(role="presentation")
                       a(href=domain.getAbsoluteUrl() + "/recruiter-profile", role="menuitem", tabindex="-1").
-                        Настройки
+                        #{fmt.message("layout.recruiter.profile")}
                     li(role="presentation")
                       a(href=domain.getAbsoluteUrl() + "/recruiter-active-deals", role="menuitem", tabindex="-1").
-                        Вакансии в работе
+                        #{fmt.message("layout.recruiter.vacancies_in_progress")}
                     li(role="presentation")
                       a(href=domain.getAbsoluteUrl() + "/recruiter-active-bids", role="menuitem", tabindex="-1").
-                        Мои заявки
+                        #{fmt.message("layout.recruiter.my_applications")}
                     li(role="presentation")
                       a(href=domain.getAbsoluteUrl() + "/recruiter-find-new-vacancies", role="menuitem", tabindex="-1").
-                        Поиск вакансии
+                        #{fmt.message("layout.recruiter.vacancy_search")}
                   if security.isUserInRole("ROLE_EMPLOYER")
                     li(role="presentation")
                       a(href=domain.getAbsoluteUrl() + "/employer-profile", role="menuitem", tabindex="-1").
-                        Настройки
+                        #{fmt.message("layout.employer.profile")}
                     li(role="presentation")
                       a(href=domain.getAbsoluteUrl() + "/employer-recruiter-search", role="menuitem", tabindex="-1").
-                        Выбор рекрутёра
+                        #{fmt.message("layout.employer.recruiter_choose")}
                     li(role="presentation")
                       a(href=domain.getAbsoluteUrl() + "/employer-progress-vacancies-list", role="menuitem", tabindex="-1").
-                        Вакансии с рекрутёром
+                        #{fmt.message("layout.employer.recruiter_vacancies")}
                   li(role="presentation", class="divider")
                   li(role="presentation")
                     form(action=domain.getAbsoluteUrl() + "/j_spring_security_logout", method="post")
-                      input.btn.btn-link(type="submit", name="submit", value="Выйти")
+                      input.btn.btn-link(type="submit", name="submit", value=fmt.message("layout.exit"))
                       input(type="hidden", name=csrf.getParameterName(), value=csrf.getToken())

@@ -11,11 +11,11 @@ html
     block content
       .container
         form.form-signin(role="form", action=domain.getAbsoluteUrl() + "/j_spring_security_check", method="post")
-          h2.form-signin-heading Вход
-          input.form-control(type="text", name="j_username", placeholder="Email address", required="", autofocus="")
-          input.form-control(type="password", name="j_password", placeholder="Password", required="")
+          h2.form-signin-heading=fmt.message("login.enter")
+          input.form-control(type="text", name="j_username", placeholder=fmt.message("login.username"), required="", autofocus="")
+          input.form-control(type="password", name="j_password", placeholder=fmt.message("login.password"), required="")
           input(type="hidden", name=csrf.getParameterName(), value=csrf.getToken())
           label.checkbox
             input(type="checkbox", value="remember-me")
-            | Запомнить меня
-          button.btn.btn-lg.btn-primary.btn-block(name="submit", type="submit", value="Sign In") Вход
+            | #{fmt.message("login.remember")}
+          button.btn.btn-lg.btn-primary.btn-block(name="submit", type="submit", value="Sign In")=fmt.message("login.ok")
