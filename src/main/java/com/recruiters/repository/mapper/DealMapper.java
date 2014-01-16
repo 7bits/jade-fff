@@ -98,7 +98,7 @@ public interface DealMapper {
             "INNER JOIN bids b on v.id = b.vacancy_id " +
             "WHERE b.id = #{bidId}")
     @Options(useGeneratedKeys = true, keyProperty = "deal.id", keyColumn = "id")
-    void create(final Long bidId, final Deal deal);
+    void create(@Param(value = "bidId") final Long bidId, @Param(value = "deal") final Deal deal);
 
     @Update("UPDATE deals SET status = #{status} WHERE id = #{dealId} ")
     void updateStatus(@Param(value = "dealId") final Long dealId, @Param(value = "status") final DealStatus status);
