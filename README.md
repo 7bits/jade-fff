@@ -93,7 +93,7 @@ Repository Layer is divided on classes by Model. As all security measures were i
 
 DDD
 ---
-This project was build using Domain Driven Design. So we used some unusual techniques in the process of
+This project was built using Domain Driven Design. So we used some unusual techniques in the process of
  developing it. And all of them are not visible when application is complete. From developing process you got an
  answer why these techniques are better for business. First of all our mission was to implement number of use
  cases provided by customer:
