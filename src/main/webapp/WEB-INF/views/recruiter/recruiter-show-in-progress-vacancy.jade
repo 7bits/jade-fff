@@ -35,7 +35,7 @@ block append content
           tr
             td #{applicant.firstName}
             td #{applicant.lastName}
-            td #{applicant.status}
+            td #{fmt.applicantStatus(applicant.status)}
             td #{fmt.date(deal.vacancy.creationDate)}
             td
               if applicant.status != 'REJECTED'

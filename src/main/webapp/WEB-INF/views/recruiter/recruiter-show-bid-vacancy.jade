@@ -15,4 +15,4 @@ block append content
       dt=fmt.message("recruiter-show-bid-vacancy.dt.expirationDate")
       dd #{fmt.date(bid.vacancy.expirationDate)}
       dt=fmt.message("recruiter-show-bid-vacancy.dt.status")
-      dd #{bid.status}
+      dd #{fmt.bidStatus(bid.status)}

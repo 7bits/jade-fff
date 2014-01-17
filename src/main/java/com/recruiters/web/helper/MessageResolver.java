@@ -1,5 +1,9 @@
 package com.recruiters.web.helper;
 
+import com.recruiters.model.ApplicantStatus;
+import com.recruiters.model.BidStatus;
+import com.recruiters.model.DealStatus;
+import com.recruiters.model.VacancyStatus;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -12,26 +16,31 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
- * Jade Helper for resolving messages by code
+ * Jade Helper for all localised formatting purposes
  */
 @Component
 public class MessageResolver {
-    // Cannot be autowired
+    // Cannot auto-wire
     private MessageSource messageSource;
+    // Cannot auto-wire
     private Locale locale;
-    private static final Long MILLISECONDS_IN_ONE_SECOND = 1000L;
 
     public MessageResolver() {}
 
+    /**
+     * Constructor with required objects needed for Class
+     * @param messageSource    Spring message source
+     * @param locale           Requester locale
+     */
     public MessageResolver(final MessageSource messageSource, final Locale locale) {
         this.messageSource = messageSource;
         this.locale = locale;
     }
 
     /**
-     * Main method, resolves messages by code
+     * Resolve message by code
      * @param code code to resolve
-     * @return message
+     * @return localised message
      */
     public String message(final String code) {
 
@@ -42,6 +51,11 @@ public class MessageResolver {
         }
     }
 
+    /**
+     * Resolve localised date by Date type time argument
+     * @param date    input Date type time
+     * @return localised time
+     */
     public String date(final Date date) {
         String stringDate = "";
         if (date == null) {
@@ -59,6 +73,100 @@ public class MessageResolver {
         return stringDate;
     }
 
+    /**
+     * Resolve message for bid status
+     * @param bidStatus    Bid status
+     * @return localised bid status
+     */
+    public String bidStatus(final BidStatus bidStatus) {
+        String stringStatus = "";
+        switch (bidStatus) {
+            case ACTIVE:
+                stringStatus = messageSource.getMessage("BidStatus.ACTIVE", null, locale);
+                break;
+            case REJECTED:
+                stringStatus = messageSource.getMessage("BidStatus.REJECTED", null, locale);
+                break;
+            case APPROVED:
+                stringStatus = messageSource.getMessage("BidStatus.APPROVED", null, locale);
+                break;
+            default:
+                break;
+        }
+        return stringStatus;
+    }
+
+    /**
+     * Resolve message for deal status
+     * @param dealStatus    Deal status
+     * @return localised deal status
+     */
+    public String dealStatus(final DealStatus dealStatus) {
+        String stringStatus = "";
+        switch (dealStatus) {
+            case IN_PROGRESS:
+                stringStatus = messageSource.getMessage("DealStatus.IN_PROGRESS", null, locale);
+                break;
+            case FIRED:
+                stringStatus = messageSource.getMessage("DealStatus.FIRED", null, locale);
+                break;
+            case CLOSED:
+                stringStatus = messageSource.getMessage("DealStatus.CLOSED", null, locale);
+                break;
+            default:
+                break;
+        }
+        return stringStatus;
+    }
+
+    /**
+     * Resolve message for applicant status
+     * @param applicantStatus    Applicant status
+     * @return localised applicant status
+     */
+    public String applicantStatus(final ApplicantStatus applicantStatus) {
+        String stringStatus = "";
+        switch (applicantStatus) {
+            case IN_PROGRESS:
+                stringStatus = messageSource.getMessage("ApplicantStatus.IN_PROGRESS", null, locale);
+                break;
+            case REJECTED:
+                stringStatus = messageSource.getMessage("ApplicantStatus.REJECTED", null, locale);
+                break;
+            case APPROVED:
+                stringStatus = messageSource.getMessage("ApplicantStatus.APPROVED", null, locale);
+                break;
+            default:
+                break;
+        }
+        return stringStatus;
+    }
+
+    /**
+     * Resolve message for vacancy status
+     * @param vacancyStatus    Vacancy status
+     * @return localised vacancy status
+     */
+    public String vacancyStatus(final VacancyStatus vacancyStatus) {
+        String stringStatus = "";
+        switch (vacancyStatus) {
+            case ACTIVE:
+                stringStatus = messageSource.getMessage("VacancyStatus.ACTIVE", null, locale);
+                break;
+            case ARCHIVED:
+                stringStatus = messageSource.getMessage("VacancyStatus.ARCHIVED", null, locale);
+                break;
+            default:
+                break;
+        }
+        return stringStatus;
+    }
+
+    /**
+     * Check if date is Today
+     * @param date    input time
+     * @return true if date is today, otherwise false
+     */
     private Boolean dateIsToday(final Date date) {
         if (date == null) {
             return false;
@@ -67,6 +175,11 @@ public class MessageResolver {
         return DateUtils.isSameDay(date, currentDate);
     }
 
+    /**
+     * Check if date is tomorrow
+     * @param date    input time
+     * @return true if date is tomorrow, otherwise false
+     */
     private Boolean dateIsTomorrow(final Date date) {
         if (date == null) {
             return false;
@@ -82,6 +195,11 @@ public class MessageResolver {
         return DateUtils.isSameDay(calDate, calCurrentDate);
     }
 
+    /**
+     * Check if date is yesterday
+     * @param date    input time
+     * @return true if date is yesterday, otherwise false
+     */
     private Boolean dateIsYesterday(final Date date) {
         if (date == null) {
             return false;

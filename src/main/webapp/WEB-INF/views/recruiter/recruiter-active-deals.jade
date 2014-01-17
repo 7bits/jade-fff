@@ -16,7 +16,7 @@ block append content
           tr
             td #{deal.vacancy.title}
             td #{deal.vacancy.description}
-            td #{deal.status}
+            td #{fmt.dealStatus(deal.status)}
             td #{fmt.date(deal.vacancy.creationDate)}
             td
               a.btn.btn-link(href=domain.getAbsoluteUrl() + "/recruiter-show-in-progress-vacancy/" + deal.id)=fmt.message("recruiter-active-deals.more")
