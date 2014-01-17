@@ -22,21 +22,31 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 /**
- * Controller Class for "Employer Profile"
+ * Employer profile view and edit
  */
 @Controller
 public class EmployerEditProfile {
 
+    /** User utils for obtaining any session user information */
     @Autowired
     private UserUtils userUtils = null;
+    /** Employer Service provides all Employer related methods */
     @Autowired
     private EmployerService employerService = null;
+    /** Validator for Employer Form */
     @Autowired
     private EmployerFormValidator employerFormValidator = null;
 
     /**
-     * Controller for "Employer Profile"
-     * @return model and view with Employer Profile
+     * Controller for "Employer Profile" with method GET
+     * Display employer profile with ability to edit it
+     * @param request        Http Request
+     * @param response       Http Response
+     * @return model and view with Employer Profile, Internal Server Error
+     * page if something is wrong with obtaining data due to technical or
+     * any other reasons
+     * @throws Exception in very rare circumstances: it should be runtime
+     * or servlet Exception to be thrown
      */
     @RequestMapping(value = "employer-profile", method = RequestMethod.GET)
     public ModelAndView showEmployerProfile(
@@ -57,11 +67,18 @@ public class EmployerEditProfile {
     }
 
     /**
-     * Controller for creating editing employer with method POST
+     * Controller for editing employer profile with method POST
      * @param request               Http Request
-     * @param employerForm          Model attribute for employer
+     * @param response              Http Response
+     * @param employerForm         Model attribute for employer
      * @param bindingResult         BindingResult
-     * @return model and view for editing employer with errors if any
+     * @return model and view for editing employer with errors if any,
+     * otherwise redirects to employer deals page, Forbidden page if form
+     * saved is not related to current recruiter, Internal Server Error
+     * page if something is wrong with obtaining data due to technical or
+     * any other reasons
+     * @throws Exception in very rare circumstances: it should be runtime
+     * or servlet Exception to be thrown
      */
     @RequestMapping(value = "employer-profile", method = RequestMethod.POST)
     public ModelAndView editEmployer(
@@ -89,7 +106,10 @@ public class EmployerEditProfile {
         return new ModelAndView("redirect:/employer-progress-vacancies-list");
     }
 
-
+    /**
+     * Binding default validator to "Employer Form" validator
+     * @param binder    Spring Web Data Binder
+     */
     @InitBinder("employerForm")
     protected void initSurveyListFormBinder(final WebDataBinder binder) {
         binder.setValidator(employerFormValidator);

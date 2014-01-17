@@ -17,21 +17,30 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Controller for C5 "Show recruiter info to employer"
+ * View bid information and do all bid actions for employer
  */
 @Controller
 public class EmployerRecruiterDeal {
 
+    /** Employer Service provides all Employer related methods */
     @Autowired
     private EmployerService employerService = null;
+    /** User utils for obtaining any session user information */
     @Autowired
     private UserUtils userUtils = null;
 
     /**
-     * Method for C5 "Show recruiter info to employer page"
-     * @param bidId    Id of corresponding bid
-     * @param request  Http request
-     * @return model and view with data
+     * Show all bid information for employer
+     * @param bidId       Id of bid
+     * @param request     Http Request
+     * @param response    Http Response
+     * @return model and view with bid details,
+     * Forbidden page if requested bid does not belong to this employer,
+     * Not Found page if there is no bid with such id,
+     * Internal Server Error page if something is wrong with obtaining data
+     * due to technical or any other reasons
+     * @throws Exception in very rare circumstances: it should be runtime
+     * or servlet Exception to be thrown
      */
     @RequestMapping(value = "employer-recruiter-show/{bidId}")
     public ModelAndView employerShowRecruiterBid(
@@ -55,6 +64,18 @@ public class EmployerRecruiterDeal {
         return showBid;
     }
 
+    /**
+     * Approve recruiter application
+     * @param bidId       Id of application bid
+     * @param request     Http Request
+     * @param response    Http Response
+     * @return redirect to "recruiter search" page if everything goes fine,
+     * Forbidden page if this bid does not belong to this employer,
+     * Internal Server Error page if something is wrong with obtaining data
+     * due to technical or any other reasons
+     * @throws Exception in very rare circumstances: it should be runtime
+     * or servlet Exception to be thrown
+     */
     @RequestMapping(value = "employer-recruiter-approve/{bidId}", method = RequestMethod.GET)
     public String approveRecruiterBid(
             @PathVariable final Long bidId,
@@ -73,6 +94,18 @@ public class EmployerRecruiterDeal {
         return "redirect:/employer-recruiter-search";
     }
 
+    /**
+     * Decline recruiter application
+     * @param bidId       Id of application bid
+     * @param request     Http Request
+     * @param response    Http Response
+     * @return redirect to "recruiter search" page if everything goes fine,
+     * Forbidden page if this bid does not belong to this employer,
+     * Internal Server Error page if something is wrong with obtaining data
+     * due to technical or any other reasons
+     * @throws Exception in very rare circumstances: it should be runtime
+     * or servlet Exception to be thrown
+     */
     @RequestMapping(value = "employer-recruiter-decline/{bidId}", method = RequestMethod.GET)
     public String declineRecruiterBid(
             @PathVariable final Long bidId,

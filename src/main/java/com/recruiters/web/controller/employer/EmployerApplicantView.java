@@ -17,24 +17,34 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Controller for C71 "View applicant"
+ * Applicant view and actions for employer
  */
 @Controller
 public class EmployerApplicantView {
 
+    /** Employer Service provides all Employer related methods */
     @Autowired
     private EmployerService employerService = null;
+    /** User utils for obtaining any session user information */
     @Autowired
     private UserUtils userUtils = null;
 
     /**
-     * Page controller for C71 "View applicant"
+     * Show applicant details
      * @param applicantId    Id of applicant
      * @param request        Http request
-     * @return model and view with applicant
+     * @param response       Http response
+     * @return model and view with applicant details,
+     * Forbidden page if requested applicant is not related to any vacancy
+     * of current employer,
+     * Not Found page if there is no applicant with such id,
+     * Internal Server Error page if something is wrong with obtaining data
+     * due to technical or any other reasons
+     * @throws Exception in very rare circumstances: it should be runtime
+     * or servlet Exception to be thrown
      */
     @RequestMapping(value = "employer-applicant-show/{applicantId}", method = RequestMethod.GET)
-    public ModelAndView employeeShow(
+    public ModelAndView applicantShow(
             @PathVariable final Long applicantId,
             final HttpServletRequest request,
             final HttpServletResponse response
@@ -56,10 +66,18 @@ public class EmployerApplicantView {
     }
 
     /**
-     * Agree with Applicant offer
+     * Approve applicant
      * @param applicantId    Id of applicant
      * @param request        Http request
-     * @return model and view with applicant
+     * @param response       Http response
+     * @return redirects to list of vacancies currently in work if the action
+     * was successful,
+     * Forbidden page if this applicant is not related to any vacancy
+     * of current employer,
+     * Internal Server Error page if something is wrong with obtaining data
+     * due to technical or any other reasons
+     * @throws Exception in very rare circumstances: it should be runtime
+     * or servlet Exception to be thrown
      */
     @RequestMapping(value = "employer-applicant-show/apply/{applicantId}", method = RequestMethod.GET)
     public String applicantApply(
@@ -81,10 +99,18 @@ public class EmployerApplicantView {
 
 
     /**
-     * Decline Applicant offer
+     * Decline applicant
      * @param applicantId    Id of applicant
      * @param request        Http request
-     * @return model and view with applicant
+     * @param response       Http response
+     * @return redirects to list of vacancies currently in work if the action
+     * was successful,
+     * Forbidden page if this applicant is not related to any vacancy
+     * of current employer,
+     * Internal Server Error page if something is wrong with obtaining data
+     * due to technical or any other reasons
+     * @throws Exception in very rare circumstances: it should be runtime
+     * or servlet Exception to be thrown
      */
     @RequestMapping(value = "employer-applicant-show/decline/{applicantId}", method = RequestMethod.GET)
     public String applicantDecline(

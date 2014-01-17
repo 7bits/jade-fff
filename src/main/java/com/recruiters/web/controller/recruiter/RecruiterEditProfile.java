@@ -73,8 +73,8 @@ public class RecruiterEditProfile {
      * @param recruiterForm         Model attribute for recruiter
      * @param bindingResult         BindingResult
      * @return model and view for editing recruiter with errors if any,
-     * otherwise redirects to recruiter deals page, Forbidden page if deal
-     * requested is not related to current recruiter, Internal Server Error
+     * otherwise redirects to recruiter deals page, Forbidden page if form
+     * saved is not related to current recruiter, Internal Server Error
      * page if something is wrong with obtaining data due to technical or
      * any other reasons
      * @throws Exception in very rare circumstances: it should be runtime

@@ -16,21 +16,30 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Controller for C70 "Show progress of vacancy "
+ * Show Deal for Employer with all corresponding actions
  */
 @Controller
 public class EmployerVacancyShow {
 
+    /** Employer Service provides all Employer related methods */
     @Autowired
     private EmployerService employerService = null;
+    /** User utils for obtaining any session user information */
     @Autowired
     private UserUtils userUtils = null;
 
     /**
-     * Page controller for C70 "Show progress of vacancy"
-     * @param dealId Id of corresponding deal
-     * @param request    Http request
-     * @return model and view with single deal
+     * Show progress of vacancy (Deal)
+     * @param dealId      Id of deal
+     * @param request     Http request
+     * @param response    Http response
+     * @return model and view with deal details,
+     * Forbidden page if requested deal does not belong to this employer,
+     * Not Found page if there is no deal with such id,
+     * Internal Server Error page if something is wrong with obtaining data
+     * due to technical or any other reasons
+     * @throws Exception in very rare circumstances: it should be runtime
+     * or servlet Exception to be thrown
      */
     @RequestMapping(value = "employer-progress-vacancy-show/{dealId}", method = RequestMethod.GET)
     public ModelAndView showVacancyProgressForEmployer(
@@ -55,10 +64,16 @@ public class EmployerVacancyShow {
     }
 
     /**
-     * action for fire recruiter by employer
-     * @param dealId Id of corresponding deal
-     * @param request    Http request
-     * @return model and view with single deal
+     * Fire Recruiter for Employer
+     * @param dealId      Id of deal
+     * @param request     Http request
+     * @param response    Http response
+     * @return redirect to "vacancies list" page if everything goes fine,
+     * Forbidden page if this deal does not belong to this employer,
+     * Internal Server Error page if something is wrong with obtaining data
+     * due to technical or any other reasons
+     * @throws Exception in very rare circumstances: it should be runtime
+     * or servlet Exception to be thrown
      */
     @RequestMapping(value = "employer-fire-recruiter/{dealId}", method = RequestMethod.GET)
     public String fireRecruiter(
@@ -75,7 +90,7 @@ public class EmployerVacancyShow {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
 
-        return "redirect:/";
+        return "redirect:/employer-progress-vacancies-list";
     }
 
 
