@@ -13,6 +13,9 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
+/**
+ * Spring Security Configuration
+ */
 @EnableWebSecurity
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -21,12 +24,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserRepository userRepository;
 
+    /**
+     * Setup success login handler
+     * @return success login handler
+     */
     @Bean
     public SuccessLoginHandler successLoginHandler() {
 
         return new SuccessLoginHandler(userRepository);
     }
 
+    /**
+     * Configure spring security
+     * @param http    Http Security
+     * @throws Exception if fails
+     */
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
         http
@@ -52,18 +64,33 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 
+    /**
+     * Setup authentication manager
+     * @return authentication manager
+     * @throws Exception if fails
+     */
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
 
+    /**
+     * Configure authentication manager
+     * @param auth    Authentication manager
+     * @throws Exception if fails
+     */
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
 
         auth.userDetailsService(userRepository);
     }
 
+    /**
+     * Configure Web Security
+     * @param builder    Web security builder
+     * @throws Exception if fails
+     */
     @Override
     public void configure(final WebSecurity builder) throws Exception {
         builder

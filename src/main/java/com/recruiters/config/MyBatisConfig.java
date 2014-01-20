@@ -17,6 +17,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.inject.Inject;
 
 
+/**
+ * MyBatis Configuration
+ */
 @Configuration
 @PropertySource("classpath:jdbc.properties")
 @EnableJpaRepositories("com.recruiters")
@@ -28,6 +31,10 @@ public class MyBatisConfig {
     @Inject
     private Environment environment;
 
+    /**
+     * DataSource Bean setup
+     * @return DataSource
+     */
     @Bean
     public javax.sql.DataSource dataSource() {
         BasicDataSource ds = new BasicDataSource();
@@ -45,6 +52,11 @@ public class MyBatisConfig {
         return ds;
     }
 
+    /**
+     * SQL Session Factory setup
+     * @return SQL Session Factory
+     * @throws Exception if fails
+     */
     @Bean
     public SqlSessionFactory sqlSessionFactory() throws Exception {
         SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
@@ -52,6 +64,10 @@ public class MyBatisConfig {
         return sqlSessionFactory.getObject();
     }
 
+    /**
+     * Transaction Manager Setup
+     * @return transaction manager
+     */
     @Bean
     public PlatformTransactionManager transactionManager() {
 

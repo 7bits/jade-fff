@@ -23,6 +23,9 @@ import javax.inject.Inject;
 import javax.servlet.MultipartConfigElement;
 import java.io.File;
 
+/**
+ * Spring Web Configuration
+ */
 @Configuration
 @PropertySource("classpath:server.properties")
 @EnableWebMvc
@@ -32,11 +35,19 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     @Inject
     private org.springframework.core.env.Environment environment;
 
+    /**
+     * Configure resource handler
+     * @param registry    Resource Handler Registry
+     */
     @Override
     public void addResourceHandlers(final ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
     }
 
+    /**
+     * Configure Interceptors
+     * @param registry    Interceptors Registry
+     */
     @Override
     public void addInterceptors(final InterceptorRegistry registry) {
         HandlerInterceptor handlerInterceptor = new HandlerInterceptor();
@@ -49,7 +60,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     }
 
     /**
-     * Setting up Spring Message Source
+     * Configure Spring Message Source
      * @return Message Source
      */
     @Bean
@@ -64,6 +75,10 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         return messageSource;
     }
 
+    /**
+     * Configure Locale Resolver
+     * @return Locale Resolver
+     */
     @Bean
     public LocaleResolver localeResolver() {
         CookieLocaleResolver localeResolver = new CookieLocaleResolver();
@@ -72,6 +87,10 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         return localeResolver;
     }
 
+    /**
+     * Configure Request Mapping Handler
+     * @return Request Mapping Handler
+     */
     @Bean
     public RequestMappingHandlerAdapter requestMappingHandlerAdapter() {
         RequestMappingHandlerAdapter requestMappingHandlerAdapter = new RequestMappingHandlerAdapter();
@@ -79,6 +98,10 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         return requestMappingHandlerAdapter;
     }
 
+    /**
+     * Configure Multi-part Resolver
+     * @return Multi-part resolver
+     */
     @Bean
     public MultipartResolver multipartResolver() {
         return new StandardServletMultipartResolver();

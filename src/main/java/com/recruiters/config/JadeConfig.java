@@ -7,9 +7,16 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.ViewResolver;
 
+/**
+ * Jade Templates Configuration
+ */
 @Configuration
 public class JadeConfig {
 
+    /**
+     * Template Loader setting
+     * @return template loader
+     */
     @Bean
     public SpringTemplateLoader templateLoader() {
         SpringTemplateLoader templateLoader = new SpringTemplateLoader();
@@ -19,6 +26,10 @@ public class JadeConfig {
         return templateLoader;
     }
 
+    /**
+     * Jade Configuration
+     * @return jade configuration
+     */
     @Bean
     public JadeConfiguration jadeConfiguration() {
         JadeConfiguration configuration = new JadeConfiguration();
@@ -27,6 +38,10 @@ public class JadeConfig {
         return configuration;
     }
 
+    /**
+     * Setup view resolver for Jade templates
+     * @return jade view resolver
+     */
     @Bean
     public ViewResolver jadeViewResolver() {
         JadeViewResolver jadeViewResolver = new JadeViewResolver();
