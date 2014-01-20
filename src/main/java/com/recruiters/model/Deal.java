@@ -3,7 +3,7 @@ package com.recruiters.model;
 import java.util.List;
 
 /**
- *  Deal POJO Class
+ *  Deal POJO
  */
 public class Deal {
     private Long id = null;

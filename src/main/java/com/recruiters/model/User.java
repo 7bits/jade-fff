@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.LinkedList;
 
 /**
+ * User POJO
  */
 public class User implements UserDetails {
     private Long id = null;

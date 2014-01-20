@@ -1,7 +1,7 @@
 package com.recruiters.model;
 
 /**
- * List of statuses of deal
+ * Vacancy Statuses
  */
 public enum VacancyStatus {
 

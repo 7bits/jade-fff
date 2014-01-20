@@ -3,7 +3,8 @@ package com.recruiters.model;
 import org.springframework.security.core.GrantedAuthority;
 
 /**
- * Provides granted authority implementation in terms of Spring Security
+ * Roles
+ * Provides granted authority implementation for Spring Security
  */
 public final class Role implements GrantedAuthority {
 

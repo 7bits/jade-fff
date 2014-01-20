@@ -1,7 +1,7 @@
 package com.recruiters.model;
 
 /**
- * Applicant POJO Class
+ * Applicant POJO
  */
 public class Applicant {
     private Long id;

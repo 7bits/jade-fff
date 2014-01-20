@@ -1,7 +1,7 @@
 package com.recruiters.model;
 
 /**
- * Employer POJO Class
+ * Employer POJO
  */
 public class Employer {
     private Long id = null;

@@ -3,7 +3,7 @@ package com.recruiters.model;
 import java.util.Date;
 
 /**
- * Vacancy POJO Class
+ * Vacancy POJO
  */
 public class Vacancy {
     private Long id;

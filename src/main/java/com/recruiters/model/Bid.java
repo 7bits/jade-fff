@@ -1,7 +1,7 @@
 package com.recruiters.model;
 
 /**
- * Bid POJO Class
+ * Bid POJO
  */
 public class Bid {
     private Long id = null;
