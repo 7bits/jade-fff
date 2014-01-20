@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * custom login controller
+ * Custom login controller
  */
 public class SuccessLoginHandler implements AuthenticationSuccessHandler {
 
@@ -21,6 +21,14 @@ public class SuccessLoginHandler implements AuthenticationSuccessHandler {
         this.userRepository = userRepository;
     }
 
+    /**
+     * Login Handler, saves user to session
+     * @param request           Http Request
+     * @param response          Http Response
+     * @param authentication    Authentication
+     * @throws IOException if user information cannot be obtained
+     * @throws ServletException if servlet fails
+     */
     @Override
     public void onAuthenticationSuccess(
             final HttpServletRequest request,

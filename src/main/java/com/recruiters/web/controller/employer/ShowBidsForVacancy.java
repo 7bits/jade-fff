@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * Controller Class showing bids for exact vacancy
+ * Show all bids for certain vacancy
  */
 @Controller
 public class ShowBidsForVacancy {
@@ -28,10 +28,17 @@ public class ShowBidsForVacancy {
     private UserUtils userUtils = null;
 
     /**
-     * Controller showing bids for exact vacancy
-     * @param vacancyId  Id of vacancy
-     * @param request    Http request
-     * @return model and view with data
+     * Showing bids for exact vacancy
+     * @param vacancyId    Id of vacancy
+     * @param request      Http Request
+     * @param response     Http Response
+     * @return model and view with vacancy info and list of bids,
+     * Forbidden page if requested bid does not belong to this employer,
+     * Not Found page if there is no bid with such id,
+     * Internal Server Error page if something is wrong with obtaining data
+     * due to technical or any other reasons
+     * @throws Exception in very rare circumstances: it should be runtime
+     * or servlet Exception to be thrown
      */
     @RequestMapping(value = "employer-show-recruiter-bids/{vacancyId}")
     public ModelAndView employerVacanciesBids(

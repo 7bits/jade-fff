@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * Controller Class for C4 "Choosing recruiter"
+ * Show list of recruiter applications
  */
 @Controller
 public class RecruiterSearch {
@@ -25,10 +25,14 @@ public class RecruiterSearch {
     private UserUtils userUtils = null;
 
     /**
-     * Controller for C4 "Choosing recruiter" displays only
-     * vacancies with recruiter offers (bids)
-     * @param request    Http request
-     * @return model and view with data
+     * Show vacancies with recruiter offers (bids)
+     * @param request     Http Request
+     * @param response    Http Response
+     * @return model and view with list of vacancies with bid count for each,
+     * Internal Server Error page if something is wrong with obtaining data
+     * due to technical or any other reasons
+     * @throws Exception in very rare circumstances: it should be runtime
+     * or servlet Exception to be thrown
      */
     @RequestMapping(value = "employer-recruiter-search")
     public ModelAndView employerVacanciesBids(
@@ -44,7 +48,6 @@ public class RecruiterSearch {
         } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
-
 
         return vacanciesBids;
     }

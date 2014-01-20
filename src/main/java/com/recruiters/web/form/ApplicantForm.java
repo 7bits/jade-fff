@@ -1,15 +1,11 @@
 package com.recruiters.web.form;
 
-/**
- * Java Bean for Applicant Form
- */
-
 import com.recruiters.model.Applicant;
 import com.recruiters.model.Deal;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
- * Java Bean Class for Applicant Form
+ * Applicant Form
  */
 public class ApplicantForm {
     private Long id = 0L;

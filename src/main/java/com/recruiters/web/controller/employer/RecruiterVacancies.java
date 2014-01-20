@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * Controller Class for C3 "Vacancies with recruiter"
+ * Show list of deals
  */
 @Controller
 public class RecruiterVacancies {
@@ -26,9 +26,14 @@ public class RecruiterVacancies {
     private UserUtils userUtils = null;
 
     /**
-     * Controller method for C3 "Vacancies with recruiter" page
-     * @param request  Http request
-     * @return model and view with vacancies
+     * Show deals (vacancies with recruiter)
+     * @param request     Http Request
+     * @param response    Http Response
+     * @return model and view with list of deals for current recruiter,
+     * Internal Server Error page if something is wrong with obtaining data
+     * due to technical or any other reasons
+     * @throws Exception in very rare circumstances: it should be runtime
+     * or servlet Exception to be thrown
      */
     @RequestMapping(value = "employer-progress-vacancies-list", method = RequestMethod.GET)
     public ModelAndView showEmployerDeals(

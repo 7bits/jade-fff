@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Service Class for Employer
+ * User-related session utilities
  */
 @Service
 public class UserUtils {
@@ -18,9 +18,10 @@ public class UserUtils {
     private UserRepository userRepository = null;
 
     /**
-     * Finds user by session info
-     * @param request Http request
+     * Find user by session info and return POJO with user info
+     * @param request Http Request
      * @return User POJO instance
+     * @throws ServiceException is there are no user assigned to session
      */
     public User getCurrentUser(final HttpServletRequest request) throws ServiceException {
         User user =  (User) request.getSession().getAttribute("currentUser");

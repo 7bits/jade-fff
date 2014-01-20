@@ -21,6 +21,11 @@ public class ApplicantFormValidator implements Validator {
         return ApplicantForm.class.equals(clazz);
     }
 
+    /**
+     * Check if all necessary fields are not empty
+     * @param object    Applicant Form object
+     * @param errors    Errors (from binding result)
+     */
     public void validate(final Object object, final Errors errors) {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "NotEmpty.applicantForm.firstName");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "NotEmpty.applicantForm.lastName");

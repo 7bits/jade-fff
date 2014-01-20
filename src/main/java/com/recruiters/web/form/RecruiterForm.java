@@ -4,7 +4,7 @@ import com.recruiters.model.Recruiter;
 import com.recruiters.model.User;
 
 /**
- * JavaBean for RecruiterForm
+ * Recruiter Form
  */
 public class RecruiterForm {
     private Long id;

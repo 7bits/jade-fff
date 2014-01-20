@@ -16,7 +16,8 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
- * Jade Helper for all localised formatting purposes
+ * Message Resolver for all localisation formatting purposes
+ * for use inside templates
  */
 @Component
 public class MessageResolver {
@@ -28,7 +29,7 @@ public class MessageResolver {
     public MessageResolver() {}
 
     /**
-     * Constructor with required objects needed for Class
+     * Constructor with required objects needed for localisation
      * @param messageSource    Spring message source
      * @param locale           Requester locale
      */

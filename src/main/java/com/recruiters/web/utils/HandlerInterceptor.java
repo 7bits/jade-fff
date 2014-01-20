@@ -20,6 +20,8 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
+ * Main interceptor is used to solve all issues we have with non-JSP templates
+ * like absence of localisation, formatters, error checkers and other tools
  */
 public class HandlerInterceptor extends HandlerInterceptorAdapter {
 
@@ -43,6 +45,15 @@ public class HandlerInterceptor extends HandlerInterceptorAdapter {
     @Autowired
     private MessageSource messageSource;
 
+    /**
+     * Handler is requested after each controller, before model and view render
+     * Adds all necessary data to model and view, which we may need to use
+     * inside template later.
+     * @param request     Http Request
+     * @param response    Http Response
+     * @param handler     Handler
+     * @param mav         Model and View
+     */
     @Override
     public void postHandle(
             final HttpServletRequest request,

@@ -6,9 +6,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * Map roles to their start pages
+ */
 @Controller
 public class Dashboard {
 
+    /**
+     * Map employer role to employer start page, recruiter role to
+     * recruiter start page, otherwise redirect to login page
+     * @param request    Http Request
+     * @return redirect to recruiter page for recruiter, employer
+     * page for employer, otherwise redirect to login page
+     */
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String routeByRole(final HttpServletRequest request) {
 

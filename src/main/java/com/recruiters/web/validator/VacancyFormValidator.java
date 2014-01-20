@@ -21,6 +21,12 @@ public class VacancyFormValidator implements Validator {
         return VacancyForm.class.equals(clazz);
     }
 
+    /**
+     * Check if all necessary fields are not empty
+     * Check if salary range filled out properly
+     * @param object    Vacancy Form object
+     * @param errors    Errors (from binding result)
+     */
     public void validate(final Object object, final Errors errors) {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "title", "NotEmpty.vacancyForm.title");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "description", "NotEmpty.vacancyForm.description");

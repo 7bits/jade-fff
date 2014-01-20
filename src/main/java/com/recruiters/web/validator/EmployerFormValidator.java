@@ -26,6 +26,13 @@ public class EmployerFormValidator implements Validator {
         return EmployerForm.class.equals(clazz);
     }
 
+    /**
+     * Check if all necessary fields are not empty
+     * If password is changing too, check if old password filled out properly
+     * and new password is long enough
+     * @param object    Employer Form object
+     * @param errors    Errors (from binding result)
+     */
     public void validate(final Object object, final Errors errors) {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "id", "NotEmpty.employerForm.id");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "NotEmpty.employerForm.firstName");
