@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  * Show Deal for Employer with all corresponding actions
  */
 @Controller
-public class EmployerVacancyShow {
+public class EmployerDeal {
 
     /** Employer Service provides all Employer related methods */
     @Autowired

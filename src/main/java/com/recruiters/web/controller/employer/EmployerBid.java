@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  * View bid information and do all bid actions for employer
  */
 @Controller
-public class EmployerRecruiterDeal {
+public class EmployerBid {
 
     /** Employer Service provides all Employer related methods */
     @Autowired
