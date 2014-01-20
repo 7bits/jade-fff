@@ -1,24 +1,28 @@
-package com.recruiters.service.utils;
+package com.recruiters.web.helper;
 
 import org.apache.commons.lang3.StringUtils;
 
 /**
- *  service for provide some function for jade templates
+ *  Url helper for templates
  */
-public class TemplateService {
+public class UrlResolver {
 
     private String protocol = null;
     private String server = null;
     private String port = null;
     private String applicationName = null;
 
-    public TemplateService(final String protocol, final String server, final String port, final String applicationName) {
+    public UrlResolver(final String protocol, final String server, final String port, final String applicationName) {
         this.protocol = protocol;
         this.server = server;
         this.port = port;
         this.applicationName = applicationName;
     }
 
+    /**
+     * Provide full application url
+     * @return url of our app
+     */
     public String getAbsoluteUrl() {
         String fullPath = protocol + "://" + server;
         if (!StringUtils.isBlank(port)) {

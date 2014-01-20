@@ -1,7 +1,7 @@
 package com.recruiters.web.utils;
 
-import com.recruiters.service.utils.TemplateService;
-import com.recruiters.service.utils.SecurityService;
+import com.recruiters.web.helper.UrlResolver;
+import com.recruiters.web.helper.UserResolver;
 import com.recruiters.web.helper.CsrfResolver;
 import com.recruiters.web.helper.MessageResolver;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,8 +62,8 @@ public class HandlerInterceptor extends HandlerInterceptorAdapter {
             final ModelAndView mav
     ) {
         if (mav != null) {
-            mav.addObject(DOMAIN_NAME_VARIABLE, new TemplateService(protocol, server, port, applicationName));
-            mav.addObject(SECURITY_SERVICE_NAME, new SecurityService());
+            mav.addObject(DOMAIN_NAME_VARIABLE, new UrlResolver(protocol, server, port, applicationName));
+            mav.addObject(SECURITY_SERVICE_NAME, new UserResolver());
 
             // Resolving if ModelAndView have any form data, getting errors from it (if any)
             // and adding them to HashMap with pre-configured name into ModelAndView
