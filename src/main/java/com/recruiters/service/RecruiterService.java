@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 /**
+ * Service for Recruiter
  */
 @Service
 public class RecruiterService {
@@ -32,22 +33,22 @@ public class RecruiterService {
     /** Vacancies Repository provides Vacancy DAO */
     @Autowired
     private VacancyRepository vacancyRepository = null;
-    /** Vacancies Repository provides Deal DAO */
+    /** Deal Repository provides Deal DAO */
     @Autowired
     private DealRepository dealRepository = null;
-    /** Vacancies Repository provides Applicant DAO */
+    /** Applicant Repository provides Applicant DAO */
     @Autowired
     private ApplicantRepository applicantRepository = null;
-    /** Vacancies Repository provides Employer DAO */
+    /** Employer Repository provides Employer DAO */
     @Autowired
     private EmployerRepository employerRepository = null;
-    /** Vacancies Repository provides User DAO */
+    /** User Repository provides User DAO */
     @Autowired
     private UserRepository userRepository = null;
-    /** Vacancies Repository provides Recruiter DAO */
+    /** Recruiter Repository provides Recruiter DAO */
     @Autowired
     private RecruiterRepository recruiterRepository = null;
-    /** Vacancies Repository provides Bid DAO */
+    /** Bid Repository provides Bid DAO */
     @Autowired
     private BidRepository bidRepository = null;
     /** Logger */
@@ -104,6 +105,7 @@ public class RecruiterService {
      * @return Vacancy instance
      * @throws ServiceException if cannot obtain Vacancy instance from
      * repository or any other possible error
+     * @throws NotFoundException if Vacancy was not found
      */
     public Vacancy findVacancy(final Long vacancyId)
             throws ServiceException, NotFoundException {
@@ -130,6 +132,8 @@ public class RecruiterService {
      * @return Bid instance
      * @throws ServiceException if cannot obtain Bid instance from
      * repository or any other possible error
+     * @throws NotFoundException if Bid was not found
+     * @throws NotAffiliatedException if Bid does not belong to exact recruiter
      */
     public Bid findActiveBid(final Long bidId, final Long recruiterId)
             throws ServiceException, NotAffiliatedException, NotFoundException {
@@ -198,6 +202,7 @@ public class RecruiterService {
      * @param recruiterId    Id of recruiter obtaining information
      * @return Deal instance if Deal requested belongs to recruiter
      * requested it and there were no technical issues
+     * @throws NotFoundException if Deal was not found
      * @throws NotAffiliatedException if deal requested not belongs to
      * recruiter requested it
      * @throws ServiceException if cannot obtain Deal instance from
@@ -236,6 +241,7 @@ public class RecruiterService {
      * @param recruiterId    Id of recruiter
      * @return Applicant instance if certain applicant belongs to
      * recruiter requested it and there were no any technical issues
+     * @throws NotFoundException if applicant was not found
      * @throws NotAffiliatedException if applicant requested not belongs to
      * recruiter requested it
      * @throws ServiceException if cannot obtain Applicant instance from

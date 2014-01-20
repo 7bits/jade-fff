@@ -27,30 +27,37 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 import java.util.List;
 
 /**
- * Service Class for Employer
+ * Service for Employer
  */
 @Service
 public class EmployerService {
 
-    @Autowired
-    private EmployerRepository employerRepository = null;
-    @Autowired
-    private DealRepository dealRepository = null;
-    @Autowired
-    private ApplicantRepository applicantRepository = null;
-    @Autowired
-    private BidRepository bidRepository = null;
+    /** Vacancies Repository provides Vacancy DAO */
     @Autowired
     private VacancyRepository vacancyRepository = null;
+    /** Deal Repository provides Deal DAO */
+    @Autowired
+    private DealRepository dealRepository = null;
+    /** Bid Repository provides Bid DAO */
+    @Autowired
+    private BidRepository bidRepository = null;
+    /** Applicant Repository provides Applicant DAO */
+    @Autowired
+    private ApplicantRepository applicantRepository = null;
+    /** Employer Repository provides Employer DAO */
+    @Autowired
+    private EmployerRepository employerRepository = null;
+    /** User Repository provides User DAO */
     @Autowired
     private UserRepository userRepository = null;
+    /** Platform transaction Manager */
     @Autowired
     private PlatformTransactionManager txManager = null;
     /** Transaction settings object */
-    private DefaultTransactionDefinition def = null;
+    private DefaultTransactionDefinition employerTx = null;
     /** Logger */
     private final Logger log = Logger.getLogger(EmployerService.class);
-    /** Tx definition name */
+    /** Transaction settings name */
     private static final String TX_NAME = "EmployerTxService";
     /** Default message for ServiceException */
     private static final String SERVICE_EXCEPTION_MESSAGE = "Employer Service general exception: ";
@@ -66,18 +73,20 @@ public class EmployerService {
 
     /**
      * Default constructor
-     * Configuring default transaction settings here
+     * Configuring transaction settings here
      */
     public EmployerService() {
-        def = new DefaultTransactionDefinition();
-        def.setName(TX_NAME);
-        def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+        employerTx = new DefaultTransactionDefinition();
+        employerTx.setName(TX_NAME);
+        employerTx.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
     }
 
     /**
      * Get all active deals from DB for current employer
-     * @param employerId    Employer ID
-     * @return list of deals
+     * @param employerId    Id of Employer
+     * @return List of Deals for exact Employer
+     * @throws ServiceException if cannot obtain list of Deals from
+     * repository or any other possible error
      */
     public List<Deal> findDealsForEmployer(final Long employerId)
             throws ServiceException {
@@ -91,10 +100,15 @@ public class EmployerService {
     }
 
     /**
-     * Returns deal for employer by its Id, using Employer instance as security measures
-     * @param dealId      Id of deal
+     * Return deal for employer by its Id, using Employer instance as security measures
+     * @param dealId        Id of deal
      * @param employerId    Id of employer
      * @return POJO Deal instance
+     * @throws NotFoundException if Deal was not found
+     * @throws NotAffiliatedException if deal requested not belongs to
+     * employer requested it
+     * @throws ServiceException if cannot obtain Deal instance from
+     * repository or any other possible error
      */
     public Deal findDeal(final Long dealId, final Long employerId)
             throws NotAffiliatedException, ServiceException, NotFoundException {
@@ -128,6 +142,11 @@ public class EmployerService {
      * @param applicantId    Id of applicant
      * @param employerId     Id of employer
      * @return Applicant POJO instance
+     * @throws NotFoundException if Applicant was not found
+     * @throws NotAffiliatedException if applicant requested not belongs to
+     * employer requested it
+     * @throws ServiceException if cannot obtain Applicant instance from
+     * repository or any other possible error
      */
     public Applicant findApplicant(final Long applicantId, final Long employerId)
             throws NotAffiliatedException, ServiceException, NotFoundException {
@@ -158,9 +177,13 @@ public class EmployerService {
 
     /**
      * Get bids for exact vacancy from DB for current employer
-     * @param vacancyId   Id of vacancy
-     * @param employerId    Employer ID
+     * @param vacancyId     Id of vacancy
+     * @param employerId    Employer Id
      * @return list of bids
+     * @throws NotAffiliatedException if Vacancy requested not belongs to
+     * employer requested it
+     * @throws ServiceException if cannot obtain Vacancy instance from
+     * repository or any other possible error
      */
     public List<Bid> findBidsForVacancy(final Long vacancyId, final Long employerId)
             throws NotAffiliatedException, ServiceException {
@@ -183,9 +206,14 @@ public class EmployerService {
 
     /**
      * Get bid by its id, employer verification required
-     * @param bidId       Id of bid
-     * @param employerId    Employer ID
+     * @param bidId         Id of bid
+     * @param employerId    Employer Id
      * @return Bid POJO instance
+     * @throws NotFoundException if bid was not found
+     * @throws NotAffiliatedException if bid requested not belongs to
+     * employer requested it
+     * @throws ServiceException if cannot obtain Bid instance from
+     * repository or any other possible error
      */
     public Bid findBid(final Long bidId, final Long employerId)
             throws NotAffiliatedException, ServiceException, NotFoundException {
@@ -216,8 +244,10 @@ public class EmployerService {
 
     /**
      * Find all vacancies for exact employer with count of bids for each
-     * @param employerId    Employer ID
+     * @param employerId    Employer Id
      * @return List of vacancies
+     * @throws ServiceException if cannot obtain vacancies from
+     * repository or any other possible error
      */
     public List<Vacancy> findVacanciesForEmployer(final Long employerId)
             throws ServiceException {
@@ -231,9 +261,14 @@ public class EmployerService {
 
     /**
      * Get Vacancy by its id if its related to exact employer
-     * @param vacancyId    Id of vacancy
-     * @param employerId     Employer ID
+     * @param vacancyId      Id of vacancy
+     * @param employerId     Employer Id
      * @return Vacancy POJO instance
+     * @throws NotFoundException if Vacancy was not found
+     * @throws NotAffiliatedException if Vacancy requested not belongs to
+     * employer requested it
+     * @throws ServiceException if cannot obtain Vacancy instance from
+     * repository or any other possible error
      */
     public Vacancy findVacancy(final Long vacancyId, final Long employerId)
             throws NotAffiliatedException, ServiceException, NotFoundException {
@@ -278,7 +313,7 @@ public class EmployerService {
         try {
             bid = bidRepository.findById(bidId);
             if (bid.getVacancy().getEmployer().getId().equals(employerId)) {
-                status = txManager.getTransaction(def);
+                status = txManager.getTransaction(employerTx);
                 this.dealRepository.create(bidId);
                 this.bidRepository.updateStatus(bidId, BidStatus.APPROVED);
                 txManager.commit(status);
@@ -297,6 +332,16 @@ public class EmployerService {
         throw new NotAffiliatedException(securityMessage);
     }
 
+    /**
+     * Decline recruiter bid.
+     * @param bidId         Id of bid
+     * @param employerId    Id of employer
+     * @return id of bid
+     * @throws NotAffiliatedException if bid not belongs to
+     * employer requested method
+     * @throws ServiceException if Repository cannot process request
+     * or any other possible error
+     */
     public Long declineBidForRecruiter(final Long bidId, final Long employerId)
             throws NotAffiliatedException, ServiceException {
         Bid bid;
@@ -320,6 +365,10 @@ public class EmployerService {
      * Saving employer profile
      * @param employer    Employer POJO instance
      * @return true if update is ok, otherwise false
+     * @throws NotAffiliatedException if employer object not belongs to
+     * employer requested method
+     * @throws ServiceException if Repository cannot process request
+     * or any other possible error
      */
     public User saveProfileForEmployer(final Employer employer, final Long employerId)
             throws ServiceException, NotAffiliatedException {
@@ -341,6 +390,8 @@ public class EmployerService {
      * Finds Employer POJO instance by its  id
      * @param employerId    Employer Id
      * @return Employer POJO instance
+     * @throws ServiceException if Repository cannot process request
+     * or any other possible error
      */
     public Employer findEmployer(final Long employerId) throws ServiceException {
         try {
@@ -352,10 +403,14 @@ public class EmployerService {
     }
 
     /**
-     * Apply Applicant
+     * Apply Applicant, finishes deal
      * @param applicantId      Id of applicant
      * @param employerId       Id of employer
      * @return true if success, otherwise false
+     * @throws NotAffiliatedException if applicant not belongs to
+     * employer requested method
+     * @throws ServiceException if Repository cannot process request
+     * or any other possible error
      */
     public Long applyApplicant(final Long applicantId, final Long employerId)
             throws NotAffiliatedException, ServiceException {
@@ -364,7 +419,7 @@ public class EmployerService {
         try {
             applicant = applicantRepository.findById(applicantId);
             if (applicant.getDeal().getVacancy().getEmployer().getId().equals(employerId)) {
-                status = txManager.getTransaction(def);
+                status = txManager.getTransaction(employerTx);
                 applicantRepository.updateStatus(applicantId, ApplicantStatus.APPROVED);
                 vacancyRepository.updateStatus(
                         applicant.getDeal().getVacancy().getId(),
@@ -392,6 +447,10 @@ public class EmployerService {
      * @param applicantId      Id of applicant
      * @param employerId       Id of employer
      * @return true if success, otherwise false
+     * @throws NotAffiliatedException if applicant not belongs to
+     * employer requested method
+     * @throws ServiceException if Repository cannot process request
+     * or any other possible error
      */
     public Long declineApplicant(final Long applicantId, final Long employerId)
             throws NotAffiliatedException, ServiceException {
@@ -413,10 +472,14 @@ public class EmployerService {
     }
 
     /**
-     * fire recruiter from vacancy
-     * @param dealId Id of deal
+     * Fire recruiter from vacancy
+     * @param dealId     Id of deal
      * @param employerId Id of employer
      * @return true if success, otherwise false
+     * @throws NotAffiliatedException if deal not belongs to
+     * employer requested method
+     * @throws ServiceException if Repository cannot process request
+     * or any other possible error
      */
     public Long fireRecruiter(final Long dealId, final Long employerId)
             throws NotAffiliatedException, ServiceException {
@@ -434,5 +497,53 @@ public class EmployerService {
                 SECURITY_EXCEPTION_MESSAGE_PART2;
         log.error(securityMessage);
         throw new NotAffiliatedException(securityMessage);
+    }
+
+    public VacancyRepository getVacancyRepository() {
+        return vacancyRepository;
+    }
+
+    public void setVacancyRepository(final VacancyRepository vacancyRepository) {
+        this.vacancyRepository = vacancyRepository;
+    }
+
+    public DealRepository getDealRepository() {
+        return dealRepository;
+    }
+
+    public void setDealRepository(final DealRepository dealRepository) {
+        this.dealRepository = dealRepository;
+    }
+
+    public BidRepository getBidRepository() {
+        return bidRepository;
+    }
+
+    public void setBidRepository(final BidRepository bidRepository) {
+        this.bidRepository = bidRepository;
+    }
+
+    public ApplicantRepository getApplicantRepository() {
+        return applicantRepository;
+    }
+
+    public void setApplicantRepository(final ApplicantRepository applicantRepository) {
+        this.applicantRepository = applicantRepository;
+    }
+
+    public EmployerRepository getEmployerRepository() {
+        return employerRepository;
+    }
+
+    public void setEmployerRepository(final EmployerRepository employerRepository) {
+        this.employerRepository = employerRepository;
+    }
+
+    public UserRepository getUserRepository() {
+        return userRepository;
+    }
+
+    public void setUserRepository(final UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 }
