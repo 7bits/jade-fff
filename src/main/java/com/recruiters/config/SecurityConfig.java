@@ -44,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .formLogin()
                     .loginPage("/")
-                    .loginProcessingUrl("/j_spring_security_check")
+                    .loginProcessingUrl("/*/j_spring_security_check")
                     .usernameParameter("j_username")
                     .passwordParameter("j_password")
                     .defaultSuccessUrl("/")
@@ -53,13 +53,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .permitAll()
                     .and()
                 .logout()
-                    .logoutUrl("/j_spring_security_logout")
+                    .logoutUrl("/*/j_spring_security_logout")
                     .logoutSuccessUrl("/")
                     .permitAll()
                     .and()
                 .authorizeRequests()
-                    .antMatchers("/recruiter*/**").hasRole("RECRUITER")
-                    .antMatchers("/employer*/**").hasRole("EMPLOYER")
+                    .antMatchers("/*/recruiter*/**").hasRole("RECRUITER")
+                    .antMatchers("/*/employer*/**").hasRole("EMPLOYER")
+                    .antMatchers("/*/j_*").permitAll()
+                    .antMatchers("/*").permitAll()
                     .anyRequest().anonymous();
 
     }

@@ -41,7 +41,7 @@ public class EmployerBid {
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
-    @RequestMapping(value = "employer-recruiter-show/{bidId}")
+    @RequestMapping(value = "/{locale}/employer-recruiter-show/{bidId}")
     public ModelAndView employerShowRecruiterBid(
             @PathVariable final Long bidId,
             final HttpServletRequest request,
@@ -66,6 +66,7 @@ public class EmployerBid {
     /**
      * Approve recruiter application
      * @param bidId       Id of application bid
+     * @param locale      Locale
      * @param request     Http Request
      * @param response    Http Response
      * @return redirect to "recruiter search" page if everything goes fine,
@@ -75,9 +76,10 @@ public class EmployerBid {
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
-    @RequestMapping(value = "employer-recruiter-approve/{bidId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{locale}/employer-recruiter-approve/{bidId}", method = RequestMethod.GET)
     public String approveRecruiterBid(
             @PathVariable final Long bidId,
+            @PathVariable final String locale,
             final HttpServletRequest request,
             final HttpServletResponse response
     ) throws Exception {
@@ -90,12 +92,13 @@ public class EmployerBid {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
 
-        return "redirect:/employer-recruiter-search";
+        return "redirect:/" + locale + "/employer-recruiter-search";
     }
 
     /**
      * Decline recruiter application
      * @param bidId       Id of application bid
+     * @param locale      Locale
      * @param request     Http Request
      * @param response    Http Response
      * @return redirect to "recruiter search" page if everything goes fine,
@@ -105,9 +108,10 @@ public class EmployerBid {
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
-    @RequestMapping(value = "employer-recruiter-decline/{bidId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{locale}/employer-recruiter-decline/{bidId}", method = RequestMethod.GET)
     public String declineRecruiterBid(
             @PathVariable final Long bidId,
+            @PathVariable final String locale,
             final HttpServletRequest request,
             final HttpServletResponse response
     ) throws Exception {
@@ -120,7 +124,7 @@ public class EmployerBid {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
 
-        return "redirect:/employer-recruiter-search";
+        return "redirect:/" + locale + "/employer-recruiter-search";
     }
 
     public EmployerService getEmployerService() {

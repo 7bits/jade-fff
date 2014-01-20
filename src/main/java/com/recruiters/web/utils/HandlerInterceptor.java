@@ -62,8 +62,6 @@ public class HandlerInterceptor extends HandlerInterceptorAdapter {
             final ModelAndView mav
     ) {
         if (mav != null) {
-            mav.addObject(DOMAIN_NAME_VARIABLE, new UrlResolver(protocol, server, port, applicationName));
-            mav.addObject(SECURITY_SERVICE_NAME, new UserResolver());
 
             // Resolving if ModelAndView have any form data, getting errors from it (if any)
             // and adding them to HashMap with pre-configured name into ModelAndView
@@ -97,11 +95,24 @@ public class HandlerInterceptor extends HandlerInterceptorAdapter {
             mav.addObject(MODEL_ERRORS_NAME, errors);
 
             // Message resolver added
+            // Url resolver added
             Locale locale = RequestContextUtils.getLocale(request);
-            mav.addObject(MODEL_MESSAGE_RESOLVER_NAME, new MessageResolver(messageSource, locale));
+            try {
+                Integer indexOfSecondSlash = request.getServletPath().indexOf('/', 1);
+                String localeFromUrl = request.getServletPath().substring(1, indexOfSecondSlash);
+                Locale urlLocale = new Locale(localeFromUrl);
+                mav.addObject(MODEL_MESSAGE_RESOLVER_NAME, new MessageResolver(messageSource, urlLocale));
+                mav.addObject(DOMAIN_NAME_VARIABLE, new UrlResolver(protocol, server, port, applicationName, urlLocale));
+            } catch (IndexOutOfBoundsException e) {
+                mav.addObject(MODEL_MESSAGE_RESOLVER_NAME, new MessageResolver(messageSource, locale));
+                mav.addObject(DOMAIN_NAME_VARIABLE, new UrlResolver(protocol, server, port, applicationName, locale));
+            }
 
             // CSRF Token Resolver
             mav.addObject(CSRF_RESOLVER_NAME, new CsrfResolver(request));
+
+            // User resolver
+            mav.addObject(SECURITY_SERVICE_NAME, new UserResolver());
         }
     }
 

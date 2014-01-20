@@ -41,7 +41,7 @@ public class EmployerDeal {
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
-    @RequestMapping(value = "employer-progress-vacancy-show/{dealId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{locale}/employer-progress-vacancy-show/{dealId}", method = RequestMethod.GET)
     public ModelAndView showVacancyProgressForEmployer(
             @PathVariable final Long dealId,
             final HttpServletRequest request,
@@ -66,6 +66,7 @@ public class EmployerDeal {
     /**
      * Fire Recruiter for Employer
      * @param dealId      Id of deal
+     * @param locale      Locale
      * @param request     Http request
      * @param response    Http response
      * @return redirect to "vacancies list" page if everything goes fine,
@@ -75,9 +76,10 @@ public class EmployerDeal {
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
-    @RequestMapping(value = "employer-fire-recruiter/{dealId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{locale}/employer-fire-recruiter/{dealId}", method = RequestMethod.GET)
     public String fireRecruiter(
             @PathVariable final Long dealId,
+            @PathVariable final String locale,
             final HttpServletRequest request,
             final HttpServletResponse response
     ) throws Exception {
@@ -90,7 +92,7 @@ public class EmployerDeal {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
 
-        return "redirect:/employer-progress-vacancies-list";
+        return "redirect:/" + locale + "/employer-progress-vacancies-list";
     }
 
 

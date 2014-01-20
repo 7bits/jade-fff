@@ -43,7 +43,7 @@ public class SuccessLoginHandler implements AuthenticationSuccessHandler {
         } catch (RepositoryException e) {
             throw new IOException("Cannot obtain user information: ", e);
         }
-        response.sendRedirect(request.getContextPath() + "/");
+        response.sendRedirect(request.getContextPath() + request.getServletPath());
     }
 
     public UserRepository getUserRepository() {

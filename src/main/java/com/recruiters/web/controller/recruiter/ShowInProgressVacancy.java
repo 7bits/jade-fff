@@ -40,7 +40,7 @@ public class ShowInProgressVacancy {
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
-    @RequestMapping(value = "recruiter-show-in-progress-vacancy/{dealId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{locale}/recruiter-show-in-progress-vacancy/{dealId}", method = RequestMethod.GET)
     public ModelAndView showInProgressVacancy(
             @PathVariable final Long dealId,
             final HttpServletRequest request,

@@ -35,7 +35,7 @@ public class EmployerVacancy {
      * Controller for creating new vacancy with method GET
      * @return model and view with empty vacancy
      */
-    @RequestMapping(value = "employer-vacancy-create", method = RequestMethod.GET)
+    @RequestMapping(value = "/{locale}/employer-vacancy-create", method = RequestMethod.GET)
     public ModelAndView createVacancy() {
 
         ModelAndView createVacancy = new ModelAndView("employer/vacancy-create.jade");

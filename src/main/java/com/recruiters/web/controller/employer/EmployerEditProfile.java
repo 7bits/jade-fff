@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -48,7 +49,7 @@ public class EmployerEditProfile {
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
-    @RequestMapping(value = "employer-profile", method = RequestMethod.GET)
+    @RequestMapping(value = "/{locale}/employer-profile", method = RequestMethod.GET)
     public ModelAndView showEmployerProfile(
             final HttpServletRequest request,
             final HttpServletResponse response
@@ -70,7 +71,8 @@ public class EmployerEditProfile {
      * Controller for editing employer profile with method POST
      * @param request               Http Request
      * @param response              Http Response
-     * @param employerForm         Model attribute for employer
+     * @param locale                Locale
+     * @param employerForm          Model attribute for employer
      * @param bindingResult         BindingResult
      * @return model and view for editing employer with errors if any,
      * otherwise redirects to employer deals page, Forbidden page if form
@@ -80,10 +82,11 @@ public class EmployerEditProfile {
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
-    @RequestMapping(value = "employer-profile", method = RequestMethod.POST)
+    @RequestMapping(value = "/{locale}/employer-profile", method = RequestMethod.POST)
     public ModelAndView editEmployer(
             final HttpServletRequest request,
             final HttpServletResponse response,
+            @PathVariable final String locale,
             @Valid @ModelAttribute("employerForm") final EmployerForm employerForm,
             final BindingResult bindingResult
     ) throws Exception {
@@ -103,7 +106,7 @@ public class EmployerEditProfile {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
         }
 
-        return new ModelAndView("redirect:/employer-progress-vacancies-list");
+        return new ModelAndView("redirect:/" + locale + "/employer-progress-vacancies-list");
     }
 
     /**

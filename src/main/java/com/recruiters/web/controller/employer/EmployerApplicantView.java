@@ -2,8 +2,10 @@ package com.recruiters.web.controller.employer;
 
 import com.recruiters.model.Applicant;
 import com.recruiters.model.User;
-import com.recruiters.service.*;
+import com.recruiters.service.EmployerService;
 import com.recruiters.service.NotAffiliatedException;
+import com.recruiters.service.NotFoundException;
+import com.recruiters.service.ServiceException;
 import com.recruiters.web.controller.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -42,7 +44,7 @@ public class EmployerApplicantView {
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
-    @RequestMapping(value = "employer-applicant-show/{applicantId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{locale}/employer-applicant-show/{applicantId}", method = RequestMethod.GET)
     public ModelAndView applicantShow(
             @PathVariable final Long applicantId,
             final HttpServletRequest request,
@@ -67,6 +69,7 @@ public class EmployerApplicantView {
     /**
      * Approve applicant
      * @param applicantId    Id of applicant
+     * @param locale         Locale
      * @param request        Http request
      * @param response       Http response
      * @return redirects to list of vacancies currently in work if the action
@@ -78,9 +81,10 @@ public class EmployerApplicantView {
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
-    @RequestMapping(value = "employer-applicant-show/apply/{applicantId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{locale}/employer-applicant-show/apply/{applicantId}", method = RequestMethod.GET)
     public String applicantApply(
             @PathVariable final Long applicantId,
+            @PathVariable final String locale,
             final HttpServletRequest request,
             final HttpServletResponse response
     ) throws Exception {
@@ -93,13 +97,14 @@ public class EmployerApplicantView {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
 
-        return "redirect:/employer-progress-vacancies-list";
+        return "redirect:/" + locale + "/employer-progress-vacancies-list";
     }
 
 
     /**
      * Decline applicant
      * @param applicantId    Id of applicant
+     * @param locale         Locale
      * @param request        Http request
      * @param response       Http response
      * @return redirects to list of vacancies currently in work if the action
@@ -111,9 +116,10 @@ public class EmployerApplicantView {
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
-    @RequestMapping(value = "employer-applicant-show/decline/{applicantId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{locale}/employer-applicant-show/decline/{applicantId}", method = RequestMethod.GET)
     public String applicantDecline(
             @PathVariable final Long applicantId,
+            @PathVariable final String locale,
             final HttpServletRequest request,
             final HttpServletResponse response
     ) throws Exception {
@@ -122,7 +128,7 @@ public class EmployerApplicantView {
             employerService.declineApplicant(applicantId, user.getEmployerId());
             Applicant applicant = employerService.findApplicant(applicantId, user.getEmployerId());
 
-            return "redirect:/employer-progress-vacancy-show/" + applicant.getDeal().getId();
+            return "redirect:/" + locale + "/employer-progress-vacancy-show/" + applicant.getDeal().getId();
         } catch (NotAffiliatedException e) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
         } catch (ServiceException e) {

@@ -43,7 +43,7 @@ public class RecruiterApplicant {
      * @param dealId    Id of deal we assign applicant to
      * @return model and view with empty applicant
      */
-    @RequestMapping(value = "recruiter-add-applicant/{dealId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{locale}/recruiter-add-applicant/{dealId}", method = RequestMethod.GET)
     public ModelAndView addApplicant(
             @PathVariable final Long dealId
     ) {
@@ -59,6 +59,7 @@ public class RecruiterApplicant {
     /**
      * Controller for creating new applicant with method POST
      * @param applicantForm         Model attribute for applicant
+     * @param locale                Locale
      * @param bindingResult         BindingResult
      * @param request               Http Request
      * @param response              Http Response
@@ -70,9 +71,10 @@ public class RecruiterApplicant {
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
-    @RequestMapping(value = "recruiter-add-applicant/{dealId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/{locale}/recruiter-add-applicant/{dealId}", method = RequestMethod.POST)
     public ModelAndView createApplicant(
             @Valid @ModelAttribute("applicantForm") final ApplicantForm applicantForm,
+            @PathVariable final String locale,
             final BindingResult bindingResult,
             final HttpServletRequest request,
             final HttpServletResponse response
@@ -95,7 +97,7 @@ public class RecruiterApplicant {
             );
             Long dealId = applicantForm.getDealId();
 
-            return new ModelAndView("redirect:/recruiter-show-in-progress-vacancy/" + dealId);
+            return new ModelAndView("redirect:/" + locale + "/recruiter-show-in-progress-vacancy/" + dealId);
         } catch (NotAffiliatedException e) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
         } catch (ServiceException e) {
@@ -117,7 +119,7 @@ public class RecruiterApplicant {
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
-    @RequestMapping(value = "recruiter-edit-applicant/{applicantId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{locale}/recruiter-edit-applicant/{applicantId}", method = RequestMethod.GET)
     public ModelAndView editApplicant(
             @PathVariable final Long applicantId,
             final HttpServletRequest request,
@@ -143,6 +145,7 @@ public class RecruiterApplicant {
     /**
      * Controller for editing applicant with method POST
      * @param applicantForm         Model attribute for applicant
+     * @param locale                Locale
      * @param bindingResult         BindingResult
      * @param request               Http Request
      * @param response              Http Response
@@ -154,9 +157,10 @@ public class RecruiterApplicant {
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
-    @RequestMapping(value = "recruiter-edit-applicant/{applicantId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/{locale}/recruiter-edit-applicant/{applicantId}", method = RequestMethod.POST)
     public ModelAndView updateApplicant(
             @Valid @ModelAttribute("applicantForm") final ApplicantForm applicantForm,
+            @PathVariable final String locale,
             final BindingResult bindingResult,
             final HttpServletRequest request,
             final HttpServletResponse response
@@ -177,7 +181,7 @@ public class RecruiterApplicant {
                     user.getRecruiterId()
             );
             Long dealId = applicantForm.getDealId();
-            return new ModelAndView("redirect:/recruiter-show-in-progress-vacancy/" + dealId);
+            return new ModelAndView("redirect:/" + locale + "/recruiter-show-in-progress-vacancy/" + dealId);
         } catch (NotAffiliatedException e) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
         } catch (ServiceException e) {

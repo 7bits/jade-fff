@@ -3,10 +3,10 @@ html
   head
     title=fmt.message("login.title")
     block head
-      script(src=domain.getAbsoluteUrl() + '/resources/js/lib/bootstrap.min.js')
-      link(href=domain.getAbsoluteUrl() + '/resources/stylesheets/lib/bootstrap.min.css', rel='stylesheet', type='text/css')
-      link(href=domain.getAbsoluteUrl() + '/resources/stylesheets/lib/bootstrap-theme.min.css', rel='stylesheet', type='text/css')
-      link(href=domain.getAbsoluteUrl() + '/resources/stylesheets/form.css', rel='stylesheet', type='text/css')
+      script(src=domain.getResourceUrl() + '/js/lib/bootstrap.min.js')
+      link(href=domain.getResourceUrl() + '/stylesheets/lib/bootstrap.min.css', rel='stylesheet', type='text/css')
+      link(href=domain.getResourceUrl() + '/stylesheets/lib/bootstrap-theme.min.css', rel='stylesheet', type='text/css')
+      link(href=domain.getResourceUrl() + '/stylesheets/form.css', rel='stylesheet', type='text/css')
   body
     block content
       .container

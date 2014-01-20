@@ -16,7 +16,7 @@ public class LoginPage {
      * Display login page
      * @return model and view with login page
      */
-    @RequestMapping(value = "/login-page", method = RequestMethod.GET)
+    @RequestMapping(value = "/{locale}/login-page", method = RequestMethod.GET)
     public ModelAndView vacanciesSearch() {
 
         ModelAndView mav = new ModelAndView("login.jade");

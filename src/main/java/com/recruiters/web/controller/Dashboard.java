@@ -1,10 +1,13 @@
 package com.recruiters.web.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Locale;
 
 /**
  * Map roles to their start pages
@@ -17,18 +20,37 @@ public class Dashboard {
      * recruiter start page, otherwise redirect to login page
      * @param request    Http Request
      * @return redirect to recruiter page for recruiter, employer
-     * page for employer, otherwise redirect to login page
+     * page for employer, otherwise redirect to login page with
+     * appropriate locale
      */
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String routeByRole(final HttpServletRequest request) {
+    public String routeByRole(final HttpServletRequest request
+    ) {
+        Locale locale = RequestContextUtils.getLocale(request);
 
         if (request.isUserInRole("ROLE_RECRUITER")) {
-            return "redirect:/recruiter-active-deals";
+            return "redirect:/" + locale + "/recruiter-active-deals";
         }
         if (request.isUserInRole("ROLE_EMPLOYER")) {
-            return "redirect:/employer-progress-vacancies-list";
+            return "redirect:/" + locale + "/employer-progress-vacancies-list";
         }
 
-        return "redirect:/login-page";
+        return "redirect:/" + locale + "/login-page";
+    }
+
+    @RequestMapping(value = { "/{locale}", "/{locale}/j_*" }, method = RequestMethod.GET)
+    public String routeByRoleWithLocale(
+            final HttpServletRequest request,
+            @PathVariable final String locale
+    ) {
+
+        if (request.isUserInRole("ROLE_RECRUITER")) {
+            return "redirect:/" + locale + "/recruiter-active-deals";
+        }
+        if (request.isUserInRole("ROLE_EMPLOYER")) {
+            return "redirect:/" + locale + "/employer-progress-vacancies-list";
+        }
+
+        return "redirect:/" + locale + "/login-page";
     }
 }

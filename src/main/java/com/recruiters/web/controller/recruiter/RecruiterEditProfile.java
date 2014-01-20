@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -48,7 +49,7 @@ public class RecruiterEditProfile {
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
-    @RequestMapping(value = "recruiter-profile", method = RequestMethod.GET)
+    @RequestMapping(value = "/{locale}/recruiter-profile", method = RequestMethod.GET)
     public ModelAndView showRecruiterProfile(
             final HttpServletRequest request,
             final HttpServletResponse response
@@ -70,6 +71,7 @@ public class RecruiterEditProfile {
      * Controller for editing recruiter profile with method POST
      * @param request               Http Request
      * @param response              Http Response
+     * @param locale                Locale
      * @param recruiterForm         Model attribute for recruiter
      * @param bindingResult         BindingResult
      * @return model and view for editing recruiter with errors if any,
@@ -80,10 +82,11 @@ public class RecruiterEditProfile {
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
-    @RequestMapping(value = "recruiter-profile", method = RequestMethod.POST)
+    @RequestMapping(value = "/{locale}/recruiter-profile", method = RequestMethod.POST)
     public ModelAndView editRecruiter(
             final HttpServletRequest request,
             final HttpServletResponse response,
+            @PathVariable final String locale,
             @Valid @ModelAttribute("recruiterForm") final RecruiterForm recruiterForm,
             final BindingResult bindingResult
     ) throws Exception {
@@ -103,7 +106,7 @@ public class RecruiterEditProfile {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
         }
 
-        return new ModelAndView("redirect:/recruiter-active-deals");
+        return new ModelAndView("redirect:/" + locale + "/recruiter-active-deals");
     }
 
     /**

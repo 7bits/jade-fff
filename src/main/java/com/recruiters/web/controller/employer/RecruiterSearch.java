@@ -34,7 +34,7 @@ public class RecruiterSearch {
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
-    @RequestMapping(value = "employer-recruiter-search")
+    @RequestMapping(value = "/{locale}/employer-recruiter-search")
     public ModelAndView employerVacanciesBids(
             final HttpServletRequest request,
             final HttpServletResponse response
