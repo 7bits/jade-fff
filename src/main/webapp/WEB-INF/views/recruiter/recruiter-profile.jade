@@ -1,8 +1,10 @@
 extends ../layout
 
+block append head
+  title=fmt.message("recruiter-profile.title")
 block append content
   .container
-    h2=fmt.message("profile.title")
+    h2=fmt.message("recruiter-profile.h1")
     form(name="recruiterForm", action="", method="post")
       .row
         .col-md-6

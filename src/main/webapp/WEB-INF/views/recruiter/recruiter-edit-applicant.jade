@@ -1,8 +1,10 @@
 extends ../layout
 
+block append head
+  title=fmt.message("recruiter-edit-applicant.title")
 block append content
   .container
-    h2=fmt.message("recruiter-edit-applicant.title")
+    h2=fmt.message("recruiter-edit-applicant.h1")
     form(name="applicantForm", action="", method="post", enctype="multipart/form-data")
       .row
         .col-md-6

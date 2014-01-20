@@ -1,40 +1,42 @@
 extends ../layout
 
+block append head
+  title=fmt.message("employer-vacancy-create.title")
 block append content
   .container
-    h2=fmt.message("employer-vacancy-create.title")
+    h1=fmt.message("employer-vacancy-create.h1")
     form(name="applicantForm", action="", method="post", enctype="multipart/form-data")
       .row
         .col-md-6
           .form-group
             label(for="title")
-            input(type="text", class="form-control", id="title", name="title", placeholder=fmt.message("employer-vacancy-create.name"))
+            input(type="text", class="form-control", id="title", name="title", placeholder=fmt.message("employer-vacancy-create.form.title"))
             #{errors.title}
           .form-group
             label(for="description")
-            textarea(class="form-control", id="description", name="description", placeholder=fmt.message("employer-vacancy-create.description"))
+            textarea(class="form-control", id="description", name="description", placeholder=fmt.message("employer-vacancy-create.form.description"))
             #{errors.description}
           .form-group
             label(for="pay-from")
-              =fmt.message("employer-vacancy-create.salary")
+              =fmt.message("employer-vacancy-create.form.salary")
             .row
               .col-xs-3
-                input(type="number", class="form-control", id="salaryFrom", name="salaryFrom", placeholder=fmt.message("employer-vacancy-create.salaryFrom"))
+                input(type="number", class="form-control", id="salaryFrom", name="salaryFrom", placeholder=fmt.message("employer-vacancy-create.form.salaryFrom"))
               .col-xs-3
-                input(type="number", class="form-control", id="salaryTo", name="salaryTo", placeholder=fmt.message("employer-vacancy-create.salaryTo"))
+                input(type="number", class="form-control", id="salaryTo", name="salaryTo", placeholder=fmt.message("employer-vacancy-create.form.salaryTo"))
             #{errors.salaryFrom}
           .form-group
             label(for="expirationDate")
             .row
               .col-xs-4
-                input(type="text", class="form-control datepicker", id="expirationDate", name="expirationDate", placeholder=fmt.message("employer-vacancy-create.expirationDate"))
+                input(type="text", class="form-control datepicker", id="expirationDate", name="expirationDate", placeholder=fmt.message("employer-vacancy-create.form.expirationDate"))
             #{errors.expirationDate}
           .form-group
             label(for="testFile")=fmt.message("employer-vacancy-create.testFile")
-            input(type="file", id="testFile", name="testFile", placeholder=fmt.message("employer-vacancy-create.testFile"))
+            input(type="file", id="testFile", name="testFile", placeholder=fmt.message("employer-vacancy-create.form.testFile"))
             #{errors.testFile}
           .checkbox
-            label(for="publish")=fmt.message("employer-vacancy-create.publish")
+            label(for="publish")=fmt.message("employer-vacancy-create.form.publish")
             input(type="checkbox", id="publish", name="publish", value="1")
             #{errors.publish}
-          input.btn.btn-success(type="submit", name="submit", value=fmt.message("employer-vacancy-create.add"))=fmt.message("employer-vacancy-create.add")
+          input.btn.btn-success(type="submit", name="submit", value=fmt.message("employer-vacancy-create.add"))=fmt.message("employer-vacancy-create.form.add")

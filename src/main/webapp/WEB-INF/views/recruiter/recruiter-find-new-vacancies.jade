@@ -1,5 +1,7 @@
 extends ../layout
 
+block append head
+  title=fmt.message("recruiter-find-new-vacancies.title")
 block append content
   .container
     h1=fmt.message("recruiter-find-new-vacancies.h1")
