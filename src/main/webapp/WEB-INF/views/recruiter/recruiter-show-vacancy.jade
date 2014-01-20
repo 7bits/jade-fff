@@ -9,7 +9,7 @@ block append content
       dt=fmt.message("recruiter-show-vacancy.dt.description")
       dd #{vacancy.description}
       dt=fmt.message("recruiter-show-vacancy.dt.salary")
-      dd #{vacancy.salary}
+      dd #{vacancy.salaryFrom} - #{vacancy.salaryTo}
       dt=fmt.message("recruiter-show-vacancy.dt.creationDate")
       dd #{fmt.date(vacancy.creationDate)}
       dt=fmt.message("recruiter-show-vacancy.dt.expirationDate")

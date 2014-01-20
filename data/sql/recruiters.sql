@@ -195,7 +195,8 @@ CREATE TABLE IF NOT EXISTS `vacancies` (
   `employer_id` bigint(20) NOT NULL,
   `title` varchar(255) NOT NULL,
   `description` varchar(255) NOT NULL,
-  `salary` varchar(255) NOT NULL,
+  `salary_from` bigint(20) NOT NULL,
+  `salary_to` bigint(20) NOT NULL,
   `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `expiration_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `test_file` varchar(255) NOT NULL,
@@ -208,13 +209,13 @@ CREATE TABLE IF NOT EXISTS `vacancies` (
 -- Dumping data for table `vacancies`
 --
 
-INSERT INTO `vacancies` (`id`, `employer_id`, `title`, `description`, `salary`, `creation_date`, `expiration_date`, `test_file`, `status`) VALUES
-(1, 1, 'Лесоруб', 'Должен уметь рубить лес', '10тыс.-15тыс. руб.', '2013-12-28 04:36:42', '2014-01-08 17:00:00', '#', 'ACTIVE'),
-(2, 1, 'Сантехник', 'Не должен пить!', '20 000 руб', '2013-12-28 04:36:40', '2014-01-30 17:00:00', '#', 'ACTIVE'),
-(3, 1, 'Программист', 'Уметь программировать на С++', '100500 руб.', '2013-12-28 04:36:38', '2014-01-14 17:00:00', '#', 'ACTIVE'),
-(4, 2, 'Банщик', 'Парит и шпарит', 'берет банными вениками', '2014-01-14 11:43:41', '2014-01-14 17:00:00', '#', 'ACTIVE'),
-(5, 2, 'Водитель', 'Водитель маршрутного такси на полный рабочий день.', '30000 - 40000', '2014-01-14 11:44:43', '2014-01-30 17:00:00', '#', 'ACTIVE'),
-(6, 3, 'Токарь', 'Токарь 3-го разряда', '15000-20000', '2014-01-14 11:45:38', '2014-01-30 17:00:00', '#', 'ACTIVE');
+INSERT INTO `vacancies` (`id`, `employer_id`, `title`, `description`, `salary_from`, `salary_to`, `creation_date`, `expiration_date`, `test_file`, `status`) VALUES
+(1, 1, 'Лесоруб', 'Должен уметь рубить лес', 10000, 15000, '2013-12-28 04:36:42', '2014-01-08 17:00:00', '#', 'ACTIVE'),
+(2, 1, 'Сантехник', 'Не должен пить!', 20000, 20000, '2013-12-28 04:36:40', '2014-01-30 17:00:00', '#', 'ACTIVE'),
+(3, 1, 'Программист', 'Уметь программировать на С++', 100000, 100000 , '2013-12-28 04:36:38', '2014-01-14 17:00:00', '#', 'ACTIVE'),
+(4, 2, 'Банщик', 'Парит и шпарит', 20000, 25000, '2014-01-14 11:43:41', '2014-01-14 17:00:00', '#', 'ACTIVE'),
+(5, 2, 'Водитель', 'Водитель маршрутного такси на полный рабочий день.', 30000, 40000, '2014-01-14 11:44:43', '2014-01-30 17:00:00', '#', 'ACTIVE'),
+(6, 3, 'Токарь', 'Токарь 3-го разряда', 15000, 20000, '2014-01-14 11:45:38', '2014-01-30 17:00:00', '#', 'ACTIVE');
 
 --
 -- Constraints for dumped tables

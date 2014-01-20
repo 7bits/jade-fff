@@ -11,7 +11,7 @@ block append content
         h2=fmt.message("employer-recruiter-show.h2.vacancy")
         p #{bid.vacancy.title}
         p #{bid.vacancy.description}
-        p #{bid.vacancy.salary}
+        p #{bid.vacancy.salaryFrom} - #{bid.vacancy.salaryTo}
 
     .row
       .col-md-6

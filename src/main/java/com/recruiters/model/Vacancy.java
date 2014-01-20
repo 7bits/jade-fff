@@ -10,7 +10,8 @@ public class Vacancy {
     private Employer employer = null;
     private String title;
     private String description;
-    private String salary;
+    private Long salaryFrom;
+    private Long salaryTo;
     private Date creationDate;
     private Date expirationDate;
     private String testFile;
@@ -34,13 +35,14 @@ public class Vacancy {
     }
 
     public Vacancy(final Long id, final Employer employer, final String title,
-                   final String description, final String salary,
+                   final String description, final Long salaryFrom, final Long salaryTo,
                    final Date creationDate, final Date expirationDate, final String testFile) {
         this.id = id;
         this.employer = employer;
         this.title = title;
         this.description = description;
-        this.salary = salary;
+        this.salaryFrom = salaryFrom;
+        this.salaryTo = salaryTo;
         this.creationDate = creationDate;
         this.expirationDate = expirationDate;
         this.testFile = testFile;
@@ -79,12 +81,20 @@ public class Vacancy {
         this.description = description;
     }
 
-    public String getSalary() {
-        return salary;
+    public Long getSalaryFrom() {
+        return salaryFrom;
     }
 
-    public void setSalary(final String salary) {
-        this.salary = salary;
+    public void setSalaryFrom(final Long salaryFrom) {
+        this.salaryFrom = salaryFrom;
+    }
+
+    public Long getSalaryTo() {
+        return salaryTo;
+    }
+
+    public void setSalaryTo(final Long salaryTo) {
+        this.salaryTo = salaryTo;
     }
 
     public Date getCreationDate() {

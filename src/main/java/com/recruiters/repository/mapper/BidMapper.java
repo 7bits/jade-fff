@@ -19,7 +19,8 @@ public interface BidMapper {
 
     @Select("SELECT bids.id, bids.message, bids.status, " +
             "vacancies.id as vacancy_id,  vacancies.employer_id, vacancies.title, " +
-            "vacancies.description, vacancies.salary, vacancies.creation_date, vacancies.expiration_date, " +
+            "vacancies.description, vacancies.salary_from, vacancies.salary_to, " +
+            "vacancies.creation_date, vacancies.expiration_date, " +
             "recruiters.id as recruiter_id, " +
             "users.firstname, users.lastname " +
             "FROM bids " +
@@ -35,7 +36,8 @@ public interface BidMapper {
             @Result(column = "employer_id", property = "vacancy.employer.id"),
             @Result(column = "title", property = "vacancy.title"),
             @Result(column = "description", property = "vacancy.description"),
-            @Result(column = "salary", property = "vacancy.salary"),
+            @Result(column = "salary_from", property = "vacancy.salaryFrom"),
+            @Result(column = "salary_to", property = "vacancy.salaryTo"),
             @Result(column = "creation_date", property = "vacancy.creationDate"),
             @Result(column = "expiration_date", property = "vacancy.expirationDate"),
             @Result(column = "recruiter_id", property = "recruiter.id"),
@@ -46,7 +48,8 @@ public interface BidMapper {
 
     @Select("SELECT bids.id, bids.message, bids.status, " +
             "vacancies.id as vacancy_id,  vacancies.employer_id, vacancies.title, " +
-            "vacancies.description, vacancies.salary, vacancies.creation_date, vacancies.expiration_date, " +
+            "vacancies.description, vacancies.salary_from, vacancies.salary_to, " +
+            "vacancies.creation_date, vacancies.expiration_date, " +
             "recruiters.id as recruiter_id, " +
             "users.firstname, users.lastname " +
             "FROM bids " +
@@ -64,7 +67,8 @@ public interface BidMapper {
             @Result(column = "employer_id", property = "vacancy.employer.id"),
             @Result(column = "title", property = "vacancy.title"),
             @Result(column = "description", property = "vacancy.description"),
-            @Result(column = "salary", property = "vacancy.salary"),
+            @Result(column = "salary_from", property = "vacancy.salaryFrom"),
+            @Result(column = "salary_to", property = "vacancy.salaryTo"),
             @Result(column = "creation_date", property = "vacancy.creationDate"),
             @Result(column = "expiration_date", property = "vacancy.expirationDate"),
             @Result(column = "recruiter_id", property = "recruiter.id"),
@@ -75,7 +79,8 @@ public interface BidMapper {
 
     @Select("SELECT bids.id, bids.message, bids.status, " +
             "vacancies.id as vacancy_id,  vacancies.employer_id, vacancies.title, " +
-            "vacancies.description, vacancies.salary, vacancies.creation_date, vacancies.expiration_date, " +
+            "vacancies.description, vacancies.salary_from, vacancies.salary_to, " +
+            "vacancies.creation_date, vacancies.expiration_date, " +
             "recruiters.id as recruiter_id, " +
             "users.firstname, users.lastname " +
             "FROM bids " +
@@ -91,7 +96,8 @@ public interface BidMapper {
             @Result(column = "employer_id", property = "vacancy.employer.id"),
             @Result(column = "title", property = "vacancy.title"),
             @Result(column = "description", property = "vacancy.description"),
-            @Result(column = "salary", property = "vacancy.salary"),
+            @Result(column = "salary_from", property = "vacancy.salaryFrom"),
+            @Result(column = "salary_to", property = "vacancy.salaryTo"),
             @Result(column = "creation_date", property = "vacancy.creationDate"),
             @Result(column = "expiration_date", property = "vacancy.expirationDate"),
             @Result(column = "recruiter_id", property = "recruiter.id"),
@@ -102,7 +108,8 @@ public interface BidMapper {
 
     @Select("SELECT bids.id, bids.message, bids.status, " +
             "vacancies.id as vacancy_id,  vacancies.employer_id, vacancies.title, " +
-            "vacancies.description, vacancies.salary, vacancies.creation_date, vacancies.expiration_date, " +
+            "vacancies.description, vacancies.salary_from, vacancies.salary_to, " +
+            "vacancies.creation_date, vacancies.expiration_date, " +
             "recruiters.id as recruiter_id, " +
             "users.firstname, users.lastname " +
             "FROM bids " +
@@ -119,7 +126,8 @@ public interface BidMapper {
             @Result(column = "employer_id", property = "vacancy.employer.id"),
             @Result(column = "title", property = "vacancy.title"),
             @Result(column = "description", property = "vacancy.description"),
-            @Result(column = "salary", property = "vacancy.salary"),
+            @Result(column = "salary_from", property = "vacancy.salaryFrom"),
+            @Result(column = "salary_to", property = "vacancy.salaryTo"),
             @Result(column = "creation_date", property = "vacancy.creationDate"),
             @Result(column = "expiration_date", property = "vacancy.expirationDate"),
             @Result(column = "recruiter_id", property = "recruiter.id"),
