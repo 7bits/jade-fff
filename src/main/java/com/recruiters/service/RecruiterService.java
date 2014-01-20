@@ -54,9 +54,9 @@ public class RecruiterService {
     private final Logger log = Logger.getLogger(RecruiterService.class);
     /** Default message for ServiceException */
     private static final String SERVICE_EXCEPTION_MESSAGE = "Recruiter Service general exception: ";
-    /** Default message for SecurityException, part 1 */
+    /** Default message for NotAffiliatedException, part 1 */
     private static final String SECURITY_EXCEPTION_MESSAGE_PART1 = "Recruiter Service security exception: ";
-    /** Default message for SecurityException, part 2 */
+    /** Default message for NotAffiliatedException, part 2 */
     private static final String SECURITY_EXCEPTION_MESSAGE_PART2 = " belongs to different recruiter";
     /** Default message for NotFoundException, part 1 */
     private static final String NOT_FOUND_EXCEPTION_MESSAGE_PART1 = "Recruiter Service not found exception: ";
@@ -132,7 +132,7 @@ public class RecruiterService {
      * repository or any other possible error
      */
     public Bid findActiveBid(final Long bidId, final Long recruiterId)
-            throws ServiceException, SecurityException, NotFoundException {
+            throws ServiceException, NotAffiliatedException, NotFoundException {
         Bid bid;
         try {
             bid = bidRepository.findActiveBidById(bidId, recruiterId);
@@ -154,7 +154,7 @@ public class RecruiterService {
         String securityMessage = SECURITY_EXCEPTION_MESSAGE_PART1 + Bid.class.getSimpleName() +
                 SECURITY_EXCEPTION_MESSAGE_PART2;
         log.error(securityMessage);
-        throw new SecurityException(securityMessage);
+        throw new NotAffiliatedException(securityMessage);
     }
 
     /**
@@ -198,13 +198,13 @@ public class RecruiterService {
      * @param recruiterId    Id of recruiter obtaining information
      * @return Deal instance if Deal requested belongs to recruiter
      * requested it and there were no technical issues
-     * @throws SecurityException if deal requested not belongs to
+     * @throws NotAffiliatedException if deal requested not belongs to
      * recruiter requested it
      * @throws ServiceException if cannot obtain Deal instance from
      * repository or any other possible error
      */
     public Deal findDealForRecruiter(final Long dealId, final Long recruiterId)
-            throws SecurityException, ServiceException, NotFoundException {
+            throws NotAffiliatedException, ServiceException, NotFoundException {
         Deal deal;
         try {
             deal = dealRepository.findById(dealId);
@@ -226,7 +226,7 @@ public class RecruiterService {
         String securityMessage = SECURITY_EXCEPTION_MESSAGE_PART1 + Deal.class.getSimpleName() +
                 SECURITY_EXCEPTION_MESSAGE_PART2;
         log.error(securityMessage);
-        throw new SecurityException(securityMessage);
+        throw new NotAffiliatedException(securityMessage);
     }
 
     /**
@@ -236,13 +236,13 @@ public class RecruiterService {
      * @param recruiterId    Id of recruiter
      * @return Applicant instance if certain applicant belongs to
      * recruiter requested it and there were no any technical issues
-     * @throws SecurityException if applicant requested not belongs to
+     * @throws NotAffiliatedException if applicant requested not belongs to
      * recruiter requested it
      * @throws ServiceException if cannot obtain Applicant instance from
      * repository or any other possible error
      */
     public Applicant findApplicant(final Long applicantId, final Long recruiterId)
-            throws SecurityException, ServiceException, NotFoundException {
+            throws NotAffiliatedException, ServiceException, NotFoundException {
         Applicant applicant;
         try {
             applicant = applicantRepository.findById(applicantId);
@@ -264,7 +264,7 @@ public class RecruiterService {
         String securityMessage = SECURITY_EXCEPTION_MESSAGE_PART1 + Applicant.class.getSimpleName() +
                 SECURITY_EXCEPTION_MESSAGE_PART2;
         log.error(securityMessage);
-        throw new SecurityException(securityMessage);
+        throw new NotAffiliatedException(securityMessage);
     }
 
     /**
@@ -276,7 +276,7 @@ public class RecruiterService {
      * @param recruiterId       Id of recruiter
      * @return Applicant instance if applicant deal belongs to
      * recruiter requested apply and there were no any technical issues
-     * @throws SecurityException if applicant deal not belongs to
+     * @throws NotAffiliatedException if applicant deal not belongs to
      * recruiter requested method
      * @throws ServiceException if Repository cannot process request
      * or any other possible error
@@ -286,7 +286,7 @@ public class RecruiterService {
             final MultipartFile resumeFile,
             final MultipartFile testAnswerFile,
             final Long recruiterId
-    ) throws SecurityException, ServiceException {
+    ) throws NotAffiliatedException, ServiceException {
         Deal deal;
         try {
             deal = dealRepository.findById(applicant.getDeal().getId());
@@ -310,7 +310,7 @@ public class RecruiterService {
         String securityMessage = SECURITY_EXCEPTION_MESSAGE_PART1 + Deal.class.getSimpleName() +
                 SECURITY_EXCEPTION_MESSAGE_PART2;
         log.error(securityMessage);
-        throw new SecurityException(securityMessage);
+        throw new NotAffiliatedException(securityMessage);
     }
 
     /**
@@ -341,13 +341,13 @@ public class RecruiterService {
      * @param recruiterId    Id of recruiter which wants to save recruiter instance
      * @return recruiter User if recruiter instance belongs to
      * recruiter requested save and there were no any technical issues
-     * @throws SecurityException if recruiter instance not belongs to
+     * @throws NotAffiliatedException if recruiter instance not belongs to
      * recruiter requested method
      * @throws ServiceException if Repository cannot process request
      * or any other possible error
      */
     public User saveProfileForRecruiter(final Recruiter recruiter, final Long recruiterId)
-            throws ServiceException, SecurityException {
+            throws ServiceException, NotAffiliatedException {
         try {
             if (recruiter.getId().equals(recruiterId)) {
                 return userRepository.update(recruiter.getUser());
@@ -359,7 +359,7 @@ public class RecruiterService {
         String securityMessage = SECURITY_EXCEPTION_MESSAGE_PART1 + Recruiter.class.getSimpleName() +
                 SECURITY_EXCEPTION_MESSAGE_PART2;
         log.error(securityMessage);
-        throw new SecurityException(securityMessage);
+        throw new NotAffiliatedException(securityMessage);
     }
 
     public FileRepository getFileRepository() {

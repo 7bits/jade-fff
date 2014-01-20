@@ -112,7 +112,7 @@ public class ShowVacancy {
             User user = userUtils.getCurrentUser(request);
             Bid bid = recruiterService.findActiveBid(bidId, user.getRecruiterId());
             showBidVacancy.addObject("bid", bid);
-        } catch (com.recruiters.service.SecurityException e) {
+        } catch (NotAffiliatedException e) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
         } catch (NotFoundException e) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND);

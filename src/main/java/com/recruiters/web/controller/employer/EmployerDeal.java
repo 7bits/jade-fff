@@ -3,7 +3,7 @@ package com.recruiters.web.controller.employer;
 import com.recruiters.model.Deal;
 import com.recruiters.model.User;
 import com.recruiters.service.*;
-import com.recruiters.service.SecurityException;
+import com.recruiters.service.NotAffiliatedException;
 import com.recruiters.web.controller.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -52,7 +52,7 @@ public class EmployerDeal {
             User user = userUtils.getCurrentUser(request);
             Deal deal = employerService.findDeal(dealId, user.getEmployerId());
             vacancyProgress.addObject("deal", deal);
-        } catch (SecurityException e) {
+        } catch (NotAffiliatedException e) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
         } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
@@ -84,7 +84,7 @@ public class EmployerDeal {
         try {
             User user = userUtils.getCurrentUser(request);
             employerService.fireRecruiter(dealId, user.getEmployerId());
-        } catch (SecurityException e) {
+        } catch (NotAffiliatedException e) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
         } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);

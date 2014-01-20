@@ -3,11 +3,10 @@ package com.recruiters.web.controller.employer;
 import com.recruiters.model.Bid;
 import com.recruiters.model.User;
 import com.recruiters.service.*;
-import com.recruiters.service.SecurityException;
+import com.recruiters.service.NotAffiliatedException;
 import com.recruiters.web.controller.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -53,7 +52,7 @@ public class EmployerBid {
             User user = userUtils.getCurrentUser(request);
             Bid bid = employerService.findBid(bidId, user.getEmployerId());
             showBid.addObject("bid", bid);
-        } catch (SecurityException e) {
+        } catch (NotAffiliatedException e) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
         } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
@@ -85,7 +84,7 @@ public class EmployerBid {
         try {
             User user = userUtils.getCurrentUser(request);
             employerService.approveBidForRecruiter(bidId, user.getEmployerId());
-        } catch (SecurityException e) {
+        } catch (NotAffiliatedException e) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
         } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
@@ -115,7 +114,7 @@ public class EmployerBid {
         try {
             User user = userUtils.getCurrentUser(request);
             employerService.declineBidForRecruiter(bidId, user.getEmployerId());
-        } catch (SecurityException e) {
+        } catch (NotAffiliatedException e) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
         } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);

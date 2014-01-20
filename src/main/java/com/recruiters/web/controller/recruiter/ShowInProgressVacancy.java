@@ -3,7 +3,7 @@ package com.recruiters.web.controller.recruiter;
 import com.recruiters.model.Deal;
 import com.recruiters.model.User;
 import com.recruiters.service.*;
-import com.recruiters.service.SecurityException;
+import com.recruiters.service.NotAffiliatedException;
 import com.recruiters.web.controller.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -55,7 +55,7 @@ public class ShowInProgressVacancy {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         } catch (NotFoundException e) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
-        } catch (SecurityException e) {
+        } catch (NotAffiliatedException e) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
         }
 

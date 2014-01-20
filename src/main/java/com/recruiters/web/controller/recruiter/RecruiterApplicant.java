@@ -3,7 +3,7 @@ package com.recruiters.web.controller.recruiter;
 import com.recruiters.model.Applicant;
 import com.recruiters.model.User;
 import com.recruiters.service.*;
-import com.recruiters.service.SecurityException;
+import com.recruiters.service.NotAffiliatedException;
 import com.recruiters.web.controller.utils.UserUtils;
 import com.recruiters.web.form.ApplicantForm;
 import com.recruiters.web.validator.ApplicantFormValidator;
@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -97,7 +96,7 @@ public class RecruiterApplicant {
             Long dealId = applicantForm.getDealId();
 
             return new ModelAndView("redirect:/recruiter-show-in-progress-vacancy/" + dealId);
-        } catch (SecurityException e) {
+        } catch (NotAffiliatedException e) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
         } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
@@ -130,7 +129,7 @@ public class RecruiterApplicant {
             Applicant applicant = recruiterService.findApplicant(applicantId, user.getRecruiterId());
             ApplicantForm applicantForm = new ApplicantForm(applicant);
             editApplicant.addObject("applicantForm", applicantForm);
-        } catch (SecurityException e) {
+        } catch (NotAffiliatedException e) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
         } catch (NotFoundException e) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -179,7 +178,7 @@ public class RecruiterApplicant {
             );
             Long dealId = applicantForm.getDealId();
             return new ModelAndView("redirect:/recruiter-show-in-progress-vacancy/" + dealId);
-        } catch (SecurityException e) {
+        } catch (NotAffiliatedException e) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
         } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);

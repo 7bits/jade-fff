@@ -3,7 +3,7 @@ package com.recruiters.web.controller.employer;
 import com.recruiters.model.Employer;
 import com.recruiters.model.User;
 import com.recruiters.service.*;
-import com.recruiters.service.SecurityException;
+import com.recruiters.service.NotAffiliatedException;
 import com.recruiters.web.controller.utils.UserUtils;
 import com.recruiters.web.form.EmployerForm;
 import com.recruiters.web.validator.EmployerFormValidator;
@@ -99,7 +99,7 @@ public class EmployerEditProfile {
             employerService.saveProfileForEmployer(updatedEmployer, user.getEmployerId());
         } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-        } catch (SecurityException e) {
+        } catch (NotAffiliatedException e) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
         }
 

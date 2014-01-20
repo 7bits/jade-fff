@@ -54,9 +54,9 @@ public class EmployerService {
     private static final String TX_NAME = "EmployerTxService";
     /** Default message for ServiceException */
     private static final String SERVICE_EXCEPTION_MESSAGE = "Employer Service general exception: ";
-    /** Default message for SecurityException, part 1 */
+    /** Default message for NotAffiliatedException, part 1 */
     private static final String SECURITY_EXCEPTION_MESSAGE_PART1 = "Employer Service security exception: ";
-    /** Default message for SecurityException, part 2 */
+    /** Default message for NotAffiliatedException, part 2 */
     private static final String SECURITY_EXCEPTION_MESSAGE_PART2 = " belongs to different employer";
     /** Default message for NotFoundException, part 1 */
     private static final String NOT_FOUND_EXCEPTION_MESSAGE_PART1 = "Employer Service not found exception: ";
@@ -97,7 +97,7 @@ public class EmployerService {
      * @return POJO Deal instance
      */
     public Deal findDeal(final Long dealId, final Long employerId)
-            throws SecurityException, ServiceException, NotFoundException {
+            throws NotAffiliatedException, ServiceException, NotFoundException {
         Deal deal;
         try {
             deal = dealRepository.findById(dealId);
@@ -119,7 +119,7 @@ public class EmployerService {
         String securityMessage = SECURITY_EXCEPTION_MESSAGE_PART1 + Deal.class.getSimpleName() +
                 SECURITY_EXCEPTION_MESSAGE_PART2;
         log.error(securityMessage);
-        throw new SecurityException(securityMessage);
+        throw new NotAffiliatedException(securityMessage);
     }
 
     /**
@@ -130,7 +130,7 @@ public class EmployerService {
      * @return Applicant POJO instance
      */
     public Applicant findApplicant(final Long applicantId, final Long employerId)
-            throws  SecurityException, ServiceException, NotFoundException {
+            throws NotAffiliatedException, ServiceException, NotFoundException {
         Applicant applicant;
         try {
             applicant = applicantRepository.findById(applicantId);
@@ -153,7 +153,7 @@ public class EmployerService {
         String securityMessage = SECURITY_EXCEPTION_MESSAGE_PART1 + Applicant.class.getSimpleName() +
                 SECURITY_EXCEPTION_MESSAGE_PART2;
         log.error(securityMessage);
-        throw new SecurityException(securityMessage);
+        throw new NotAffiliatedException(securityMessage);
     }
 
     /**
@@ -163,7 +163,7 @@ public class EmployerService {
      * @return list of bids
      */
     public List<Bid> findBidsForVacancy(final Long vacancyId, final Long employerId)
-            throws  SecurityException, ServiceException {
+            throws NotAffiliatedException, ServiceException {
         Vacancy vacancy;
         try {
             vacancy = vacancyRepository.findById(vacancyId);
@@ -178,7 +178,7 @@ public class EmployerService {
         String securityMessage = SECURITY_EXCEPTION_MESSAGE_PART1 + Vacancy.class.getSimpleName() +
                 SECURITY_EXCEPTION_MESSAGE_PART2;
         log.error(securityMessage);
-        throw new SecurityException(securityMessage);
+        throw new NotAffiliatedException(securityMessage);
     }
 
     /**
@@ -188,7 +188,7 @@ public class EmployerService {
      * @return Bid POJO instance
      */
     public Bid findBid(final Long bidId, final Long employerId)
-            throws SecurityException, ServiceException, NotFoundException {
+            throws NotAffiliatedException, ServiceException, NotFoundException {
         Bid bid;
         try {
             bid = bidRepository.findById(bidId);
@@ -211,7 +211,7 @@ public class EmployerService {
         String securityMessage = SECURITY_EXCEPTION_MESSAGE_PART1 + Bid.class.getSimpleName() +
                 SECURITY_EXCEPTION_MESSAGE_PART2;
         log.error(securityMessage);
-        throw new SecurityException(securityMessage);
+        throw new NotAffiliatedException(securityMessage);
     }
 
     /**
@@ -236,7 +236,7 @@ public class EmployerService {
      * @return Vacancy POJO instance
      */
     public Vacancy findVacancy(final Long vacancyId, final Long employerId)
-            throws SecurityException, ServiceException, NotFoundException {
+            throws NotAffiliatedException, ServiceException, NotFoundException {
         Vacancy vacancy;
         try {
             vacancy = vacancyRepository.findById(vacancyId);
@@ -258,7 +258,7 @@ public class EmployerService {
         String securityMessage = SECURITY_EXCEPTION_MESSAGE_PART1 + Vacancy.class.getSimpleName() +
                 SECURITY_EXCEPTION_MESSAGE_PART2;
         log.error(securityMessage);
-        throw new SecurityException(securityMessage);
+        throw new NotAffiliatedException(securityMessage);
     }
 
     /**
@@ -266,13 +266,13 @@ public class EmployerService {
      * @param bidId         Id of bid
      * @param employerId    Id of employer
      * @return id of created deal
-     * @throws SecurityException if bid not belongs to
+     * @throws NotAffiliatedException if bid not belongs to
      * employer requested method
      * @throws ServiceException if Repository cannot process request
      * or any other possible error
      */
     public Long approveBidForRecruiter(final Long bidId, final Long employerId)
-            throws SecurityException, ServiceException {
+            throws NotAffiliatedException, ServiceException {
         TransactionStatus status = null;
         Bid bid;
         try {
@@ -294,11 +294,11 @@ public class EmployerService {
         String securityMessage = SECURITY_EXCEPTION_MESSAGE_PART1 + Bid.class.getSimpleName() +
                 SECURITY_EXCEPTION_MESSAGE_PART2;
         log.error(securityMessage);
-        throw new SecurityException(securityMessage);
+        throw new NotAffiliatedException(securityMessage);
     }
 
     public Long declineBidForRecruiter(final Long bidId, final Long employerId)
-            throws SecurityException, ServiceException {
+            throws NotAffiliatedException, ServiceException {
         Bid bid;
         try {
             bid = bidRepository.findById(bidId);
@@ -313,7 +313,7 @@ public class EmployerService {
         String securityMessage = SECURITY_EXCEPTION_MESSAGE_PART1 + Bid.class.getSimpleName() +
                 SECURITY_EXCEPTION_MESSAGE_PART2;
         log.error(securityMessage);
-        throw new SecurityException(securityMessage);
+        throw new NotAffiliatedException(securityMessage);
     }
 
     /**
@@ -322,7 +322,7 @@ public class EmployerService {
      * @return true if update is ok, otherwise false
      */
     public User saveProfileForEmployer(final Employer employer, final Long employerId)
-            throws ServiceException, SecurityException {
+            throws ServiceException, NotAffiliatedException {
         try {
             if (employer.getId().equals(employerId)) {
                 return userRepository.update(employer.getUser());
@@ -334,7 +334,7 @@ public class EmployerService {
         String securityMessage = SECURITY_EXCEPTION_MESSAGE_PART1 + Employer.class.getSimpleName() +
                 SECURITY_EXCEPTION_MESSAGE_PART2;
         log.error(securityMessage);
-        throw new SecurityException(securityMessage);
+        throw new NotAffiliatedException(securityMessage);
     }
 
     /**
@@ -358,7 +358,7 @@ public class EmployerService {
      * @return true if success, otherwise false
      */
     public Long applyApplicant(final Long applicantId, final Long employerId)
-            throws SecurityException, ServiceException {
+            throws NotAffiliatedException, ServiceException {
         TransactionStatus status = null;
         Applicant applicant;
         try {
@@ -384,7 +384,7 @@ public class EmployerService {
         String securityMessage = SECURITY_EXCEPTION_MESSAGE_PART1 + Applicant.class.getSimpleName() +
                 SECURITY_EXCEPTION_MESSAGE_PART2;
         log.error(securityMessage);
-        throw new SecurityException(securityMessage);
+        throw new NotAffiliatedException(securityMessage);
     }
 
     /**
@@ -394,7 +394,7 @@ public class EmployerService {
      * @return true if success, otherwise false
      */
     public Long declineApplicant(final Long applicantId, final Long employerId)
-            throws SecurityException, ServiceException {
+            throws NotAffiliatedException, ServiceException {
         Applicant applicant;
         try {
             applicant = applicantRepository.findById(applicantId);
@@ -409,7 +409,7 @@ public class EmployerService {
         String securityMessage = SECURITY_EXCEPTION_MESSAGE_PART1 + Applicant.class.getSimpleName() +
                 SECURITY_EXCEPTION_MESSAGE_PART2;
         log.error(securityMessage);
-        throw new SecurityException(securityMessage);
+        throw new NotAffiliatedException(securityMessage);
     }
 
     /**
@@ -419,7 +419,7 @@ public class EmployerService {
      * @return true if success, otherwise false
      */
     public Long fireRecruiter(final Long dealId, final Long employerId)
-            throws SecurityException, ServiceException {
+            throws NotAffiliatedException, ServiceException {
         Deal deal;
         try {
             deal = dealRepository.findById(dealId);
@@ -433,6 +433,6 @@ public class EmployerService {
         String securityMessage = SECURITY_EXCEPTION_MESSAGE_PART1 + Deal.class.getSimpleName() +
                 SECURITY_EXCEPTION_MESSAGE_PART2;
         log.error(securityMessage);
-        throw new SecurityException(securityMessage);
+        throw new NotAffiliatedException(securityMessage);
     }
 }

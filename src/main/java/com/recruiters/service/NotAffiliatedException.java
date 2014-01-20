@@ -5,13 +5,13 @@ package com.recruiters.service;
  * is thrown when there are any security issues
  * with performing service request
  */
-public class SecurityException extends Exception {
+public class NotAffiliatedException extends Exception {
 
     /**
      * Exception with message only
      * @param message    String message
      */
-    public SecurityException(final String message) {
+    public NotAffiliatedException(final String message) {
         super(message);
     }
 
@@ -20,7 +20,7 @@ public class SecurityException extends Exception {
      * @param message    String message
      * @param e          Exception
      */
-    public SecurityException(final String message, final Exception e) {
+    public NotAffiliatedException(final String message, final Exception e) {
         super(message, e);
     }
 }

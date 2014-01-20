@@ -1,10 +1,9 @@
 package com.recruiters.web.controller.employer;
 
 import com.recruiters.model.Applicant;
-import com.recruiters.model.Employer;
 import com.recruiters.model.User;
 import com.recruiters.service.*;
-import com.recruiters.service.SecurityException;
+import com.recruiters.service.NotAffiliatedException;
 import com.recruiters.web.controller.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -54,7 +53,7 @@ public class EmployerApplicantView {
             User user = userUtils.getCurrentUser(request);
             Applicant applicant = employerService.findApplicant(applicantId, user.getEmployerId());
             showApplicant.addObject("applicant", applicant);
-        } catch (SecurityException e) {
+        } catch (NotAffiliatedException e) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
         } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
@@ -88,7 +87,7 @@ public class EmployerApplicantView {
         try {
             User user = userUtils.getCurrentUser(request);
             employerService.applyApplicant(applicantId, user.getEmployerId());
-        } catch (SecurityException e) {
+        } catch (NotAffiliatedException e) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
         } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
@@ -124,7 +123,7 @@ public class EmployerApplicantView {
             Applicant applicant = employerService.findApplicant(applicantId, user.getEmployerId());
 
             return "redirect:/employer-progress-vacancy-show/" + applicant.getDeal().getId();
-        } catch (SecurityException e) {
+        } catch (NotAffiliatedException e) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
         } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);

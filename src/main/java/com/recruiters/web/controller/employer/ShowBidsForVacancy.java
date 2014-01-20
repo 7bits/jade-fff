@@ -4,7 +4,7 @@ import com.recruiters.model.Bid;
 import com.recruiters.model.User;
 import com.recruiters.model.Vacancy;
 import com.recruiters.service.*;
-import com.recruiters.service.SecurityException;
+import com.recruiters.service.NotAffiliatedException;
 import com.recruiters.web.controller.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -47,7 +47,7 @@ public class ShowBidsForVacancy {
             Vacancy vacancy = employerService.findVacancy(vacancyId, user.getEmployerId());
             recruiterBids.addObject("bids", bids);
             recruiterBids.addObject("vacancy", vacancy);
-        } catch (SecurityException e) {
+        } catch (NotAffiliatedException e) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
         } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
