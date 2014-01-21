@@ -5,13 +5,17 @@ import com.recruiters.web.helper.UserResolver;
 import com.recruiters.web.helper.CsrfResolver;
 import com.recruiters.web.helper.MessageResolver;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.MessageSource;
+import org.springframework.core.env.Environment;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
@@ -44,6 +48,11 @@ public class HandlerInterceptor extends HandlerInterceptorAdapter {
     private String applicationName = null;
     @Autowired
     private MessageSource messageSource;
+    private Environment environment;
+
+    public HandlerInterceptor(final Environment environment) {
+        this.environment = environment;
+    }
 
     /**
      * Handler is requested after each controller, before model and view render
@@ -98,14 +107,22 @@ public class HandlerInterceptor extends HandlerInterceptorAdapter {
             // Url resolver added
             Locale locale = RequestContextUtils.getLocale(request);
             try {
+                // Try to get locale from url
                 Integer indexOfSecondSlash = request.getServletPath().indexOf('/', 1);
                 String localeFromUrl = request.getServletPath().substring(1, indexOfSecondSlash);
                 Locale urlLocale = new Locale(localeFromUrl);
                 mav.addObject(MODEL_MESSAGE_RESOLVER_NAME, new MessageResolver(messageSource, urlLocale));
-                mav.addObject(DOMAIN_NAME_VARIABLE, new UrlResolver(protocol, server, port, applicationName, urlLocale));
+                mav.addObject(
+                        DOMAIN_NAME_VARIABLE,
+                        new UrlResolver(protocol, server, port, applicationName, urlLocale, request, environment)
+                );
             } catch (IndexOutOfBoundsException e) {
+                // Otherwise use user locale
                 mav.addObject(MODEL_MESSAGE_RESOLVER_NAME, new MessageResolver(messageSource, locale));
-                mav.addObject(DOMAIN_NAME_VARIABLE, new UrlResolver(protocol, server, port, applicationName, locale));
+                mav.addObject(
+                        DOMAIN_NAME_VARIABLE,
+                        new UrlResolver(protocol, server, port, applicationName, locale, request, environment)
+                );
             }
 
             // CSRF Token Resolver

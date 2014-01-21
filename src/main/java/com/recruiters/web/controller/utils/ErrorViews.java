@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * Error pages
  */
@@ -26,7 +28,7 @@ public class ErrorViews {
      * @return model and view with 404 error page
      */
     @RequestMapping(value = "404", method = RequestMethod.GET)
-    public ModelAndView errorNotFound() {
+    public ModelAndView errorNotFound(HttpServletRequest request) {
 
         return new ModelAndView("errors/404.jade");
     }

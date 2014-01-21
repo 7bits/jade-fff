@@ -8,6 +8,7 @@ html
       script(src=domain.getResourceUrl() + '/js/lib/bootstrap-confirmation.js')
       script(src=domain.getResourceUrl() + '/js/lib/bootstrap-datepicker.js')
       script(src=domain.getResourceUrl() + '/js/confirmation.js')
+      script(src=domain.getResourceUrl() + '/js/language.js')
       link(href=domain.getResourceUrl() + '/stylesheets/lib/bootstrap.min.css', rel='stylesheet', type='text/css')
       link(href=domain.getResourceUrl() + '/stylesheets/lib/bootstrap-theme.min.css', rel='stylesheet', type='text/css')
       link(href=domain.getResourceUrl() + '/stylesheets/lib/datepicker.css', rel='stylesheet', type='text/css')
@@ -23,14 +24,17 @@ html
           .navbar-header
             a.navbar-brand(href=domain.getAbsoluteUrl()).
               #{fmt.message("layout.logo")}
-          .navbar-collapse.collapse
-            ul.nav.navbar-nav.navbar-right
-              li#fat-menu.dropdown
-                a(href="#", id="menu", role="button", class="dropdown-toggle", data-toggle="dropdown")
-                  span.glyphicon.glyphicon-star
-                  b.caret
-                ul(class="dropdown-menu", role="menu", aria-labelledby="menu")
-                  if security.isUserInRole("ROLE_RECRUITER")
+            select(id="lang")
+              for langChoose in domain.getLangUrlList()
+                option(selected=langChoose.selected, value=langChoose.url) #{langChoose.language}
+          if security.isUserInRole("ROLE_RECRUITER")
+            .navbar-collapse.collapse
+              ul.nav.navbar-nav.navbar-right
+                li#fat-menu.dropdown
+                  a(href="#", id="menu", role="button", class="dropdown-toggle", data-toggle="dropdown")
+                    span.glyphicon.glyphicon-star
+                    b.caret
+                  ul(class="dropdown-menu", role="menu", aria-labelledby="menu")
                     li(role="presentation")
                       a(href=domain.getAbsoluteUrl() + "/recruiter-profile", role="menuitem", tabindex="-1").
                         #{fmt.message("layout.recruiter.profile")}
@@ -43,7 +47,19 @@ html
                     li(role="presentation")
                       a(href=domain.getAbsoluteUrl() + "/recruiter-find-new-vacancies", role="menuitem", tabindex="-1").
                         #{fmt.message("layout.recruiter.vacancy_search")}
-                  if security.isUserInRole("ROLE_EMPLOYER")
+                    li(role="presentation", class="divider")
+                    li(role="presentation")
+                      form(action=domain.getAbsoluteUrl() + "/j_spring_security_logout", method="post")
+                        input.btn.btn-link(type="submit", name="submit", value=fmt.message("layout.exit"))
+                        input(type="hidden", name=csrf.getParameterName(), value=csrf.getToken())
+          if security.isUserInRole("ROLE_EMPLOYER")
+            .navbar-collapse.collapse
+              ul.nav.navbar-nav.navbar-right
+                li#fat-menu.dropdown
+                  a(href="#", id="menu", role="button", class="dropdown-toggle", data-toggle="dropdown")
+                    span.glyphicon.glyphicon-star
+                    b.caret
+                  ul(class="dropdown-menu", role="menu", aria-labelledby="menu")
                     li(role="presentation")
                       a(href=domain.getAbsoluteUrl() + "/employer-profile", role="menuitem", tabindex="-1").
                         #{fmt.message("layout.employer.profile")}
@@ -53,8 +69,8 @@ html
                     li(role="presentation")
                       a(href=domain.getAbsoluteUrl() + "/employer-progress-vacancies-list", role="menuitem", tabindex="-1").
                         #{fmt.message("layout.employer.recruiter_vacancies")}
-                  li(role="presentation", class="divider")
-                  li(role="presentation")
-                    form(action=domain.getAbsoluteUrl() + "/j_spring_security_logout", method="post")
-                      input.btn.btn-link(type="submit", name="submit", value=fmt.message("layout.exit"))
-                      input(type="hidden", name=csrf.getParameterName(), value=csrf.getToken())
+                    li(role="presentation", class="divider")
+                    li(role="presentation")
+                      form(action=domain.getAbsoluteUrl() + "/j_spring_security_logout", method="post")
+                        input.btn.btn-link(type="submit", name="submit", value=fmt.message("layout.exit"))
+                        input(type="hidden", name=csrf.getParameterName(), value=csrf.getToken())

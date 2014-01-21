@@ -1,13 +1,15 @@
 package com.recruiters.config;
 
 import com.recruiters.web.utils.HandlerInterceptor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-import org.springframework.util.StringUtils;
+import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.LocaleResolver;
@@ -16,24 +18,23 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
-import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 
 import javax.inject.Inject;
-import javax.servlet.MultipartConfigElement;
-import java.io.File;
 
 /**
  * Spring Web Configuration
  */
 @Configuration
-@PropertySource("classpath:server.properties")
+@PropertySource({"classpath:server.properties", "classpath:language.properties"})
 @EnableWebMvc
 @ComponentScan(basePackages = { "com.recruiters" })
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
     @Inject
     private org.springframework.core.env.Environment environment;
+    @Value("classpath:language.properties")
+    private Resource languageChooseResource;
 
     /**
      * Configure resource handler
@@ -50,7 +51,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
      */
     @Override
     public void addInterceptors(final InterceptorRegistry registry) {
-        HandlerInterceptor handlerInterceptor = new HandlerInterceptor();
+        HandlerInterceptor handlerInterceptor = new HandlerInterceptor(environment);
         handlerInterceptor.setProtocol(environment.getProperty("recruiter-server.protocol"));
         handlerInterceptor.setServer(environment.getProperty("recruiter-server.server"));
         handlerInterceptor.setPort(environment.getProperty("recruiter-server.port"));
