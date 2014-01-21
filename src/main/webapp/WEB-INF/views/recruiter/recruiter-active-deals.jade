@@ -10,6 +10,7 @@ block append content
         tr
           th=fmt.message("recruiter-active-deals.table.name")
           th=fmt.message("recruiter-active-deals.table.description")
+          th=fmt.message("recruiter-active-deals.table.applicants")
           th=fmt.message("recruiter-active-deals.table.status")
           th=fmt.message("recruiter-active-deals.table.date")
           th
@@ -18,6 +19,13 @@ block append content
           tr
             td #{deal.vacancy.title}
             td #{deal.vacancy.description}
+            td
+              span.green=deal.unseenApplicantCount
+              span / #{deal.allApplicantCount} [
+              span.red=deal.rejectedApplicantCount
+              span /
+              span.yellow=deal.viewedApplicantCount
+              span ]
             td #{fmt.dealStatus(deal.status)}
             td #{fmt.date(deal.vacancy.creationDate)}
             td

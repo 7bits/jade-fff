@@ -13,6 +13,10 @@ public class Deal {
     private DealStatus status = null;
     private Boolean employerArchived = false;
     private Boolean recruiterArchived = false;
+    private Long allApplicantCount = 0L;
+    private Long rejectedApplicantCount = 0L;
+    private Long viewedApplicantCount = 0L;
+    private Long unseenApplicantCount = 0L;
 
     public Deal(final Long id, final Vacancy vacancy, final Recruiter recruiter, final List<Applicant> applicants) {
         this.id = id;
@@ -83,5 +87,37 @@ public class Deal {
 
     public void setRecruiterArchived(final Boolean recruiterArchived) {
         this.recruiterArchived = recruiterArchived;
+    }
+
+    public Long getAllApplicantCount() {
+        return allApplicantCount;
+    }
+
+    public void setAllApplicantCount(final Long allApplicantCount) {
+        this.allApplicantCount = allApplicantCount;
+    }
+
+    public Long getRejectedApplicantCount() {
+        return rejectedApplicantCount;
+    }
+
+    public void setRejectedApplicantCount(final Long rejectedApplicantCount) {
+        this.rejectedApplicantCount = rejectedApplicantCount;
+    }
+
+    public Long getViewedApplicantCount() {
+        return viewedApplicantCount;
+    }
+
+    public void setViewedApplicantCount(final Long viewedApplicantCount) {
+        this.viewedApplicantCount = viewedApplicantCount;
+    }
+
+    public Long getUnseenApplicantCount() {
+        return unseenApplicantCount;
+    }
+
+    public void setUnseenApplicantCount(final Long unseenApplicantCount) {
+        this.unseenApplicantCount = unseenApplicantCount;
     }
 }

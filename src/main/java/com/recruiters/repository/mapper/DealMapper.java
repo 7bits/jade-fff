@@ -51,7 +51,15 @@ public interface DealMapper {
             "vacancies.description, vacancies.salary_from, vacancies.salary_to, " +
             "vacancies.creation_date, " +
             "recruiters.id as recruiter_id, " +
-            "users.firstname, users.lastname " +
+            "users.firstname, users.lastname, " +
+            "(SELECT COUNT(applicants.id) FROM applicants " +
+            "WHERE deal_id=deals.id) as all_applicants, " +
+            "(SELECT COUNT(applicants.id) FROM applicants " +
+            "WHERE deal_id=deals.id AND viewed=1) as viewed_applicants, " +
+            "(SELECT COUNT(applicants.id) FROM applicants " +
+            "WHERE deal_id=deals.id AND viewed=0) as unseen_applicants, " +
+            "(SELECT COUNT(applicants.id) FROM applicants " +
+            "WHERE deal_id=deals.id AND status=\"REJECTED\") as rejected_applicants " +
             "FROM deals " +
             "INNER JOIN vacancies ON vacancies.id=deals.vacancy_id " +
             "INNER JOIN recruiters  ON recruiters.id=deals.recruiter_id " +
@@ -71,7 +79,11 @@ public interface DealMapper {
             @Result(column = "creation_date", property = "vacancy.creationDate"),
             @Result(column = "recruiter_id", property = "recruiter.id"),
             @Result(column = "firstname", property = "recruiter.user.firstName"),
-            @Result(column = "lastname", property = "recruiter.user.lastName")
+            @Result(column = "lastname", property = "recruiter.user.lastName"),
+            @Result(column = "all_applicants", property = "allApplicantCount"),
+            @Result(column = "viewed_applicants", property = "viewedApplicantCount"),
+            @Result(column = "unseen_applicants", property = "unseenApplicantCount"),
+            @Result(column = "rejected_applicants", property = "rejectedApplicantCount")
     })
     List<Deal> findActiveDealsByRecruiterId(final Long recruiterId);
 
