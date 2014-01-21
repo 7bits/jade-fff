@@ -425,7 +425,7 @@ public class EmployerService {
                         applicant.getDeal().getVacancy().getId(),
                         VacancyStatus.ARCHIVED
                 );
-                dealRepository.updateStatus(applicant.getDeal().getId(), DealStatus.CLOSED);
+                dealRepository.updateStatus(applicant.getDeal().getId(), DealStatus.APPROVED);
                 txManager.commit(status);
                 return applicantId;
             }

@@ -81,19 +81,8 @@ public class MessageResolver {
      */
     public String bidStatus(final BidStatus bidStatus) {
         String stringStatus = "";
-        switch (bidStatus) {
-            case ACTIVE:
-                stringStatus = messageSource.getMessage("BidStatus.ACTIVE", null, locale);
-                break;
-            case REJECTED:
-                stringStatus = messageSource.getMessage("BidStatus.REJECTED", null, locale);
-                break;
-            case APPROVED:
-                stringStatus = messageSource.getMessage("BidStatus.APPROVED", null, locale);
-                break;
-            default:
-                break;
-        }
+        String messageCode = bidStatus.getClass().getSimpleName() + "." + bidStatus.getName();
+        stringStatus = messageSource.getMessage(messageCode, null, locale);
         return stringStatus;
     }
 
@@ -104,19 +93,8 @@ public class MessageResolver {
      */
     public String dealStatus(final DealStatus dealStatus) {
         String stringStatus = "";
-        switch (dealStatus) {
-            case IN_PROGRESS:
-                stringStatus = messageSource.getMessage("DealStatus.IN_PROGRESS", null, locale);
-                break;
-            case FIRED:
-                stringStatus = messageSource.getMessage("DealStatus.FIRED", null, locale);
-                break;
-            case CLOSED:
-                stringStatus = messageSource.getMessage("DealStatus.CLOSED", null, locale);
-                break;
-            default:
-                break;
-        }
+        String messageCode = dealStatus.getClass().getSimpleName() + "." + dealStatus.getName();
+        stringStatus = messageSource.getMessage(messageCode, null, locale);
         return stringStatus;
     }
 
@@ -127,19 +105,8 @@ public class MessageResolver {
      */
     public String applicantStatus(final ApplicantStatus applicantStatus) {
         String stringStatus = "";
-        switch (applicantStatus) {
-            case IN_PROGRESS:
-                stringStatus = messageSource.getMessage("ApplicantStatus.IN_PROGRESS", null, locale);
-                break;
-            case REJECTED:
-                stringStatus = messageSource.getMessage("ApplicantStatus.REJECTED", null, locale);
-                break;
-            case APPROVED:
-                stringStatus = messageSource.getMessage("ApplicantStatus.APPROVED", null, locale);
-                break;
-            default:
-                break;
-        }
+        String messageCode = applicantStatus.getClass().getSimpleName() + "." + applicantStatus.getName();
+        stringStatus = messageSource.getMessage(messageCode, null, locale);
         return stringStatus;
     }
 
@@ -150,16 +117,8 @@ public class MessageResolver {
      */
     public String vacancyStatus(final VacancyStatus vacancyStatus) {
         String stringStatus = "";
-        switch (vacancyStatus) {
-            case ACTIVE:
-                stringStatus = messageSource.getMessage("VacancyStatus.ACTIVE", null, locale);
-                break;
-            case ARCHIVED:
-                stringStatus = messageSource.getMessage("VacancyStatus.ARCHIVED", null, locale);
-                break;
-            default:
-                break;
-        }
+        String messageCode = vacancyStatus.getClass().getSimpleName() + "." + vacancyStatus.getName();
+        stringStatus = messageSource.getMessage(messageCode, null, locale);
         return stringStatus;
     }
 

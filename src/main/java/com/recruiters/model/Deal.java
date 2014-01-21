@@ -11,6 +11,8 @@ public class Deal {
     private Recruiter recruiter = null;
     private List<Applicant> applicants = null;
     private DealStatus status = null;
+    private Boolean employerArchived = false;
+    private Boolean recruiterArchived = false;
 
     public Deal(final Long id, final Vacancy vacancy, final Recruiter recruiter, final List<Applicant> applicants) {
         this.id = id;
@@ -65,5 +67,21 @@ public class Deal {
 
     public void setStatus(final DealStatus status) {
         this.status = status;
+    }
+
+    public Boolean getEmployerArchived() {
+        return employerArchived;
+    }
+
+    public void setEmployerArchived(final Boolean employerArchived) {
+        this.employerArchived = employerArchived;
+    }
+
+    public Boolean getRecruiterArchived() {
+        return recruiterArchived;
+    }
+
+    public void setRecruiterArchived(final Boolean recruiterArchived) {
+        this.recruiterArchived = recruiterArchived;
     }
 }

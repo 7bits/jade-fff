@@ -179,7 +179,7 @@ public class RecruiterService {
     }
 
     /**
-     * Find and return list with all active deals for recruiter
+     * Find and return list with all deals for recruiter
      * @param recruiterId    Id of recruiter
      * @return list with all active deals for certain recruiter
      * @throws ServiceException if cannot obtain Deals from repository
@@ -366,6 +366,41 @@ public class RecruiterService {
                 SECURITY_EXCEPTION_MESSAGE_PART2;
         log.error(securityMessage);
         throw new NotAffiliatedException(securityMessage);
+    }
+
+    /**
+     * Clear deals (move to archive) in which current recruiter was fired
+     * @param recruiterId    Id of recruiter
+     * @return recruiter Id
+     * @throws ServiceException if cannot perform command with repository
+     * or any other possible error
+     */
+    public Long clearFiredDealsForRecruiter(final Long recruiterId)
+            throws ServiceException {
+        try {
+            return dealRepository.clearFiredByRecruiterId(recruiterId);
+        } catch (Exception e) {
+            log.error(SERVICE_EXCEPTION_MESSAGE, e);
+            throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
+        }
+    }
+
+    /**
+     * Clear deals (move to archive) in which applicant of current recruiter
+     * was approved
+     * @param recruiterId    Id of recruiter
+     * @return recruiter Id
+     * @throws ServiceException if cannot perform command with repository
+     * or any other possible error
+     */
+    public Long clearApprovedDealsForRecruiter(final Long recruiterId)
+            throws ServiceException {
+        try {
+            return dealRepository.clearApprovedByRecruiterId(recruiterId);
+        } catch (Exception e) {
+            log.error(SERVICE_EXCEPTION_MESSAGE, e);
+            throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
+        }
     }
 
     public FileRepository getFileRepository() {

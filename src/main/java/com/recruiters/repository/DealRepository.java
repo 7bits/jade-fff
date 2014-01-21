@@ -124,6 +124,46 @@ public class DealRepository {
         }
     }
 
+    /**
+     * Clear fired deals (move to archive) for exact recruiter
+     * @param recruiterId    Id of recruiter
+     * @return Id of recruiter if success
+     * @throws RepositoryException if input parameter is incorrect or there
+     * were any technical issues
+     */
+    public Long clearFiredByRecruiterId(final Long recruiterId) throws RepositoryException {
+        if (recruiterId == null) {
+            throw new RepositoryException("recruiterId is null");
+        }
+        try {
+            dealMapper.clearFiredByRecruiterId(recruiterId);
+
+            return recruiterId;
+        } catch (Exception e) {
+            throw new RepositoryException("General database error: ", e);
+        }
+    }
+
+    /**
+     * Clear approved deals (move to archive) for exact recruiter
+     * @param recruiterId    Id of recruiter
+     * @return Id of recruiter if success
+     * @throws RepositoryException if input parameter is incorrect or there
+     * were any technical issues
+     */
+    public Long clearApprovedByRecruiterId(final Long recruiterId) throws RepositoryException {
+        if (recruiterId == null) {
+            throw new RepositoryException("recruiterId is null");
+        }
+        try {
+            dealMapper.clearApprovedByRecruiterId(recruiterId);
+
+            return recruiterId;
+        } catch (Exception e) {
+            throw new RepositoryException("General database error: ", e);
+        }
+    }
+
     public DealMapper getDealMapper() {
         return dealMapper;
     }

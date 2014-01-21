@@ -56,7 +56,9 @@ public interface DealMapper {
             "INNER JOIN vacancies ON vacancies.id=deals.vacancy_id " +
             "INNER JOIN recruiters  ON recruiters.id=deals.recruiter_id " +
             "INNER JOIN users ON recruiters.user_id=users.id " +
-            "WHERE recruiters.id=#{recruiterId} AND deals.status=\"IN_PROGRESS\"")
+            "WHERE recruiters.id=#{recruiterId} AND " +
+            "deals.status IN(\"IN_PROGRESS\", \"FIRED\", \"APPROVED\") AND " +
+            "deals.recruiter_archived = 0")
     @Results({
             @Result(column = "id", property = "id"),
             @Result(column = "status", property = "status"),
@@ -109,4 +111,14 @@ public interface DealMapper {
 
     @Update("UPDATE deals SET status = #{status} WHERE id = #{dealId} ")
     void updateStatus(@Param(value = "dealId") final Long dealId, @Param(value = "status") final DealStatus status);
+
+    @Update("UPDATE deals SET recruiter_archived = 1 " +
+            "WHERE recruiter_id = #{recruiterId}  AND recruiter_archived = 0 " +
+            "AND status = \"FIRED\"")
+    void clearFiredByRecruiterId(final Long recruiterId);
+
+    @Update("UPDATE deals SET recruiter_archived = 1 " +
+            "WHERE recruiter_id = #{recruiterId}  AND recruiter_archived = 0 " +
+            "AND status = \"APPROVED\"")
+    void clearApprovedByRecruiterId(final Long recruiterId);
 }

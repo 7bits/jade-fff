@@ -94,6 +94,8 @@ CREATE TABLE IF NOT EXISTS `deals` (
   `vacancy_id` bigint(20) NOT NULL,
   `recruiter_id` bigint(20) NOT NULL,
   `status` varchar(50) NOT NULL DEFAULT 'IN_PROGRESS',
+  `recruiter_archived` tinyint(1) NOT NULL DEFAULT 0,
+  `employer_archived` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   KEY `vacancy_id` (`vacancy_id`),
   KEY `recruiter_id` (`recruiter_id`)

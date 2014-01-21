@@ -22,3 +22,5 @@ block append content
             td #{fmt.date(deal.vacancy.creationDate)}
             td
               a.btn.btn-link(href=domain.getAbsoluteUrl() + "/recruiter-show-in-progress-vacancy/" + deal.id)=fmt.message("recruiter-active-deals.more")
+    a.btn.btn-link(href=domain.getAbsoluteUrl() + "/recruiter-clear-fired-deals")=fmt.message("recruiter-active-deals.clear.fired")
+    a.btn.btn-link(href=domain.getAbsoluteUrl() + "/recruiter-clear-approved-deals")=fmt.message("recruiter-active-deals.clear.approved")

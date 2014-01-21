@@ -10,7 +10,9 @@ public enum DealStatus {
     /** Status - fired */
     FIRED (1, "Fired"),
     /** Status - closed */
-    CLOSED (2, "Closed");
+    CLOSED (2, "Closed"),
+    /** Status - applicant approved */
+    APPROVED (3, "Approved");
 
     private final int order;
     private final String description;
