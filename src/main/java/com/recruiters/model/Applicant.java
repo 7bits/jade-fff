@@ -14,6 +14,7 @@ public class Applicant {
     private String resumeFile;
     private String testAnswerFile;
     private ApplicantStatus status = null;
+    private Boolean viewed = false;
 
     public Applicant() {
     }
@@ -119,5 +120,13 @@ public class Applicant {
 
     public void setAge(final Integer age) {
         this.age = age;
+    }
+
+    public Boolean getViewed() {
+        return viewed;
+    }
+
+    public void setViewed(final Boolean viewed) {
+        this.viewed = viewed;
     }
 }

@@ -39,6 +39,7 @@ CREATE TABLE IF NOT EXISTS `applicants` (
   `resume_file` varchar(255) DEFAULT NULL,
   `test_answer_file` varchar(255) DEFAULT NULL,
   `status` varchar(50) NOT NULL DEFAULT 'IN_PROGRESS',
+  `viewed` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   KEY `deal` (`deal_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;

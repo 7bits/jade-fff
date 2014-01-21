@@ -82,7 +82,11 @@ public interface ApplicantMapper {
     void update(final Applicant applicant);
 
     @Update("UPDATE applicants SET status=#{status} " +
-            "WHERE id=#{applicantId} and applicants.deal_id")
+            "WHERE id=#{applicantId}")
     void updateStatus(@Param("applicantId") final Long applicantId,
                       @Param("status") final ApplicantStatus applicantStatus);
+
+    @Update("UPDATE applicants SET viewed = 1 " +
+            "WHERE id=#{applicantId} AND viewed = 0")
+    void setViewed(final Long applicantId);
 }

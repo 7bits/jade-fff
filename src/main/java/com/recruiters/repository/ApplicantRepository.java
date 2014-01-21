@@ -100,6 +100,26 @@ public class ApplicantRepository {
         }
     }
 
+    /**
+     * Set Applicant viewed state to true
+     * @param applicantId    Applicant Id
+     * @return Applicant Id if it was successfully updated
+     * @throws RepositoryException if input parameter is incorrect or there
+     * were any technical issues
+     */
+    public Long setViewed(final Long applicantId) throws RepositoryException {
+        if (applicantId == null) {
+            throw new RepositoryException("applicantId is null");
+        }
+        try {
+
+            applicantMapper.setViewed(applicantId);
+            return applicantId;
+        } catch (Exception e) {
+            throw new RepositoryException("General database error: ", e);
+        }
+    }
+
     public ApplicantMapper getApplicantMapper() {
         return applicantMapper;
     }

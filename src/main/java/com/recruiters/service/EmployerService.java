@@ -151,15 +151,22 @@ public class EmployerService {
     public Applicant findApplicant(final Long applicantId, final Long employerId)
             throws NotAffiliatedException, ServiceException, NotFoundException {
         Applicant applicant;
+        TransactionStatus status = null;
         try {
+            status = txManager.getTransaction(employerTx);
             applicant = applicantRepository.findById(applicantId);
             if (applicant != null) {
                 if (applicant.getDeal().getVacancy().getEmployer().getId().equals(employerId)) {
+                    applicantRepository.setViewed(applicantId);
+                    txManager.commit(status);
 
                     return applicant;
                 }
             }
         } catch (Exception e) {
+            if (status != null) {
+                txManager.rollback(status);
+            }
             log.error(SERVICE_EXCEPTION_MESSAGE, e);
             throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
         }
