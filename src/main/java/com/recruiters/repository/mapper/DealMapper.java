@@ -137,6 +137,9 @@ public interface DealMapper {
     @Update("UPDATE deals SET status = #{status} WHERE id = #{dealId} ")
     void updateStatus(@Param(value = "dealId") final Long dealId, @Param(value = "status") final DealStatus status);
 
+    @Update("UPDATE deals SET status = \"FIRED\", fire_reason=#{message} WHERE id = #{dealId} ")
+    void fireRecruiter(@Param(value = "dealId") final Long dealId, @Param(value = "message") final String message);
+
     @Update("UPDATE deals SET recruiter_archived = 1 " +
             "WHERE recruiter_id = #{recruiterId}  AND recruiter_archived = 0 " +
             "AND status = \"FIRED\"")

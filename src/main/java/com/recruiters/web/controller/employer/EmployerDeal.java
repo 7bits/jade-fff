@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -65,6 +66,7 @@ public class EmployerDeal {
 
     /**
      * Fire Recruiter for Employer
+     * @param message     Reason of firing
      * @param dealId      Id of deal
      * @param locale      Locale
      * @param request     Http request
@@ -76,16 +78,17 @@ public class EmployerDeal {
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
-    @RequestMapping(value = "/{locale}/employer-fire-recruiter/{dealId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{locale}/employer-fire-recruiter", method = RequestMethod.POST)
     public String fireRecruiter(
-            @PathVariable final Long dealId,
+            @RequestParam(value = "message", required = false) final String message,
+            @RequestParam(value = "id", required = true) final Long dealId,
             @PathVariable final String locale,
             final HttpServletRequest request,
             final HttpServletResponse response
     ) throws Exception {
         try {
             User user = userUtils.getCurrentUser(request);
-            employerService.fireRecruiter(dealId, user.getEmployerId());
+            employerService.fireRecruiter(dealId, message, user.getEmployerId());
         } catch (NotAffiliatedException e) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
         } catch (ServiceException e) {

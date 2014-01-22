@@ -481,6 +481,7 @@ public class EmployerService {
     /**
      * Fire recruiter from vacancy
      * @param dealId     Id of deal
+     * @param message    Reason of firing
      * @param employerId Id of employer
      * @return true if success, otherwise false
      * @throws NotAffiliatedException if deal not belongs to
@@ -488,13 +489,13 @@ public class EmployerService {
      * @throws ServiceException if Repository cannot process request
      * or any other possible error
      */
-    public Long fireRecruiter(final Long dealId, final Long employerId)
+    public Long fireRecruiter(final Long dealId, final String message, final Long employerId)
             throws NotAffiliatedException, ServiceException {
         Deal deal;
         try {
             deal = dealRepository.findById(dealId);
             if (deal.getVacancy().getEmployer().getId().equals(employerId)) {
-                return dealRepository.updateStatus(dealId, DealStatus.FIRED);
+                return dealRepository.fireRecruiter(dealId, message);
             }
         } catch (Exception e) {
             log.error(SERVICE_EXCEPTION_MESSAGE, e);

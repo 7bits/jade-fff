@@ -125,6 +125,27 @@ public class DealRepository {
     }
 
     /**
+     * Fire Deal -  update status to fired and set reason of firing
+     * @param dealId    Id of deal
+     * @param message   Firing reason
+     * @return Id of deal, which status we've modified
+     * @throws RepositoryException if input parameters are incorrect or there
+     * were any technical issues
+     */
+    public Long fireRecruiter(final Long dealId, final String message)
+            throws RepositoryException {
+        if (dealId == null) {
+            throw new RepositoryException("dealId is null");
+        }
+        try {
+            dealMapper.fireRecruiter(dealId, message);
+
+            return dealId;
+        } catch (Exception e) {
+            throw new RepositoryException("General database error: ", e);
+        }
+    }
+    /**
      * Clear fired deals (move to archive) for exact recruiter
      * @param recruiterId    Id of recruiter
      * @return Id of recruiter if success

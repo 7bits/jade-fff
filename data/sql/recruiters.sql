@@ -105,6 +105,7 @@ CREATE TABLE IF NOT EXISTS `deals` (
   `recruiter_archived` tinyint(1) NOT NULL DEFAULT '0',
   `employer_archived` tinyint(1) NOT NULL DEFAULT '0',
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `fire_reason` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `vacancy_id` (`vacancy_id`),
   KEY `recruiter_id` (`recruiter_id`)

@@ -24,8 +24,14 @@ block append content
         p
           #{deal.recruiter.user.firstName} #{deal.recruiter.user.lastName}
           .tools
-            a.btn.btn-danger(href=domain.getAbsoluteUrl() + "/employer-fire-recruiter/" + deal.id).
-              #{fmt.message("employer-progress-vacancy-show.recruiter.decline")}
+            form(name="", action=domain.getAbsoluteUrl() + "/employer-fire-recruiter", method="post")
+              .row
+                .col-md-6
+                  textarea(class="form-control", name="message", placeholder=fmt.message("employer-progress-vacancy-show.recruiter.decline.reason"), rows="4")
+              .btn-row
+                input(type="hidden", name=csrf.getParameterName(), value=csrf.getToken())
+                input(type="hidden", name="id", value=deal.id)
+                input.btn.btn-danger(type="submit", name="submit", value=fmt.message("employer-progress-vacancy-show.recruiter.decline"))
     h2=fmt.message("employer-progress-vacancy-show.applicants.h2")
     .row
       .col-md-6
