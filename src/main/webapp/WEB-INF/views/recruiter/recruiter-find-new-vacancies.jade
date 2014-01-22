@@ -5,6 +5,25 @@ block append head
 block append content
   .container
     h1=fmt.message("recruiter-find-new-vacancies.h1")
+    form(name="searchVacancy", action="", method="post")
+      .row
+        .col-md-6
+          .form-group
+            label(for="search")
+            input(type="text", class="form-control", id="search", name="search", value=vacancySearchForm.search, placeholder=fmt.message("recruiter-find-new-vacancies.form.search"))
+          .checkbox
+            label(for="showVacancies")=fmt.message("recruiter-find-new-vacancies.form.vacancies")
+            input(type="checkbox", id="showVacancies", name="showVacancies", value="1", checked=vacancySearchForm.showVacancies)
+          .checkbox
+            label(for="showBids")=fmt.message("recruiter-find-new-vacancies.form.bids")
+            input(type="checkbox", id="showBids", name="showBids", value="1", checked=vacancySearchForm.showBids)
+          .checkbox
+            label(for="showDeals")=fmt.message("recruiter-find-new-vacancies.form.deals")
+            input(type="checkbox", id="showDeals", name="showDeals", value="1", checked=vacancySearchForm.showDeals)
+      .btn-row
+        input(type="hidden", name=csrf.getParameterName(), value=csrf.getToken())
+        input.btn.btn-success(type="submit", name="submit", value=fmt.message("recruiter-find-new-vacancies.form.submit"))
+
     table.table.table-striped
       thead
         tr

@@ -81,18 +81,28 @@ public class RecruiterService {
     }
 
     /**
-     * Find and return all vacancies for certain recruiter
-     * (and that with deal or bid too)
+     * Find and return filtered vacancies list for certain recruiter
      * @param recruiterId    Id of recruiter
-     * @return List of all Vacancies which is available for bidding by
+     * @param searchText     Search text, can be empty, so will bot be used
+     * @param showVacancies  Show vacancies without bids or not
+     * @param showBids       Show bids or not
+     * @param showDeals      Show deals or not
+     * @return List of filtered Vacancies which is available for bidding by
      * this recruiter
      * @throws ServiceException if cannot obtain Vacancy instances from
      * repository or any other possible error
      */
-    public List<Vacancy> findAllVacanciesForRecruiter(final Long recruiterId)
-            throws ServiceException {
+    public List<Vacancy> findFilteredVacanciesForRecruiter(
+            final Long recruiterId,
+            final String searchText,
+            final Boolean showVacancies,
+            final Boolean showBids,
+            final Boolean showDeals
+    ) throws ServiceException {
         try {
-            return vacancyRepository.findAllVacanciesForRecruiter(recruiterId);
+            return vacancyRepository.findFilteredVacanciesForRecruiter(
+                    recruiterId, searchText, showVacancies, showBids, showDeals
+            );
         } catch (Exception e) {
             log.error(SERVICE_EXCEPTION_MESSAGE, e);
             throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
