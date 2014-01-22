@@ -3,7 +3,6 @@ package com.recruiters.repository;
 import com.recruiters.model.Vacancy;
 import com.recruiters.model.VacancyStatus;
 import com.recruiters.repository.mapper.VacancyMapper;
-import org.mybatis.spring.MyBatisSystemException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -39,21 +38,21 @@ public class VacancyRepository {
     }
 
     /**
-     * Find and return List of Vacancy instances available for apply for
-     * this recruiter
+     * Find and return List of Vacancies for Recruiter
+     * Vacancies that have already Bid or Deal included
      * @param recruiterId    Id of recruiter
      * @return List of vacancies with no bids and deals from certain recruiter
      * @throws RepositoryException if input parameter is incorrect or there
      * were any technical issues
      */
-    public List<Vacancy> findAvailableVacanciesForRecruiter(final Long recruiterId)
+    public List<Vacancy> findAllVacanciesForRecruiter(final Long recruiterId)
             throws RepositoryException {
         if (recruiterId == null) {
             throw new RepositoryException("recruiterId is null");
         }
         try {
 
-            return vacancyMapper.findAvailableVacanciesForRecruiter(recruiterId);
+            return vacancyMapper.findAllVacanciesForRecruiter(recruiterId);
         } catch (Exception e) {
             throw new RepositoryException("General database error: ", e);
         }

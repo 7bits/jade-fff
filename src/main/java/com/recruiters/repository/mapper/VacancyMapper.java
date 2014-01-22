@@ -31,19 +31,14 @@ public interface VacancyMapper {
     })
     Vacancy findById(final Long vacancyId);
 
-    @Select("SELECT vacancies.*, users.firstname, users.lastname " +
+    @Select("SELECT vacancies.*, users.firstname, users.lastname, " +
+            "bids.id as bid_id, deals.id as deal_id " +
             "FROM vacancies " +
             "INNER JOIN employers ON employers.id = vacancies.employer_id " +
             "INNER JOIN users  ON employers.user_id=users.id " +
-            "WHERE vacancies.status like 'ACTIVE' " +
-            "AND ( " +
-            "   NOT EXISTS ( " +
-            "       SELECT * FROM bids b WHERE b.vacancy_id = vacancies.id AND b.recruiter_id = #{recruiterId} AND b.status <> 'REJECTED' " +
-            "   ) " +
-            "   AND NOT EXISTS (" +
-            "       SELECT * FROM deals d WHERE d.vacancy_id = vacancies.id AND d.recruiter_id = #{recruiterId} AND d.status <> 'FIRED' " +
-            "   ) " +
-            ") ")
+            "LEFT JOIN bids ON bids.vacancy_id=vacancies.id AND bids.recruiter_id=#{recruiterId} " +
+            "LEFT JOIN deals ON deals.vacancy_id=vacancies.id AND deals.recruiter_id=#{recruiterId} " +
+            "WHERE vacancies.status like 'ACTIVE' ORDER BY creation_date DESC")
     @Results({
             @Result(column = "id", property = "id"),
             @Result(column = "employer_id", property = "employer.id"),
@@ -55,9 +50,11 @@ public interface VacancyMapper {
             @Result(column = "expiration_date", property = "expirationDate"),
             @Result(column = "test_file", property = "testFile"),
             @Result(column = "firstname", property = "employer.user.firstName"),
-            @Result(column = "lastname", property = "employer.user.lastName")
+            @Result(column = "lastname", property = "employer.user.lastName"),
+            @Result(column = "bid_id", property = "bidId"),
+            @Result(column = "deal_id", property = "dealId")
     })
-    List<Vacancy> findAvailableVacanciesForRecruiter(final Long recruiterId);
+    List<Vacancy> findAllVacanciesForRecruiter(final Long recruiterId);
 
     @Select("SELECT vacancies.*, count(bids.id) as bid_count, " +
             "users.firstname, users.lastname " +

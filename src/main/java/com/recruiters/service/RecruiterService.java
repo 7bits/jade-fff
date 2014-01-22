@@ -82,16 +82,17 @@ public class RecruiterService {
 
     /**
      * Find and return all vacancies for certain recruiter
+     * (and that with deal or bid too)
      * @param recruiterId    Id of recruiter
      * @return List of all Vacancies which is available for bidding by
      * this recruiter
      * @throws ServiceException if cannot obtain Vacancy instances from
      * repository or any other possible error
      */
-    public List<Vacancy> findAvailableVacanciesForRecruiter(final Long recruiterId)
+    public List<Vacancy> findAllVacanciesForRecruiter(final Long recruiterId)
             throws ServiceException {
         try {
-            return vacancyRepository.findAvailableVacanciesForRecruiter(recruiterId);
+            return vacancyRepository.findAllVacanciesForRecruiter(recruiterId);
         } catch (Exception e) {
             log.error(SERVICE_EXCEPTION_MESSAGE, e);
             throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);

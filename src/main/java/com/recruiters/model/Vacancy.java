@@ -17,6 +17,8 @@ public class Vacancy {
     private String testFile;
     private VacancyStatus status = null;
     private Long bidCount = 0L;
+    private Long bidId = 0L;
+    private Long dealId = 0L;
 
     public Vacancy() {
     }
@@ -135,5 +137,21 @@ public class Vacancy {
 
     public void setBidCount(final Long bidCount) {
         this.bidCount = bidCount;
+    }
+
+    public Long getBidId() {
+        return bidId;
+    }
+
+    public void setBidId(final Long bidId) {
+        this.bidId = bidId;
+    }
+
+    public Long getDealId() {
+        return dealId;
+    }
+
+    public void setDealId(final Long dealId) {
+        this.dealId = dealId;
     }
 }

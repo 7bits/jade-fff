@@ -11,6 +11,7 @@ block append content
           th=fmt.message("recruiter-find-new-vacancies.table.name")
           th=fmt.message("recruiter-find-new-vacancies.table.description")
           th=fmt.message("recruiter-find-new-vacancies.table.date")
+          th=fmt.message("recruiter-find-new-vacancies.table.bidOrDeal")
           th
       tbody
         for vacancy in vacancies
@@ -18,5 +19,16 @@ block append content
             td #{vacancy.title}
             td #{vacancy.description}
             td #{fmt.date(vacancy.creationDate)}
-            td
-              a.btn.btn-link(href=domain.getAbsoluteUrl() + "/recruiter-show-vacancy/" + vacancy.id)=fmt.message("recruiter-find-new-vacancies.more")
+            if vacancy.dealId != 0
+              td=fmt.message("recruiter-find-new-vacancies.table.deal")
+              td
+                a.btn.btn-link(href=domain.getAbsoluteUrl() + "/recruiter-show-in-progress-vacancy/" + vacancy.dealId)=fmt.message("recruiter-find-new-vacancies.more")
+            else
+              if vacancy.bidId != 0
+                td=fmt.message("recruiter-find-new-vacancies.table.bid")
+                td
+                  a.btn.btn-link(href=domain.getAbsoluteUrl() + "/recruiter-show-bid-vacancy/" + vacancy.bidId)=fmt.message("recruiter-find-new-vacancies.more")
+              else
+                td
+                td
+                  a.btn.btn-link(href=domain.getAbsoluteUrl() + "/recruiter-show-vacancy/" + vacancy.id)=fmt.message("recruiter-find-new-vacancies.more")

@@ -47,7 +47,7 @@ public class AllAvailableVacancies {
         try {
             User user = userUtils.getCurrentUser(request);
             List<Vacancy> vacancies = recruiterService
-                    .findAvailableVacanciesForRecruiter(user.getRecruiterId());
+                    .findAllVacanciesForRecruiter(user.getRecruiterId());
             allAvailableVacancies.addObject("vacancies", vacancies);
         } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
