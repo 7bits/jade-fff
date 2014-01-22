@@ -1,5 +1,6 @@
 package com.recruiters.model;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -17,6 +18,7 @@ public class Deal {
     private Long rejectedApplicantCount = 0L;
     private Long viewedApplicantCount = 0L;
     private Long unseenApplicantCount = 0L;
+    private Date lastModified = null;
 
     public Deal(final Long id, final Vacancy vacancy, final Recruiter recruiter, final List<Applicant> applicants) {
         this.id = id;
@@ -119,5 +121,13 @@ public class Deal {
 
     public void setUnseenApplicantCount(final Long unseenApplicantCount) {
         this.unseenApplicantCount = unseenApplicantCount;
+    }
+
+    public Date getLastModified() {
+        return lastModified;
+    }
+
+    public void setLastModified(final Date lastModified) {
+        this.lastModified = lastModified;
     }
 }

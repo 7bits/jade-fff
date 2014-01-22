@@ -59,11 +59,23 @@ public interface DealMapper {
             "(SELECT COUNT(applicants.id) FROM applicants " +
             "WHERE deal_id=deals.id AND viewed=0) as unseen_applicants, " +
             "(SELECT COUNT(applicants.id) FROM applicants " +
-            "WHERE deal_id=deals.id AND status=\"REJECTED\") as rejected_applicants " +
+            "WHERE deal_id=deals.id AND status=\"REJECTED\") as rejected_applicants, " +
+            "max_updated.max_updated_date " +
             "FROM deals " +
             "INNER JOIN vacancies ON vacancies.id=deals.vacancy_id " +
             "INNER JOIN recruiters  ON recruiters.id=deals.recruiter_id " +
             "INNER JOIN users ON recruiters.user_id=users.id " +
+            "INNER JOIN (SELECT id, MAX(updated_date) as max_updated_date FROM " +
+            "(SELECT id,updated_date FROM deals WHERE recruiter_id=#{recruiterId} " +
+            "UNION ALL " +
+            "SELECT deals.id, vacancies.updated_date FROM vacancies " +
+            "INNER JOIN deals ON deals.vacancy_id=vacancies.id " +
+            "WHERE deals.recruiter_id=#{recruiterId} " +
+            "UNION ALL " +
+            "SELECT deals.id, MAX(applicants.updated_date)  FROM applicants " +
+            "INNER JOIN deals ON applicants.deal_id=deals.id " +
+            "WHERE deals.recruiter_id=#{recruiterId})as updated_dates GROUP BY id) as max_updated " +
+            "ON max_updated.id=deals.id " +
             "WHERE recruiters.id=#{recruiterId} AND " +
             "deals.status IN(\"IN_PROGRESS\", \"FIRED\", \"APPROVED\") AND " +
             "deals.recruiter_archived = 0")
@@ -83,7 +95,8 @@ public interface DealMapper {
             @Result(column = "all_applicants", property = "allApplicantCount"),
             @Result(column = "viewed_applicants", property = "viewedApplicantCount"),
             @Result(column = "unseen_applicants", property = "unseenApplicantCount"),
-            @Result(column = "rejected_applicants", property = "rejectedApplicantCount")
+            @Result(column = "rejected_applicants", property = "rejectedApplicantCount"),
+            @Result(column = "max_updated_date", property = "lastModified")
     })
     List<Deal> findActiveDealsByRecruiterId(final Long recruiterId);
 

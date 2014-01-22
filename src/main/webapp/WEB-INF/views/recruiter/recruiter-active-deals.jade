@@ -13,13 +13,14 @@ block append content
           th=fmt.message("recruiter-active-deals.table.applicants")
           th=fmt.message("recruiter-active-deals.table.status")
           th=fmt.message("recruiter-active-deals.table.date")
+          th=fmt.message("recruiter-active-deals.table.dateModified")
           th
       tbody
         for deal in deals
           tr
             td #{deal.vacancy.title}
             td #{deal.vacancy.description}
-            td
+            td(title=fmt.message("recruiter-active-deals.table.applicants.all") + ": " + deal.allApplicantCount + ' | ' + fmt.message("recruiter-active-deals.table.applicants.unseen") + ": " + deal.unseenApplicantCount + ' | ' + fmt.message("recruiter-active-deals.table.applicants.rejected") + ": " + deal.rejectedApplicantCount + ' | ' + fmt.message("recruiter-active-deals.table.applicants.viewed") + ": " + deal.viewedApplicantCount)
               span.green=deal.unseenApplicantCount
               span / #{deal.allApplicantCount} [
               span.red=deal.rejectedApplicantCount
@@ -27,7 +28,8 @@ block append content
               span.yellow=deal.viewedApplicantCount
               span ]
             td #{fmt.dealStatus(deal.status)}
-            td #{fmt.date(deal.vacancy.creationDate)}
+            td(title=deal.vacancy.creationDate) #{fmt.date(deal.vacancy.creationDate)}
+            td(title=deal.lastModified) #{fmt.date(deal.lastModified)}
             td
               a.btn.btn-link(href=domain.getAbsoluteUrl() + "/recruiter-show-in-progress-vacancy/" + deal.id)=fmt.message("recruiter-active-deals.more")
     a.btn.btn-link(href=domain.getAbsoluteUrl() + "/recruiter-clear-fired-deals")=fmt.message("recruiter-active-deals.clear.fired")
