@@ -81,8 +81,10 @@ public class MessageResolver {
      */
     public String bidStatus(final BidStatus bidStatus) {
         String stringStatus = "";
-        String messageCode = bidStatus.getClass().getSimpleName() + "." + bidStatus.getName();
-        stringStatus = messageSource.getMessage(messageCode, null, locale);
+        if (bidStatus != null) {
+            String messageCode = bidStatus.getClass().getSimpleName() + "." + bidStatus.getName();
+            stringStatus = messageSource.getMessage(messageCode, null, locale);
+        }
         return stringStatus;
     }
 
@@ -93,8 +95,10 @@ public class MessageResolver {
      */
     public String dealStatus(final DealStatus dealStatus) {
         String stringStatus = "";
-        String messageCode = dealStatus.getClass().getSimpleName() + "." + dealStatus.getName();
-        stringStatus = messageSource.getMessage(messageCode, null, locale);
+        if (dealStatus != null) {
+            String messageCode = dealStatus.getClass().getSimpleName() + "." + dealStatus.getName();
+            stringStatus = messageSource.getMessage(messageCode, null, locale);
+        }
         return stringStatus;
     }
 
@@ -105,8 +109,10 @@ public class MessageResolver {
      */
     public String applicantStatus(final ApplicantStatus applicantStatus) {
         String stringStatus = "";
-        String messageCode = applicantStatus.getClass().getSimpleName() + "." + applicantStatus.getName();
-        stringStatus = messageSource.getMessage(messageCode, null, locale);
+        if (applicantStatus != null) {
+            String messageCode = applicantStatus.getClass().getSimpleName() + "." + applicantStatus.getName();
+            stringStatus = messageSource.getMessage(messageCode, null, locale);
+        }
         return stringStatus;
     }
 
@@ -117,8 +123,10 @@ public class MessageResolver {
      */
     public String vacancyStatus(final VacancyStatus vacancyStatus) {
         String stringStatus = "";
-        String messageCode = vacancyStatus.getClass().getSimpleName() + "." + vacancyStatus.getName();
-        stringStatus = messageSource.getMessage(messageCode, null, locale);
+        if (vacancyStatus != null) {
+            String messageCode = vacancyStatus.getClass().getSimpleName() + "." + vacancyStatus.getName();
+            stringStatus = messageSource.getMessage(messageCode, null, locale);
+        }
         return stringStatus;
     }
 

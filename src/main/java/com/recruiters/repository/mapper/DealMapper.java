@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface DealMapper {
 
-    @Select("SELECT deals.id, deals.status, " +
+    @Select("SELECT deals.id, deals.status, deals.fire_reason, " +
             "vacancies.id as vacancy_id, vacancies.employer_id, vacancies.title, " +
             "vacancies.description, vacancies.salary_from, vacancies.salary_to, " +
             "vacancies.creation_date, vacancies.expiration_date, " +
@@ -28,6 +28,7 @@ public interface DealMapper {
     @Results({
             @Result(column = "id", property = "id", javaType = Long.class),
             @Result(column = "status", property = "status"),
+            @Result(column = "fire_reason", property = "fireReason"),
             @Result(column = "vacancy_id", property = "vacancy.id"),
             @Result(column = "employer_id", property = "vacancy.employer.id"),
             @Result(column = "employer_firstname", property = "vacancy.employer.user.firstName"),

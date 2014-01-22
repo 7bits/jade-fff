@@ -19,6 +19,12 @@ block append content
           dd #{fmt.date(deal.vacancy.creationDate)}
           dt=fmt.message("recruiter-show-in-progress-vacancy.dt.expirationDate")
           dd #{fmt.date(deal.vacancy.expirationDate)}
+          dt=fmt.message("recruiter-show-in-progress-vacancy.dt.status")
+          dd #{fmt.dealStatus(deal.status)}
+          if(deal.status == 'Fired')
+            dt=fmt.message("recruiter-show-in-progress-vacancy.dt.fire_reason")
+            dd #{deal.fireReason}
+
       .col-md-4
         h2=fmt.message("recruiter-show-in-progress-vacancy.employer")
         p #{deal.vacancy.employer.user.firstName} #{deal.vacancy.employer.user.lastName}
@@ -40,7 +46,7 @@ block append content
             td #{fmt.applicantStatus(applicant.status)}
             td #{fmt.date(deal.vacancy.creationDate)}
             td
-              if applicant.status != 'REJECTED'
+              if applicant.status != 'Rejected'
                 a.btn.btn-link.pull-right(href= domain.getAbsoluteUrl() + "/recruiter-edit-applicant/" + applicant.id)=fmt.message("recruiter-show-in-progress-vacancy.table.change")
-
-    a.btn.btn-success(href= domain.getAbsoluteUrl() + "/recruiter-add-applicant/" + deal.id)=fmt.message("recruiter-show-in-progress-vacancy.add")
+    if deal.status != 'Fired'
+      a.btn.btn-success(href= domain.getAbsoluteUrl() + "/recruiter-add-applicant/" + deal.id)=fmt.message("recruiter-show-in-progress-vacancy.add")
