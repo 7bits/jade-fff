@@ -29,7 +29,7 @@ public class AllAvailableVacancies {
     private UserUtils userUtils = null;
 
     /**
-     * Shows vacancies without bids and deals for recruiter
+     * Shows vacancies (including those with bids and deals) for recruiter
      * @param request    Http Request
      * @param response   Http Response
      * @return model and view with list of vacancies available for bidding,
