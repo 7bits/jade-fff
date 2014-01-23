@@ -21,7 +21,7 @@ block append content
           dd #{fmt.date(deal.vacancy.expirationDate)}
           dt=fmt.message("recruiter-show-in-progress-vacancy.dt.status")
           dd #{fmt.dealStatus(deal.status)}
-          if(deal.status == 'Fired')
+          if test.isRecruiterFired(deal.status)
             dt=fmt.message("recruiter-show-in-progress-vacancy.dt.fire_reason")
             dd #{deal.fireReason}
 
@@ -46,7 +46,7 @@ block append content
             td #{fmt.applicantStatus(applicant.status)}
             td #{fmt.date(deal.vacancy.creationDate)}
             td
-              if applicant.status != 'Rejected'
+              if test.isApplicantEditable(applicant.status, deal.status)
                 a.btn.btn-link.pull-right(href= domain.getAbsoluteUrl() + "/recruiter-edit-applicant/" + applicant.id)=fmt.message("recruiter-show-in-progress-vacancy.table.change")
-    if deal.status != 'Fired'
+    if test.canAddApplicant(deal.status)
       a.btn.btn-success(href= domain.getAbsoluteUrl() + "/recruiter-add-applicant/" + deal.id)=fmt.message("recruiter-show-in-progress-vacancy.add")

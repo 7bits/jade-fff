@@ -1,5 +1,6 @@
 package com.recruiters.web.utils;
 
+import com.recruiters.web.helper.ConditionTester;
 import com.recruiters.web.helper.UrlResolver;
 import com.recruiters.web.helper.UserResolver;
 import com.recruiters.web.helper.CsrfResolver;
@@ -41,6 +42,8 @@ public class HandlerInterceptor extends HandlerInterceptorAdapter {
     static final String MODEL_MESSAGE_RESOLVER_NAME = "fmt";
     /** CSRF resolver Helper name */
     static final String CSRF_RESOLVER_NAME = "csrf";
+    /** Condition Tester Helper name */
+    static final String CONDITION_TESTER_NAME = "test";
 
     private String protocol = null;
     private String server = null;
@@ -124,6 +127,9 @@ public class HandlerInterceptor extends HandlerInterceptorAdapter {
                         new UrlResolver(protocol, server, port, applicationName, locale, request, environment)
                 );
             }
+
+            // Condition tester
+            mav.addObject(CONDITION_TESTER_NAME, new ConditionTester());
 
             // CSRF Token Resolver
             mav.addObject(CSRF_RESOLVER_NAME, new CsrfResolver(request));
