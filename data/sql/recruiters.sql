@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Янв 22 2014 г., 11:24
+-- Время создания: Янв 23 2014 г., 16:23
 -- Версия сервера: 5.5.34
 -- Версия PHP: 5.3.10-1ubuntu3.8
 
@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS `bids` (
   PRIMARY KEY (`id`),
   KEY `vacancy_id` (`vacancy_id`),
   KEY `recruiter_id` (`recruiter_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
 
 --
 -- Дамп данных таблицы `bids`
@@ -87,8 +87,9 @@ INSERT INTO `bids` (`id`, `vacancy_id`, `recruiter_id`, `message`, `status`, `up
 (2, 1, 2, 'Какие то другие условия.', 'ACTIVE', '2014-01-22 04:13:37'),
 (3, 1, 3, 'Условия Условия Условия Условия Условия Условия Условия Условия " +                 "Условия Условия Условия Условия Условия Условия Условия Условия Условия Условия', 'ACTIVE', '2014-01-22 04:13:37'),
 (4, 2, 1, 'Кто не согласен с условиями тот не прав. Условия такие хорошие', 'ACTIVE', '2014-01-22 04:13:37'),
-(5, 2, 2, 'Грех не отказаться от условий под дулом пистолета', 'ACTIVE', '2014-01-22 04:13:37'),
-(6, 4, 1, 'Блабла', 'ACTIVE', '2014-01-22 04:13:37');
+(5, 2, 2, 'Грех не отказаться от условий под дулом пистолета', 'APPROVED', '2014-01-23 09:22:54'),
+(6, 4, 1, 'Блабла', 'ACTIVE', '2014-01-22 04:13:37'),
+(8, 3, 1, 'Клёвые условия, не пожалеете', 'APPROVED', '2014-01-23 09:22:18');
 
 -- --------------------------------------------------------
 
@@ -115,10 +116,10 @@ CREATE TABLE IF NOT EXISTS `deals` (
 -- Дамп данных таблицы `deals`
 --
 
-INSERT INTO `deals` (`id`, `vacancy_id`, `recruiter_id`, `status`, `recruiter_archived`, `employer_archived`, `updated_date`) VALUES
-(1, 3, 1, 'IN_PROGRESS', 0, 0, '2014-01-22 04:13:37'),
-(2, 2, 2, 'IN_PROGRESS', 0, 0, '2014-01-22 04:13:37'),
-(3, 1, 1, 'IN_PROGRESS', 0, 0, '2014-01-22 04:14:55');
+INSERT INTO `deals` (`id`, `vacancy_id`, `recruiter_id`, `status`, `recruiter_archived`, `employer_archived`, `updated_date`, `fire_reason`) VALUES
+(1, 3, 1, 'IN_PROGRESS', 0, 0, '2014-01-22 04:13:37', NULL),
+(2, 2, 2, 'IN_PROGRESS', 0, 0, '2014-01-22 04:13:37', NULL),
+(3, 1, 1, 'IN_PROGRESS', 0, 0, '2014-01-22 04:14:55', NULL);
 
 -- --------------------------------------------------------
 
