@@ -31,6 +31,31 @@ public interface VacancyMapper {
     })
     Vacancy findById(final Long vacancyId);
 
+    @Select("SELECT vacancies.*, users.firstname, users.lastname, " +
+            "bids.id as bid_id, deals.id as deal_id " +
+            "FROM vacancies " +
+            "INNER JOIN employers ON employers.id = vacancies.employer_id " +
+            "INNER JOIN users  ON employers.user_id=users.id " +
+            "LEFT JOIN bids ON bids.vacancy_id=vacancies.id AND bids.recruiter_id=#{recruiterId} " +
+            "LEFT JOIN deals ON deals.vacancy_id=vacancies.id " +
+            "WHERE vacancies.id=#{vacancyId}")
+    @Results({
+            @Result(column = "id", property = "id"),
+            @Result(column = "employer_id", property = "employer.id"),
+            @Result(column = "title", property = "title"),
+            @Result(column = "description", property = "description"),
+            @Result(column = "salary_from", property = "salaryFrom"),
+            @Result(column = "salary_to", property = "salaryTo"),
+            @Result(column = "creation_date", property = "creationDate"),
+            @Result(column = "expiration_date", property = "expirationDate"),
+            @Result(column = "test_file", property = "testFile"),
+            @Result(column = "firstname", property = "employer.user.firstName"),
+            @Result(column = "lastname", property = "employer.user.lastName"),
+            @Result(column = "bid_id", property = "bidId"),
+            @Result(column = "deal_id", property = "dealId")
+    })
+    Vacancy findByIdAndRecruiterId(@Param("vacancyId") final Long vacancyId, @Param("recruiterId") final Long recruiterId);
+
     @Select("<script>" +
             "SELECT * FROM (" +
             "SELECT vacancies.*, users.firstname, users.lastname, " +

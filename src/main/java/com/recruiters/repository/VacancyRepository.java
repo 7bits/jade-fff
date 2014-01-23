@@ -37,6 +37,31 @@ public class VacancyRepository {
         }
     }
 
+
+    /**
+     * Find and return Vacancy instance by its id
+     * and recruiter id (to assign bid id for this recruiter if any
+     * and deal id for any recruiter if any)
+     * @param vacancyId    Id of vacancy
+     * @param recruiterId  Id of recruiter
+     * @return Vacancy instance
+     * @throws RepositoryException if input parameter is incorrect or there
+     * were any technical issues
+     */
+    public Vacancy findByIdAndRecruiterId(
+            final Long vacancyId,
+            final Long recruiterId
+    ) throws RepositoryException {
+        if (vacancyId == null || recruiterId == null) {
+            throw new RepositoryException("vacancyId or recruiterId is null");
+        }
+        try {
+            return vacancyMapper.findByIdAndRecruiterId(vacancyId, recruiterId);
+        } catch (Exception e) {
+            throw new RepositoryException("General database error: ", e);
+        }
+    }
+
     /**
      * Find and return List of Vacancies for Recruiter
      * Depends on filter properties.

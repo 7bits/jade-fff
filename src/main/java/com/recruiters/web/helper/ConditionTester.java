@@ -48,6 +48,7 @@ public class ConditionTester {
         if (dealStatus == DealStatus.IN_PROGRESS) {
             isDealActive = true;
         }
+
         return  (isApplicantActive && isDealActive);
     }
 
@@ -60,5 +61,12 @@ public class ConditionTester {
     public Boolean canAddApplicant(final DealStatus dealStatus) {
 
         return (dealStatus == DealStatus.IN_PROGRESS);
+    }
+
+    public Boolean canApplyToVacancy(final Long bidId, final Long dealId) {
+        Boolean bidIdIsNull = bidId.equals(0L);
+        Boolean dealIdIsNull = dealId.equals(0L);
+
+        return (bidIdIsNull && dealIdIsNull);
     }
 }

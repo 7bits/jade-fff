@@ -50,7 +50,8 @@ public class ShowVacancy {
     ) throws Exception {
         ModelAndView showVacancy = new ModelAndView("recruiter/recruiter-show-vacancy.jade");
         try {
-            Vacancy vacancy = recruiterService.findVacancy(vacancyId);
+            User user = userUtils.getCurrentUser(request);
+            Vacancy vacancy = recruiterService.findVacancy(vacancyId, user.getRecruiterId());
             showVacancy.addObject("vacancy", vacancy);
         } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
@@ -72,7 +73,8 @@ public class ShowVacancy {
      * @param response     Http Response
      * @return redirects to page with vacancies available for bid, Internal
      * Server Error page if something is wrong with obtaining data due to
-     * technical or any other reasons
+     * technical or any other reasons,
+     * Forbidden if this vacancy have deal already
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
@@ -89,6 +91,9 @@ public class ShowVacancy {
             recruiterService.applyRecruiterToVacancy(user.getRecruiterId(), vacancyId, message);
         } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return null;
+        } catch (NotAffiliatedException e) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN);
             return null;
         }
 

@@ -113,19 +113,21 @@ public class RecruiterService {
     }
 
     /**
-     * Find and return Vacancy instance by its id
+     * Find and return Vacancy instance by its id and recruiter id
+     * to assign bids of this recruiter or deals of any recruiter if found
      * @param vacancyId    Id of vacancy for which we want to get
      *                     full description
+     * @param recruiterId  Id of recruiter
      * @return Vacancy instance
      * @throws ServiceException if cannot obtain Vacancy instance from
      * repository or any other possible error
      * @throws NotFoundException if Vacancy was not found
      */
-    public Vacancy findVacancy(final Long vacancyId)
+    public Vacancy findVacancy(final Long vacancyId, final Long recruiterId)
             throws ServiceException, NotFoundException {
         Vacancy vacancy;
         try {
-            vacancy = vacancyRepository.findById(vacancyId);
+            vacancy = vacancyRepository.findByIdAndRecruiterId(vacancyId, recruiterId);
             if (vacancy != null) {
                 return vacancy;
             }
@@ -342,18 +344,28 @@ public class RecruiterService {
      * @return Id of bid created, if there were not technical issues
      * @throws ServiceException if Repository cannot process request
      * or any other possible error
+     * @throws NotAffiliatedException if this recruiter cannot be applied
+     * to this vacancy because there exists deal for this vacancy already
      */
     public Long applyRecruiterToVacancy(
             final Long recruiterId,
             final Long vacancyId,
             final String message
-    ) throws ServiceException {
+    ) throws ServiceException, NotAffiliatedException {
+        Vacancy vacancy;
         try {
-            return bidRepository.create(recruiterId, vacancyId, message);
+            vacancy = vacancyRepository.findByIdAndRecruiterId(vacancyId, recruiterId);
+            if (vacancy.getDealId().equals(0L)) {
+                return bidRepository.create(recruiterId, vacancyId, message);
+            }
         } catch (Exception e) {
             log.error(SERVICE_EXCEPTION_MESSAGE, e);
             throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
         }
+        String securityMessage = SECURITY_EXCEPTION_MESSAGE_PART1 + Vacancy.class.getSimpleName() +
+                SECURITY_EXCEPTION_MESSAGE_PART2;
+        log.error(securityMessage);
+        throw new NotAffiliatedException(securityMessage);
     }
 
     /**
