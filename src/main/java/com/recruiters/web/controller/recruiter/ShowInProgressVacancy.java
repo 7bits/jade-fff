@@ -53,10 +53,13 @@ public class ShowInProgressVacancy {
             vacancyInProgress.addObject("deal", deal);
         } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return null;
         } catch (NotFoundException e) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            return null;
         } catch (NotAffiliatedException e) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
+            return null;
         }
 
         return vacancyInProgress;

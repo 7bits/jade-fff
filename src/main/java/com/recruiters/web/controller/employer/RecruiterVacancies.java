@@ -48,6 +48,7 @@ public class RecruiterVacancies {
             myDeals.addObject("deals", deals);
         } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return null;
         }
 
         return myDeals;

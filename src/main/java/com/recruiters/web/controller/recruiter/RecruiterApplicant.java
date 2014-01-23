@@ -100,11 +100,11 @@ public class RecruiterApplicant {
             return new ModelAndView("redirect:/" + locale + "/recruiter-show-in-progress-vacancy/" + dealId);
         } catch (NotAffiliatedException e) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
+            return null;
         } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return null;
         }
-
-        return null;
     }
 
     /**
@@ -133,10 +133,13 @@ public class RecruiterApplicant {
             editApplicant.addObject("applicantForm", applicantForm);
         } catch (NotAffiliatedException e) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
+            return null;
         } catch (NotFoundException e) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            return null;
         } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return null;
         }
 
         return editApplicant;
@@ -184,11 +187,11 @@ public class RecruiterApplicant {
             return new ModelAndView("redirect:/" + locale + "/recruiter-show-in-progress-vacancy/" + dealId);
         } catch (NotAffiliatedException e) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
+            return null;
         } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return null;
         }
-
-        return null;
     }
 
     /**

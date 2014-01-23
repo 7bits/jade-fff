@@ -54,8 +54,10 @@ public class ShowVacancy {
             showVacancy.addObject("vacancy", vacancy);
         } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return null;
         } catch (NotFoundException e) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            return null;
         }
 
         return showVacancy;
@@ -87,6 +89,7 @@ public class ShowVacancy {
             recruiterService.applyRecruiterToVacancy(user.getRecruiterId(), vacancyId, message);
         } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return null;
         }
 
         return "redirect:/" + locale + "/recruiter-find-new-vacancies";
@@ -116,10 +119,13 @@ public class ShowVacancy {
             showBidVacancy.addObject("bid", bid);
         } catch (NotAffiliatedException e) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
+            return null;
         } catch (NotFoundException e) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            return null;
         } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return null;
         }
 
         return showBidVacancy;

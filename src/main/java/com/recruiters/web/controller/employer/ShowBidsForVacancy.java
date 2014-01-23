@@ -56,10 +56,13 @@ public class ShowBidsForVacancy {
             recruiterBids.addObject("vacancy", vacancy);
         } catch (NotAffiliatedException e) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
+            return null;
         } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return null;
         } catch (NotFoundException e) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            return null;
         }
 
         return recruiterBids;

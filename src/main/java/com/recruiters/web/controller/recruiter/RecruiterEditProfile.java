@@ -62,6 +62,7 @@ public class RecruiterEditProfile {
             recruiterProfile.addObject("recruiterForm", recruiterForm);
         } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return null;
         }
 
         return recruiterProfile;
@@ -102,8 +103,10 @@ public class RecruiterEditProfile {
             recruiterService.saveProfileForRecruiter(updatedRecruiter, user.getRecruiterId());
         } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return null;
         } catch (NotAffiliatedException e) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
+            return null;
         }
 
         return new ModelAndView("redirect:/" + locale + "/recruiter-active-deals");

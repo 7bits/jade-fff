@@ -51,6 +51,7 @@ public class RecruiterDeals {
             activeDeals.addObject("deals", deals);
         } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return null;
         }
 
         return activeDeals;
@@ -78,6 +79,7 @@ public class RecruiterDeals {
             recruiterService.clearFiredDealsForRecruiter(user.getRecruiterId());
         } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return null;
         }
 
         return "redirect:/" + locale + "/recruiter-active-deals";
@@ -105,6 +107,7 @@ public class RecruiterDeals {
             recruiterService.clearApprovedDealsForRecruiter(user.getRecruiterId());
         } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return null;
         }
 
         return "redirect:/" + locale + "/recruiter-active-deals";

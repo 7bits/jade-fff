@@ -51,6 +51,7 @@ public class RecruiterBids {
             recruiterBids.addObject("bids", bids);
         } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return null;
         }
 
         return recruiterBids;

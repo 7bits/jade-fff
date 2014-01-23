@@ -115,6 +115,7 @@ public class AllAvailableVacancies {
             filteredVacancies.addObject("vacancies", vacancies);
         } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return null;
         }
 
         return filteredVacancies;

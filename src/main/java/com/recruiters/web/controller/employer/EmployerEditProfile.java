@@ -62,6 +62,7 @@ public class EmployerEditProfile {
             employerProfile.addObject("employerForm", employerForm);
         } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return null;
         }
 
         return employerProfile;
@@ -102,8 +103,10 @@ public class EmployerEditProfile {
             employerService.saveProfileForEmployer(updatedEmployer, user.getEmployerId());
         } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return null;
         } catch (NotAffiliatedException e) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
+            return null;
         }
 
         return new ModelAndView("redirect:/" + locale + "/employer-progress-vacancies-list");
