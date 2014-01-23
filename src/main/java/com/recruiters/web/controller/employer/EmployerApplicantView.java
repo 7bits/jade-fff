@@ -57,10 +57,13 @@ public class EmployerApplicantView {
             showApplicant.addObject("applicant", applicant);
         } catch (NotAffiliatedException e) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
+            return null;
         } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return null;
         } catch (NotFoundException e) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            return null;
         }
 
         return showApplicant;
@@ -93,8 +96,10 @@ public class EmployerApplicantView {
             employerService.applyApplicant(applicantId, user.getEmployerId());
         } catch (NotAffiliatedException e) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
+            return null;
         } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return null;
         }
 
         return "redirect:/" + locale + "/employer-progress-vacancies-list";
@@ -131,12 +136,14 @@ public class EmployerApplicantView {
             return "redirect:/" + locale + "/employer-progress-vacancy-show/" + applicant.getDeal().getId();
         } catch (NotAffiliatedException e) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
+            return null;
         } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return null;
         } catch (NotFoundException e) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            return null;
         }
-        return null;
     }
 
     public EmployerService getEmployerService() {

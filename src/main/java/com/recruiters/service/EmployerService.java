@@ -415,7 +415,7 @@ public class EmployerService {
      * @param employerId       Id of employer
      * @return true if success, otherwise false
      * @throws NotAffiliatedException if applicant not belongs to
-     * employer requested method
+     * employer requested method or deal is not "IN PROGRESS"
      * @throws ServiceException if Repository cannot process request
      * or any other possible error
      */
@@ -425,7 +425,8 @@ public class EmployerService {
         Applicant applicant;
         try {
             applicant = applicantRepository.findById(applicantId);
-            if (applicant.getDeal().getVacancy().getEmployer().getId().equals(employerId)) {
+            if (applicant.getDeal().getVacancy().getEmployer().getId().equals(employerId) &&
+                    applicant.getDeal().getStatus().equals(DealStatus.IN_PROGRESS)) {
                 status = txManager.getTransaction(employerTx);
                 applicantRepository.updateStatus(applicantId, ApplicantStatus.APPROVED);
                 vacancyRepository.updateStatus(
@@ -455,7 +456,7 @@ public class EmployerService {
      * @param employerId       Id of employer
      * @return true if success, otherwise false
      * @throws NotAffiliatedException if applicant not belongs to
-     * employer requested method
+     * employer requested method or deal is not "IN PROGRESS"
      * @throws ServiceException if Repository cannot process request
      * or any other possible error
      */
@@ -464,7 +465,8 @@ public class EmployerService {
         Applicant applicant;
         try {
             applicant = applicantRepository.findById(applicantId);
-            if (applicant.getDeal().getVacancy().getEmployer().getId().equals(employerId)) {
+            if (applicant.getDeal().getVacancy().getEmployer().getId().equals(employerId) &&
+                    applicant.getDeal().getStatus().equals(DealStatus.IN_PROGRESS)) {
 
                 return applicantRepository.updateStatus(applicantId, ApplicantStatus.REJECTED);
             }
@@ -485,7 +487,7 @@ public class EmployerService {
      * @param employerId Id of employer
      * @return true if success, otherwise false
      * @throws NotAffiliatedException if deal not belongs to
-     * employer requested method
+     * employer requested method or deal is not "IN PROGRESS"
      * @throws ServiceException if Repository cannot process request
      * or any other possible error
      */
@@ -494,7 +496,8 @@ public class EmployerService {
         Deal deal;
         try {
             deal = dealRepository.findById(dealId);
-            if (deal.getVacancy().getEmployer().getId().equals(employerId)) {
+            if (deal.getVacancy().getEmployer().getId().equals(employerId) &&
+                    deal.getStatus().equals(DealStatus.IN_PROGRESS)) {
                 return dealRepository.fireRecruiter(dealId, message);
             }
         } catch (Exception e) {
