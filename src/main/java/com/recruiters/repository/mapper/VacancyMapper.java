@@ -40,7 +40,7 @@ public interface VacancyMapper {
             "INNER JOIN users  ON employers.user_id=users.id " +
             "LEFT JOIN bids ON bids.vacancy_id=vacancies.id AND bids.recruiter_id=#{recruiterId} " +
             "LEFT JOIN deals ON deals.vacancy_id=vacancies.id AND deals.recruiter_id=#{recruiterId} " +
-            "WHERE vacancies.status like 'ACTIVE' " +
+            "WHERE vacancies.status like 'ACTIVE' AND DATE(vacancies.creation_date)=#{date}" +
             "<if test=\"searchLikeText != null\">AND (vacancies.title LIKE #{searchLikeText} " +
             "OR vacancies.description LIKE #{searchLikeText})  </if>) " +
             "as all_vacancies " +
@@ -66,6 +66,7 @@ public interface VacancyMapper {
     })
     List<Vacancy> findFilteredVacanciesForRecruiter(
             @Param("recruiterId") final Long recruiterId,
+            @Param("date") final String date,
             @Param("searchLikeText") final String searchLikeText,
             @Param("showVacancies") final Boolean showVacancies,
             @Param("showBids") final Boolean showBids,

@@ -5,25 +5,28 @@ block append head
 block append content
   .container
     h1=fmt.message("recruiter-find-new-vacancies.h1")
-    form(name="searchVacancy", action="", method="post")
+    form(name="", action="", method="get")
       .row
         .col-md-6
           .form-group
-            label(for="search")
-            input(type="text", class="form-control", id="search", name="search", value=vacancySearchForm.search, placeholder=fmt.message("recruiter-find-new-vacancies.form.search"))
+            label(for="searchText")
+            input(type="text", class="form-control", id="searchText", name="searchText", value=searchText, placeholder=fmt.message("recruiter-find-new-vacancies.form.search"))
           .checkbox
             label(for="showVacancies")=fmt.message("recruiter-find-new-vacancies.form.vacancies")
-            input(type="checkbox", id="showVacancies", name="showVacancies", value="1", checked=vacancySearchForm.showVacancies)
+            input(type="checkbox", id="showVacancies", name="showVacancies", value="1", checked=showVacancies)
           .checkbox
             label(for="showBids")=fmt.message("recruiter-find-new-vacancies.form.bids")
-            input(type="checkbox", id="showBids", name="showBids", value="1", checked=vacancySearchForm.showBids)
+            input(type="checkbox", id="showBids", name="showBids", value="1", checked=showBids)
           .checkbox
             label(for="showDeals")=fmt.message("recruiter-find-new-vacancies.form.deals")
-            input(type="checkbox", id="showDeals", name="showDeals", value="1", checked=vacancySearchForm.showDeals)
+            input(type="checkbox", id="showDeals", name="showDeals", value="1", checked=showDeals)
+            input(type="hidden", id="date", name="date", value=curDateParam)
       .btn-row
-        input(type="hidden", name=csrf.getParameterName(), value=csrf.getToken())
         input.btn.btn-success(type="submit", name="submit", value=fmt.message("recruiter-find-new-vacancies.form.submit"))
-
+    if locals.nextDate
+      a.btn.btn-link(href=domain.getAbsoluteUrl() + "/recruiter-find-new-vacancies" + nextDateLink)=fmt.date(nextDate)
+    span=fmt.date(curDate)
+    a.btn.btn-link(href=domain.getAbsoluteUrl() + "/recruiter-find-new-vacancies" + prevDateLink)=fmt.date(prevDate)
     table.table.table-striped
       thead
         tr

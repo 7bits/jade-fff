@@ -41,6 +41,7 @@ public class VacancyRepository {
      * Find and return List of Vacancies for Recruiter
      * Depends on filter properties.
      * @param recruiterId    Id of recruiter
+     * @param date           Date in "YYYY-MM-DD" format
      * @param searchText     Search text, can be empty, so will not be used
      * @param showVacancies  Show vacancies without bids or not
      * @param showBids       Show bids or not
@@ -51,6 +52,7 @@ public class VacancyRepository {
      */
     public List<Vacancy> findFilteredVacanciesForRecruiter(
             final Long recruiterId,
+            final String date,
             final String searchText,
             final Boolean showVacancies,
             final Boolean showBids,
@@ -66,7 +68,7 @@ public class VacancyRepository {
                 likeSearchText = "%" + searchText + "%";
             }
             return vacancyMapper.findFilteredVacanciesForRecruiter(
-                    recruiterId, likeSearchText, showVacancies, showBids, showDeals
+                    recruiterId, date, likeSearchText, showVacancies, showBids, showDeals
             );
         } catch (Exception e) {
             throw new RepositoryException("General database error: ", e);

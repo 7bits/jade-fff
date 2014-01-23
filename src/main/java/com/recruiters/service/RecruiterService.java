@@ -83,6 +83,7 @@ public class RecruiterService {
     /**
      * Find and return filtered vacancies list for certain recruiter
      * @param recruiterId    Id of recruiter
+     * @param date           Date in "YYYY-MM-DD" format
      * @param searchText     Search text, can be empty, so will bot be used
      * @param showVacancies  Show vacancies without bids or not
      * @param showBids       Show bids or not
@@ -94,6 +95,7 @@ public class RecruiterService {
      */
     public List<Vacancy> findFilteredVacanciesForRecruiter(
             final Long recruiterId,
+            final String date,
             final String searchText,
             final Boolean showVacancies,
             final Boolean showBids,
@@ -101,7 +103,7 @@ public class RecruiterService {
     ) throws ServiceException {
         try {
             return vacancyRepository.findFilteredVacanciesForRecruiter(
-                    recruiterId, searchText, showVacancies, showBids, showDeals
+                    recruiterId, date, searchText, showVacancies, showBids, showDeals
             );
         } catch (Exception e) {
             log.error(SERVICE_EXCEPTION_MESSAGE, e);
