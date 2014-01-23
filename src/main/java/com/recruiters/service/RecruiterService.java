@@ -3,6 +3,7 @@ package com.recruiters.service;
 import com.recruiters.model.Applicant;
 import com.recruiters.model.Bid;
 import com.recruiters.model.Deal;
+import com.recruiters.model.DealStatus;
 import com.recruiters.model.Recruiter;
 import com.recruiters.model.User;
 import com.recruiters.model.Vacancy;
@@ -58,7 +59,7 @@ public class RecruiterService {
     /** Default message for NotAffiliatedException, part 1 */
     private static final String SECURITY_EXCEPTION_MESSAGE_PART1 = "Recruiter Service security exception: ";
     /** Default message for NotAffiliatedException, part 2 */
-    private static final String SECURITY_EXCEPTION_MESSAGE_PART2 = " belongs to different recruiter";
+    private static final String SECURITY_EXCEPTION_MESSAGE_PART2 = " belongs to different recruiter or not allowed";
     /** Default message for NotFoundException, part 1 */
     private static final String NOT_FOUND_EXCEPTION_MESSAGE_PART1 = "Recruiter Service not found exception: ";
     /** Default message for NotFoundException, part 2 */
@@ -296,7 +297,7 @@ public class RecruiterService {
      * @return Applicant instance if applicant deal belongs to
      * recruiter requested apply and there were no any technical issues
      * @throws NotAffiliatedException if applicant deal not belongs to
-     * recruiter requested method
+     * recruiter requested method or deal is not "IN_PROGRESS"
      * @throws ServiceException if Repository cannot process request
      * or any other possible error
      */
@@ -309,7 +310,8 @@ public class RecruiterService {
         Deal deal;
         try {
             deal = dealRepository.findById(applicant.getDeal().getId());
-            if (deal.getRecruiter().getId().equals(recruiterId)) {
+            if (deal.getRecruiter().getId().equals(recruiterId) &&
+                    deal.getStatus().equals(DealStatus.IN_PROGRESS)) {
                 /* TODO: Make FileService instead of FileRepository and use it in Web-layer.
                 Use file names at this method */
                 String fileNameForResume =  this.getFileRepository().saveFile(resumeFile);
