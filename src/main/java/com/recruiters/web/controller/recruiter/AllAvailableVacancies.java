@@ -37,8 +37,9 @@ public class AllAvailableVacancies {
 
     /**
      * Shows vacancies with filter applied for recruiter
-     * @param request    Http Request
-     * @param response   Http Response
+     * @param request        Http Request
+     * @param response       Http Response
+     * @param date           Date in format ddMMyyyy, for example 23012013
      * @param searchText     Search text, can be empty, so will not be used
      * @param showVacancies  Show vacancies without bids or not
      * @param showBids       Show bids or not
