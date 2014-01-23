@@ -493,14 +493,22 @@ public class EmployerService {
      */
     public Long fireRecruiter(final Long dealId, final String message, final Long employerId)
             throws NotAffiliatedException, ServiceException {
+        TransactionStatus status = null;
         Deal deal;
         try {
             deal = dealRepository.findById(dealId);
             if (deal.getVacancy().getEmployer().getId().equals(employerId) &&
                     deal.getStatus().equals(DealStatus.IN_PROGRESS)) {
-                return dealRepository.fireRecruiter(dealId, message);
+                status = txManager.getTransaction(employerTx);
+                vacancyRepository.updateStatus(deal.getVacancy().getId(), VacancyStatus.ARCHIVED);
+                Long statusId = dealRepository.fireRecruiter(dealId, message);
+                txManager.commit(status);
+                return statusId;
             }
         } catch (Exception e) {
+            if (status != null) {
+                txManager.rollback(status);
+            }
             log.error(SERVICE_EXCEPTION_MESSAGE, e);
             throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
         }

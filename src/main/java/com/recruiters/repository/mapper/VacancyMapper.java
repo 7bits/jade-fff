@@ -40,7 +40,9 @@ public interface VacancyMapper {
             "INNER JOIN users  ON employers.user_id=users.id " +
             "LEFT JOIN bids ON bids.vacancy_id=vacancies.id AND bids.recruiter_id=#{recruiterId} " +
             "LEFT JOIN deals ON deals.vacancy_id=vacancies.id AND deals.recruiter_id=#{recruiterId} " +
-            "WHERE vacancies.status like 'ACTIVE' AND DATE(vacancies.creation_date)=#{date}" +
+            "WHERE vacancies.status NOT LIKE 'ARCHIVED' AND DATE(vacancies.creation_date)=#{date} " +
+            "AND NOT EXISTS " +
+            "(SELECT * FROM deals WHERE vacancy_id=vacancies.id AND recruiter_id!=#{recruiterId}) " +
             "<if test=\"searchLikeText != null\">AND (vacancies.title LIKE #{searchLikeText} " +
             "OR vacancies.description LIKE #{searchLikeText})  </if>) " +
             "as all_vacancies " +
