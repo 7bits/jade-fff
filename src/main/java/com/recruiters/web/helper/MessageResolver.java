@@ -153,6 +153,17 @@ public class MessageResolver {
     }
 
     /**
+     * Currency range formatter
+     * @param from    From $
+     * @param to      To $
+     * @return localised currency range
+     */
+    public String currencyRange(final Long from, final Long to) {
+
+        return messageSource.getMessage("currency.range", new Object[] {from, to}, locale);
+    }
+
+    /**
      * Check if date is Today
      * @param date    input time
      * @return true if date is today, otherwise false

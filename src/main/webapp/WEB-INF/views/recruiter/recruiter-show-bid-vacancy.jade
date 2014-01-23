@@ -11,7 +11,7 @@ block append content
       dt=fmt.message("recruiter-show-bid-vacancy.dt.description")
       dd #{bid.vacancy.description}
       dt=fmt.message("recruiter-show-bid-vacancy.dt.salary")
-      dd #{bid.vacancy.salaryFrom} - #{bid.vacancy.salaryTo}
+      dd=fmt.currencyRange(bid.vacancy.salaryFrom, bid.vacancy.salaryTo)
       dt=fmt.message("recruiter-show-bid-vacancy.dt.creationDate")
       dd #{fmt.date(bid.vacancy.creationDate)}
       dt=fmt.message("recruiter-show-bid-vacancy.dt.expirationDate")

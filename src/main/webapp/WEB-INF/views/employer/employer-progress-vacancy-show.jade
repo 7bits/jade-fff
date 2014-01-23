@@ -14,7 +14,7 @@ block append content
           dt=fmt.message("employer-progress-vacancy-show.dt.description")
           dd #{deal.vacancy.description}
           dt=fmt.message("employer-progress-vacancy-show.dt.salary")
-          dd #{deal.vacancy.salaryFrom} - #{deal.vacancy.salaryTo}
+          dd=fmt.currencyRange(deal.vacancy.salaryFrom, deal.vacancy.salaryTo)
           dt=fmt.message("employer-progress-vacancy-show.dt.creation")
           dd #{fmt.date(deal.vacancy.creationDate)}
           dt=fmt.message("employer-progress-vacancy-show.dt.expiration")
