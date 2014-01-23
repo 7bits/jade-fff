@@ -19,7 +19,8 @@ public interface ApplicantMapper {
     @Select("SELECT applicants.*, " +
             "vacancies.id as vacancy_id, " +
             "vacancies.employer_id, " +
-            "recruiters.id as recruiter_id " +
+            "recruiters.id as recruiter_id, " +
+            "deals.status as deal_status " +
             "FROM applicants " +
             "INNER JOIN deals ON deals.id=applicants.deal_id " +
             "INNER JOIN vacancies ON vacancies.id=deals.vacancy_id " +
@@ -38,7 +39,8 @@ public interface ApplicantMapper {
             @Result(column = "deal_id", property = "deal.id"),
             @Result(column = "vacancy_id", property = "deal.vacancy.id"),
             @Result(column = "employer_id", property = "deal.vacancy.employer.id"),
-            @Result(column = "recruiter_id", property = "deal.recruiter.id")
+            @Result(column = "recruiter_id", property = "deal.recruiter.id"),
+            @Result(column = "deal_status", property = "deal.status")
     })
     Applicant findById(final Long applicantId);
 

@@ -17,8 +17,9 @@ block append content
           dd #{applicant.age}
         a.btn.btn-link(href=applicant.resumeFile)=fmt.message("employer-applicant-show.resume")
         a.btn.btn-link(href=applicant.testAnswerFile)=fmt.message("employer-applicant-show.test")
-    .row
-      .col-md-6
-        a.btn.btn-success(href="apply/" + applicant.id,data-toggle="confirmation", data-placement="left", data-original-title="", title="")=fmt.message("employer-applicant-show.apply")
-        a.btn.btn-danger(href="decline/" + applicant.id,data-toggle="confirmation", data-placement="left", data-original-title="", title="")=fmt.message("employer-applicant-show.decline")
+    if test.isApplicantEditable(applicant.status, applicant.deal.status)
+      .row
+        .col-md-6
+          a.btn.btn-success(href="apply/" + applicant.id,data-toggle="confirmation", data-placement="left", data-original-title="", title="")=fmt.message("employer-applicant-show.apply")
+          a.btn.btn-danger(href="decline/" + applicant.id,data-toggle="confirmation", data-placement="left", data-original-title="", title="")=fmt.message("employer-applicant-show.decline")
     a.btn.btn-link(href="../employer-progress-vacancy-show/" + applicant.deal.id)=fmt.message("employer-applicant-show.return")

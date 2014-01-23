@@ -23,6 +23,16 @@ public class ConditionTester {
     }
 
     /**
+     * Test if employer can fire recruiter from exact deal
+     * @param dealStatus    Deal status
+     * @return true if recruiter is fired, otherwise false
+     */
+    public Boolean canFireRecruiter(final DealStatus dealStatus) {
+
+        return  (dealStatus == DealStatus.IN_PROGRESS);
+    }
+
+    /**
      * Test if exact applicant in deal is editable
      * @param applicantStatus    Status of applicant
      * @param dealStatus         Status of deal
