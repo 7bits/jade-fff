@@ -131,6 +131,28 @@ public class MessageResolver {
     }
 
     /**
+     * Building tooltip for applicants
+     * @param unseenApplicantCount      Number of unseen applicants
+     * @param allApplicantCount         Total number of applicants
+     * @param rejectedApplicantCount    Number of rejected applicants
+     * @param viewedApplicantCount      Number of applicants already viewed by employer
+     * @return localised tooltip
+     */
+    public String applicantsTooltip(
+            final Long unseenApplicantCount,
+            final Long allApplicantCount,
+            final Long rejectedApplicantCount,
+            final Long viewedApplicantCount
+    ) {
+        return messageSource.getMessage("recruiter-active-deals.table.applicants.tooltip", new Object[] {
+                unseenApplicantCount,
+                allApplicantCount,
+                rejectedApplicantCount,
+                viewedApplicantCount
+        }, locale);
+    }
+
+    /**
      * Check if date is Today
      * @param date    input time
      * @return true if date is today, otherwise false

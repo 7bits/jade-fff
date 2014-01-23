@@ -20,7 +20,7 @@ block append content
           tr
             td #{deal.vacancy.title}
             td #{deal.vacancy.description}
-            td(title=fmt.message("recruiter-active-deals.table.applicants.all") + ": " + deal.allApplicantCount + ' | ' + fmt.message("recruiter-active-deals.table.applicants.unseen") + ": " + deal.unseenApplicantCount + ' | ' + fmt.message("recruiter-active-deals.table.applicants.rejected") + ": " + deal.rejectedApplicantCount + ' | ' + fmt.message("recruiter-active-deals.table.applicants.viewed") + ": " + deal.viewedApplicantCount)
+            td(title=fmt.applicantsTooltip(deal.unseenApplicantCount, deal.allApplicantCount, deal.rejectedApplicantCount, deal.viewedApplicantCount))
               span.green=deal.unseenApplicantCount
               span / #{deal.allApplicantCount} [
               span.red=deal.rejectedApplicantCount
