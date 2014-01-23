@@ -15,9 +15,10 @@ block append content
         p #{bid.vacancy.description}
         p=fmt.currencyRange(bid.vacancy.salaryFrom, bid.vacancy.salaryTo)
 
-    .row
-      .col-md-6
-        a.btn.btn-success(href=domain.getAbsoluteUrl()+"/employer-recruiter-approve/" + bid.id, data-toggle="confirmation", data-placement="left", data-href= domain.getAbsoluteUrl() + "/employer-recruiter-show/apply", data-original-title="", title="")
-          #{fmt.message("employer-recruiter-show.apply")}
-        a.btn.btn-danger(href=domain.getAbsoluteUrl()+"/employer-recruiter-decline/" + bid.id, data-toggle="confirmation", data-placement="left", data-href= domain.getAbsoluteUrl() + "/employer-recruiter-show/decline", data-original-title="", title="")
-          #{fmt.message("employer-recruiter-show.decline")}
+    if test.canModifyRecruiterBid(bid)
+      .row
+        .col-md-6
+          a.btn.btn-success(href=domain.getAbsoluteUrl()+"/employer-recruiter-approve/" + bid.id, data-toggle="confirmation", data-placement="left", data-href= domain.getAbsoluteUrl() + "/employer-recruiter-show/apply", data-original-title="", title="")
+            #{fmt.message("employer-recruiter-show.apply")}
+          a.btn.btn-danger(href=domain.getAbsoluteUrl()+"/employer-recruiter-decline/" + bid.id, data-toggle="confirmation", data-placement="left", data-href= domain.getAbsoluteUrl() + "/employer-recruiter-show/decline", data-original-title="", title="")
+            #{fmt.message("employer-recruiter-show.decline")}

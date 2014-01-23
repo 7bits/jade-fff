@@ -105,7 +105,7 @@ public interface VacancyMapper {
             "FROM vacancies " +
             "INNER JOIN employers ON employers.id = vacancies.employer_id " +
             "INNER JOIN users  ON employers.user_id=users.id " +
-            "LEFT JOIN bids ON bids.vacancy_id=vacancies.id AND bids.status like 'ACTIVE' " +
+            "LEFT JOIN bids ON bids.vacancy_id=vacancies.id " +
             "WHERE vacancies.employer_id=#{employerId} " +
             "AND vacancies.status like 'ACTIVE' " +
             "GROUP BY vacancies.id")

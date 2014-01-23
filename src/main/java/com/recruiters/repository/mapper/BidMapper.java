@@ -51,11 +51,13 @@ public interface BidMapper {
             "vacancies.description, vacancies.salary_from, vacancies.salary_to, " +
             "vacancies.creation_date, vacancies.expiration_date, " +
             "recruiters.id as recruiter_id, " +
-            "users.firstname, users.lastname " +
+            "users.firstname, users.lastname, " +
+            "deals.id as deal_id " +
             "FROM bids " +
             "INNER JOIN vacancies ON vacancies.id=bids.vacancy_id " +
             "INNER JOIN recruiters  ON recruiters.id=bids.recruiter_id " +
             "INNER JOIN users ON recruiters.user_id=users.id " +
+            "LEFT JOIN deals ON deals.vacancy_id=bids.vacancy_id " +
             "WHERE bids.id=#{bidId}")
     @Results({
             @Result(column = "id", property = "id"),
@@ -71,7 +73,8 @@ public interface BidMapper {
             @Result(column = "expiration_date", property = "vacancy.expirationDate"),
             @Result(column = "recruiter_id", property = "recruiter.id"),
             @Result(column = "firstname", property = "recruiter.user.firstName"),
-            @Result(column = "lastname", property = "recruiter.user.lastName")
+            @Result(column = "lastname", property = "recruiter.user.lastName"),
+            @Result(column = "deal_id", property = "dealId")
     })
     Bid findById(final Long bidId);
 
@@ -85,8 +88,7 @@ public interface BidMapper {
             "INNER JOIN vacancies ON vacancies.id=bids.vacancy_id " +
             "INNER JOIN recruiters  ON recruiters.id=bids.recruiter_id " +
             "INNER JOIN users ON recruiters.user_id=users.id " +
-            "WHERE bids.vacancy_id=#{vacancyId} " +
-            "AND bids.status like 'ACTIVE' ")
+            "WHERE bids.vacancy_id=#{vacancyId} ")
     @Results({
             @Result(column = "id", property = "id"),
             @Result(column = "message", property = "message"),

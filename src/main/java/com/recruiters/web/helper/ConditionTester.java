@@ -1,6 +1,8 @@
 package com.recruiters.web.helper;
 
 import com.recruiters.model.ApplicantStatus;
+import com.recruiters.model.Bid;
+import com.recruiters.model.BidStatus;
 import com.recruiters.model.DealStatus;
 import org.springframework.stereotype.Component;
 
@@ -63,10 +65,28 @@ public class ConditionTester {
         return (dealStatus == DealStatus.IN_PROGRESS);
     }
 
+    /**
+     * Test if recruiter can apply to this vacancy
+     * @param bidId     Id of bid assigned to vacancy
+     * @param dealId    Id of deal assigned to vacancy
+     * @return if recruiter can apply to vacancy
+     */
     public Boolean canApplyToVacancy(final Long bidId, final Long dealId) {
         Boolean bidIdIsNull = bidId.equals(0L);
         Boolean dealIdIsNull = dealId.equals(0L);
 
         return (bidIdIsNull && dealIdIsNull);
+    }
+
+    /**
+     * Test if employer could apply or decline recruiter bid
+     * @param bid    bid
+     * @return whether employer can modify recruiter state or not
+     */
+    public Boolean canModifyRecruiterBid(final Bid bid) {
+
+        Boolean bidIsActive = bid.getStatus() == BidStatus.ACTIVE;
+        Boolean thereAreNoDeal = bid.getDealId().equals(0L);
+        return (bidIsActive && thereAreNoDeal);
     }
 }

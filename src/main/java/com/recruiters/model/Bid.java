@@ -9,6 +9,7 @@ public class Bid {
     private Recruiter recruiter = null;
     private String message = null;
     private BidStatus status = null;
+    private Long dealId = 0L;
 
     public Bid() {
 
@@ -67,5 +68,13 @@ public class Bid {
 
     public void setStatus(final BidStatus status) {
         this.status = status;
+    }
+
+    public Long getDealId() {
+        return dealId;
+    }
+
+    public void setDealId(final Long dealId) {
+        this.dealId = dealId;
     }
 }

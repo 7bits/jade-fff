@@ -309,7 +309,8 @@ public class EmployerService {
      * @param employerId    Id of employer
      * @return id of created deal
      * @throws NotAffiliatedException if bid not belongs to
-     * employer requested method
+     * employer requested method or bid is not active and there
+     * are no any deal for related vacancy
      * @throws ServiceException if Repository cannot process request
      * or any other possible error
      */
@@ -319,7 +320,9 @@ public class EmployerService {
         Bid bid;
         try {
             bid = bidRepository.findById(bidId);
-            if (bid.getVacancy().getEmployer().getId().equals(employerId)) {
+            if (bid.getVacancy().getEmployer().getId().equals(employerId) &&
+                    bid.getStatus().equals(BidStatus.ACTIVE) &&
+                    bid.getDealId().equals(0L)) {
                 status = txManager.getTransaction(employerTx);
                 this.dealRepository.create(bidId);
                 this.bidRepository.updateStatus(bidId, BidStatus.APPROVED);
@@ -345,7 +348,8 @@ public class EmployerService {
      * @param employerId    Id of employer
      * @return id of bid
      * @throws NotAffiliatedException if bid not belongs to
-     * employer requested method
+     * employer requested method or bid is not active and there are no deal for
+     * related vacancy
      * @throws ServiceException if Repository cannot process request
      * or any other possible error
      */
@@ -354,7 +358,9 @@ public class EmployerService {
         Bid bid;
         try {
             bid = bidRepository.findById(bidId);
-            if (bid.getVacancy().getEmployer().getId().equals(employerId)) {
+            if (bid.getVacancy().getEmployer().getId().equals(employerId) &&
+                    bid.getStatus().equals(BidStatus.ACTIVE) &&
+                    bid.getDealId().equals(0L)) {
                 this.bidRepository.updateStatus(bidId, BidStatus.REJECTED);
                 return bidId;
             }
