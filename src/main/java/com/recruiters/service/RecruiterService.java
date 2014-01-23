@@ -153,7 +153,7 @@ public class RecruiterService {
             throws ServiceException, NotAffiliatedException, NotFoundException {
         Bid bid;
         try {
-            bid = bidRepository.findActiveBidById(bidId, recruiterId);
+            bid = bidRepository.findById(bidId);
             if (bid != null) {
                 if (bid.getRecruiter().getId().equals(recruiterId)) {
                     return bid;

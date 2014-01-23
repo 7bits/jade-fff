@@ -54,37 +54,6 @@ public interface BidMapper {
             "users.firstname, users.lastname " +
             "FROM bids " +
             "INNER JOIN vacancies ON vacancies.id=bids.vacancy_id " +
-            "INNER JOIN recruiters ON recruiters.id=bids.recruiter_id " +
-            "INNER JOIN users ON recruiters.user_id=users.id " +
-            "WHERE bids.id=#{bidId} " +
-            "AND vacancies.status like 'ACTIVE' " +
-            "AND bids.status like 'ACTIVE' ")
-    @Results({
-            @Result(column = "id", property = "id"),
-            @Result(column = "message", property = "message"),
-            @Result(column = "status", property = "status"),
-            @Result(column = "vacancy_id", property = "vacancy.id"),
-            @Result(column = "employer_id", property = "vacancy.employer.id"),
-            @Result(column = "title", property = "vacancy.title"),
-            @Result(column = "description", property = "vacancy.description"),
-            @Result(column = "salary_from", property = "vacancy.salaryFrom"),
-            @Result(column = "salary_to", property = "vacancy.salaryTo"),
-            @Result(column = "creation_date", property = "vacancy.creationDate"),
-            @Result(column = "expiration_date", property = "vacancy.expirationDate"),
-            @Result(column = "recruiter_id", property = "recruiter.id"),
-            @Result(column = "firstname", property = "recruiter.user.firstName"),
-            @Result(column = "lastname", property = "recruiter.user.lastName")
-    })
-    Bid findActiveBidById(@Param(value = "bidId") final Long bidId);
-
-    @Select("SELECT bids.id, bids.message, bids.status, " +
-            "vacancies.id as vacancy_id,  vacancies.employer_id, vacancies.title, " +
-            "vacancies.description, vacancies.salary_from, vacancies.salary_to, " +
-            "vacancies.creation_date, vacancies.expiration_date, " +
-            "recruiters.id as recruiter_id, " +
-            "users.firstname, users.lastname " +
-            "FROM bids " +
-            "INNER JOIN vacancies ON vacancies.id=bids.vacancy_id " +
             "INNER JOIN recruiters  ON recruiters.id=bids.recruiter_id " +
             "INNER JOIN users ON recruiters.user_id=users.id " +
             "WHERE bids.id=#{bidId}")

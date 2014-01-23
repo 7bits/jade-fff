@@ -78,30 +78,6 @@ public class BidRepository {
     }
 
     /**
-     * Find and return active Bid by id and recruiter id
-     * certain recruiter
-     * @param bidId      Id of bid
-     * @param recruiterId    Id of recruiter
-     * @return Bid instance
-     * @throws RepositoryException if input parameters are incorrect or there
-     * were any technical issues
-     */
-    public Bid findActiveBidById(
-            final Long bidId,
-            final Long recruiterId
-    ) throws RepositoryException {
-        if (bidId == null || recruiterId == null) {
-            throw new RepositoryException("bidId or recruiterId is null");
-        }
-        try {
-            return bidMapper.findActiveBidById(bidId);
-        } catch (Exception e) {
-            throw new RepositoryException("General database error: ", e);
-        }
-    }
-
-
-    /**
      * Create bid from certain vacancy, applying to it Recruiter
      * with custom message
      * @param recruiterId    Id of recruiter
