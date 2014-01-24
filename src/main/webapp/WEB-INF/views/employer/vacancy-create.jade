@@ -32,11 +32,11 @@ block append content
                 input(type="text", class="form-control datepicker", id="expirationDate", name="expirationDate", placeholder=fmt.message("employer-vacancy-create.form.expirationDate"))
             #{errors.expirationDate}
           .form-group
-            label(for="testFile")=fmt.message("employer-vacancy-create.testFile")
+            label(for="testFile")=fmt.message("employer-vacancy-create.form.testFile")
             input(type="file", id="testFile", name="testFile", placeholder=fmt.message("employer-vacancy-create.form.testFile"))
             #{errors.testFile}
           .checkbox
             label(for="publish")=fmt.message("employer-vacancy-create.form.publish")
             input(type="checkbox", id="publish", name="publish", value="1")
             #{errors.publish}
-          input.btn.btn-success(type="submit", name="submit", value=fmt.message("employer-vacancy-create.add"))=fmt.message("employer-vacancy-create.form.add")
+          input.btn.btn-success(type="submit", name="submit", value=fmt.message("employer-vacancy-create.form.add"))=fmt.message("employer-vacancy-create.form.add")
