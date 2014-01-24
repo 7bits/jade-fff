@@ -1,12 +1,3 @@
--- phpMyAdmin SQL Dump
--- version 3.4.10.1deb1
--- http://www.phpmyadmin.net
---
--- Хост: localhost
--- Время создания: Янв 23 2014 г., 16:23
--- Версия сервера: 5.5.34
--- Версия PHP: 5.3.10-1ubuntu3.8
-
 SET FOREIGN_KEY_CHECKS=0;
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,15 +8,6 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
 
---
--- База данных: `recruiters`
---
-
--- --------------------------------------------------------
-
---
--- Структура таблицы `applicants`
---
 
 DROP TABLE IF EXISTS `applicants`;
 CREATE TABLE IF NOT EXISTS `applicants` (
@@ -45,9 +27,6 @@ CREATE TABLE IF NOT EXISTS `applicants` (
   KEY `deal` (`deal_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
 
---
--- Дамп данных таблицы `applicants`
---
 
 INSERT INTO `applicants` (`id`, `deal_id`, `first_name`, `last_name`, `description`, `sex`, `age`, `resume_file`, `test_answer_file`, `status`, `viewed`, `updated_date`) VALUES
 (1, 1, 'Александр', 'Иванов', 'Программирую даже во сне', 'Мужской', 34, '#', '#', 'IN_PROGRESS', 1, '2014-01-22 04:17:39'),
@@ -61,9 +40,7 @@ INSERT INTO `applicants` (`id`, `deal_id`, `first_name`, `last_name`, `descripti
 
 -- --------------------------------------------------------
 
---
--- Структура таблицы `bids`
---
+
 
 DROP TABLE IF EXISTS `bids`;
 CREATE TABLE IF NOT EXISTS `bids` (
@@ -78,9 +55,7 @@ CREATE TABLE IF NOT EXISTS `bids` (
   KEY `recruiter_id` (`recruiter_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
 
---
--- Дамп данных таблицы `bids`
---
+
 
 INSERT INTO `bids` (`id`, `vacancy_id`, `recruiter_id`, `message`, `status`, `updated_date`) VALUES
 (1, 1, 1, 'Условия такие условия, такие интересные условия', 'APPROVED', '2014-01-22 04:14:55'),
@@ -93,9 +68,7 @@ INSERT INTO `bids` (`id`, `vacancy_id`, `recruiter_id`, `message`, `status`, `up
 
 -- --------------------------------------------------------
 
---
--- Структура таблицы `deals`
---
+
 
 DROP TABLE IF EXISTS `deals`;
 CREATE TABLE IF NOT EXISTS `deals` (
@@ -112,9 +85,7 @@ CREATE TABLE IF NOT EXISTS `deals` (
   KEY `recruiter_id` (`recruiter_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
---
--- Дамп данных таблицы `deals`
---
+
 
 INSERT INTO `deals` (`id`, `vacancy_id`, `recruiter_id`, `status`, `recruiter_archived`, `employer_archived`, `updated_date`, `fire_reason`) VALUES
 (1, 3, 1, 'IN_PROGRESS', 0, 0, '2014-01-22 04:13:37', NULL),
@@ -123,9 +94,6 @@ INSERT INTO `deals` (`id`, `vacancy_id`, `recruiter_id`, `status`, `recruiter_ar
 
 -- --------------------------------------------------------
 
---
--- Структура таблицы `employers`
---
 
 DROP TABLE IF EXISTS `employers`;
 CREATE TABLE IF NOT EXISTS `employers` (
@@ -135,9 +103,7 @@ CREATE TABLE IF NOT EXISTS `employers` (
   KEY `fk_employers_1` (`user_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
---
--- Дамп данных таблицы `employers`
---
+
 
 INSERT INTO `employers` (`id`, `user_id`) VALUES
 (1, 2),
@@ -146,9 +112,7 @@ INSERT INTO `employers` (`id`, `user_id`) VALUES
 
 -- --------------------------------------------------------
 
---
--- Структура таблицы `recruiters`
---
+
 
 DROP TABLE IF EXISTS `recruiters`;
 CREATE TABLE IF NOT EXISTS `recruiters` (
@@ -158,9 +122,7 @@ CREATE TABLE IF NOT EXISTS `recruiters` (
   KEY `fk_recruiters_1` (`user_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
---
--- Дамп данных таблицы `recruiters`
---
+
 
 INSERT INTO `recruiters` (`id`, `user_id`) VALUES
 (1, 1),
@@ -169,9 +131,7 @@ INSERT INTO `recruiters` (`id`, `user_id`) VALUES
 
 -- --------------------------------------------------------
 
---
--- Структура таблицы `users`
---
+
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
@@ -185,9 +145,6 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `username_UNIQUE` (`username`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
---
--- Дамп данных таблицы `users`
---
 
 INSERT INTO `users` (`id`, `username`, `password`, `firstname`, `lastname`, `description`) VALUES
 (1, 'recruiter', '123123', 'Павел', 'Потапов', 'Лучший рекрутер на правом берегу Иртыша '),
@@ -199,9 +156,7 @@ INSERT INTO `users` (`id`, `username`, `password`, `firstname`, `lastname`, `des
 
 -- --------------------------------------------------------
 
---
--- Структура таблицы `vacancies`
---
+
 
 DROP TABLE IF EXISTS `vacancies`;
 CREATE TABLE IF NOT EXISTS `vacancies` (
@@ -211,8 +166,8 @@ CREATE TABLE IF NOT EXISTS `vacancies` (
   `description` varchar(255) NOT NULL,
   `salary_from` bigint(20) NOT NULL,
   `salary_to` bigint(20) NOT NULL,
-  `creation_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `expiration_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `creation_date` timestamp NOT NULL DEFAULT '1970-01-01 00:00:01',
+  `expiration_date` timestamp NOT NULL DEFAULT '2038-01-19 00:00:00',
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `test_file` varchar(255) NOT NULL,
   `status` varchar(50) NOT NULL DEFAULT 'ACTIVE',
@@ -220,58 +175,40 @@ CREATE TABLE IF NOT EXISTS `vacancies` (
   KEY `employer_id` (`employer_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
---
--- Дамп данных таблицы `vacancies`
---
+
 
 INSERT INTO `vacancies` (`id`, `employer_id`, `title`, `description`, `salary_from`, `salary_to`, `creation_date`, `expiration_date`, `updated_date`, `test_file`, `status`) VALUES
-(1, 1, 'Лесоруб', 'Должен уметь рубить лес', 10000, 15000, '2013-12-28 04:36:42', '2014-01-08 17:00:00', '2014-01-22 04:13:37', '#', 'ACTIVE'),
-(2, 1, 'Сантехник', 'Не должен пить!', 20000, 20000, '2013-12-28 04:36:40', '2014-01-30 17:00:00', '2014-01-22 04:13:37', '#', 'ACTIVE'),
-(3, 1, 'Программист', 'Уметь программировать на С++', 100000, 100000, '2013-12-28 04:36:38', '2014-01-14 17:00:00', '2014-01-22 04:13:37', '#', 'ACTIVE'),
-(4, 2, 'Банщик', 'Парит и шпарит', 20000, 25000, '2014-01-14 11:43:41', '2014-01-14 17:00:00', '2014-01-22 04:13:37', '#', 'ACTIVE'),
-(5, 2, 'Водитель', 'Водитель маршрутного такси на полный рабочий день.', 30000, 40000, '2014-01-14 11:44:43', '2014-01-30 17:00:00', '2014-01-22 04:13:37', '#', 'ACTIVE'),
-(6, 3, 'Токарь', 'Токарь 3-го разряда', 15000, 20000, '2014-01-14 11:45:38', '2014-01-30 17:00:00', '2014-01-22 04:13:37', '#', 'ACTIVE'),
-(7, 1, 'Техник', 'Техник технический 2го разряда', 22000, 27000, '2014-01-23 00:00:00', '2014-02-13 00:00:00', '2014-02-13 00:00:00', '#', 'ACTIVE');
+(1, 1, 'Лесоруб', 'Должен уметь рубить лес', 10000, 15000, '2014-01-20 04:36:42', '2014-02-08 17:00:00', '2014-01-22 04:13:37', '#', 'ACTIVE'),
+(2, 1, 'Сантехник', 'Не должен пить!', 20000, 20000, '2014-01-20 04:36:40', '2014-02-16 17:00:00', '2014-01-22 04:13:37', '#', 'ACTIVE'),
+(3, 1, 'Программист', 'Уметь программировать на С++', 100000, 100000, '2014-01-21 04:36:38', '2014-02-14 17:00:00', '2014-01-22 04:13:37', '#', 'ACTIVE'),
+(4, 2, 'Банщик', 'Парит и шпарит', 20000, 25000, '2014-01-14 11:43:41', '2014-02-22 17:00:00', '2014-01-22 04:13:37', '#', 'ACTIVE'),
+(5, 2, 'Водитель', 'Водитель маршрутного такси на полный рабочий день.', 30000, 40000, '2014-01-22 11:44:43', '2014-02-16 17:00:00', '2014-01-22 04:13:37', '#', 'ACTIVE'),
+(6, 3, 'Токарь', 'Токарь 3-го разряда', 15000, 20000, '2014-01-22 11:45:38', '2014-02-16 17:00:00', '2014-01-22 04:13:37', '#', 'ACTIVE'),
+(7, 1, 'Техник', 'Техник технический 2го разряда', 22000, 27000, '2014-01-23 00:00:00', '2014-02-13 00:00:00', '2014-01-22 00:00:00', '#', 'ACTIVE');
 
---
--- Ограничения внешнего ключа сохраненных таблиц
---
 
---
--- Ограничения внешнего ключа таблицы `applicants`
---
 ALTER TABLE `applicants`
   ADD CONSTRAINT `applicants_ibfk_1` FOREIGN KEY (`deal_id`) REFERENCES `deals` (`id`);
 
---
--- Ограничения внешнего ключа таблицы `bids`
---
+
 ALTER TABLE `bids`
   ADD CONSTRAINT `bids_ibfk_1` FOREIGN KEY (`vacancy_id`) REFERENCES `vacancies` (`id`),
   ADD CONSTRAINT `bids_ibfk_2` FOREIGN KEY (`recruiter_id`) REFERENCES `recruiters` (`id`);
 
---
--- Ограничения внешнего ключа таблицы `deals`
---
+
 ALTER TABLE `deals`
   ADD CONSTRAINT `deals_ibfk_1` FOREIGN KEY (`vacancy_id`) REFERENCES `vacancies` (`id`),
   ADD CONSTRAINT `deals_ibfk_2` FOREIGN KEY (`recruiter_id`) REFERENCES `recruiters` (`id`);
 
---
--- Ограничения внешнего ключа таблицы `employers`
---
+
 ALTER TABLE `employers`
   ADD CONSTRAINT `fk_employers_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
---
--- Ограничения внешнего ключа таблицы `recruiters`
---
+
 ALTER TABLE `recruiters`
   ADD CONSTRAINT `fk_recruiters_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
---
--- Ограничения внешнего ключа таблицы `vacancies`
---
+
 ALTER TABLE `vacancies`
   ADD CONSTRAINT `vacancies_ibfk_1` FOREIGN KEY (`employer_id`) REFERENCES `employers` (`id`);
 SET FOREIGN_KEY_CHECKS=1;
