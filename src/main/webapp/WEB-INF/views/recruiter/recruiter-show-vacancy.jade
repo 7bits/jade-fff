@@ -16,7 +16,7 @@ block append content
       dd #{fmt.date(vacancy.creationDate)}
       dt=fmt.message("recruiter-show-vacancy.dt.expirationDate")
       dd #{fmt.date(vacancy.expirationDate)}
-    if test.canApplyToVacancy(vacancy.bidId, vacancy.dealId)
+    if test.canApplyToVacancy(vacancy)
       form(name="", action="", method="post")
         .row
           .col-md-6

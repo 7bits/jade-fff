@@ -1,9 +1,12 @@
 package com.recruiters.web.helper;
 
+import com.recruiters.model.Applicant;
 import com.recruiters.model.ApplicantStatus;
 import com.recruiters.model.Bid;
 import com.recruiters.model.BidStatus;
+import com.recruiters.model.Deal;
 import com.recruiters.model.DealStatus;
+import com.recruiters.model.Vacancy;
 import org.springframework.stereotype.Component;
 
 /**
@@ -16,38 +19,38 @@ public class ConditionTester {
 
     /**
      * Test if recruiter status is fired for exact deal
-     * @param dealStatus    Deal status
+     * @param deal    Deal
      * @return true if recruiter is fired, otherwise false
      */
-    public Boolean isRecruiterFired(final DealStatus dealStatus) {
+    public Boolean isRecruiterFired(final Deal deal) {
 
-        return  (dealStatus == DealStatus.FIRED);
+        return  (deal.getStatus() == DealStatus.FIRED);
     }
 
     /**
      * Test if employer can fire recruiter from exact deal
-     * @param dealStatus    Deal status
+     * @param deal   Deal
      * @return true if recruiter is fired, otherwise false
      */
-    public Boolean canFireRecruiter(final DealStatus dealStatus) {
+    public Boolean canFireRecruiter(final Deal deal) {
 
-        return  (dealStatus == DealStatus.IN_PROGRESS);
+        return  (deal.getStatus() == DealStatus.IN_PROGRESS);
     }
 
     /**
      * Test if exact applicant in deal is editable
-     * @param applicantStatus    Status of applicant
-     * @param dealStatus         Status of deal
+     * @param applicant    Applicant
+     * @param deal         Deal
      * @return true if it's allowed to edit applicant, otherwise false
      */
-    public Boolean isApplicantEditable(final ApplicantStatus applicantStatus, final DealStatus dealStatus) {
+    public Boolean isApplicantEditable(final Applicant applicant, final Deal deal) {
 
         Boolean isApplicantActive = false;
-        if (applicantStatus == ApplicantStatus.IN_PROGRESS) {
+        if (applicant.getStatus() == ApplicantStatus.IN_PROGRESS) {
             isApplicantActive = true;
         }
         Boolean isDealActive = false;
-        if (dealStatus == DealStatus.IN_PROGRESS) {
+        if (deal.getStatus() == DealStatus.IN_PROGRESS) {
             isDealActive = true;
         }
 
@@ -56,24 +59,23 @@ public class ConditionTester {
 
     /**
      * Test if it's allowed to add new applicants for exact deal
-     * @param dealStatus    Status of deal
+     * @param deal    Deal
      * @return true if you can add new applicants to this deal,
      * otherwise false
      */
-    public Boolean canAddApplicant(final DealStatus dealStatus) {
+    public Boolean canAddApplicant(final Deal deal) {
 
-        return (dealStatus == DealStatus.IN_PROGRESS);
+        return (deal.getStatus() == DealStatus.IN_PROGRESS);
     }
 
     /**
      * Test if recruiter can apply to this vacancy
-     * @param bidId     Id of bid assigned to vacancy
-     * @param dealId    Id of deal assigned to vacancy
+     * @param vacancy     Vacancy
      * @return if recruiter can apply to vacancy
      */
-    public Boolean canApplyToVacancy(final Long bidId, final Long dealId) {
-        Boolean bidIdIsNull = bidId.equals(0L);
-        Boolean dealIdIsNull = dealId.equals(0L);
+    public Boolean canApplyToVacancy(final Vacancy vacancy) {
+        Boolean bidIdIsNull = vacancy.getBidId().equals(0L);
+        Boolean dealIdIsNull = vacancy.getDealId().equals(0L);
 
         return (bidIdIsNull && dealIdIsNull);
     }

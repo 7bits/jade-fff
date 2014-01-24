@@ -27,10 +27,10 @@ block append content
             dl.dl
               dt=fmt.message("employer-progress-vacancy-show.recruiter.dt.status")
               dd #{fmt.dealStatus(deal.status)}
-              if test.isRecruiterFired(deal.status)
+              if test.isRecruiterFired(deal)
                 dt=fmt.message("employer-progress-vacancy-show.recruiter.dt.fire_reason")
                 dd #{deal.fireReason}
-            if test.canFireRecruiter(deal.status)
+            if test.canFireRecruiter(deal)
               form(name="", action=domain.getAbsoluteUrl() + "/employer-fire-recruiter", method="post")
                 .row
                   .col-md-6

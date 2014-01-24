@@ -17,7 +17,7 @@ block append content
           dd #{applicant.age}
         a.btn.btn-link(href=applicant.resumeFile)=fmt.message("employer-applicant-show.resume")
         a.btn.btn-link(href=applicant.testAnswerFile)=fmt.message("employer-applicant-show.test")
-    if test.isApplicantEditable(applicant.status, applicant.deal.status)
+    if test.isApplicantEditable(applicant, applicant.deal)
       .row
         .col-md-6
           a.btn.btn-success(href="apply/" + applicant.id,data-toggle="confirmation", data-placement="left", data-original-title="", title="")=fmt.message("employer-applicant-show.apply")
