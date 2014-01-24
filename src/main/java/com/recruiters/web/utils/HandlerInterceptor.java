@@ -1,13 +1,11 @@
 package com.recruiters.web.utils;
 
-import com.recruiters.web.helper.ConditionTester;
+import com.recruiters.service.BusinessRulesService;
 import com.recruiters.web.helper.UrlResolver;
 import com.recruiters.web.helper.UserResolver;
 import com.recruiters.web.helper.CsrfResolver;
 import com.recruiters.web.helper.MessageResolver;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.MessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.validation.BindingResult;
@@ -16,7 +14,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
@@ -129,7 +126,7 @@ public class HandlerInterceptor extends HandlerInterceptorAdapter {
             }
 
             // Condition tester
-            mav.addObject(CONDITION_TESTER_NAME, new ConditionTester());
+            mav.addObject(CONDITION_TESTER_NAME, new BusinessRulesService());
 
             // CSRF Token Resolver
             mav.addObject(CSRF_RESOLVER_NAME, new CsrfResolver(request));

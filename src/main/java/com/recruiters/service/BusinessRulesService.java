@@ -1,4 +1,4 @@
-package com.recruiters.web.helper;
+package com.recruiters.service;
 
 import com.recruiters.model.Applicant;
 import com.recruiters.model.ApplicantStatus;
@@ -13,9 +13,9 @@ import org.springframework.stereotype.Component;
  * Helper implementing checking some conditions for use in templates
  */
 @Component
-public class ConditionTester {
+public class BusinessRulesService {
 
-    public ConditionTester(){}
+    public BusinessRulesService(){}
 
     /**
      * Test if recruiter status is fired for exact deal
