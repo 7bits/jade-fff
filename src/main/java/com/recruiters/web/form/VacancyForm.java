@@ -1,5 +1,9 @@
 package com.recruiters.web.form;
 
+import com.recruiters.model.Employer;
+import com.recruiters.model.User;
+import com.recruiters.model.Vacancy;
+import com.recruiters.model.VacancyStatus;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
@@ -18,6 +22,24 @@ public class VacancyForm {
     private Boolean publish = false;
 
     public VacancyForm() {
+    }
+
+    public Vacancy fillModel(final User user) {
+        Vacancy vacancy = new Vacancy();
+        vacancy.setId(id);
+        vacancy.setTitle(title);
+        vacancy.setDescription(description);
+        vacancy.setSalaryFrom(salaryFrom);
+        vacancy.setSalaryTo(salaryTo);
+        vacancy.setCreationDate(new Date());
+        vacancy.setExpirationDate(expirationDate);
+        vacancy.setEmployer(new Employer(user.getEmployerId(), user));
+        if (publish) {
+            vacancy.setStatus(VacancyStatus.ACTIVE);
+        } else {
+            vacancy.setStatus(VacancyStatus.UNPUBLISHED);
+        }
+        return vacancy;
     }
 
     public String getDescription() {

@@ -8,7 +8,9 @@ public enum VacancyStatus {
     /** Status - active */
     ACTIVE (0, "Active"),
     /** Status - archived */
-    ARCHIVED (1, "Archived");
+    ARCHIVED (1, "Archived"),
+    /** Status - unpublished */
+    UNPUBLISHED (2, "Unpublished");
 
     private final int order;
     private final String description;

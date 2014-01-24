@@ -143,6 +143,27 @@ public class VacancyRepository {
         }
     }
 
+    /**
+     * Create new vacancy
+     * @param vacancy    Vacancy instance
+     * @return created vacancy instance if there were no any technical issues
+     * @throws RepositoryException if input parameters are incorrect or there
+     * were any technical issues
+     */
+    public Vacancy create(final Vacancy vacancy)
+            throws RepositoryException {
+        if (vacancy == null) {
+            throw new RepositoryException("vacancy is null");
+        }
+        try {
+            Long vacancyId = vacancyMapper.create(vacancy);
+            vacancy.setId(vacancyId);
+
+            return vacancy;
+        } catch (Exception e) {
+            throw new RepositoryException("General database error: ", e);
+        }
+    }
     public VacancyMapper getVacancyMapper() {
         return vacancyMapper;
     }

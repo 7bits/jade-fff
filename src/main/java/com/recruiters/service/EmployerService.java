@@ -14,6 +14,7 @@ import com.recruiters.repository.ApplicantRepository;
 import com.recruiters.repository.BidRepository;
 import com.recruiters.repository.DealRepository;
 import com.recruiters.repository.EmployerRepository;
+import com.recruiters.repository.FileRepository;
 import com.recruiters.repository.UserRepository;
 import com.recruiters.repository.VacancyRepository;
 import org.apache.log4j.Logger;
@@ -23,6 +24,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -32,6 +34,9 @@ import java.util.List;
 @Service
 public class EmployerService {
 
+    /** Files Repository provides files manipulation methods */
+    @Autowired
+    private FileRepository fileRepository = null;
     /** Vacancies Repository provides Vacancy DAO */
     @Autowired
     private VacancyRepository vacancyRepository = null;
@@ -524,6 +529,34 @@ public class EmployerService {
         throw new NotAffiliatedException(securityMessage);
     }
 
+    /**
+     * Save Vacancy no matter it's new or update already existed
+     * First one have 0L id
+     * @param vacancy     Vacancy instance
+     * @param testFile    Test file
+     * @return created or updated vacancy if no errors occurs
+     * @throws ServiceException if Repository cannot process request
+     * or any other possible error
+     */
+    public Vacancy saveVacancy(
+            final Vacancy vacancy,
+            final MultipartFile testFile
+    ) throws ServiceException {
+        try {
+            String fileNameForTestFile = fileRepository.saveFile(testFile);
+            vacancy.setTestFile(fileNameForTestFile);
+            if (vacancy.getId().equals(0L)) {
+                return vacancyRepository.create(vacancy);
+            } else {
+//                return vacancyRepository.update(vacancy);
+                return null;
+            }
+        } catch (Exception e) {
+            log.error(SERVICE_EXCEPTION_MESSAGE, e);
+            throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
+        }
+    }
+
     public VacancyRepository getVacancyRepository() {
         return vacancyRepository;
     }
@@ -570,5 +603,13 @@ public class EmployerService {
 
     public void setUserRepository(final UserRepository userRepository) {
         this.userRepository = userRepository;
+    }
+
+    public FileRepository getFileRepository() {
+        return fileRepository;
+    }
+
+    public void setFileRepository(final FileRepository fileRepository) {
+        this.fileRepository = fileRepository;
     }
 }

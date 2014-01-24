@@ -127,4 +127,13 @@ public interface VacancyMapper {
 
     @Update("UPDATE vacancies SET status = #{status} WHERE id = #{vacancyId} ")
     void updateStatus(@Param(value = "vacancyId") final Long vacancyId, @Param(value = "status") final VacancyStatus status);
+
+    @Insert("INSERT INTO vacancies (employer_id, title, description, " +
+            "salary_from, salary_to, creation_date, expiration_date, " +
+            "test_file, status) " +
+            "VALUES (#{employer.id}, #{title}, #{description}, " +
+            "#{salaryFrom}, #{salaryTo}, #{creationDate}, #{expirationDate}, " +
+            "#{testFile}, #{status})")
+    @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
+    Long create(final Vacancy vacancy);
 }
