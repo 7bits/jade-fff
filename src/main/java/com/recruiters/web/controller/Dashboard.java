@@ -26,16 +26,28 @@ public class Dashboard {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String routeByRole(final HttpServletRequest request
     ) {
-        Locale locale = RequestContextUtils.getLocale(request);
+        String locale = RequestContextUtils.getLocale(request).toString();
+        Integer indexOfUnderScore = locale.indexOf('_');
+        String urlLocale;
+        if (indexOfUnderScore == -1) {
+            urlLocale = locale;
+        } else {
+            urlLocale = locale.substring(0, indexOfUnderScore);
+        }
+
+        if (!urlLocale.equals("ru") && !urlLocale.equals("en")) {
+            // Default URL Locale
+            urlLocale = "ru";
+        }
 
         if (request.isUserInRole("ROLE_RECRUITER")) {
-            return "redirect:/" + locale + "/recruiter-active-deals";
+            return "redirect:/" + urlLocale + "/recruiter-active-deals";
         }
         if (request.isUserInRole("ROLE_EMPLOYER")) {
-            return "redirect:/" + locale + "/employer-progress-vacancies-list";
+            return "redirect:/" + urlLocale + "/employer-progress-vacancies-list";
         }
 
-        return "redirect:/" + locale + "/login-page";
+        return "redirect:/" + urlLocale + "/login-page";
     }
 
     @RequestMapping(value = { "/{locale}", "/{locale}/j_*" }, method = RequestMethod.GET)
