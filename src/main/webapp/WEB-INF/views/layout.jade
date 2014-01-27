@@ -25,9 +25,7 @@ html
           .navbar-header
             a.navbar-brand(href=domain.getAbsoluteUrl()).
               #{fmt.message("layout.logo")}
-            select(id="lang")
-              for langChoose in domain.getLangUrlList()
-                option(selected=langChoose.selected, value=langChoose.url) #{langChoose.language}
+            a.btn.btn-link#lang(href=domain.getLangChangeUrl())=fmt.message("language.change")
           if security.isUserInRole("ROLE_RECRUITER")
             .navbar-collapse.collapse
               ul.nav.navbar-nav.navbar-right

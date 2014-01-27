@@ -22,7 +22,6 @@ public class UrlResolver {
     private String applicationName = null;
     private Locale locale = null;
     private HttpServletRequest request = null;
-    private Environment environment;
 
 
     public UrlResolver(final String protocol,
@@ -30,8 +29,7 @@ public class UrlResolver {
                        final String port,
                        final String applicationName,
                        final Locale locale,
-                       final HttpServletRequest request,
-                       final Environment environment
+                       final HttpServletRequest request
     ) {
         this.protocol = protocol;
         this.server = server;
@@ -39,7 +37,6 @@ public class UrlResolver {
         this.applicationName = applicationName;
         this.locale = locale;
         this.request = request;
-        this.environment = environment;
     }
 
     /**
@@ -63,37 +60,29 @@ public class UrlResolver {
     }
 
     /**
-     * Populate and return list of language choosing objects for current request
-     * @return List of LangChoose filled out with all locale-language pairs
-     * configured in properties. Also set selected for current locale.
+     * Return url for language switch
+     * @return full url of the same page with locale in url changed
      */
-    public List<LangChoose> getLangUrlList() {
-        String languagesProperties = environment.getProperty("recruiter-language.language");
-        String localesProperties = environment.getProperty("recruiter-language.locale");
-        String[] languages = languagesProperties.split(",");
-        String[] locales = localesProperties.split(",");
-        List<LangChoose> langChooseList = new ArrayList<LangChoose>();
-        Integer i = 0;
+    public String getLangChangeUrl() {
         String requestUri = request.getRequestURI();
-        for (String language: languages) {
-            LangChoose langChoose = new LangChoose();
-            langChoose.setLanguage(language);
             try {
                 Integer localeStartIndex = requestUri.indexOf("/", 1) + 1;
                 Integer localeEndIndex = requestUri.indexOf("/", localeStartIndex);
-                langChoose.setUrl(getApplicationUrl() +  locales[i] +
-                        requestUri.substring(localeEndIndex));
                 String currentLocale = requestUri.substring(localeStartIndex, localeEndIndex);
-                if (currentLocale.equals(locales[i])) {
-                    langChoose.setSelected(true);
-                }
+                String changeLocale;
+               if (currentLocale.equals("ru")) {
+                   changeLocale = getApplicationUrl() + "en" + requestUri.substring(localeEndIndex);
+               } else if (currentLocale.equals("en")) {
+                   changeLocale = getApplicationUrl() + "ru" + requestUri.substring(localeEndIndex);
+               } else {
+                   changeLocale = getApplicationUrl() + "ru" + requestUri.substring(localeEndIndex);
+               }
+
+                return changeLocale;
             } catch (IndexOutOfBoundsException e) {
-                langChoose.setUrl("#");
+
+                return "#";
             }
-            langChooseList.add(langChoose);
-            i++;
-        }
-        return langChooseList;
     }
 
     /**

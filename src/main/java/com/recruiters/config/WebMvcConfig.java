@@ -26,7 +26,7 @@ import javax.inject.Inject;
  * Spring Web Configuration
  */
 @Configuration
-@PropertySource({"classpath:server.properties", "classpath:language.properties"})
+@PropertySource("classpath:server.properties")
 @EnableWebMvc
 @ComponentScan(basePackages = { "com.recruiters" })
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
@@ -51,7 +51,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
      */
     @Override
     public void addInterceptors(final InterceptorRegistry registry) {
-        HandlerInterceptor handlerInterceptor = new HandlerInterceptor(environment);
+        HandlerInterceptor handlerInterceptor = new HandlerInterceptor();
         handlerInterceptor.setProtocol(environment.getProperty("recruiter-server.protocol"));
         handlerInterceptor.setServer(environment.getProperty("recruiter-server.server"));
         handlerInterceptor.setPort(environment.getProperty("recruiter-server.port"));

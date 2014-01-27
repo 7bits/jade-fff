@@ -48,10 +48,8 @@ public class HandlerInterceptor extends HandlerInterceptorAdapter {
     private String applicationName = null;
     @Autowired
     private MessageSource messageSource;
-    private Environment environment;
 
-    public HandlerInterceptor(final Environment environment) {
-        this.environment = environment;
+    public HandlerInterceptor() {
     }
 
     /**
@@ -62,6 +60,7 @@ public class HandlerInterceptor extends HandlerInterceptorAdapter {
      * @param response    Http Response
      * @param handler     Handler
      * @param mav         Model and View
+     * @throws Exception in very rare circumstances like IO errors
      */
     @Override
     public void postHandle(
@@ -69,7 +68,7 @@ public class HandlerInterceptor extends HandlerInterceptorAdapter {
             final HttpServletResponse response,
             final Object handler,
             final ModelAndView mav
-    ) {
+    ) throws Exception {
         if (mav != null) {
 
             // Resolving if ModelAndView have any form data, getting errors from it (if any)
@@ -114,15 +113,10 @@ public class HandlerInterceptor extends HandlerInterceptorAdapter {
                 mav.addObject(MODEL_MESSAGE_RESOLVER_NAME, new MessageResolver(messageSource, urlLocale));
                 mav.addObject(
                         DOMAIN_NAME_VARIABLE,
-                        new UrlResolver(protocol, server, port, applicationName, urlLocale, request, environment)
+                        new UrlResolver(protocol, server, port, applicationName, urlLocale, request)
                 );
             } catch (IndexOutOfBoundsException e) {
-                // Otherwise use user locale
-                mav.addObject(MODEL_MESSAGE_RESOLVER_NAME, new MessageResolver(messageSource, locale));
-                mav.addObject(
-                        DOMAIN_NAME_VARIABLE,
-                        new UrlResolver(protocol, server, port, applicationName, locale, request, environment)
-                );
+                // TODO show 404 error
             }
 
             // Condition tester
