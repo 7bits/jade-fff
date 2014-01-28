@@ -5,6 +5,7 @@ import com.recruiters.model.BidStatus;
 import com.recruiters.model.DealStatus;
 import com.recruiters.model.VacancyStatus;
 import org.apache.commons.lang3.time.DateUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;
@@ -19,12 +20,12 @@ import java.util.Locale;
  * Message Resolver for all localisation formatting purposes
  * for use inside templates
  */
-@Component
 public class MessageResolver {
-    // Cannot auto-wire
+    @Autowired
     private MessageSource messageSource;
-    // Cannot auto-wire
+    // TODO add locale to all methods
     private Locale locale;
+//    = new Locale("ru");
 
     public MessageResolver() {}
 
@@ -33,18 +34,32 @@ public class MessageResolver {
      * @param messageSource    Spring message source
      * @param locale           Requester locale
      */
-    public MessageResolver(final MessageSource messageSource, final Locale locale) {
-        this.messageSource = messageSource;
-        this.locale = locale;
-    }
+//    public MessageResolver(final MessageSource messageSource, final Locale locale) {
+//        this.messageSource = messageSource;
+//        this.locale = locale;
+//    }
+
+//    /**
+//     * Resolve message by code
+//     * @param code code to resolve
+//     * @return localised message
+//     */
+//    public String message(final String code) {
+//
+//        try {
+//            return messageSource.getMessage(code, null, locale);
+//        } catch (Exception e) {
+//            return code;
+//        }
+//    }
 
     /**
      * Resolve message by code
-     * @param code code to resolve
+     * @param code      Code to resolve
+     * @param locale    Locale to use
      * @return localised message
      */
-    public String message(final String code) {
-
+    public String message(final String code, final Locale locale) {
         try {
             return messageSource.getMessage(code, null, locale);
         } catch (Exception e) {

@@ -1,16 +1,15 @@
 package com.recruiters.config;
 
-import com.recruiters.web.utils.CustomLocaleResolver;
+import com.recruiters.web.helper.MessageResolver;
+import com.recruiters.web.helper.UrlResolver;
+import com.recruiters.web.utils.AttributeLocaleResolver;
 import com.recruiters.web.utils.HandlerInterceptor;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.LocaleResolver;
@@ -18,16 +17,15 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
+import java.util.StringTokenizer;
 
 /**
  * Spring Web Configuration
@@ -40,8 +38,6 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
     @Inject
     private org.springframework.core.env.Environment environment;
-    @Value("classpath:language.properties")
-    private Resource languageChooseResource;
 
     /**
      * Configure resource handler
@@ -59,11 +55,9 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(final InterceptorRegistry registry) {
         HandlerInterceptor handlerInterceptor = new HandlerInterceptor();
-        handlerInterceptor.setProtocol(environment.getProperty("recruiter-server.protocol"));
-        handlerInterceptor.setServer(environment.getProperty("recruiter-server.server"));
-        handlerInterceptor.setPort(environment.getProperty("recruiter-server.port"));
-        handlerInterceptor.setApplicationName(environment.getProperty("recruiter-server.application-name"));
         handlerInterceptor.setMessageSource(messageSource());
+        handlerInterceptor.setMessageResolver(messageResolver());
+        handlerInterceptor.setUrlResolver(urlResolver());
         registry.addInterceptor(handlerInterceptor);
     }
 
@@ -84,21 +78,28 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     }
 
     /**
-     * Configure Locale Resolver
+     * Configure Locale Resolver with country and language codes,
+     * for which our application have translations
      * @return Locale Resolver
      */
     @Bean
     public LocaleResolver localeResolver() {
         String defaultLocale = environment.getProperty("recruiter-language.default");
-        String[] countries = environment.getProperty("recruiter-language.countries").split(",");
-        Map<String, List<String>> countryLanguages = new HashMap<String, List<String>>();
-        for (String country : countries) {
-            String propertyCode = "recruiter-language.countries" + "." + country;
-            String[] languageArray = environment.getProperty(propertyCode).split(",");
-            List<String> languages = Arrays.asList(languageArray);
-            countryLanguages.put(country, languages);
+        String[] languages = environment.getProperty("recruiter-language.languages").split(",");
+        Map<String, Set<String>> countryLanguages = new HashMap<String, Set<String>>();
+        for (String language : languages) {
+            String propertyCode = "recruiter-language.languages" + "." + language;
+            StringTokenizer st = new StringTokenizer(
+                    environment.getProperty(propertyCode),
+                    ","
+            );
+            Set<String> countries = new HashSet<String>();
+            while (st.hasMoreTokens()) {
+                countries.add(st.nextToken());
+            }
+            countryLanguages.put(language, countries);
         }
-        CustomLocaleResolver localeResolver = new CustomLocaleResolver(
+        AttributeLocaleResolver localeResolver = new AttributeLocaleResolver(
                 countryLanguages,
                 new Locale(defaultLocale)
         );
@@ -123,6 +124,21 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     @Bean
     public MultipartResolver multipartResolver() {
         return new StandardServletMultipartResolver();
+    }
+
+    @Bean
+    public MessageResolver messageResolver() {
+        return new MessageResolver();
+    }
+
+    @Bean
+    public UrlResolver urlResolver() {
+        UrlResolver urlResolver = new UrlResolver();
+        urlResolver.setProtocol(environment.getProperty("recruiter-server.protocol"));
+        urlResolver.setServer(environment.getProperty("recruiter-server.server"));
+        urlResolver.setPort(environment.getProperty("recruiter-server.port"));
+        urlResolver.setApplicationName(environment.getProperty("recruiter-server.application-name"));
+        return urlResolver;
     }
 }
 

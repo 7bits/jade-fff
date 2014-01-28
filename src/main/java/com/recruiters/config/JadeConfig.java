@@ -1,8 +1,8 @@
 package com.recruiters.config;
 
+import com.recruiters.web.utils.CustomJadeViewResolver;
 import de.neuland.jade4j.JadeConfiguration;
 import de.neuland.jade4j.spring.template.SpringTemplateLoader;
-import de.neuland.jade4j.spring.view.JadeViewResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.ViewResolver;
@@ -40,11 +40,12 @@ public class JadeConfig {
 
     /**
      * Setup view resolver for Jade templates
+     * Using custom view resolver, because Jade is bad
      * @return jade view resolver
      */
     @Bean
     public ViewResolver jadeViewResolver() {
-        JadeViewResolver jadeViewResolver = new JadeViewResolver();
+        CustomJadeViewResolver jadeViewResolver = new CustomJadeViewResolver();
         jadeViewResolver.setConfiguration(jadeConfiguration());
         jadeViewResolver.setOrder(0);
         return jadeViewResolver;

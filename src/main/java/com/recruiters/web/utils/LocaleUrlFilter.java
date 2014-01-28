@@ -14,12 +14,17 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by fairdev on 27.01.14.
+ * Locale url filter - filters out part of URL,
+ * recognizes locale from it, adds it to session attributes
+ * Works with /language/ and /language/country/ 2 letters codes
+ * immediately after application name in URL
  */
 public class LocaleUrlFilter implements Filter {
-
+    /** Pattern to recognize (1) - language, (2) - country, (3) - rest of url */
     private static final Pattern LOCALE_PATTERN = Pattern.compile("^/([a-z]{2})(?:/([a-z]{2}))?(/.*)?");
+    /** Session attribute used to add country code */
     private static final String COUNTRY_CODE_ATTRIBUTE_NAME = LocaleUrlFilter.class.getName() + ".country";
+    /** Session attribute used to add language code */
     private static final String LANGUAGE_CODE_ATTRIBUTE_NAME = LocaleUrlFilter.class.getName() + ".language";
 
     public void destroy() {
@@ -34,17 +39,17 @@ public class LocaleUrlFilter implements Filter {
         final HttpServletRequest request = (HttpServletRequest) servletRequest;
         final String url = request.getRequestURI().substring(request.getContextPath().length());
         final Matcher matcher = LOCALE_PATTERN.matcher(url);
-        if (matcher.matches()) {
 
-            request.setAttribute(COUNTRY_CODE_ATTRIBUTE_NAME, matcher.group(1));
-            request.setAttribute(LANGUAGE_CODE_ATTRIBUTE_NAME, matcher.group(2));
-            String endOfUrl;
+        if (matcher.matches()) {
+            request.setAttribute(LANGUAGE_CODE_ATTRIBUTE_NAME, matcher.group(1));
+            request.setAttribute(COUNTRY_CODE_ATTRIBUTE_NAME, matcher.group(2));
+            String restOfUrl;
             if (matcher.group(3) == null) {
-                endOfUrl = "/";
+                restOfUrl = "/";
             } else {
-                endOfUrl = matcher.group(3);
+                restOfUrl = matcher.group(3);
             }
-            request.getRequestDispatcher(endOfUrl)
+            request.getRequestDispatcher(restOfUrl)
                     .forward(servletRequest, servletResponse);
         } else {
             filterChain.doFilter(servletRequest, servletResponse);

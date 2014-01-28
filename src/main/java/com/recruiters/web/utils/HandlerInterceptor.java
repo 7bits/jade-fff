@@ -11,8 +11,11 @@ import org.springframework.core.env.Environment;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.servlet.support.RequestContext;
 import org.springframework.web.servlet.support.RequestContextUtils;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,6 +38,8 @@ public class HandlerInterceptor extends HandlerInterceptorAdapter {
     static final String TYPE_WITH_BINDING_RESULT = "org.springframework.validation.BindingResult";
     /** Object name which will contains form errors if any in model */
     static final String MODEL_ERRORS_NAME = "errors";
+    /** Name of object which will contain locale */
+    static final String MODEL_LOCALE_NAME = "locale";
     /** Message resolver Helper name */
     static final String MODEL_MESSAGE_RESOLVER_NAME = "fmt";
     /** CSRF resolver Helper name */
@@ -46,8 +51,9 @@ public class HandlerInterceptor extends HandlerInterceptorAdapter {
     private String server = null;
     private String port = null;
     private String applicationName = null;
-    @Autowired
     private MessageSource messageSource;
+    private MessageResolver messageResolver;
+    private UrlResolver urlResolver;
 
     public HandlerInterceptor() {
     }
@@ -102,22 +108,13 @@ public class HandlerInterceptor extends HandlerInterceptorAdapter {
             // Adding is forced because otherwise jade is output some sh!t when it shouldn't
             mav.addObject(MODEL_ERRORS_NAME, errors);
 
-            // Message resolver added
-            // Url resolver added
+            // Adding language and country code to model
             Locale locale = RequestContextUtils.getLocale(request);
-//            try {
-//                // Try to get locale from url
-//                Integer indexOfSecondSlash = request.getServletPath().indexOf('/', 1);
-//                String localeFromUrl = request.getServletPath().substring(1, indexOfSecondSlash);
-//                Locale urlLocale = new Locale(localeFromUrl);
-                mav.addObject(MODEL_MESSAGE_RESOLVER_NAME, new MessageResolver(messageSource, locale));
-                mav.addObject(
-                        DOMAIN_NAME_VARIABLE,
-                        new UrlResolver(protocol, server, port, applicationName, request)
-                );
-//            } catch (IndexOutOfBoundsException e) {
-//                // TODO show 404 error
-//            }
+            mav.addObject(MODEL_LOCALE_NAME, locale);
+            // Message resolver added
+            mav.addObject(MODEL_MESSAGE_RESOLVER_NAME, messageResolver);
+            // Url resolver added
+            mav.addObject(DOMAIN_NAME_VARIABLE, urlResolver);
 
             // Condition tester
             mav.addObject(CONDITION_TESTER_NAME, new BusinessRulesService());
@@ -164,5 +161,13 @@ public class HandlerInterceptor extends HandlerInterceptorAdapter {
 
     public void setMessageSource(final MessageSource messageSource) {
         this.messageSource = messageSource;
+    }
+
+    public void setMessageResolver(final MessageResolver messageResolver) {
+        this.messageResolver = messageResolver;
+    }
+
+    public void setUrlResolver(final UrlResolver urlResolver) {
+        this.urlResolver = urlResolver;
     }
 }

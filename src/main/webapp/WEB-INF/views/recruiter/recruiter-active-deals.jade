@@ -1,19 +1,19 @@
 extends ../layout
 
 block append head
-  title=fmt.message("recruiter-active-deals.title")
+  title=fmt.message("recruiter-active-deals.title", locale)
 block append content
   .container
-    h1=fmt.message("recruiter-active-deals.h1")
+    h1=fmt.message("recruiter-active-deals.h1", locale)
     table.table.table-striped
       thead
         tr
-          th=fmt.message("recruiter-active-deals.table.name")
-          th=fmt.message("recruiter-active-deals.table.description")
-          th=fmt.message("recruiter-active-deals.table.applicants")
-          th=fmt.message("recruiter-active-deals.table.status")
-          th=fmt.message("recruiter-active-deals.table.date")
-          th=fmt.message("recruiter-active-deals.table.dateModified")
+          th=fmt.message("recruiter-active-deals.table.name", locale)
+          th=fmt.message("recruiter-active-deals.table.description", locale)
+          th=fmt.message("recruiter-active-deals.table.applicants", locale)
+          th=fmt.message("recruiter-active-deals.table.status", locale)
+          th=fmt.message("recruiter-active-deals.table.date", locale)
+          th=fmt.message("recruiter-active-deals.table.dateModified", locale)
           th
       tbody
         for deal in deals
@@ -31,6 +31,6 @@ block append content
             td(title=deal.vacancy.creationDate) #{fmt.date(deal.vacancy.creationDate)}
             td(title=deal.lastModified) #{fmt.date(deal.lastModified)}
             td
-              a.btn.btn-link(href=domain.getAbsoluteUrl() + "/recruiter-show-in-progress-vacancy/" + deal.id)=fmt.message("recruiter-active-deals.more")
-    a.btn.btn-success(href=domain.getAbsoluteUrl() + "/recruiter-clear-fired-deals")=fmt.message("recruiter-active-deals.clear.fired")
-    a.btn.btn-success(href=domain.getAbsoluteUrl() + "/recruiter-clear-approved-deals")=fmt.message("recruiter-active-deals.clear.approved")
+              a.btn.btn-link(href=domain.getAbsoluteUrl() + "/recruiter-show-in-progress-vacancy/" + deal.id)=fmt.message("recruiter-active-deals.more", locale)
+    a.btn.btn-success(href=domain.getAbsoluteUrl() + "/recruiter-clear-fired-deals")=fmt.message("recruiter-active-deals.clear.fired", locale)
+    a.btn.btn-success(href=domain.getAbsoluteUrl() + "/recruiter-clear-approved-deals")=fmt.message("recruiter-active-deals.clear.approved", locale)

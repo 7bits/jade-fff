@@ -2,15 +2,15 @@ extends layout
 
 block append head
   link(href=domain.getResourceUrl() + '/stylesheets/form.css', rel='stylesheet', type='text/css')
-  title=fmt.message("login.title")
+  title=fmt.message("login.title", locale)
 block append content
   .container
     form.form-signin(role="form", action=domain.getAbsoluteUrl() + "/j_spring_security_check", method="post")
-      h2.form-signin-heading=fmt.message("login.enter")
-      input.form-control(type="text", name="j_username", placeholder=fmt.message("login.username"), required="", autofocus="")
-      input.form-control(type="password", name="j_password", placeholder=fmt.message("login.password"), required="")
+      h2.form-signin-heading=fmt.message("login.enter", locale)
+      input.form-control(type="text", name="j_username", placeholder=fmt.message("login.username", locale), required="", autofocus="")
+      input.form-control(type="password", name="j_password", placeholder=fmt.message("login.password", locale), required="")
       input(type="hidden", name=csrf.getParameterName(), value=csrf.getToken())
       label.checkbox
         input(type="checkbox", value="remember-me")
-        | #{fmt.message("login.remember")}
-      button.btn.btn-lg.btn-primary.btn-block(name="submit", type="submit", value="Sign In")=fmt.message("login.ok")
+        | #{fmt.message("login.remember", locale)}
+      button.btn.btn-lg.btn-primary.btn-block(name="submit", type="submit", value="Sign In")=fmt.message("login.ok", locale)
