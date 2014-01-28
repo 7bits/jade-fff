@@ -1,5 +1,6 @@
 package com.recruiters.config;
 
+import com.recruiters.web.utils.CustomLocaleResolver;
 import com.recruiters.web.utils.HandlerInterceptor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
@@ -21,12 +22,18 @@ import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Spring Web Configuration
  */
 @Configuration
-@PropertySource("classpath:server.properties")
+@PropertySource({"classpath:server.properties", "classpath:language.properties"})
 @EnableWebMvc
 @ComponentScan(basePackages = { "com.recruiters" })
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
@@ -82,9 +89,19 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
      */
     @Bean
     public LocaleResolver localeResolver() {
-        CookieLocaleResolver localeResolver = new CookieLocaleResolver();
-        //localeResolver.setDefaultLocale(StringUtils.parseLocaleString("ru"));
-        localeResolver.setCookieName("locale");
+        String defaultLocale = environment.getProperty("recruiter-language.default");
+        String[] countries = environment.getProperty("recruiter-language.countries").split(",");
+        Map<String, List<String>> countryLanguages = new HashMap<String, List<String>>();
+        for (String country : countries) {
+            String propertyCode = "recruiter-language.countries" + "." + country;
+            String[] languageArray = environment.getProperty(propertyCode).split(",");
+            List<String> languages = Arrays.asList(languageArray);
+            countryLanguages.put(country, languages);
+        }
+        CustomLocaleResolver localeResolver = new CustomLocaleResolver(
+                countryLanguages,
+                new Locale(defaultLocale)
+        );
         return localeResolver;
     }
 

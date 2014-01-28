@@ -105,19 +105,19 @@ public class HandlerInterceptor extends HandlerInterceptorAdapter {
             // Message resolver added
             // Url resolver added
             Locale locale = RequestContextUtils.getLocale(request);
-            try {
-                // Try to get locale from url
-                Integer indexOfSecondSlash = request.getServletPath().indexOf('/', 1);
-                String localeFromUrl = request.getServletPath().substring(1, indexOfSecondSlash);
-                Locale urlLocale = new Locale(localeFromUrl);
-                mav.addObject(MODEL_MESSAGE_RESOLVER_NAME, new MessageResolver(messageSource, urlLocale));
+//            try {
+//                // Try to get locale from url
+//                Integer indexOfSecondSlash = request.getServletPath().indexOf('/', 1);
+//                String localeFromUrl = request.getServletPath().substring(1, indexOfSecondSlash);
+//                Locale urlLocale = new Locale(localeFromUrl);
+                mav.addObject(MODEL_MESSAGE_RESOLVER_NAME, new MessageResolver(messageSource, locale));
                 mav.addObject(
                         DOMAIN_NAME_VARIABLE,
-                        new UrlResolver(protocol, server, port, applicationName, urlLocale, request)
+                        new UrlResolver(protocol, server, port, applicationName, request)
                 );
-            } catch (IndexOutOfBoundsException e) {
-                // TODO show 404 error
-            }
+//            } catch (IndexOutOfBoundsException e) {
+//                // TODO show 404 error
+//            }
 
             // Condition tester
             mav.addObject(CONDITION_TESTER_NAME, new BusinessRulesService());

@@ -2,6 +2,7 @@ package com.recruiters.web.utils;
 
 import com.recruiters.repository.RepositoryException;
 import com.recruiters.repository.UserRepository;
+import com.recruiters.web.helper.UrlResolver;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
@@ -16,6 +17,7 @@ import java.io.IOException;
 public class SuccessLoginHandler implements AuthenticationSuccessHandler {
 
     private UserRepository userRepository = null;
+
 
     public SuccessLoginHandler(final UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -43,7 +45,7 @@ public class SuccessLoginHandler implements AuthenticationSuccessHandler {
         } catch (RepositoryException e) {
             throw new IOException("Cannot obtain user information: ", e);
         }
-        response.sendRedirect(request.getContextPath() + request.getServletPath());
+        response.sendRedirect(request.getContextPath());
     }
 
     public UserRepository getUserRepository() {

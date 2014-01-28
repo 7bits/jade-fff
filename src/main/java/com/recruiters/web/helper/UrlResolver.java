@@ -1,15 +1,9 @@
 package com.recruiters.web.helper;
 
+import com.recruiters.web.utils.LocaleUrlFilter;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.env.Environment;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
 
 /**
  *  Url helper for templates
@@ -20,7 +14,6 @@ public class UrlResolver {
     private String server = null;
     private String port = null;
     private String applicationName = null;
-    private Locale locale = null;
     private HttpServletRequest request = null;
 
 
@@ -28,14 +21,12 @@ public class UrlResolver {
                        final String server,
                        final String port,
                        final String applicationName,
-                       final Locale locale,
                        final HttpServletRequest request
     ) {
         this.protocol = protocol;
         this.server = server;
         this.port = port;
         this.applicationName = applicationName;
-        this.locale = locale;
         this.request = request;
     }
 
@@ -45,7 +36,12 @@ public class UrlResolver {
      */
     public String getAbsoluteUrl() {
         String fullPath = getApplicationUrl();
-        fullPath += locale;
+        String countryCode = (String) request.getAttribute(LocaleUrlFilter.getCountryCodeAttributeName());
+        String langCode = (String) request.getAttribute(LocaleUrlFilter.getLanguageCodeAttributeName());
+        fullPath += countryCode;
+        if (langCode != null) {
+            fullPath += "/" + langCode;
+        }
         return fullPath;
     }
 
@@ -64,25 +60,16 @@ public class UrlResolver {
      * @return full url of the same page with locale in url changed
      */
     public String getLangChangeUrl() {
-        String requestUri = request.getRequestURI();
-            try {
-                Integer localeStartIndex = requestUri.indexOf("/", 1) + 1;
-                Integer localeEndIndex = requestUri.indexOf("/", localeStartIndex);
-                String currentLocale = requestUri.substring(localeStartIndex, localeEndIndex);
-                String changeLocale;
-               if (currentLocale.equals("ru")) {
-                   changeLocale = getApplicationUrl() + "en" + requestUri.substring(localeEndIndex);
-               } else if (currentLocale.equals("en")) {
-                   changeLocale = getApplicationUrl() + "ru" + requestUri.substring(localeEndIndex);
-               } else {
-                   changeLocale = getApplicationUrl() + "ru" + requestUri.substring(localeEndIndex);
-               }
+        String countryCode = (String) request.getAttribute(LocaleUrlFilter.getCountryCodeAttributeName());
+        //String langCode = (String) request.getAttribute(LocaleUrlFilter.getLanguageCodeAttributeName());
+        String changeLocale;
+        if (countryCode.equals("us")) {
+            changeLocale = getApplicationUrl() + "ru/" + request.getServletPath();
+        } else {
+            changeLocale = getApplicationUrl() + "us/en" + request.getServletPath();
+        }
 
-                return changeLocale;
-            } catch (IndexOutOfBoundsException e) {
-
-                return "#";
-            }
+        return changeLocale;
     }
 
     /**

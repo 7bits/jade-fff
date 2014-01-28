@@ -1,5 +1,6 @@
 package com.recruiters.config;
 
+import com.recruiters.web.utils.LocaleUrlFilter;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 import org.springframework.web.filter.CharacterEncodingFilter;
@@ -24,5 +25,11 @@ public class SecurityInitializerConfig extends AbstractSecurityWebApplicationIni
         CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
         characterEncodingFilter.setEncoding("UTF-8");
         insertFilters(servletContext, characterEncodingFilter);
+    }
+
+    @Override
+    protected void afterSpringSecurityFilterChain(final ServletContext servletContext) {
+        LocaleUrlFilter localeUrlFilter = new LocaleUrlFilter();
+        insertFilters(servletContext, localeUrlFilter);
     }
 }
