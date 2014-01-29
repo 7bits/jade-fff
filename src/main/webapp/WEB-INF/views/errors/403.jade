@@ -1,9 +1,9 @@
 extends ../layout
 
 block append head
-  title=fmt.message("error.403")
+  title=fmt.message("error.403", locale)
 block append content
   .container
     .navbar-header
-      a.navbar-brand(href=domain.getAbsoluteUrl()).
-        #{fmt.message("error.403")}
+      a.navbar-brand(href=domain.getAbsoluteUrl(locale)).
+        #{fmt.message("error.403", locale)}

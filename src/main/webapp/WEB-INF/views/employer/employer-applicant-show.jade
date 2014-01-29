@@ -1,25 +1,25 @@
 extends ../layout
 
 block append head
-  title=fmt.message("employer-applicant-show.title")
+  title=fmt.message("employer-applicant-show.title", locale)
 block append content
   .container
     .row
       .col-md-6
-        h1=fmt.message("employer-applicant-show.h1")
+        h1=fmt.message("employer-applicant-show.h1", locale)
         h2 #{applicant.firstName} #{applicant.lastName}
         dl.dl-horizontal
-          dt=fmt.message("employer-applicant-show.description")
+          dt=fmt.message("employer-applicant-show.description", locale)
           dd #{applicant.description}
-          dt=fmt.message("employer-applicant-show.sex")
+          dt=fmt.message("employer-applicant-show.sex", locale)
           dd #{applicant.sex}
-          dt=fmt.message("employer-applicant-show.age")
+          dt=fmt.message("employer-applicant-show.age", locale)
           dd #{applicant.age}
-        a.btn.btn-link(href=applicant.resumeFile)=fmt.message("employer-applicant-show.resume")
-        a.btn.btn-link(href=applicant.testAnswerFile)=fmt.message("employer-applicant-show.test")
+        a.btn.btn-link(href=applicant.resumeFile)=fmt.message("employer-applicant-show.resume", locale)
+        a.btn.btn-link(href=applicant.testAnswerFile)=fmt.message("employer-applicant-show.test", locale)
     if test.isApplicantEditable(applicant, applicant.deal)
       .row
         .col-md-6
-          a.btn.btn-success(href="apply/" + applicant.id,data-toggle="confirmation", data-placement="left", data-original-title="", title="")=fmt.message("employer-applicant-show.apply")
-          a.btn.btn-danger(href="decline/" + applicant.id,data-toggle="confirmation", data-placement="left", data-original-title="", title="")=fmt.message("employer-applicant-show.decline")
-    a.btn.btn-link(href="../employer-progress-vacancy-show/" + applicant.deal.id)=fmt.message("employer-applicant-show.return")
+          a.btn.btn-success(href="apply/" + applicant.id,data-toggle="confirmation", data-placement="left", data-original-title="", title="")=fmt.message("employer-applicant-show.apply", locale)
+          a.btn.btn-danger(href="decline/" + applicant.id,data-toggle="confirmation", data-placement="left", data-original-title="", title="")=fmt.message("employer-applicant-show.decline", locale)
+    a.btn.btn-link(href="../employer-progress-vacancy-show/" + applicant.deal.id)=fmt.message("employer-applicant-show.return", locale)

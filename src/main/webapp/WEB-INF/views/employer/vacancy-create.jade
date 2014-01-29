@@ -1,43 +1,43 @@
 extends ../layout
 
 block append head
-  title=fmt.message("employer-vacancy-create.title")
+  title=fmt.message("employer-vacancy-create.title", locale)
 block append content
   .container
-    h1=fmt.message("employer-vacancy-create.h1")
+    h1=fmt.message("employer-vacancy-create.h1", locale)
     form(name="applicantForm", action="", method="post", enctype="multipart/form-data")
       .row
         .col-md-6
           .form-group
-            label(for="title")=fmt.message("employer-vacancy-create.form.title")
-            input(type="text", class="form-control", id="title", name="title", value=vacancyForm.title, placeholder=fmt.message("employer-vacancy-create.form.title"))
+            label(for="title")=fmt.message("employer-vacancy-create.form.title", locale)
+            input(type="text", class="form-control", id="title", name="title", value=vacancyForm.title, placeholder=fmt.message("employer-vacancy-create.form.title", locale))
             #{errors.title}
           .form-group
-            label(for="description")=fmt.message("employer-vacancy-create.form.description")
-            textarea(class="form-control", id="description", name="description", placeholder=fmt.message("employer-vacancy-create.form.description"))=vacancyForm.description
+            label(for="description")=fmt.message("employer-vacancy-create.form.description", locale)
+            textarea(class="form-control", id="description", name="description", placeholder=fmt.message("employer-vacancy-create.form.description", locale))=vacancyForm.description
             #{errors.description}
           .form-group
             label(for="pay-from")
-              =fmt.message("employer-vacancy-create.form.salary")
+              =fmt.message("employer-vacancy-create.form.salary", locale)
             .row
               .col-xs-3
-                input(type="number", class="form-control", id="salaryFrom", name="salaryFrom", value=vacancyForm.salaryFrom, placeholder=fmt.message("employer-vacancy-create.form.salaryFrom"))
+                input(type="number", class="form-control", id="salaryFrom", name="salaryFrom", value=vacancyForm.salaryFrom, placeholder=fmt.message("employer-vacancy-create.form.salaryFrom", locale))
               .col-xs-3
-                input(type="number", class="form-control", id="salaryTo", name="salaryTo", value=vacancyForm.salaryTo, placeholder=fmt.message("employer-vacancy-create.form.salaryTo"))
+                input(type="number", class="form-control", id="salaryTo", name="salaryTo", value=vacancyForm.salaryTo, placeholder=fmt.message("employer-vacancy-create.form.salaryTo", locale))
             #{errors.salaryFrom}
           .form-group
-            label(for="expirationDate")=fmt.message("employer-vacancy-create.form.expirationDate")
+            label(for="expirationDate")=fmt.message("employer-vacancy-create.form.expirationDate", locale)
             .row
               .col-xs-4
-                input(type="text", class="form-control datepicker", id="expirationDate", name="expirationDate", value=vacancyForm.expirationDate, placeholder=fmt.message("employer-vacancy-create.form.expirationDate"))
+                input(type="text", class="form-control datepicker", id="expirationDate", name="expirationDate", value=vacancyForm.expirationDate, placeholder=fmt.message("employer-vacancy-create.form.expirationDate", locale))
             #{errors.expirationDate}
           .form-group
-            label(for="testFile")=fmt.message("employer-vacancy-create.form.testFile")
-            input(type="file", id="testFile", name="testFile", value=vacancyForm.testFile, placeholder=fmt.message("employer-vacancy-create.form.testFile"))
+            label(for="testFile")=fmt.message("employer-vacancy-create.form.testFile", locale)
+            input(type="file", id="testFile", name="testFile", value=vacancyForm.testFile, placeholder=fmt.message("employer-vacancy-create.form.testFile", locale))
             #{errors.testFile}
           .checkbox
-            label(for="publish")=fmt.message("employer-vacancy-create.form.publish")
+            label(for="publish")=fmt.message("employer-vacancy-create.form.publish", locale)
             input(type="checkbox", id="publish", name="publish", value="1", checked=vacancyForm.publish)
             input(type="hidden", name=csrf.getParameterName(), value=csrf.getToken())
             #{errors.publish}
-          input.btn.btn-success(type="submit", name="submit", value=fmt.message("employer-vacancy-create.form.add"))=fmt.message("employer-vacancy-create.form.add")
+          input.btn.btn-success(type="submit", name="submit", value=fmt.message("employer-vacancy-create.form.add", locale))=fmt.message("employer-vacancy-create.form.add", locale)

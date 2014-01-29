@@ -7,15 +7,18 @@ import com.recruiters.service.NotAffiliatedException;
 import com.recruiters.service.NotFoundException;
 import com.recruiters.service.ServiceException;
 import com.recruiters.web.controller.utils.UserUtils;
+import com.recruiters.web.helper.UrlResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Locale;
 
 /**
  * Applicant view and actions for employer
@@ -29,6 +32,9 @@ public class EmployerApplicantView {
     /** User utils for obtaining any session user information */
     @Autowired
     private UserUtils userUtils = null;
+    /** Url Builder */
+    @Autowired
+    private UrlResolver urlResolver;
 
     /**
      * Show applicant details
@@ -44,7 +50,7 @@ public class EmployerApplicantView {
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
-    @RequestMapping(value = "/{locale}/employer-applicant-show/{applicantId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/employer-applicant-show/{applicantId}", method = RequestMethod.GET)
     public ModelAndView applicantShow(
             @PathVariable final Long applicantId,
             final HttpServletRequest request,
@@ -72,7 +78,6 @@ public class EmployerApplicantView {
     /**
      * Approve applicant
      * @param applicantId    Id of applicant
-     * @param locale         Locale
      * @param request        Http request
      * @param response       Http response
      * @return redirects to list of vacancies currently in work if the action
@@ -84,10 +89,9 @@ public class EmployerApplicantView {
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
-    @RequestMapping(value = "/{locale}/employer-applicant-show/apply/{applicantId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/employer-applicant-show/apply/{applicantId}", method = RequestMethod.GET)
     public String applicantApply(
             @PathVariable final Long applicantId,
-            @PathVariable final String locale,
             final HttpServletRequest request,
             final HttpServletResponse response
     ) throws Exception {
@@ -101,15 +105,15 @@ public class EmployerApplicantView {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             return null;
         }
+        Locale locale = RequestContextUtils.getLocale(request);
 
-        return "redirect:/" + locale + "/employer-progress-vacancies-list";
+        return  urlResolver.buildRedirectUri("employer-progress-vacancies-list", locale);
     }
 
 
     /**
      * Decline applicant
      * @param applicantId    Id of applicant
-     * @param locale         Locale
      * @param request        Http request
      * @param response       Http response
      * @return redirects to list of vacancies currently in work if the action
@@ -121,10 +125,9 @@ public class EmployerApplicantView {
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
-    @RequestMapping(value = "/{locale}/employer-applicant-show/decline/{applicantId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/employer-applicant-show/decline/{applicantId}", method = RequestMethod.GET)
     public String applicantDecline(
             @PathVariable final Long applicantId,
-            @PathVariable final String locale,
             final HttpServletRequest request,
             final HttpServletResponse response
     ) throws Exception {
@@ -132,8 +135,13 @@ public class EmployerApplicantView {
             User user = userUtils.getCurrentUser(request);
             employerService.declineApplicant(applicantId, user.getEmployerId());
             Applicant applicant = employerService.findApplicant(applicantId, user.getEmployerId());
+            Locale locale = RequestContextUtils.getLocale(request);
 
-            return "redirect:/" + locale + "/employer-progress-vacancy-show/" + applicant.getDeal().getId();
+            return urlResolver.buildRedirectUriLongParam(
+                    "employer-progress-vacancy-show",
+                    applicant.getDeal().getId(),
+                    locale
+            );
         } catch (NotAffiliatedException e) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
             return null;

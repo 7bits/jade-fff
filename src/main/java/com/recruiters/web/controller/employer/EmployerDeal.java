@@ -5,6 +5,7 @@ import com.recruiters.model.User;
 import com.recruiters.service.*;
 import com.recruiters.service.NotAffiliatedException;
 import com.recruiters.web.controller.utils.UserUtils;
+import com.recruiters.web.helper.UrlResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Locale;
 
 /**
  * Show Deal for Employer with all corresponding actions
@@ -28,6 +31,9 @@ public class EmployerDeal {
     /** User utils for obtaining any session user information */
     @Autowired
     private UserUtils userUtils = null;
+    /** Url Builder */
+    @Autowired
+    private UrlResolver urlResolver;
 
     /**
      * Show progress of vacancy (Deal)
@@ -42,7 +48,7 @@ public class EmployerDeal {
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
-    @RequestMapping(value = "/{locale}/employer-progress-vacancy-show/{dealId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/employer-progress-vacancy-show/{dealId}", method = RequestMethod.GET)
     public ModelAndView showVacancyProgressForEmployer(
             @PathVariable final Long dealId,
             final HttpServletRequest request,
@@ -71,7 +77,6 @@ public class EmployerDeal {
      * Fire Recruiter for Employer
      * @param message     Reason of firing
      * @param dealId      Id of deal
-     * @param locale      Locale
      * @param request     Http request
      * @param response    Http response
      * @return redirect to "vacancies list" page if everything goes fine,
@@ -81,11 +86,10 @@ public class EmployerDeal {
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
-    @RequestMapping(value = "/{locale}/employer-fire-recruiter", method = RequestMethod.POST)
+    @RequestMapping(value = "/employer-fire-recruiter", method = RequestMethod.POST)
     public String fireRecruiter(
             @RequestParam(value = "message", required = false) final String message,
             @RequestParam(value = "id", required = true) final Long dealId,
-            @PathVariable final String locale,
             final HttpServletRequest request,
             final HttpServletResponse response
     ) throws Exception {
@@ -99,8 +103,9 @@ public class EmployerDeal {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             return null;
         }
+        Locale locale = RequestContextUtils.getLocale(request);
 
-        return "redirect:/" + locale + "/employer-progress-vacancies-list";
+        return  urlResolver.buildRedirectUri("employer-progress-vacancies-list", locale);
     }
 
 

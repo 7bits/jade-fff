@@ -1,20 +1,20 @@
 extends ../layout
 
 block append head
-  title=fmt.message("recruiter-show-bid-vacancy.title")
+  title=fmt.message("recruiter-show-bid-vacancy.title", locale)
 block append content
   .container
-    h1=fmt.message("recruiter-show-bid-vacancy.h1")
+    h1=fmt.message("recruiter-show-bid-vacancy.h1", locale)
     dl.dl-horizontal
-      dt=fmt.message("recruiter-show-bid-vacancy.dt.title")
+      dt=fmt.message("recruiter-show-bid-vacancy.dt.title", locale)
       dd #{bid.vacancy.title}
-      dt=fmt.message("recruiter-show-bid-vacancy.dt.description")
+      dt=fmt.message("recruiter-show-bid-vacancy.dt.description", locale)
       dd #{bid.vacancy.description}
-      dt=fmt.message("recruiter-show-bid-vacancy.dt.salary")
-      dd=fmt.currencyRange(bid.vacancy.salaryFrom, bid.vacancy.salaryTo)
-      dt=fmt.message("recruiter-show-bid-vacancy.dt.creationDate")
-      dd #{fmt.date(bid.vacancy.creationDate)}
-      dt=fmt.message("recruiter-show-bid-vacancy.dt.expirationDate")
-      dd #{fmt.date(bid.vacancy.expirationDate)}
-      dt=fmt.message("recruiter-show-bid-vacancy.dt.status")
-      dd #{fmt.bidStatus(bid.status)}
+      dt=fmt.message("recruiter-show-bid-vacancy.dt.salary", locale)
+      dd=fmt.currencyRange(bid.vacancy.salaryFrom, bid.vacancy.salaryTo, locale)
+      dt=fmt.message("recruiter-show-bid-vacancy.dt.creationDate", locale)
+      dd #{fmt.date(bid.vacancy.creationDate, locale)}
+      dt=fmt.message("recruiter-show-bid-vacancy.dt.expirationDate", locale)
+      dd #{fmt.date(bid.vacancy.expirationDate, locale)}
+      dt=fmt.message("recruiter-show-bid-vacancy.dt.status", locale)
+      dd #{fmt.bidStatus(bid.status, locale)}

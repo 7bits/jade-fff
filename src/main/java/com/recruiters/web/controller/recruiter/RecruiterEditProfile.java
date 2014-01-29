@@ -6,6 +6,7 @@ import com.recruiters.service.*;
 import com.recruiters.service.NotAffiliatedException;
 import com.recruiters.web.controller.utils.UserUtils;
 import com.recruiters.web.form.RecruiterForm;
+import com.recruiters.web.helper.UrlResolver;
 import com.recruiters.web.validator.RecruiterFormValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,10 +18,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.Locale;
 
 /**
  * Recruiter profile view and edit
@@ -37,6 +40,9 @@ public class RecruiterEditProfile {
     /** Validator for Recruiter Form */
     @Autowired
     private RecruiterFormValidator recruiterFormValidator = null;
+    /** Url Builder */
+    @Autowired
+    private UrlResolver urlResolver;
 
     /**
      * Controller for "Recruiter Profile" with method GET
@@ -49,7 +55,7 @@ public class RecruiterEditProfile {
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
-    @RequestMapping(value = "/{locale}/recruiter-profile", method = RequestMethod.GET)
+    @RequestMapping(value = "/recruiter-profile", method = RequestMethod.GET)
     public ModelAndView showRecruiterProfile(
             final HttpServletRequest request,
             final HttpServletResponse response
@@ -72,7 +78,6 @@ public class RecruiterEditProfile {
      * Controller for editing recruiter profile with method POST
      * @param request               Http Request
      * @param response              Http Response
-     * @param locale                Locale
      * @param recruiterForm         Model attribute for recruiter
      * @param bindingResult         BindingResult
      * @return model and view for editing recruiter with errors if any,
@@ -83,11 +88,10 @@ public class RecruiterEditProfile {
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
-    @RequestMapping(value = "/{locale}/recruiter-profile", method = RequestMethod.POST)
+    @RequestMapping(value = "/recruiter-profile", method = RequestMethod.POST)
     public ModelAndView editRecruiter(
             final HttpServletRequest request,
             final HttpServletResponse response,
-            @PathVariable final String locale,
             @Valid @ModelAttribute("recruiterForm") final RecruiterForm recruiterForm,
             final BindingResult bindingResult
     ) throws Exception {
@@ -108,8 +112,11 @@ public class RecruiterEditProfile {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
             return null;
         }
+        Locale locale = RequestContextUtils.getLocale(request);
 
-        return new ModelAndView("redirect:/" + locale + "/recruiter-active-deals");
+        return new ModelAndView(
+                urlResolver.buildRedirectUri("recruiter-active-deals", locale)
+        );
     }
 
     /**

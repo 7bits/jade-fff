@@ -1,56 +1,56 @@
 extends ../layout
 
 block append head
-  title=fmt.message("recruiter-find-new-vacancies.title")
+  title=fmt.message("recruiter-find-new-vacancies.title", locale)
 block append content
   .container
-    h1=fmt.message("recruiter-find-new-vacancies.h1")
+    h1=fmt.message("recruiter-find-new-vacancies.h1", locale)
     form(name="", action="", method="get")
       .row
         .col-md-6
           .form-group
             label(for="searchText")
-            input(type="text", class="form-control", id="searchText", name="searchText", value=searchText, placeholder=fmt.message("recruiter-find-new-vacancies.form.search"))
+            input(type="text", class="form-control", id="searchText", name="searchText", value=searchText, placeholder=fmt.message("recruiter-find-new-vacancies.form.search", locale))
           .checkbox
-            label(for="showVacancies")=fmt.message("recruiter-find-new-vacancies.form.vacancies")
+            label(for="showVacancies")=fmt.message("recruiter-find-new-vacancies.form.vacancies", locale)
             input(type="checkbox", id="showVacancies", name="showVacancies", value="1", checked=showVacancies)
           .checkbox
-            label(for="showBids")=fmt.message("recruiter-find-new-vacancies.form.bids")
+            label(for="showBids")=fmt.message("recruiter-find-new-vacancies.form.bids", locale)
             input(type="checkbox", id="showBids", name="showBids", value="1", checked=showBids)
           .checkbox
-            label(for="showDeals")=fmt.message("recruiter-find-new-vacancies.form.deals")
+            label(for="showDeals")=fmt.message("recruiter-find-new-vacancies.form.deals", locale)
             input(type="checkbox", id="showDeals", name="showDeals", value="1", checked=showDeals)
             input(type="hidden", id="date", name="date", value=curDateParam)
       .btn-row
-        input.btn.btn-success(type="submit", name="submit", value=fmt.message("recruiter-find-new-vacancies.form.submit"))
+        input.btn.btn-success(type="submit", name="submit", value=fmt.message("recruiter-find-new-vacancies.form.submit", locale))
     if locals.nextDate
-      a.btn.btn-link(href=nextDateLink)=fmt.date(nextDate)
-    span=fmt.date(curDate)
-    a.btn.btn-link(href=prevDateLink)=fmt.date(prevDate)
+      a.btn.btn-link(href=nextDateLink)=fmt.date(nextDate, locale)
+    span=fmt.date(curDate, locale)
+    a.btn.btn-link(href=prevDateLink)=fmt.date(prevDate, locale)
     table.table.table-striped
       thead
         tr
-          th=fmt.message("recruiter-find-new-vacancies.table.name")
-          th=fmt.message("recruiter-find-new-vacancies.table.description")
-          th=fmt.message("recruiter-find-new-vacancies.table.date")
-          th=fmt.message("recruiter-find-new-vacancies.table.bidOrDeal")
+          th=fmt.message("recruiter-find-new-vacancies.table.name", locale)
+          th=fmt.message("recruiter-find-new-vacancies.table.description", locale)
+          th=fmt.message("recruiter-find-new-vacancies.table.date", locale)
+          th=fmt.message("recruiter-find-new-vacancies.table.bidOrDeal", locale)
           th
       tbody
         for vacancy in vacancies
           tr
             td #{vacancy.title}
             td #{vacancy.description}
-            td #{fmt.date(vacancy.creationDate)}
+            td #{fmt.date(vacancy.creationDate, locale)}
             if vacancy.dealId != 0
-              td=fmt.message("recruiter-find-new-vacancies.table.deal")
+              td=fmt.message("recruiter-find-new-vacancies.table.deal", locale)
               td
-                a.btn.btn-link(href=domain.getAbsoluteUrl() + "/recruiter-show-in-progress-vacancy/" + vacancy.dealId)=fmt.message("recruiter-find-new-vacancies.more")
+                a.btn.btn-link(href=domain.getAbsoluteUrl(locale) + "/recruiter-show-in-progress-vacancy/" + vacancy.dealId)=fmt.message("recruiter-find-new-vacancies.more", locale)
             else
               if vacancy.bidId != 0
-                td=fmt.message("recruiter-find-new-vacancies.table.bid")
+                td=fmt.message("recruiter-find-new-vacancies.table.bid", locale)
                 td
-                  a.btn.btn-link(href=domain.getAbsoluteUrl() + "/recruiter-show-bid-vacancy/" + vacancy.bidId)=fmt.message("recruiter-find-new-vacancies.more")
+                  a.btn.btn-link(href=domain.getAbsoluteUrl(locale) + "/recruiter-show-bid-vacancy/" + vacancy.bidId)=fmt.message("recruiter-find-new-vacancies.more", locale)
               else
                 td
                 td
-                  a.btn.btn-link(href=domain.getAbsoluteUrl() + "/recruiter-show-vacancy/" + vacancy.id)=fmt.message("recruiter-find-new-vacancies.more")
+                  a.btn.btn-link(href=domain.getAbsoluteUrl(locale) + "/recruiter-show-vacancy/" + vacancy.id)=fmt.message("recruiter-find-new-vacancies.more", locale)

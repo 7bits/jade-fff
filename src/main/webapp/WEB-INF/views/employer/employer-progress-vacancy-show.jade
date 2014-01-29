@@ -1,50 +1,50 @@
 extends ../layout
 
 block append head
-  title=fmt.message("employer-progress-vacancy-show.title")
+  title=fmt.message("employer-progress-vacancy-show.title", locale)
 block append content
   .container
-    h1=fmt.message("employer-progress-vacancy-show.h1")
+    h1=fmt.message("employer-progress-vacancy-show.h1", locale)
     .row
       .col-md-8
         h2
         dl.dl-horizontal
-          dt=fmt.message("employer-progress-vacancy-show.dt.name")
+          dt=fmt.message("employer-progress-vacancy-show.dt.name", locale)
           dd #{deal.vacancy.title}
-          dt=fmt.message("employer-progress-vacancy-show.dt.description")
+          dt=fmt.message("employer-progress-vacancy-show.dt.description", locale)
           dd #{deal.vacancy.description}
-          dt=fmt.message("employer-progress-vacancy-show.dt.salary")
-          dd=fmt.currencyRange(deal.vacancy.salaryFrom, deal.vacancy.salaryTo)
-          dt=fmt.message("employer-progress-vacancy-show.dt.creation")
-          dd #{fmt.date(deal.vacancy.creationDate)}
-          dt=fmt.message("employer-progress-vacancy-show.dt.expiration")
-          dd #{fmt.date(deal.vacancy.expirationDate)}
+          dt=fmt.message("employer-progress-vacancy-show.dt.salary", locale)
+          dd=fmt.currencyRange(deal.vacancy.salaryFrom, deal.vacancy.salaryTo, locale)
+          dt=fmt.message("employer-progress-vacancy-show.dt.creation", locale)
+          dd #{fmt.date(deal.vacancy.creationDate, locale)}
+          dt=fmt.message("employer-progress-vacancy-show.dt.expiration", locale)
+          dd #{fmt.date(deal.vacancy.expirationDate, locale)}
       .col-md-4
-        h2=fmt.message("employer-progress-vacancy-show.recruiter.h2")
+        h2=fmt.message("employer-progress-vacancy-show.recruiter.h2", locale)
         p
           #{deal.recruiter.user.firstName} #{deal.recruiter.user.lastName}
           .tools
             dl.dl
-              dt=fmt.message("employer-progress-vacancy-show.recruiter.dt.status")
-              dd #{fmt.dealStatus(deal.status)}
+              dt=fmt.message("employer-progress-vacancy-show.recruiter.dt.status", locale)
+              dd #{fmt.dealStatus(deal.status, locale)}
               if test.isRecruiterFired(deal)
-                dt=fmt.message("employer-progress-vacancy-show.recruiter.dt.fire_reason")
+                dt=fmt.message("employer-progress-vacancy-show.recruiter.dt.fire_reason", locale)
                 dd #{deal.fireReason}
             if test.canFireRecruiter(deal)
-              form(name="", action=domain.getAbsoluteUrl() + "/employer-fire-recruiter", method="post")
+              form(name="", action=domain.getAbsoluteUrl(locale) + "/employer-fire-recruiter", method="post")
                 .row
                   .col-md-6
-                    textarea(class="form-control", name="message", placeholder=fmt.message("employer-progress-vacancy-show.recruiter.decline.reason"), rows="4")
+                    textarea(class="form-control", name="message", placeholder=fmt.message("employer-progress-vacancy-show.recruiter.decline.reason", locale), rows="4")
                 .btn-row
                   input(type="hidden", name=csrf.getParameterName(), value=csrf.getToken())
                   input(type="hidden", name="id", value=deal.id)
-                  input.btn.btn-danger(type="submit", name="submit", value=fmt.message("employer-progress-vacancy-show.recruiter.decline"))
-    h2=fmt.message("employer-progress-vacancy-show.applicants.h2")
+                  input.btn.btn-danger(type="submit", name="submit", value=fmt.message("employer-progress-vacancy-show.recruiter.decline", locale))
+    h2=fmt.message("employer-progress-vacancy-show.applicants.h2", locale)
     .row
       .col-md-6
         ul.list-group
           for applicant in deal.applicants
             li.list-group-item
               #{applicant.firstName} #{applicant.lastName}
-              a.btn.btn-link.pull-right(href = domain.getAbsoluteUrl() + "/employer-applicant-show/" + applicant.id).
-                #{fmt.message("employer-progress-vacancy-show.applicants.more")}
+              a.btn.btn-link.pull-right(href = domain.getAbsoluteUrl(locale) + "/employer-applicant-show/" + applicant.id).
+                #{fmt.message("employer-progress-vacancy-show.applicants.more", locale)}

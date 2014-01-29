@@ -1,52 +1,52 @@
 extends ../layout
 
 block append head
-  title=fmt.message("recruiter-show-in-progress-vacancy.title")
+  title=fmt.message("recruiter-show-in-progress-vacancy.title", locale)
 block append content
   .container
-    h1=fmt.message("recruiter-show-in-progress-vacancy.h1")
+    h1=fmt.message("recruiter-show-in-progress-vacancy.h1", locale)
     .row
       .col-md-8
         h2
         dl.dl-horizontal
-          dt=fmt.message("recruiter-show-in-progress-vacancy.dt.title")
+          dt=fmt.message("recruiter-show-in-progress-vacancy.dt.title", locale)
           dd #{deal.vacancy.title}
-          dt=fmt.message("recruiter-show-in-progress-vacancy.dt.description")
+          dt=fmt.message("recruiter-show-in-progress-vacancy.dt.description", locale)
           dd #{deal.vacancy.description}
-          dt=fmt.message("recruiter-show-in-progress-vacancy.dt.salary")
-          dd=fmt.currencyRange(deal.vacancy.salaryFrom, deal.vacancy.salaryTo)
-          dt=fmt.message("recruiter-show-in-progress-vacancy.dt.creationDate")
-          dd #{fmt.date(deal.vacancy.creationDate)}
-          dt=fmt.message("recruiter-show-in-progress-vacancy.dt.expirationDate")
-          dd #{fmt.date(deal.vacancy.expirationDate)}
-          dt=fmt.message("recruiter-show-in-progress-vacancy.dt.status")
-          dd #{fmt.dealStatus(deal.status)}
+          dt=fmt.message("recruiter-show-in-progress-vacancy.dt.salary", locale)
+          dd=fmt.currencyRange(deal.vacancy.salaryFrom, deal.vacancy.salaryTo, locale)
+          dt=fmt.message("recruiter-show-in-progress-vacancy.dt.creationDate", locale)
+          dd #{fmt.date(deal.vacancy.creationDate, locale)}
+          dt=fmt.message("recruiter-show-in-progress-vacancy.dt.expirationDate", locale)
+          dd #{fmt.date(deal.vacancy.expirationDate, locale)}
+          dt=fmt.message("recruiter-show-in-progress-vacancy.dt.status", locale)
+          dd #{fmt.dealStatus(deal.status, locale)}
           if test.isRecruiterFired(deal)
-            dt=fmt.message("recruiter-show-in-progress-vacancy.dt.fire_reason")
+            dt=fmt.message("recruiter-show-in-progress-vacancy.dt.fire_reason", locale)
             dd #{deal.fireReason}
 
       .col-md-4
-        h2=fmt.message("recruiter-show-in-progress-vacancy.employer")
+        h2=fmt.message("recruiter-show-in-progress-vacancy.employer", locale)
         p #{deal.vacancy.employer.user.firstName} #{deal.vacancy.employer.user.lastName}
 
-    h2=fmt.message("recruiter-show-in-progress-vacancy.h2")
+    h2=fmt.message("recruiter-show-in-progress-vacancy.h2", locale)
     table.table.table-striped
       thead
         tr
-          th=fmt.message("recruiter-show-in-progress-vacancy.table.firstName")
-          th=fmt.message("recruiter-show-in-progress-vacancy.table.lastName")
-          th=fmt.message("recruiter-show-in-progress-vacancy.table.status")
-          th=fmt.message("recruiter-show-in-progress-vacancy.table.creationDate")
+          th=fmt.message("recruiter-show-in-progress-vacancy.table.firstName", locale)
+          th=fmt.message("recruiter-show-in-progress-vacancy.table.lastName", locale)
+          th=fmt.message("recruiter-show-in-progress-vacancy.table.status", locale)
+          th=fmt.message("recruiter-show-in-progress-vacancy.table.creationDate", locale)
           th
       if deal.applicants
         for applicant in deal.applicants
           tr
             td #{applicant.firstName}
             td #{applicant.lastName}
-            td #{fmt.applicantStatus(applicant.status)}
-            td #{fmt.date(deal.vacancy.creationDate)}
+            td #{fmt.applicantStatus(applicant.status, locale)}
+            td #{fmt.date(deal.vacancy.creationDate, locale)}
             td
               if test.isApplicantEditable(applicant, deal)
-                a.btn.btn-link.pull-right(href= domain.getAbsoluteUrl() + "/recruiter-edit-applicant/" + applicant.id)=fmt.message("recruiter-show-in-progress-vacancy.table.change")
+                a.btn.btn-link.pull-right(href= domain.getAbsoluteUrl(locale) + "/recruiter-edit-applicant/" + applicant.id)=fmt.message("recruiter-show-in-progress-vacancy.table.change", locale)
     if test.canAddApplicant(deal)
-      a.btn.btn-success(href= domain.getAbsoluteUrl() + "/recruiter-add-applicant/" + deal.id)=fmt.message("recruiter-show-in-progress-vacancy.add")
+      a.btn.btn-success(href= domain.getAbsoluteUrl(locale) + "/recruiter-add-applicant/" + deal.id)=fmt.message("recruiter-show-in-progress-vacancy.add", locale)

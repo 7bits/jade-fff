@@ -1,5 +1,6 @@
 package com.recruiters.web.utils;
 
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.LocaleResolver;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,12 +14,16 @@ import java.util.Set;
  * where it appears after using
  * @link LocaleUrlFilter
  */
+@Component
 public class AttributeLocaleResolver implements LocaleResolver {
 
     /** Default locale */
     private Locale defaultLocale = null;
     /** Map with all <languages, Set<countries> using on website */
-    private final Map<String, Set<String>> countryLanguages;
+    private Map<String, Set<String>> countryLanguages;
+
+    public AttributeLocaleResolver() {
+    }
 
     public AttributeLocaleResolver(
             final Map<String, Set<String>> countryLanguages,
@@ -34,9 +39,9 @@ public class AttributeLocaleResolver implements LocaleResolver {
      * @return locale
      */
     public Locale resolveLocale(final HttpServletRequest servletRequest) {
-        String languageCode = (String) servletRequest.getAttribute(LocaleUrlFilter.getLanguageCodeAttributeName());
+        String languageCode = (String) servletRequest.getSession().getAttribute(LocaleUrlFilter.getLanguageCodeAttributeName());
         if (languageCode != null) {
-            String countryCode = (String) servletRequest.getAttribute(LocaleUrlFilter.getCountryCodeAttributeName());
+            String countryCode = (String) servletRequest.getSession().getAttribute(LocaleUrlFilter.getCountryCodeAttributeName());
             Set countryCodes = countryLanguages.get(languageCode);
             if (countryCodes != null && !countryCodes.isEmpty()) {
                 if (countryCode == null) {
@@ -68,5 +73,13 @@ public class AttributeLocaleResolver implements LocaleResolver {
                 servletRequest.setAttribute(LocaleUrlFilter.getCountryCodeAttributeName(), locale.getCountry());
             }
         }
+    }
+
+    public void setDefaultLocale(final Locale defaultLocale) {
+        this.defaultLocale = defaultLocale;
+    }
+
+    public void setCountryLanguages(final Map<String, Set<String>> countryLanguages) {
+        this.countryLanguages = countryLanguages;
     }
 }

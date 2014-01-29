@@ -23,35 +23,8 @@ import java.util.Locale;
 public class MessageResolver {
     @Autowired
     private MessageSource messageSource;
-    // TODO add locale to all methods
-    private Locale locale;
-//    = new Locale("ru");
 
     public MessageResolver() {}
-
-    /**
-     * Constructor with required objects needed for localisation
-     * @param messageSource    Spring message source
-     * @param locale           Requester locale
-     */
-//    public MessageResolver(final MessageSource messageSource, final Locale locale) {
-//        this.messageSource = messageSource;
-//        this.locale = locale;
-//    }
-
-//    /**
-//     * Resolve message by code
-//     * @param code code to resolve
-//     * @return localised message
-//     */
-//    public String message(final String code) {
-//
-//        try {
-//            return messageSource.getMessage(code, null, locale);
-//        } catch (Exception e) {
-//            return code;
-//        }
-//    }
 
     /**
      * Resolve message by code
@@ -69,10 +42,11 @@ public class MessageResolver {
 
     /**
      * Resolve localised date by Date type time argument
-     * @param date    input Date type time
+     * @param date             Input Date type time
+     * @param locale           Locale to use
      * @return localised time
      */
-    public String date(final Date date) {
+    public String date(final Date date, final Locale locale) {
         String stringDate = "";
         if (date == null) {
             return stringDate;
@@ -92,9 +66,10 @@ public class MessageResolver {
     /**
      * Resolve message for bid status
      * @param bidStatus    Bid status
+     * @param locale       Locale to use
      * @return localised bid status
      */
-    public String bidStatus(final BidStatus bidStatus) {
+    public String bidStatus(final BidStatus bidStatus, final Locale locale) {
         String stringStatus = "";
         if (bidStatus != null) {
             String messageCode = bidStatus.getClass().getSimpleName() + "." + bidStatus.getName();
@@ -106,9 +81,10 @@ public class MessageResolver {
     /**
      * Resolve message for deal status
      * @param dealStatus    Deal status
+     * @param locale        Locale to use
      * @return localised deal status
      */
-    public String dealStatus(final DealStatus dealStatus) {
+    public String dealStatus(final DealStatus dealStatus, final Locale locale) {
         String stringStatus = "";
         if (dealStatus != null) {
             String messageCode = dealStatus.getClass().getSimpleName() + "." + dealStatus.getName();
@@ -120,9 +96,10 @@ public class MessageResolver {
     /**
      * Resolve message for applicant status
      * @param applicantStatus    Applicant status
+     * @param locale             Locale to use
      * @return localised applicant status
      */
-    public String applicantStatus(final ApplicantStatus applicantStatus) {
+    public String applicantStatus(final ApplicantStatus applicantStatus, final Locale locale) {
         String stringStatus = "";
         if (applicantStatus != null) {
             String messageCode = applicantStatus.getClass().getSimpleName() + "." + applicantStatus.getName();
@@ -134,9 +111,10 @@ public class MessageResolver {
     /**
      * Resolve message for vacancy status
      * @param vacancyStatus    Vacancy status
+     * @param locale           Locale to use
      * @return localised vacancy status
      */
-    public String vacancyStatus(final VacancyStatus vacancyStatus) {
+    public String vacancyStatus(final VacancyStatus vacancyStatus, final Locale locale) {
         String stringStatus = "";
         if (vacancyStatus != null) {
             String messageCode = vacancyStatus.getClass().getSimpleName() + "." + vacancyStatus.getName();
@@ -151,13 +129,15 @@ public class MessageResolver {
      * @param allApplicantCount         Total number of applicants
      * @param rejectedApplicantCount    Number of rejected applicants
      * @param viewedApplicantCount      Number of applicants already viewed by employer
+     * @param locale                    Locale to use
      * @return localised tooltip
      */
     public String applicantsTooltip(
             final Long unseenApplicantCount,
             final Long allApplicantCount,
             final Long rejectedApplicantCount,
-            final Long viewedApplicantCount
+            final Long viewedApplicantCount,
+            final Locale locale
     ) {
         return messageSource.getMessage("recruiter-active-deals.table.applicants.tooltip", new Object[] {
                 unseenApplicantCount,
@@ -173,7 +153,7 @@ public class MessageResolver {
      * @param to      To $
      * @return localised currency range
      */
-    public String currencyRange(final Long from, final Long to) {
+    public String currencyRange(final Long from, final Long to, final Locale locale) {
 
         return messageSource.getMessage("currency.range", new Object[] {from, to}, locale);
     }

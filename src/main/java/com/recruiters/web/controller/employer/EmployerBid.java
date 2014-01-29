@@ -5,15 +5,18 @@ import com.recruiters.model.User;
 import com.recruiters.service.*;
 import com.recruiters.service.NotAffiliatedException;
 import com.recruiters.web.controller.utils.UserUtils;
+import com.recruiters.web.helper.UrlResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Locale;
 
 /**
  * View bid information and do all bid actions for employer
@@ -27,6 +30,9 @@ public class EmployerBid {
     /** User utils for obtaining any session user information */
     @Autowired
     private UserUtils userUtils = null;
+    /** Url Builder */
+    @Autowired
+    private UrlResolver urlResolver;
 
     /**
      * Show all bid information for employer
@@ -41,7 +47,7 @@ public class EmployerBid {
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
-    @RequestMapping(value = "/{locale}/employer-recruiter-show/{bidId}")
+    @RequestMapping(value = "/employer-recruiter-show/{bidId}")
     public ModelAndView employerShowRecruiterBid(
             @PathVariable final Long bidId,
             final HttpServletRequest request,
@@ -69,7 +75,6 @@ public class EmployerBid {
     /**
      * Approve recruiter application
      * @param bidId       Id of application bid
-     * @param locale      Locale
      * @param request     Http Request
      * @param response    Http Response
      * @return redirect to "recruiter search" page if everything goes fine,
@@ -79,10 +84,9 @@ public class EmployerBid {
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
-    @RequestMapping(value = "/{locale}/employer-recruiter-approve/{bidId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/employer-recruiter-approve/{bidId}", method = RequestMethod.GET)
     public String approveRecruiterBid(
             @PathVariable final Long bidId,
-            @PathVariable final String locale,
             final HttpServletRequest request,
             final HttpServletResponse response
     ) throws Exception {
@@ -96,14 +100,14 @@ public class EmployerBid {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             return null;
         }
+        Locale locale = RequestContextUtils.getLocale(request);
 
-        return "redirect:/" + locale + "/employer-recruiter-search";
+        return  urlResolver.buildRedirectUri("employer-recruiter-search", locale);
     }
 
     /**
      * Decline recruiter application
      * @param bidId       Id of application bid
-     * @param locale      Locale
      * @param request     Http Request
      * @param response    Http Response
      * @return redirect to "recruiter search" page if everything goes fine,
@@ -113,10 +117,9 @@ public class EmployerBid {
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
-    @RequestMapping(value = "/{locale}/employer-recruiter-decline/{bidId}", method = RequestMethod.GET)
+    @RequestMapping(value = "}/employer-recruiter-decline/{bidId}", method = RequestMethod.GET)
     public String declineRecruiterBid(
             @PathVariable final Long bidId,
-            @PathVariable final String locale,
             final HttpServletRequest request,
             final HttpServletResponse response
     ) throws Exception {
@@ -130,8 +133,9 @@ public class EmployerBid {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             return null;
         }
+        Locale locale = RequestContextUtils.getLocale(request);
 
-        return "redirect:/" + locale + "/employer-recruiter-search";
+        return  urlResolver.buildRedirectUri("employer-recruiter-search", locale);
     }
 
     public EmployerService getEmployerService() {

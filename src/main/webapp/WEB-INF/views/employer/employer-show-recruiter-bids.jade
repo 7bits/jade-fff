@@ -1,10 +1,10 @@
 extends ../layout
 
 block append head
-  title=fmt.message("employer-show-recruiter-bids.title")
+  title=fmt.message("employer-show-recruiter-bids.title", locale)
 block append content
   .container
-    h1=fmt.message("employer-show-recruiter-bids.h1")
+    h1=fmt.message("employer-show-recruiter-bids.h1", locale)
     .row
       .col-md-8
         h2
@@ -12,11 +12,11 @@ block append content
           for bid in bids
             li.list-group-item
               #{bid.recruiter.user.firstName} #{bid.recruiter.user.lastName}
-              a.btn.btn-link.pull-right(href = domain.getAbsoluteUrl() + "/employer-recruiter-show/" + bid.id).
-                #{fmt.message("employer-show-recruiter-bids.more")}
+              a.btn.btn-link.pull-right(href = domain.getAbsoluteUrl(locale) + "/employer-recruiter-show/" + bid.id).
+                #{fmt.message("employer-show-recruiter-bids.more", locale)}
 
       .col-md-4
-        h2=fmt.message("employer-show-recruiter-bids.vacancy.h2")
+        h2=fmt.message("employer-show-recruiter-bids.vacancy.h2", locale)
         p #{vacancy.title}
         p #{vacancy.description}
-        p=fmt.currencyRange(vacancy.salaryFrom, vacancy.salaryTo)
+        p=fmt.currencyRange(vacancy.salaryFrom, vacancy.salaryTo, locale)

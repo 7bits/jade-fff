@@ -7,19 +7,20 @@ import com.recruiters.service.ServiceException;
 import com.recruiters.web.controller.utils.DateTimeUtils;
 import com.recruiters.web.controller.utils.UserUtils;
 import com.recruiters.web.form.VacanciesFilter;
-import com.recruiters.web.helper.UrlBuilder;
+import com.recruiters.web.helper.UrlResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Show Vacancies for recruiter with all available actions
@@ -33,12 +34,13 @@ public class ShowVacancies {
     /** User utils for obtaining any session user information */
     @Autowired
     private UserUtils userUtils = null;
-
+    /** Url Builder */
+    @Autowired
+    private UrlResolver urlResolver;
     /**
      * Shows vacancies with filter applied for recruiter
      * @param request           Http Request
      * @param response          Http Response
-     * @param locale            Url locale part
      * @param vacanciesFilter   Vacancies Filter
      * @return model and view with list of vacancies,
      * Internal Server Error page if something is wrong with obtaining data
@@ -46,20 +48,19 @@ public class ShowVacancies {
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
-    @RequestMapping(value = "/{locale}/recruiter-find-new-vacancies", method = RequestMethod.GET)
+    @RequestMapping(value = "/recruiter-find-new-vacancies", method = RequestMethod.GET)
     public ModelAndView showFilteredAvailableVacancies(
             final HttpServletRequest request,
             final HttpServletResponse response,
-            @PathVariable final String locale,
             @ModelAttribute("VacanciesFilter") final VacanciesFilter vacanciesFilter
     ) throws Exception {
         ModelAndView filteredVacancies = new ModelAndView("recruiter/recruiter-find-new-vacancies.jade");
         DateTimeUtils dateTimeUtils = new DateTimeUtils();
-        UrlBuilder urlBuilder = new UrlBuilder(request, locale);
+        Locale locale = RequestContextUtils.getLocale(request);
         filteredVacancies.addObject("vacanciesFilter", vacanciesFilter);
 
         Date curDate;
-        if (vacanciesFilter.getDate() == null) {
+        if (vacanciesFilter.getDate().isEmpty()) {
             curDate = new Date();
             vacanciesFilter.setDate(dateTimeUtils.dateUrlFormat(curDate));
         } else {
@@ -71,7 +72,7 @@ public class ShowVacancies {
             Date nextDate = dateTimeUtils.nextDay(curDate);
             VacanciesFilter vacanciesFilterNext = new VacanciesFilter(vacanciesFilter);
             vacanciesFilterNext.setDate(dateTimeUtils.dateUrlFormat(nextDate));
-            String nextDateLink = urlBuilder.recruiterFilterUrl(vacanciesFilterNext);
+            String nextDateLink = urlResolver.buildRecruiterFilterUri(vacanciesFilterNext, locale);
             filteredVacancies.addObject("nextDate", nextDate);
             filteredVacancies.addObject("nextDateLink", nextDateLink);
         }
@@ -79,7 +80,7 @@ public class ShowVacancies {
         Date prevDate = dateTimeUtils.previousDay(curDate);
         VacanciesFilter vacanciesFilterPrev = new VacanciesFilter(vacanciesFilter);
         vacanciesFilterPrev.setDate(dateTimeUtils.dateUrlFormat(prevDate));
-        String prevDateLink = urlBuilder.recruiterFilterUrl(vacanciesFilterPrev);
+        String prevDateLink = urlResolver.buildRecruiterFilterUri(vacanciesFilterPrev, locale);
         filteredVacancies.addObject("curDate", curDate);
         filteredVacancies.addObject("prevDate", prevDate);
         filteredVacancies.addObject("prevDateLink", prevDateLink);

@@ -1,37 +1,37 @@
 extends ../layout
 
 block append head
-  title=fmt.message("recruiter-edit-applicant.title")
+  title=fmt.message("recruiter-edit-applicant.title", locale)
 block append content
   .container
-    h2=fmt.message("recruiter-edit-applicant.h1")
+    h2=fmt.message("recruiter-edit-applicant.h1", locale)
     form(name="applicantForm", action="", method="post", enctype="multipart/form-data")
       .row
         .col-md-6
           .form-group
             label(for="firstName")
-            input(type="text", class="form-control", id="firstName", name="firstName", placeholder=fmt.message("recruiter-edit-applicant.firstName"), value=applicantForm.firstName)
+            input(type="text", class="form-control", id="firstName", name="firstName", placeholder=fmt.message("recruiter-edit-applicant.firstName", locale), value=applicantForm.firstName)
             #{errors.firstName}
           .form-group
             label(for="lastName")
-            input(type="text", class="form-control", id="lastName", name="lastName", placeholder=fmt.message("recruiter-edit-applicant.lastName"), value=applicantForm.lastName)
+            input(type="text", class="form-control", id="lastName", name="lastName", placeholder=fmt.message("recruiter-edit-applicant.lastName", locale), value=applicantForm.lastName)
             #{errors.lastName}
           .form-group
             label(for="description")
-            textarea(class="form-control", id="description", name="description", placeholder=fmt.message("recruiter-edit-applicant.description"))#{applicantForm.description}
+            textarea(class="form-control", id="description", name="description", placeholder=fmt.message("recruiter-edit-applicant.description", locale))#{applicantForm.description}
             #{errors.description}
           .form-group
-            label(for="resumeFile")=fmt.message("recruiter-edit-applicant.resumeFile")
-            input(type="file", id="resumeFile", name="resumeFile", placeholder=fmt.message("recruiter-edit-applicant.resumeFile"), value=applicantForm.resumeFile)
+            label(for="resumeFile")=fmt.message("recruiter-edit-applicant.resumeFile", locale)
+            input(type="file", id="resumeFile", name="resumeFile", placeholder=fmt.message("recruiter-edit-applicant.resumeFile", locale), value=applicantForm.resumeFile)
             #{errors.resumeFile}
           .form-group
-            label(for="testAnswerFile")=fmt.message("recruiter-edit-applicant.testAnswerFile")
-            input(type="file", id="testAnswerFile", name="testAnswerFile", placeholder=fmt.message("recruiter-edit-applicant.testAnswerFile"), value=applicantForm.testAnswerFile)
+            label(for="testAnswerFile")=fmt.message("recruiter-edit-applicant.testAnswerFile", locale)
+            input(type="file", id="testAnswerFile", name="testAnswerFile", placeholder=fmt.message("recruiter-edit-applicant.testAnswerFile", locale), value=applicantForm.testAnswerFile)
             #{errors.testAnswerFile}
           .form-group
             input(type="hidden", id="dealId", name="dealId", value=applicantForm.dealId)
             input(type="hidden", id="id", name="id", value=applicantForm.id)
             input(type="hidden", name=csrf.getParameterName(), value=csrf.getToken())
-          input.btn.btn-success(type="submit", name="submit", value=fmt.message("recruiter-edit-applicant.save"))=fmt.message("recruiter-edit-applicant.save")
+          input.btn.btn-success(type="submit", name="submit", value=fmt.message("recruiter-edit-applicant.save", locale))=fmt.message("recruiter-edit-applicant.save", locale)
           a.btn.btn-link(href="#")
-            a(href=domain.getAbsoluteUrl() + "/recruiter-show-in-progress-vacancy/" + applicantForm.dealId)=fmt.message("recruiter-edit-applicant.back")
+            a(href=domain.getAbsoluteUrl(locale) + "/recruiter-show-in-progress-vacancy/" + applicantForm.dealId)=fmt.message("recruiter-edit-applicant.back", locale)

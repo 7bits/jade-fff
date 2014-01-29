@@ -1,26 +1,26 @@
 extends ../layout
 
 block append head
-  title=fmt.message("employer-progress-vacancies-list.title")
+  title=fmt.message("employer-progress-vacancies-list.title", locale)
 block append content
   .container
-    h1=fmt.message("employer-progress-vacancies-list.h1")
+    h1=fmt.message("employer-progress-vacancies-list.h1", locale)
     table.table.table-striped
       thead
         tr
-          th=fmt.message("employer-progress-vacancies-list.table.name")
-          th=fmt.message("employer-progress-vacancies-list.table.description")
-          th=fmt.message("employer-progress-vacancies-list.table.creation")
-          th=fmt.message("employer-progress-vacancies-list.table.recruiter")
+          th=fmt.message("employer-progress-vacancies-list.table.name", locale)
+          th=fmt.message("employer-progress-vacancies-list.table.description", locale)
+          th=fmt.message("employer-progress-vacancies-list.table.creation", locale)
+          th=fmt.message("employer-progress-vacancies-list.table.recruiter", locale)
           th
       tbody
         for deal in deals
           tr
             td #{deal.vacancy.title}
             td #{deal.vacancy.description}
-            td #{fmt.date(deal.vacancy.creationDate)}
+            td #{fmt.date(deal.vacancy.creationDate, locale)}
             td #{deal.recruiter.user.firstName} #{deal.recruiter.user.lastName}
             td
               a.btn.btn-link(href = domain.getAbsoluteUrl(locale) + "/employer-progress-vacancy-show/" + deal.id).
-                    #{fmt.message("employer-progress-vacancies-list.more")}
-    a.btn.btn-link(href="employer-vacancy-create")=fmt.message("employer-progress-vacancies-list.createVacancy")
+                    #{fmt.message("employer-progress-vacancies-list.more", locale)}
+    a.btn.btn-link(href="employer-vacancy-create")=fmt.message("employer-progress-vacancies-list.createVacancy", locale)

@@ -39,7 +39,7 @@ public class RecruiterBids {
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
-    @RequestMapping(value = "/{locale}/recruiter-active-bids", method = RequestMethod.GET)
+    @RequestMapping(value = "/recruiter-active-bids", method = RequestMethod.GET)
     public ModelAndView showRecruiterActiveBids(
             final HttpServletRequest request,
             final HttpServletResponse response

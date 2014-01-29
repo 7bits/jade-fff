@@ -1,13 +1,13 @@
 extends ../layout
 
 block append head
-  title=fmt.message("employer-recruiter-search.title")
+  title=fmt.message("employer-recruiter-search.title", locale)
 block append content
   .container
-    h1=fmt.message("employer-recruiter-search.h1")
+    h1=fmt.message("employer-recruiter-search.h1", locale)
     ol
       for vacancy in vacancies
         li
-          a.btn.btn-link.black(href = domain.getAbsoluteUrl() + "/employer-show-recruiter-bids/" + vacancy.id)
+          a.btn.btn-link.black(href = domain.getAbsoluteUrl(locale) + "/employer-show-recruiter-bids/" + vacancy.id)
             #{vacancy.title} &nbsp;
             | (#{vacancy.bidCount})

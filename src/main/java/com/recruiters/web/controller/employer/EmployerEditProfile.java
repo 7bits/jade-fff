@@ -6,6 +6,7 @@ import com.recruiters.service.*;
 import com.recruiters.service.NotAffiliatedException;
 import com.recruiters.web.controller.utils.UserUtils;
 import com.recruiters.web.form.EmployerForm;
+import com.recruiters.web.helper.UrlResolver;
 import com.recruiters.web.validator.EmployerFormValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,10 +18,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.Locale;
 
 /**
  * Employer profile view and edit
@@ -37,6 +40,9 @@ public class EmployerEditProfile {
     /** Validator for Employer Form */
     @Autowired
     private EmployerFormValidator employerFormValidator = null;
+    /** Url Builder */
+    @Autowired
+    private UrlResolver urlResolver;
 
     /**
      * Controller for "Employer Profile" with method GET
@@ -49,7 +55,7 @@ public class EmployerEditProfile {
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
-    @RequestMapping(value = "/{locale}/employer-profile", method = RequestMethod.GET)
+    @RequestMapping(value = "/employer-profile", method = RequestMethod.GET)
     public ModelAndView showEmployerProfile(
             final HttpServletRequest request,
             final HttpServletResponse response
@@ -72,7 +78,6 @@ public class EmployerEditProfile {
      * Controller for editing employer profile with method POST
      * @param request               Http Request
      * @param response              Http Response
-     * @param locale                Locale
      * @param employerForm          Model attribute for employer
      * @param bindingResult         BindingResult
      * @return model and view for editing employer with errors if any,
@@ -83,11 +88,10 @@ public class EmployerEditProfile {
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
-    @RequestMapping(value = "/{locale}/employer-profile", method = RequestMethod.POST)
+    @RequestMapping(value = "/employer-profile", method = RequestMethod.POST)
     public ModelAndView editEmployer(
             final HttpServletRequest request,
             final HttpServletResponse response,
-            @PathVariable final String locale,
             @Valid @ModelAttribute("employerForm") final EmployerForm employerForm,
             final BindingResult bindingResult
     ) throws Exception {
@@ -108,8 +112,11 @@ public class EmployerEditProfile {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
             return null;
         }
+        Locale locale = RequestContextUtils.getLocale(request);
 
-        return new ModelAndView("redirect:/" + locale + "/employer-progress-vacancies-list");
+        return new ModelAndView(
+                urlResolver.buildRedirectUri("employer-progress-vacancies-list", locale)
+        );
     }
 
     /**

@@ -23,7 +23,7 @@ html
       .navbar.navbar-default(role="navigation")
         .container
           .navbar-header
-            a.navbar-brand(href=domain.getAbsoluteUrl()).
+            a.navbar-brand(href=domain.getAbsoluteUrl(locale)).
               #{fmt.message("layout.logo", locale)}
             a.btn.btn-link#lang(href=domain.getLangChangeUrl())=fmt.message("language.change", locale)
           if security.isUserInRole("ROLE_RECRUITER")
@@ -35,20 +35,20 @@ html
                     b.caret
                   ul(class="dropdown-menu", role="menu", aria-labelledby="menu")
                     li(role="presentation")
-                      a(href=domain.getAbsoluteUrl() + "/recruiter-profile", role="menuitem", tabindex="-1").
+                      a(href=domain.getAbsoluteUrl(locale) + "/recruiter-profile", role="menuitem", tabindex="-1").
                         #{fmt.message("layout.recruiter.profile", locale)}
                     li(role="presentation")
-                      a(href=domain.getAbsoluteUrl() + "/recruiter-active-deals", role="menuitem", tabindex="-1").
+                      a(href=domain.getAbsoluteUrl(locale) + "/recruiter-active-deals", role="menuitem", tabindex="-1").
                         #{fmt.message("layout.recruiter.vacancies_in_progress", locale)}
                     li(role="presentation")
-                      a(href=domain.getAbsoluteUrl() + "/recruiter-active-bids", role="menuitem", tabindex="-1").
+                      a(href=domain.getAbsoluteUrl(locale) + "/recruiter-active-bids", role="menuitem", tabindex="-1").
                         #{fmt.message("layout.recruiter.my_applications", locale)}
                     li(role="presentation")
-                      a(href=domain.getAbsoluteUrl() + "/recruiter-find-new-vacancies?showVacancies=1&showBids=1&showDeals=1", role="menuitem", tabindex="-1").
+                      a(href=domain.getAbsoluteUrl(locale) + "/recruiter-find-new-vacancies?showVacancies=1&showBids=1&showDeals=1", role="menuitem", tabindex="-1").
                         #{fmt.message("layout.recruiter.vacancy_search", locale)}
                     li(role="presentation", class="divider")
                     li(role="presentation")
-                      form(action=domain.getAbsoluteUrl() + "/j_spring_security_logout", method="post")
+                      form(action=domain.getAbsoluteUrl(locale) + "/j_spring_security_logout", method="post")
                         input.btn.btn-link(type="submit", name="submit", value=fmt.message("layout.exit", locale))
                         input(type="hidden", name=csrf.getParameterName(), value=csrf.getToken())
           if security.isUserInRole("ROLE_EMPLOYER")
@@ -60,16 +60,16 @@ html
                     b.caret
                   ul(class="dropdown-menu", role="menu", aria-labelledby="menu")
                     li(role="presentation")
-                      a(href=domain.getAbsoluteUrl() + "/employer-profile", role="menuitem", tabindex="-1").
+                      a(href=domain.getAbsoluteUrl(locale) + "/employer-profile", role="menuitem", tabindex="-1").
                         #{fmt.message("layout.employer.profile", localey)}
                     li(role="presentation")
-                      a(href=domain.getAbsoluteUrl() + "/employer-recruiter-search", role="menuitem", tabindex="-1").
+                      a(href=domain.getAbsoluteUrl(locale) + "/employer-recruiter-search", role="menuitem", tabindex="-1").
                         #{fmt.message("layout.employer.recruiter_choose", locale)}
                     li(role="presentation")
-                      a(href=domain.getAbsoluteUrl() + "/employer-progress-vacancies-list", role="menuitem", tabindex="-1").
+                      a(href=domain.getAbsoluteUrl(locale) + "/employer-progress-vacancies-list", role="menuitem", tabindex="-1").
                         #{fmt.message("layout.employer.recruiter_vacancies", locale)}
                     li(role="presentation", class="divider")
                     li(role="presentation")
-                      form(action=domain.getAbsoluteUrl() + "/j_spring_security_logout", method="post")
+                      form(action=domain.getAbsoluteUrl(locale) + "/j_spring_security_logout", method="post")
                         input.btn.btn-link(type="submit", name="submit", value=fmt.message("layout.exit", locale))
                         input(type="hidden", name=csrf.getParameterName(), value=csrf.getToken())

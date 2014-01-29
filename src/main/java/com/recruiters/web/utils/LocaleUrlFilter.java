@@ -41,8 +41,8 @@ public class LocaleUrlFilter implements Filter {
         final Matcher matcher = LOCALE_PATTERN.matcher(url);
 
         if (matcher.matches()) {
-            request.setAttribute(LANGUAGE_CODE_ATTRIBUTE_NAME, matcher.group(1));
-            request.setAttribute(COUNTRY_CODE_ATTRIBUTE_NAME, matcher.group(2));
+            request.getSession().setAttribute(LANGUAGE_CODE_ATTRIBUTE_NAME, matcher.group(1));
+            request.getSession().setAttribute(COUNTRY_CODE_ATTRIBUTE_NAME, matcher.group(2));
             String restOfUrl;
             if (matcher.group(3) == null) {
                 restOfUrl = "/";

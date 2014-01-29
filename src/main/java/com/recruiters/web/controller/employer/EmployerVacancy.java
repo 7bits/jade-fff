@@ -6,6 +6,7 @@ import com.recruiters.service.EmployerService;
 import com.recruiters.service.ServiceException;
 import com.recruiters.web.controller.utils.UserUtils;
 import com.recruiters.web.form.VacancyForm;
+import com.recruiters.web.helper.UrlResolver;
 import com.recruiters.web.validator.VacancyFormValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,10 +18,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.Locale;
 
 /**
  * Show Vacancy for Employer with all related actions
@@ -38,13 +41,16 @@ public class EmployerVacancy {
     /** Validator for Vacancy Form */
     @Autowired
     private VacancyFormValidator vacancyFormValidator = null;
+    /** Url Builder */
+    @Autowired
+    private UrlResolver urlResolver;
 
 
     /**
      * Creating new vacancy initial page
      * @return model and view with empty vacancy
      */
-    @RequestMapping(value = "/{locale}/employer-vacancy-create", method = RequestMethod.GET)
+    @RequestMapping(value = "/employer-vacancy-create", method = RequestMethod.GET)
     public ModelAndView newVacancy() {
         ModelAndView createVacancy = new ModelAndView("employer/vacancy-create.jade");
         VacancyForm vacancyForm = new VacancyForm();
@@ -57,7 +63,6 @@ public class EmployerVacancy {
      * Validate and create new vacancy
      * @param request               Http Request
      * @param response              Http Response
-     * @param locale                Locale
      * @param vacancyForm           Model for Vacancy Form
      * @param bindingResult         BindingResult
      * @return model and view for editing vacancy with errors if any,
@@ -67,11 +72,10 @@ public class EmployerVacancy {
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
-    @RequestMapping(value = "/{locale}/employer-vacancy-create", method = RequestMethod.POST)
+    @RequestMapping(value = "/employer-vacancy-create", method = RequestMethod.POST)
     public ModelAndView createVacancy(
             final HttpServletRequest request,
             final HttpServletResponse response,
-            @PathVariable final String locale,
             @Valid @ModelAttribute("vacancyForm") final VacancyForm vacancyForm,
             final BindingResult bindingResult
     ) throws Exception {
@@ -89,9 +93,11 @@ public class EmployerVacancy {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             return null;
         }
+        Locale locale = RequestContextUtils.getLocale(request);
 
-        return new ModelAndView("redirect:/" + locale + "/employer-progress-vacancies-list");
-
+        return new ModelAndView(
+                urlResolver.buildRedirectUri("employer-progress-vacancies-list", locale)
+        );
     }
 
     /**

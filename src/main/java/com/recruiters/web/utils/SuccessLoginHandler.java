@@ -3,13 +3,16 @@ package com.recruiters.web.utils;
 import com.recruiters.repository.RepositoryException;
 import com.recruiters.repository.UserRepository;
 import com.recruiters.web.helper.UrlResolver;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Locale;
 
 /**
  * Custom login controller
@@ -17,6 +20,10 @@ import java.io.IOException;
 public class SuccessLoginHandler implements AuthenticationSuccessHandler {
 
     private UserRepository userRepository = null;
+    @Autowired
+    private UrlResolver urlResolver;
+    @Autowired
+    private AttributeLocaleResolver attributeLocaleResolver;
 
 
     public SuccessLoginHandler(final UserRepository userRepository) {
@@ -45,7 +52,8 @@ public class SuccessLoginHandler implements AuthenticationSuccessHandler {
         } catch (RepositoryException e) {
             throw new IOException("Cannot obtain user information: ", e);
         }
-        response.sendRedirect(request.getContextPath());
+        Locale locale = attributeLocaleResolver.resolveLocale(request);
+        response.sendRedirect(urlResolver.buildFullUri("", locale));
     }
 
     public UserRepository getUserRepository() {

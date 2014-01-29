@@ -1,6 +1,10 @@
 package com.recruiters.web.helper;
 
+import com.recruiters.web.controller.utils.DateTimeUtils;
+import com.recruiters.web.form.VacanciesFilter;
 import org.apache.commons.lang3.StringUtils;
+
+import java.util.Locale;
 
 
 /**
@@ -12,8 +16,6 @@ public class UrlResolver {
     private String server = null;
     private String port = null;
     private String applicationName = null;
-    // TODO add locale to all methods
-    private String locale = "ru";
 
 
     public UrlResolver() {
@@ -23,16 +25,10 @@ public class UrlResolver {
      * Provide full application url with locale
      * @return url of our app with locale
      */
-    public String getAbsoluteUrl() {
+    public String getAbsoluteUrl(final Locale locale) {
         String fullPath = getApplicationUrl();
-//        String countryCode = (String) request.getAttribute(LocaleUrlFilter.getCountryCodeAttributeName());
-//        String langCode = (String) request.getAttribute(LocaleUrlFilter.getLanguageCodeAttributeName());
-//        fullPath += countryCode;
-//        if (langCode != null) {
-//            fullPath += "/" + langCode;
-//        }
-//        return fullPath;
-        return fullPath + "/" + locale;
+        fullPath += makeLocaleUrlPart(locale);
+        return fullPath;
     }
 
     /**
@@ -41,7 +37,7 @@ public class UrlResolver {
      */
     public String getResourceUrl() {
         String fullPath = getApplicationUrl();
-        fullPath += "resources";
+        fullPath += "/resources";
         return fullPath;
     }
 
@@ -63,21 +59,49 @@ public class UrlResolver {
         return changeLocale;
     }
 
-    /**
-     * Provide full application url
-     * @return url of our app
-     */
-    private String getApplicationUrl() {
-        String fullPath = protocol + "://" + server;
-        if (!StringUtils.isBlank(port)) {
-            fullPath += ":" + port;
-        }
-        if (!StringUtils.isBlank(applicationName)) {
-            fullPath += "/" + applicationName;
-        }
-        fullPath += "/";
+    public String buildRedirectUri(final String uri, final Locale locale) {
+        String fullPath = "redirect:";
+        fullPath += makeLocaleUrlPart(locale);
+        fullPath += "/" + uri;
         return fullPath;
     }
+
+    public String buildRedirectUriLongParam(final String uri, final Long param, final Locale locale) {
+        String fullPath = "redirect:";
+        fullPath += makeLocaleUrlPart(locale);
+        fullPath += "/" + uri + "/" + param;
+        return fullPath;
+    }
+
+    public String buildFullUri(final String uri, final Locale locale) {
+        String fullPath = "/" + applicationName;
+        fullPath += makeLocaleUrlPart(locale);
+        fullPath += "/" + uri;
+        return fullPath;
+    }
+
+    /**
+     * Generate uri for recruiter filter request
+     * @param vacanciesFilter    Vacancies filter object
+     * @param locale             Locale
+     * @return uri with params
+     */
+    public String buildRecruiterFilterUri(final VacanciesFilter vacanciesFilter, final Locale locale) {
+        String link = "recruiter-find-new-vacancies";
+        link += "?searchText=";
+        link += vacanciesFilter.getSearchText() == null ? "" : vacanciesFilter.getSearchText();
+        link += "&showVacancies=";
+        link += vacanciesFilter.getShowVacancies() == null ? "" : vacanciesFilter.getShowVacancies();
+        link += "&showBids=";
+        link += vacanciesFilter.getShowBids() == null ? "" : vacanciesFilter.getShowBids();
+        link += "&showDeals=";
+        link += vacanciesFilter.getShowDeals() == null ? "" : vacanciesFilter.getShowDeals();
+        link += "&date=" + vacanciesFilter.getDate();
+
+        return buildFullUri(link, locale);
+    }
+
+
     public String getProtocol() {
         return protocol;
     }
@@ -111,4 +135,33 @@ public class UrlResolver {
     }
 
 
+    /**
+     * Provide full application url
+     * @return url of our app
+     */
+    private String getApplicationUrl() {
+        String fullPath = protocol + "://" + server;
+        if (!StringUtils.isBlank(port)) {
+            fullPath += ":" + port;
+        }
+        if (!StringUtils.isBlank(applicationName)) {
+            fullPath += "/" + applicationName;
+        }
+        return fullPath;
+    }
+
+    private String makeLocaleUrlPart(final Locale locale) {
+        String fullPath = "";
+        if (locale != null) {
+            String country = locale.getCountry().toLowerCase();
+            String language = locale.getLanguage().toLowerCase();
+            if (!language.isEmpty()) {
+                fullPath += "/" + language;
+                if (!country.isEmpty()) {
+                    fullPath += "/" + country;
+                }
+            }
+        }
+        return fullPath;
+    }
 }

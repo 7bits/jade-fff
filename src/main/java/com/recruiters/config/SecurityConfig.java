@@ -58,13 +58,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .permitAll()
                     .and()
                 .authorizeRequests()
-                .antMatchers("/*/recruiter*/**").hasRole("RECRUITER")
-                .antMatchers("/*/employer*/**").hasRole("EMPLOYER")
-                .antMatchers("/*/*/recruiter*/**").hasRole("RECRUITER")
-                .antMatchers("/*/*/employer*/**").hasRole("EMPLOYER")
-                .antMatchers("/*/j_*").permitAll()
-                .antMatchers("/*/*/j_*").permitAll()
-                    .antMatchers("/*").permitAll()
+                .antMatchers("/**/recruiter*/**").hasRole("RECRUITER")
+                .antMatchers("/**/employer*/**").hasRole("EMPLOYER")
+                .antMatchers("/**/j_*").permitAll()
+                    .antMatchers("/**").permitAll()
                     .anyRequest().anonymous();
 
     }

@@ -8,7 +8,7 @@ public class VacanciesFilter {
     private Boolean showVacancies = true;
     private Boolean showBids = true;
     private Boolean showDeals = true;
-    private String date = null;
+    private String date = "";
 
     public VacanciesFilter() {
     }

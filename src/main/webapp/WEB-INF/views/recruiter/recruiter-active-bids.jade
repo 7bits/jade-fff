@@ -1,24 +1,24 @@
 extends ../layout
 
 block append head
-  title=fmt.message("recruiter-active-bids.title")
+  title=fmt.message("recruiter-active-bids.title", locale)
 block append content
   .container
-    h1=fmt.message("recruiter-active-bids.h1")
+    h1=fmt.message("recruiter-active-bids.h1", locale)
     table.table.table-striped
       thead
         tr
-          th=fmt.message("recruiter-active-bids.table.name")
-          th=fmt.message("recruiter-active-bids.table.description")
-          th=fmt.message("recruiter-active-bids.table.status")
-          th=fmt.message("recruiter-active-bids.table.date")
+          th=fmt.message("recruiter-active-bids.table.name", locale)
+          th=fmt.message("recruiter-active-bids.table.description", locale)
+          th=fmt.message("recruiter-active-bids.table.status", locale)
+          th=fmt.message("recruiter-active-bids.table.date", locale)
           th
       tbody
         for bid in bids
           tr
             td #{bid.vacancy.title}
             td #{bid.vacancy.description}
-            td #{fmt.bidStatus(bid.status)}
-            td #{fmt.date(bid.vacancy.creationDate)}
+            td #{fmt.bidStatus(bid.status, locale)}
+            td #{fmt.date(bid.vacancy.creationDate, locale)}
             td
-              a.btn.btn-link(href=domain.getAbsoluteUrl() + "/recruiter-show-bid-vacancy/" + bid.id)=fmt.message("recruiter-active-bids.more")
+              a.btn.btn-link(href=domain.getAbsoluteUrl(locale) + "/recruiter-show-bid-vacancy/" + bid.id)=fmt.message("recruiter-active-bids.more", locale)

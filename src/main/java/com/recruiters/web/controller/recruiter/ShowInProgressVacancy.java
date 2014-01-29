@@ -2,8 +2,10 @@ package com.recruiters.web.controller.recruiter;
 
 import com.recruiters.model.Deal;
 import com.recruiters.model.User;
-import com.recruiters.service.*;
 import com.recruiters.service.NotAffiliatedException;
+import com.recruiters.service.NotFoundException;
+import com.recruiters.service.RecruiterService;
+import com.recruiters.service.ServiceException;
 import com.recruiters.web.controller.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,7 +42,7 @@ public class ShowInProgressVacancy {
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
-    @RequestMapping(value = "/{locale}/recruiter-show-in-progress-vacancy/{dealId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/recruiter-show-in-progress-vacancy/{dealId}", method = RequestMethod.GET)
     public ModelAndView showInProgressVacancy(
             @PathVariable final Long dealId,
             final HttpServletRequest request,

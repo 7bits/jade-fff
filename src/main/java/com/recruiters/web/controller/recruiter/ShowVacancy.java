@@ -6,6 +6,7 @@ import com.recruiters.model.User;
 import com.recruiters.model.Vacancy;
 import com.recruiters.service.*;
 import com.recruiters.web.controller.utils.UserUtils;
+import com.recruiters.web.helper.UrlResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Locale;
 
 
 /**
@@ -30,6 +33,9 @@ public class ShowVacancy {
     /** Recruiter Service provides all Recruiter related methods */
     @Autowired
     private RecruiterService recruiterService = null;
+    /** Url Builder */
+    @Autowired
+    private UrlResolver urlResolver;
 
     /**
      * Displays certain vacancy with method GET
@@ -42,7 +48,7 @@ public class ShowVacancy {
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
-    @RequestMapping(value = "/{locale}/recruiter-show-vacancy/{vacancyId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/recruiter-show-vacancy/{vacancyId}", method = RequestMethod.GET)
     public ModelAndView showVacancyById(
             @PathVariable final Long vacancyId,
             final HttpServletRequest request,
@@ -67,7 +73,6 @@ public class ShowVacancy {
     /**
      * Accepts apply to vacancy with method POST
      * @param vacancyId    Vacancy id
-     * @param locale       Locale
      * @param message      Custom message assigned to bid, no required
      * @param request      Http Request
      * @param response     Http Response
@@ -78,10 +83,9 @@ public class ShowVacancy {
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
-    @RequestMapping(value = "/{locale}/recruiter-show-vacancy/{vacancyId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/recruiter-show-vacancy/{vacancyId}", method = RequestMethod.POST)
     public String applyToVacancy(
             @PathVariable final Long vacancyId,
-            @PathVariable final String locale,
             @RequestParam(value = "message", required = false) final String message,
             final HttpServletRequest request,
             final HttpServletResponse response
@@ -96,8 +100,9 @@ public class ShowVacancy {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
             return null;
         }
+        Locale locale = RequestContextUtils.getLocale(request);
 
-        return "redirect:/" + locale + "/recruiter-find-new-vacancies";
+        return urlResolver.buildRedirectUri("recruiter-find-new-vacancies", locale);
     }
 
     /**
@@ -111,7 +116,7 @@ public class ShowVacancy {
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
-    @RequestMapping(value = "/{locale}/recruiter-show-bid-vacancy/{bidId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/recruiter-show-bid-vacancy/{bidId}", method = RequestMethod.GET)
     public ModelAndView showBidVacancyById(
             @PathVariable final Long bidId,
             final HttpServletRequest request,

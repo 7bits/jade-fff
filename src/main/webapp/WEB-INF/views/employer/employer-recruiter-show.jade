@@ -1,24 +1,24 @@
 extends ../layout
 
 block append head
-  title=fmt.message("employer-recruiter-show.title")
+  title=fmt.message("employer-recruiter-show.title", locale)
 block append content
   .container
     .row
       .col-md-8
-        h2=fmt.message("employer-recruiter-show.h2.recruiter")
+        h2=fmt.message("employer-recruiter-show.h2.recruiter", locale)
         p #{bid.recruiter.user.firstName} #{bid.recruiter.user.lastName}
         p #{bid.message}
       .col-md-4
-        h2=fmt.message("employer-recruiter-show.h2.vacancy")
+        h2=fmt.message("employer-recruiter-show.h2.vacancy", locale)
         p #{bid.vacancy.title}
         p #{bid.vacancy.description}
-        p=fmt.currencyRange(bid.vacancy.salaryFrom, bid.vacancy.salaryTo)
+        p=fmt.currencyRange(bid.vacancy.salaryFrom, bid.vacancy.salaryTo, locale)
 
     if test.canModifyRecruiterBid(bid)
       .row
         .col-md-6
-          a.btn.btn-success(href=domain.getAbsoluteUrl()+"/employer-recruiter-approve/" + bid.id, data-toggle="confirmation", data-placement="left", data-href= domain.getAbsoluteUrl() + "/employer-recruiter-show/apply", data-original-title="", title="")
-            #{fmt.message("employer-recruiter-show.apply")}
-          a.btn.btn-danger(href=domain.getAbsoluteUrl()+"/employer-recruiter-decline/" + bid.id, data-toggle="confirmation", data-placement="left", data-href= domain.getAbsoluteUrl() + "/employer-recruiter-show/decline", data-original-title="", title="")
-            #{fmt.message("employer-recruiter-show.decline")}
+          a.btn.btn-success(href=domain.getAbsoluteUrl(locale)+"/employer-recruiter-approve/" + bid.id, data-toggle="confirmation", data-placement="left", data-href= domain.getAbsoluteUrl(locale) + "/employer-recruiter-show/apply", data-original-title="", title="")
+            #{fmt.message("employer-recruiter-show.apply", locale)}
+          a.btn.btn-danger(href=domain.getAbsoluteUrl(locale)+"/employer-recruiter-decline/" + bid.id, data-toggle="confirmation", data-placement="left", data-href= domain.getAbsoluteUrl(locale) + "/employer-recruiter-show/decline", data-original-title="", title="")
+            #{fmt.message("employer-recruiter-show.decline", locale)}

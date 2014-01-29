@@ -6,6 +6,7 @@ import com.recruiters.service.*;
 import com.recruiters.service.NotAffiliatedException;
 import com.recruiters.web.controller.utils.UserUtils;
 import com.recruiters.web.form.ApplicantForm;
+import com.recruiters.web.helper.UrlResolver;
 import com.recruiters.web.validator.ApplicantFormValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,10 +18,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.Locale;
 
 /**
  * Edit and create Applicant by recruiter
@@ -37,13 +40,16 @@ public class RecruiterApplicant {
     /** Validator for Applicant Form */
     @Autowired
     private ApplicantFormValidator applicantFormValidator = null;
+    /** Url Builder */
+    @Autowired
+    private UrlResolver urlResolver;
 
     /**
      * Controller for creating new applicant with method GET
      * @param dealId    Id of deal we assign applicant to
      * @return model and view with empty applicant
      */
-    @RequestMapping(value = "/{locale}/recruiter-add-applicant/{dealId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/recruiter-add-applicant/{dealId}", method = RequestMethod.GET)
     public ModelAndView addApplicant(
             @PathVariable final Long dealId
     ) {
@@ -59,7 +65,6 @@ public class RecruiterApplicant {
     /**
      * Controller for creating new applicant with method POST
      * @param applicantForm         Model attribute for applicant
-     * @param locale                Locale
      * @param bindingResult         BindingResult
      * @param request               Http Request
      * @param response              Http Response
@@ -71,10 +76,9 @@ public class RecruiterApplicant {
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
-    @RequestMapping(value = "/{locale}/recruiter-add-applicant/{dealId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/recruiter-add-applicant/{dealId}", method = RequestMethod.POST)
     public ModelAndView createApplicant(
             @Valid @ModelAttribute("applicantForm") final ApplicantForm applicantForm,
-            @PathVariable final String locale,
             final BindingResult bindingResult,
             final HttpServletRequest request,
             final HttpServletResponse response
@@ -96,8 +100,11 @@ public class RecruiterApplicant {
                     user.getRecruiterId()
             );
             Long dealId = applicantForm.getDealId();
+            Locale locale = RequestContextUtils.getLocale(request);
 
-            return new ModelAndView("redirect:/" + locale + "/recruiter-show-in-progress-vacancy/" + dealId);
+            return new ModelAndView(
+                    urlResolver.buildRedirectUriLongParam("recruiter-show-in-progress-vacancy", dealId, locale)
+            );
         } catch (NotAffiliatedException e) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
             return null;
@@ -119,7 +126,7 @@ public class RecruiterApplicant {
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
-    @RequestMapping(value = "/{locale}/recruiter-edit-applicant/{applicantId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/recruiter-edit-applicant/{applicantId}", method = RequestMethod.GET)
     public ModelAndView editApplicant(
             @PathVariable final Long applicantId,
             final HttpServletRequest request,
@@ -148,7 +155,6 @@ public class RecruiterApplicant {
     /**
      * Controller for editing applicant with method POST
      * @param applicantForm         Model attribute for applicant
-     * @param locale                Locale
      * @param bindingResult         BindingResult
      * @param request               Http Request
      * @param response              Http Response
@@ -160,10 +166,9 @@ public class RecruiterApplicant {
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
-    @RequestMapping(value = "/{locale}/recruiter-edit-applicant/{applicantId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/recruiter-edit-applicant/{applicantId}", method = RequestMethod.POST)
     public ModelAndView updateApplicant(
             @Valid @ModelAttribute("applicantForm") final ApplicantForm applicantForm,
-            @PathVariable final String locale,
             final BindingResult bindingResult,
             final HttpServletRequest request,
             final HttpServletResponse response
@@ -184,7 +189,11 @@ public class RecruiterApplicant {
                     user.getRecruiterId()
             );
             Long dealId = applicantForm.getDealId();
-            return new ModelAndView("redirect:/" + locale + "/recruiter-show-in-progress-vacancy/" + dealId);
+            Locale locale = RequestContextUtils.getLocale(request);
+
+            return new ModelAndView(
+                    urlResolver.buildRedirectUriLongParam("recruiter-show-in-progress-vacancy", dealId, locale)
+            );
         } catch (NotAffiliatedException e) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
             return null;

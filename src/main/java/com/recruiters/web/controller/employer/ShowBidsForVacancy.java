@@ -40,7 +40,7 @@ public class ShowBidsForVacancy {
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
-    @RequestMapping(value = "/{locale}/employer-show-recruiter-bids/{vacancyId}")
+    @RequestMapping(value = "/employer-show-recruiter-bids/{vacancyId}")
     public ModelAndView employerVacanciesBids(
             @PathVariable final Long vacancyId,
             final HttpServletRequest request,

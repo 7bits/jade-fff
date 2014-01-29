@@ -5,16 +5,19 @@ import com.recruiters.model.User;
 import com.recruiters.service.RecruiterService;
 import com.recruiters.service.ServiceException;
 import com.recruiters.web.controller.utils.UserUtils;
+import com.recruiters.web.helper.UrlResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Shows deals for recruiter with all corresponding actions
@@ -28,6 +31,9 @@ public class RecruiterDeals {
     /** Recruiter Service provides all Recruiter related methods */
     @Autowired
     private RecruiterService recruiterService = null;
+    /** Url Builder */
+    @Autowired
+    private UrlResolver urlResolver;
 
     /**
      * Displays all active deals for current recruiter
@@ -61,18 +67,16 @@ public class RecruiterDeals {
      * Clear fire deals for current recruiter
      * @param request        Http Request
      * @param response       Http Response
-     * @param locale         Locale parameter in url
      * @return redirect to list of all active deals for current recruiter,
      * Internal Server Error page if something is wrong with performing
      * command due to technical or any other reasons
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
-    @RequestMapping(value = "/{locale}/recruiter-clear-fired-deals", method = RequestMethod.GET)
+    @RequestMapping(value = "/recruiter-clear-fired-deals", method = RequestMethod.GET)
     public String clearFiredDeals(
             final HttpServletRequest request,
-            final HttpServletResponse response,
-            @PathVariable final String locale
+            final HttpServletResponse response
     ) throws  Exception {
         try {
             User user = userUtils.getCurrentUser(request);
@@ -81,15 +85,15 @@ public class RecruiterDeals {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             return null;
         }
+        Locale locale = RequestContextUtils.getLocale(request);
 
-        return "redirect:/" + locale + "/recruiter-active-deals";
+        return  urlResolver.buildRedirectUri("recruiter-active-deals", locale);
     }
 
     /**
      * Clear approved deals for current recruiter
      * @param request        Http Request
      * @param response       Http Response
-     * @param locale         Locale parameter in url
      * @return redirect to list of all active deals for current recruiter,
      * Internal Server Error page if something is wrong with performing
      * command due to technical or any other reasons
@@ -99,8 +103,7 @@ public class RecruiterDeals {
     @RequestMapping(value = "/{locale}/recruiter-clear-approved-deals", method = RequestMethod.GET)
     public String clearApprovedDeals(
             final HttpServletRequest request,
-            final HttpServletResponse response,
-            @PathVariable final String locale
+            final HttpServletResponse response
     ) throws  Exception {
         try {
             User user = userUtils.getCurrentUser(request);
@@ -109,8 +112,9 @@ public class RecruiterDeals {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             return null;
         }
+        Locale locale = RequestContextUtils.getLocale(request);
 
-        return "redirect:/" + locale + "/recruiter-active-deals";
+        return  urlResolver.buildRedirectUri("recruiter-active-deals", locale);
     }
 
     public RecruiterService getRecruiterService() {

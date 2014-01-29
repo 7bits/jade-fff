@@ -99,10 +99,9 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
             }
             countryLanguages.put(language, countries);
         }
-        AttributeLocaleResolver localeResolver = new AttributeLocaleResolver(
-                countryLanguages,
-                new Locale(defaultLocale)
-        );
+        AttributeLocaleResolver localeResolver = attributeLocaleResolver();
+        localeResolver.setCountryLanguages(countryLanguages);
+        localeResolver.setDefaultLocale(new Locale(defaultLocale));
         return localeResolver;
     }
 
@@ -129,6 +128,11 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     @Bean
     public MessageResolver messageResolver() {
         return new MessageResolver();
+    }
+
+    @Bean
+    public AttributeLocaleResolver attributeLocaleResolver() {
+        return new AttributeLocaleResolver();
     }
 
     @Bean

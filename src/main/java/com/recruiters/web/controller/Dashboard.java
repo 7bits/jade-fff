@@ -1,5 +1,7 @@
 package com.recruiters.web.controller;
 
+import com.recruiters.web.helper.UrlResolver;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +16,8 @@ import java.util.Locale;
  */
 @Controller
 public class Dashboard {
+    @Autowired
+    private UrlResolver urlResolver;
 
     /**
      * Map employer role to employer start page, recruiter role to
@@ -26,14 +30,15 @@ public class Dashboard {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String routeByRole(final HttpServletRequest request
     ) {
+        Locale locale = RequestContextUtils.getLocale(request);
         if (request.isUserInRole("ROLE_RECRUITER")) {
-            return "redirect:/ru/recruiter-active-deals";
+            return urlResolver.buildRedirectUri("recruiter-active-deals", locale);
         }
         if (request.isUserInRole("ROLE_EMPLOYER")) {
-            return "redirect:/ru/employer-progress-vacancies-list";
+            return urlResolver.buildRedirectUri("employer-progress-vacancies-list", locale);
         }
 
-        return "redirect:/ru/login-page";
+        return urlResolver.buildRedirectUri("login-page", locale);
     }
 
 //    @RequestMapping(value = { "/{locale}", "/{locale}/j_*" }, method = RequestMethod.GET)
