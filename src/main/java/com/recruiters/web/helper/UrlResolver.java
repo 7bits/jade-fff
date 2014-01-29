@@ -59,6 +59,12 @@ public class UrlResolver {
         return changeLocale;
     }
 
+    /**
+     * Build uri for redirect
+     * @param uri       Page uri
+     * @param locale    Locale
+     * @return complete uri with redirect:
+     */
     public String buildRedirectUri(final String uri, final Locale locale) {
         String fullPath = "redirect:";
         fullPath += makeLocaleUrlPart(locale);
@@ -66,6 +72,14 @@ public class UrlResolver {
         return fullPath;
     }
 
+
+    /**
+     * Build uri for redirect with one parameter
+     * @param uri       Page uri
+     * @param locale    Locale
+     * @param param     Long type parameter
+     * @return complete uri with redirect:
+     */
     public String buildRedirectUriLongParam(final String uri, final Long param, final Locale locale) {
         String fullPath = "redirect:";
         fullPath += makeLocaleUrlPart(locale);
@@ -73,6 +87,12 @@ public class UrlResolver {
         return fullPath;
     }
 
+    /**
+     * Build uri suitable for web links (with application name in path)
+     * @param uri       Page uri
+     * @param locale    Locale
+     * @return complete uri with redirect:
+     */
     public String buildFullUri(final String uri, final Locale locale) {
         String fullPath = "/" + applicationName;
         fullPath += makeLocaleUrlPart(locale);
@@ -89,15 +109,15 @@ public class UrlResolver {
     public String buildRecruiterFilterUri(final VacanciesFilter vacanciesFilter, final Locale locale) {
         String link = "recruiter-find-new-vacancies";
         link += "?searchText=";
-        link += vacanciesFilter.getSearchText() == null ? "" : vacanciesFilter.getSearchText();
+        link += vacanciesFilter.getSearchText();
         link += "&showVacancies=";
-        link += vacanciesFilter.getShowVacancies() == null ? "" : vacanciesFilter.getShowVacancies();
+        link += vacanciesFilter.getShowVacancies();
         link += "&showBids=";
-        link += vacanciesFilter.getShowBids() == null ? "" : vacanciesFilter.getShowBids();
+        link += vacanciesFilter.getShowBids();
         link += "&showDeals=";
-        link += vacanciesFilter.getShowDeals() == null ? "" : vacanciesFilter.getShowDeals();
+        link += vacanciesFilter.getShowDeals();
         link += "&date=" + vacanciesFilter.getDate();
-
+        link += "&submit=Filter";
         return buildFullUri(link, locale);
     }
 

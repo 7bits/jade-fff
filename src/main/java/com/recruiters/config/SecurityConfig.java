@@ -57,10 +57,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .logoutSuccessUrl("/")
                     .permitAll()
                     .and()
-                .authorizeRequests()
-                .antMatchers("/**/recruiter*/**").hasRole("RECRUITER")
-                .antMatchers("/**/employer*/**").hasRole("EMPLOYER")
-                .antMatchers("/**/j_*").permitAll()
+                    .authorizeRequests()
+                    .antMatchers("/**/recruiter*/**").hasRole("RECRUITER")
+                    .antMatchers("/**/employer*/**").hasRole("EMPLOYER")
+                    .antMatchers("/**/j_*").permitAll()
                     .antMatchers("/**").permitAll()
                     .anyRequest().anonymous();
 

@@ -117,7 +117,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     }
 
     /**
-     * Configure Multi-part Resolver
+     * Create Bean for  Multi-part Resolver
      * @return Multi-part resolver
      */
     @Bean
@@ -125,16 +125,30 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         return new StandardServletMultipartResolver();
     }
 
+    /**
+     * Create Bean for Message Resolver
+     * @return Message Resolver
+     */
     @Bean
     public MessageResolver messageResolver() {
         return new MessageResolver();
     }
 
+    /**
+     * Create Bean for our custom Locale Resolver via attributes
+     * added with filter to Session scope
+     * @return Locale resolver
+     */
     @Bean
     public AttributeLocaleResolver attributeLocaleResolver() {
         return new AttributeLocaleResolver();
     }
 
+    /**
+     * Create and configure bean for Url Resolver, used to generate all uris
+     * and urls across whole application
+     * @return Url resolver singleton
+     */
     @Bean
     public UrlResolver urlResolver() {
         UrlResolver urlResolver = new UrlResolver();

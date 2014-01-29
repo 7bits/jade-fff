@@ -27,6 +27,12 @@ public class SecurityInitializerConfig extends AbstractSecurityWebApplicationIni
         insertFilters(servletContext, characterEncodingFilter);
     }
 
+    /**
+     * After Spring Security Handler
+     * We should include there filters that should be
+     * initialised after spring security     *
+     * @param servletContext    Servlet Context
+     */
     @Override
     protected void afterSpringSecurityFilterChain(final ServletContext servletContext) {
         LocaleUrlFilter localeUrlFilter = new LocaleUrlFilter();

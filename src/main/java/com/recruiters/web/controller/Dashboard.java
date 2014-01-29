@@ -40,20 +40,4 @@ public class Dashboard {
 
         return urlResolver.buildRedirectUri("login-page", locale);
     }
-
-//    @RequestMapping(value = { "/{locale}", "/{locale}/j_*" }, method = RequestMethod.GET)
-//    public String routeByRoleWithLocale(
-//            final HttpServletRequest request,
-//            @PathVariable final String locale
-//    ) {
-//
-//        if (request.isUserInRole("ROLE_RECRUITER")) {
-//            return "redirect:/" + locale + "/recruiter-active-deals";
-//        }
-//        if (request.isUserInRole("ROLE_EMPLOYER")) {
-//            return "redirect:/" + locale + "/employer-progress-vacancies-list";
-//        }
-//
-//        return "redirect:/" + locale + "/login-page";
-//    }
 }
