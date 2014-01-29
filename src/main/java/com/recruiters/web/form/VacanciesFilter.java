@@ -4,11 +4,12 @@ package com.recruiters.web.form;
  * Vacancy Search Filter Form
  */
 public class VacanciesFilter {
-    private String searchText = null;
-    private Boolean showVacancies = true;
-    private Boolean showBids = true;
-    private Boolean showDeals = true;
+    private String searchText = "";
+    private Boolean showVacancies = false;
+    private Boolean showBids = false;
+    private Boolean showDeals = false;
     private String date = "";
+    private String submit = null;
 
     public VacanciesFilter() {
     }
@@ -63,5 +64,13 @@ public class VacanciesFilter {
 
     public void setDate(final String date) {
         this.date = date;
+    }
+
+    public String getSubmit() {
+        return submit;
+    }
+
+    public void setSubmit(final String submit) {
+        this.submit = submit;
     }
 }

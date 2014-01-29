@@ -5,22 +5,22 @@ block append head
 block append content
   .container
     h1=fmt.message("recruiter-find-new-vacancies.h1", locale)
-    form(name="", action="", method="get")
+    form(name="vacanciesFilter", action="", method="get")
       .row
         .col-md-6
           .form-group
             label(for="searchText")
-            input(type="text", class="form-control", id="searchText", name="searchText", value=searchText, placeholder=fmt.message("recruiter-find-new-vacancies.form.search", locale))
+            input(type="text", class="form-control", id="searchText", name="searchText", value=vacanciesFilter.searchText, placeholder=fmt.message("recruiter-find-new-vacancies.form.search", locale))
           .checkbox
             label(for="showVacancies")=fmt.message("recruiter-find-new-vacancies.form.vacancies", locale)
-            input(type="checkbox", id="showVacancies", name="showVacancies", value="1", checked=showVacancies)
+            input(type="checkbox", id="showVacancies", name="showVacancies", value="1", checked=vacanciesFilter.showVacancies)
           .checkbox
             label(for="showBids")=fmt.message("recruiter-find-new-vacancies.form.bids", locale)
-            input(type="checkbox", id="showBids", name="showBids", value="1", checked=showBids)
+            input(type="checkbox", id="showBids", name="showBids", value="1", checked=vacanciesFilter.showBids)
           .checkbox
             label(for="showDeals")=fmt.message("recruiter-find-new-vacancies.form.deals", locale)
-            input(type="checkbox", id="showDeals", name="showDeals", value="1", checked=showDeals)
-            input(type="hidden", id="date", name="date", value=curDateParam)
+            input(type="checkbox", id="showDeals", name="showDeals", value="1", checked=vacanciesFilter.showDeals)
+            input(type="hidden", id="date", name="date", value=vacanciesFilter.date)
       .btn-row
         input.btn.btn-success(type="submit", name="submit", value=fmt.message("recruiter-find-new-vacancies.form.submit", locale))
     if locals.nextDate

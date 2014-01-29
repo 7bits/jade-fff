@@ -57,6 +57,12 @@ public class ShowVacancies {
         ModelAndView filteredVacancies = new ModelAndView("recruiter/recruiter-find-new-vacancies.jade");
         DateTimeUtils dateTimeUtils = new DateTimeUtils();
         Locale locale = RequestContextUtils.getLocale(request);
+        // On first visit make all checked
+        if (vacanciesFilter.getSubmit() == null) {
+            vacanciesFilter.setShowBids(true);
+            vacanciesFilter.setShowDeals(true);
+            vacanciesFilter.setShowVacancies(true);
+        }
         filteredVacancies.addObject("vacanciesFilter", vacanciesFilter);
 
         Date curDate;
