@@ -24,4 +24,4 @@ block append content
         .btn-row
           input(type="hidden", name=csrf.getParameterName(), value=csrf.getToken())
           input.btn.btn-primary(type="submit", name="submit", value=fmt.message("recruiter-show-vacancy.apply", locale))
-    a.btn.btn-link(href=domain.getAbsoluteUrl(locale) + "/recruiter-find-new-vacancies")=fmt.message("recruiter-show-vacancy.back", locale)
+    a.btn.btn-link(href=domain.buildFullUri("/recruiter-find-new-vacancies", locale))=fmt.message("recruiter-show-vacancy.back", locale)

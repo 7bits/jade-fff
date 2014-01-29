@@ -5,5 +5,5 @@ block append head
 block append content
   .container
     .navbar-header
-      a.navbar-brand(href=domain.getAbsoluteUrl(locale)).
+      a.navbar-brand(href=domain.buildFullUri("", locale)).
         #{fmt.message("error.404", locale)}

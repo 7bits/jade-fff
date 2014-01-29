@@ -47,6 +47,6 @@ block append content
             td #{fmt.date(deal.vacancy.creationDate, locale)}
             td
               if test.isApplicantEditable(applicant, deal)
-                a.btn.btn-link.pull-right(href= domain.getAbsoluteUrl(locale) + "/recruiter-edit-applicant/" + applicant.id)=fmt.message("recruiter-show-in-progress-vacancy.table.change", locale)
+                a.btn.btn-link.pull-right(href= domain.buildFullUri("/recruiter-edit-applicant/", applicant.id, locale))=fmt.message("recruiter-show-in-progress-vacancy.table.change", locale)
     if test.canAddApplicant(deal)
-      a.btn.btn-success(href= domain.getAbsoluteUrl(locale) + "/recruiter-add-applicant/" + deal.id)=fmt.message("recruiter-show-in-progress-vacancy.add", locale)
+      a.btn.btn-success(href= domain.buildFullUri("/recruiter-add-applicant/", deal.id, locale))=fmt.message("recruiter-show-in-progress-vacancy.add", locale)

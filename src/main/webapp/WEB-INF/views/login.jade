@@ -1,11 +1,11 @@
 extends layout
 
 block append head
-  link(href=domain.getResourceUrl() + '/stylesheets/form.css', rel='stylesheet', type='text/css')
+  link(href=domain.getResourceUrl('/stylesheets/form.css'), rel='stylesheet', type='text/css')
   title=fmt.message("login.title", locale)
 block append content
   .container
-    form.form-signin(role="form", action=domain.getAbsoluteUrl(locale) + "/j_spring_security_check", method="post")
+    form.form-signin(role="form", action=domain.buildFullUri("/j_spring_security_check", locale), method="post")
       h2.form-signin-heading=fmt.message("login.enter", locale)
       input.form-control(type="text", name="j_username", placeholder=fmt.message("login.username", locale), required="", autofocus="")
       input.form-control(type="password", name="j_password", placeholder=fmt.message("login.password", locale), required="")

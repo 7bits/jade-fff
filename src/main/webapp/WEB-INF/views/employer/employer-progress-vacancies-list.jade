@@ -21,6 +21,6 @@ block append content
             td #{fmt.date(deal.vacancy.creationDate, locale)}
             td #{deal.recruiter.user.firstName} #{deal.recruiter.user.lastName}
             td
-              a.btn.btn-link(href = domain.getAbsoluteUrl(locale) + "/employer-progress-vacancy-show/" + deal.id).
+              a.btn.btn-link(href = domain.buildFullUri("/employer-progress-vacancy-show/", deal.id, locale)).
                     #{fmt.message("employer-progress-vacancies-list.more", locale)}
     a.btn.btn-link(href="employer-vacancy-create")=fmt.message("employer-progress-vacancies-list.createVacancy", locale)

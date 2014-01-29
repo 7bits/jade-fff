@@ -1,6 +1,5 @@
 package com.recruiters.web.helper;
 
-import com.recruiters.web.controller.utils.DateTimeUtils;
 import com.recruiters.web.form.VacanciesFilter;
 import org.apache.commons.lang3.StringUtils;
 
@@ -22,22 +21,19 @@ public class UrlResolver {
     }
 
     /**
-     * Provide full application url with locale
-     * @return url of our app with locale
-     */
-    public String getAbsoluteUrl(final Locale locale) {
-        String fullPath = getApplicationUrl();
-        fullPath += makeLocaleUrlPart(locale);
-        return fullPath;
-    }
-
-    /**
      * Provide resources url
+     * @param uri    Uri of resource
      * @return resources url
      */
-    public String getResourceUrl() {
+    public String getResourceUrl(final String uri) {
         String fullPath = getApplicationUrl();
         fullPath += "/resources";
+        if (uri != null) {
+            if (!uri.startsWith("/")) {
+                fullPath += "/";
+            }
+        }
+        fullPath += uri;
         return fullPath;
     }
 
@@ -68,7 +64,12 @@ public class UrlResolver {
     public String buildRedirectUri(final String uri, final Locale locale) {
         String fullPath = "redirect:";
         fullPath += makeLocaleUrlPart(locale);
-        fullPath += "/" + uri;
+        if (uri != null) {
+            if (!uri.startsWith("/")) {
+                fullPath += "/";
+            }
+        }
+        fullPath += uri;
         return fullPath;
     }
 
@@ -83,7 +84,12 @@ public class UrlResolver {
     public String buildRedirectUriLongParam(final String uri, final Long param, final Locale locale) {
         String fullPath = "redirect:";
         fullPath += makeLocaleUrlPart(locale);
-        fullPath += "/" + uri + "/" + param;
+        if (uri != null) {
+            if (!uri.startsWith("/")) {
+                fullPath += "/";
+            }
+        }
+        fullPath += uri + "/" + param;
         return fullPath;
     }
 
@@ -96,7 +102,35 @@ public class UrlResolver {
     public String buildFullUri(final String uri, final Locale locale) {
         String fullPath = "/" + applicationName;
         fullPath += makeLocaleUrlPart(locale);
-        fullPath += "/" + uri;
+        if (uri != null) {
+            if (!uri.startsWith("/")) {
+                fullPath += "/";
+            }
+        }
+        fullPath += uri;
+        return fullPath;
+    }
+
+    /**
+     * Build uri suitable for web links (with application name in path)
+     * @param uri       Page uri
+     * @param param     Parameter of Long type
+     * @param locale    Locale
+     * @return complete uri with redirect:
+     */
+    public String buildFullUri(final String uri, final Long param, final Locale locale) {
+        String fullPath = "/" + applicationName;
+        fullPath += makeLocaleUrlPart(locale);
+        if (uri != null) {
+            if (!uri.startsWith("/")) {
+                fullPath += "/";
+            }
+            fullPath += uri;
+            if (!uri.endsWith("/")) {
+                fullPath += "/";
+            }
+        }
+        fullPath += param;
         return fullPath;
     }
 

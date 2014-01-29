@@ -21,4 +21,4 @@ block append content
             td #{fmt.bidStatus(bid.status, locale)}
             td #{fmt.date(bid.vacancy.creationDate, locale)}
             td
-              a.btn.btn-link(href=domain.getAbsoluteUrl(locale) + "/recruiter-show-bid-vacancy/" + bid.id)=fmt.message("recruiter-active-bids.more", locale)
+              a.btn.btn-link(href=domain.buildFullUri("/recruiter-show-bid-vacancy", bid.id, locale))=fmt.message("recruiter-active-bids.more", locale)

@@ -18,7 +18,7 @@ block append content
     if test.canModifyRecruiterBid(bid)
       .row
         .col-md-6
-          a.btn.btn-success(href=domain.getAbsoluteUrl(locale)+"/employer-recruiter-approve/" + bid.id, data-toggle="confirmation", data-placement="left", data-href= domain.getAbsoluteUrl(locale) + "/employer-recruiter-show/apply", data-original-title="", title="")
+          a.btn.btn-success(href=domain.buildFullUri("/employer-recruiter-approve/", bid.id, locale), data-toggle="confirmation", data-placement="left", data-original-title="", title="")
             #{fmt.message("employer-recruiter-show.apply", locale)}
-          a.btn.btn-danger(href=domain.getAbsoluteUrl(locale)+"/employer-recruiter-decline/" + bid.id, data-toggle="confirmation", data-placement="left", data-href= domain.getAbsoluteUrl(locale) + "/employer-recruiter-show/decline", data-original-title="", title="")
+          a.btn.btn-danger(href=domain.buildFullUri("/employer-recruiter-decline/", bid.id, locale), data-toggle="confirmation", data-placement="left", data-original-title="", title="")
             #{fmt.message("employer-recruiter-show.decline", locale)}

@@ -31,6 +31,6 @@ block append content
             td(title=deal.vacancy.creationDate) #{fmt.date(deal.vacancy.creationDate, locale)}
             td(title=deal.lastModified) #{fmt.date(deal.lastModified, locale)}
             td
-              a.btn.btn-link(href=domain.getAbsoluteUrl(locale) + "/recruiter-show-in-progress-vacancy/" + deal.id)=fmt.message("recruiter-active-deals.more", locale)
-    a.btn.btn-success(href=domain.getAbsoluteUrl(locale) + "/recruiter-clear-fired-deals")=fmt.message("recruiter-active-deals.clear.fired", locale)
-    a.btn.btn-success(href=domain.getAbsoluteUrl(locale) + "/recruiter-clear-approved-deals")=fmt.message("recruiter-active-deals.clear.approved", locale)
+              a.btn.btn-link(href=domain.buildFullUri("recruiter-show-in-progress-vacancy", deal.id, locale))=fmt.message("recruiter-active-deals.more", locale)
+    a.btn.btn-success(href=domain.buildFullUri("/recruiter-clear-fired-deals", locale))=fmt.message("recruiter-active-deals.clear.fired", locale)
+    a.btn.btn-success(href=domain.buildFullUri("/recruiter-clear-approved-deals", locale))=fmt.message("recruiter-active-deals.clear.approved", locale)

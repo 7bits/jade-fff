@@ -44,13 +44,13 @@ block append content
             if vacancy.dealId != 0
               td=fmt.message("recruiter-find-new-vacancies.table.deal", locale)
               td
-                a.btn.btn-link(href=domain.getAbsoluteUrl(locale) + "/recruiter-show-in-progress-vacancy/" + vacancy.dealId)=fmt.message("recruiter-find-new-vacancies.more", locale)
+                a.btn.btn-link(href=domain.buildFullUri("/recruiter-show-in-progress-vacancy/", vacancy.dealId, locale))=fmt.message("recruiter-find-new-vacancies.more", locale)
             else
               if vacancy.bidId != 0
                 td=fmt.message("recruiter-find-new-vacancies.table.bid", locale)
                 td
-                  a.btn.btn-link(href=domain.getAbsoluteUrl(locale) + "/recruiter-show-bid-vacancy/" + vacancy.bidId)=fmt.message("recruiter-find-new-vacancies.more", locale)
+                  a.btn.btn-link(href=domain.buildFullUri("/recruiter-show-bid-vacancy/", vacancy.bidId, locale))=fmt.message("recruiter-find-new-vacancies.more", locale)
               else
                 td
                 td
-                  a.btn.btn-link(href=domain.getAbsoluteUrl(locale) + "/recruiter-show-vacancy/" + vacancy.id)=fmt.message("recruiter-find-new-vacancies.more", locale)
+                  a.btn.btn-link(href=domain.buildFullUri("/recruiter-show-vacancy/", vacancy.id, locale))=fmt.message("recruiter-find-new-vacancies.more", locale)

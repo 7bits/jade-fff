@@ -31,7 +31,7 @@ block append content
                 dt=fmt.message("employer-progress-vacancy-show.recruiter.dt.fire_reason", locale)
                 dd #{deal.fireReason}
             if test.canFireRecruiter(deal)
-              form(name="", action=domain.getAbsoluteUrl(locale) + "/employer-fire-recruiter", method="post")
+              form(name="", action=domain.buildFullUri("/employer-fire-recruiter", locale), method="post")
                 .row
                   .col-md-6
                     textarea(class="form-control", name="message", placeholder=fmt.message("employer-progress-vacancy-show.recruiter.decline.reason", locale), rows="4")
@@ -46,5 +46,5 @@ block append content
           for applicant in deal.applicants
             li.list-group-item
               #{applicant.firstName} #{applicant.lastName}
-              a.btn.btn-link.pull-right(href = domain.getAbsoluteUrl(locale) + "/employer-applicant-show/" + applicant.id).
+              a.btn.btn-link.pull-right(href = domain.buildFullUri("/employer-applicant-show/", applicant.id, locale)).
                 #{fmt.message("employer-progress-vacancy-show.applicants.more", locale)}

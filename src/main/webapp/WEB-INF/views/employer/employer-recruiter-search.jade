@@ -8,6 +8,6 @@ block append content
     ol
       for vacancy in vacancies
         li
-          a.btn.btn-link.black(href = domain.getAbsoluteUrl(locale) + "/employer-show-recruiter-bids/" + vacancy.id)
+          a.btn.btn-link.black(href = domain.buildFullUri("/employer-show-recruiter-bids/", vacancy.id, locale))
             #{vacancy.title} &nbsp;
             | (#{vacancy.bidCount})

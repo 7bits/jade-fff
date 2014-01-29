@@ -12,7 +12,7 @@ block append content
           for bid in bids
             li.list-group-item
               #{bid.recruiter.user.firstName} #{bid.recruiter.user.lastName}
-              a.btn.btn-link.pull-right(href = domain.getAbsoluteUrl(locale) + "/employer-recruiter-show/" + bid.id).
+              a.btn.btn-link.pull-right(href = domain.buildFullUri("/employer-recruiter-show/", bid.id, locale)).
                 #{fmt.message("employer-show-recruiter-bids.more", locale)}
 
       .col-md-4

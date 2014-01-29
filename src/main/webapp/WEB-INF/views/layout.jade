@@ -4,26 +4,26 @@ html
     meta(charset="utf-8")
     block head
       script(src="http://code.jquery.com/jquery-2.0.3.js")
-      script(src=domain.getResourceUrl() + '/js/lib/bootstrap.js')
-      script(src=domain.getResourceUrl() + '/js/lib/bootstrap-confirmation.js')
-      script(src=domain.getResourceUrl() + '/js/lib/bootstrap-datepicker.js')
-      script(src=domain.getResourceUrl() + '/js/confirmation.js')
-      script(src=domain.getResourceUrl() + '/js/language.js')
-      link(href=domain.getResourceUrl() + '/stylesheets/lib/bootstrap.min.css', rel='stylesheet', type='text/css')
-      link(href=domain.getResourceUrl() + '/stylesheets/lib/bootstrap-theme.min.css', rel='stylesheet', type='text/css')
-      link(href=domain.getResourceUrl() + '/stylesheets/lib/datepicker.css', rel='stylesheet', type='text/css')
-      link(href=domain.getResourceUrl() + '/stylesheets/lib/font-awesome.min.css', rel='stylesheet', type='text/css')
-      link(href=domain.getResourceUrl() + '/stylesheets/colors.css', rel='stylesheet', type='text/css')
-      link(href=domain.getResourceUrl() + '/stylesheets/advanced-lists.css', rel='stylesheet', type='text/css')
-      link(href=domain.getResourceUrl() + '/stylesheets/table.css', rel='stylesheet', type='text/css')
-      link(href=domain.getResourceUrl() + '/stylesheets/buttons.css', rel='stylesheet', type='text/css')
-      link(href=domain.getResourceUrl() + '/stylesheets/new.css', rel='stylesheet', type='text/css')
+      script(src=domain.getResourceUrl('/js/lib/bootstrap.js'))
+      script(src=domain.getResourceUrl('/js/lib/bootstrap-confirmation.js'))
+      script(src=domain.getResourceUrl('/js/lib/bootstrap-datepicker.js'))
+      script(src=domain.getResourceUrl('/js/confirmation.js'))
+      script(src=domain.getResourceUrl('/js/language.js'))
+      link(href=domain.getResourceUrl('/stylesheets/lib/bootstrap.min.css'), rel='stylesheet', type='text/css')
+      link(href=domain.getResourceUrl('/stylesheets/lib/bootstrap-theme.min.css'), rel='stylesheet', type='text/css')
+      link(href=domain.getResourceUrl('/stylesheets/lib/datepicker.css'), rel='stylesheet', type='text/css')
+      link(href=domain.getResourceUrl('/stylesheets/lib/font-awesome.min.css'), rel='stylesheet', type='text/css')
+      link(href=domain.getResourceUrl('/stylesheets/colors.css'), rel='stylesheet', type='text/css')
+      link(href=domain.getResourceUrl('/stylesheets/advanced-lists.css'), rel='stylesheet', type='text/css')
+      link(href=domain.getResourceUrl('/stylesheets/table.css'), rel='stylesheet', type='text/css')
+      link(href=domain.getResourceUrl('/stylesheets/buttons.css'), rel='stylesheet', type='text/css')
+      link(href=domain.getResourceUrl('/stylesheets/new.css'), rel='stylesheet', type='text/css')
   body
     block content
       .navbar.navbar-default(role="navigation")
         .container
           .navbar-header
-            a.navbar-brand(href=domain.getAbsoluteUrl(locale)).
+            a.navbar-brand(href=domain.buildFullUri("", locale)).
               #{fmt.message("layout.logo", locale)}
             a.btn.btn-link#lang(href=domain.getLangChangeUrl())=fmt.message("language.change", locale)
           if security.isUserInRole("ROLE_RECRUITER")
@@ -35,20 +35,20 @@ html
                     b.caret
                   ul(class="dropdown-menu", role="menu", aria-labelledby="menu")
                     li(role="presentation")
-                      a(href=domain.getAbsoluteUrl(locale) + "/recruiter-profile", role="menuitem", tabindex="-1").
+                      a(href=domain.buildFullUri("/recruiter-profile", locale), role="menuitem", tabindex="-1").
                         #{fmt.message("layout.recruiter.profile", locale)}
                     li(role="presentation")
-                      a(href=domain.getAbsoluteUrl(locale) + "/recruiter-active-deals", role="menuitem", tabindex="-1").
+                      a(href=domain.buildFullUri("/recruiter-active-deals", locale), role="menuitem", tabindex="-1").
                         #{fmt.message("layout.recruiter.vacancies_in_progress", locale)}
                     li(role="presentation")
-                      a(href=domain.getAbsoluteUrl(locale) + "/recruiter-active-bids", role="menuitem", tabindex="-1").
+                      a(href=domain.buildFullUri("/recruiter-active-bids", locale), role="menuitem", tabindex="-1").
                         #{fmt.message("layout.recruiter.my_applications", locale)}
                     li(role="presentation")
-                      a(href=domain.getAbsoluteUrl(locale) + "/recruiter-find-new-vacancies", role="menuitem", tabindex="-1").
+                      a(href=domain.buildFullUri("/recruiter-find-new-vacancies", locale), role="menuitem", tabindex="-1").
                         #{fmt.message("layout.recruiter.vacancy_search", locale)}
                     li(role="presentation", class="divider")
                     li(role="presentation")
-                      form(action=domain.getAbsoluteUrl(locale) + "/j_spring_security_logout", method="post")
+                      form(action=domain.buildFullUri("/j_spring_security_logout", locale), method="post")
                         input.btn.btn-link(type="submit", name="submit", value=fmt.message("layout.exit", locale))
                         input(type="hidden", name=csrf.getParameterName(), value=csrf.getToken())
           if security.isUserInRole("ROLE_EMPLOYER")
@@ -60,16 +60,16 @@ html
                     b.caret
                   ul(class="dropdown-menu", role="menu", aria-labelledby="menu")
                     li(role="presentation")
-                      a(href=domain.getAbsoluteUrl(locale) + "/employer-profile", role="menuitem", tabindex="-1").
+                      a(href=domain.buildFullUri("/employer-profile", locale), role="menuitem", tabindex="-1").
                         #{fmt.message("layout.employer.profile", localey)}
                     li(role="presentation")
-                      a(href=domain.getAbsoluteUrl(locale) + "/employer-recruiter-search", role="menuitem", tabindex="-1").
+                      a(href=domain.buildFullUri"/employer-recruiter-search", (locale), role="menuitem", tabindex="-1").
                         #{fmt.message("layout.employer.recruiter_choose", locale)}
                     li(role="presentation")
-                      a(href=domain.getAbsoluteUrl(locale) + "/employer-progress-vacancies-list", role="menuitem", tabindex="-1").
+                      a(href=domain.buildFullUri("/employer-progress-vacancies-list", locale), role="menuitem", tabindex="-1").
                         #{fmt.message("layout.employer.recruiter_vacancies", locale)}
                     li(role="presentation", class="divider")
                     li(role="presentation")
-                      form(action=domain.getAbsoluteUrl(locale) + "/j_spring_security_logout", method="post")
+                      form(action=domain.buildFullUri("/j_spring_security_logout", locale), method="post")
                         input.btn.btn-link(type="submit", name="submit", value=fmt.message("layout.exit", locale))
                         input(type="hidden", name=csrf.getParameterName(), value=csrf.getToken())
