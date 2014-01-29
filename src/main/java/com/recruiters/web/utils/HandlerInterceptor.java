@@ -46,6 +46,8 @@ public class HandlerInterceptor extends HandlerInterceptorAdapter {
     static final String CSRF_RESOLVER_NAME = "csrf";
     /** Condition Tester Helper name */
     static final String CONDITION_TESTER_NAME = "test";
+    /** Current uri, needed for language switching */
+    static final String CURRENT_URI = "uri";
 
     private String protocol = null;
     private String server = null;
@@ -124,6 +126,9 @@ public class HandlerInterceptor extends HandlerInterceptorAdapter {
 
             // User resolver
             mav.addObject(SECURITY_SERVICE_NAME, new UserResolver());
+
+            // User resolver
+            mav.addObject(CURRENT_URI, request.getServletPath());
         }
     }
 

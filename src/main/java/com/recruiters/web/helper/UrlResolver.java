@@ -39,19 +39,17 @@ public class UrlResolver {
 
     /**
      * Return url for language switch
+     * @param uri       Uri of current page without app name
+     * @param locale    Current locale
      * @return full url of the same page with locale in url changed
      */
-    public String getLangChangeUrl() {
-//        String countryCode = (String) request.getAttribute(LocaleUrlFilter.getCountryCodeAttributeName());
-//        //String langCode = (String) request.getAttribute(LocaleUrlFilter.getLanguageCodeAttributeName());
+    public String getLangChangeUrl(final String uri, final Locale locale) {
         String changeLocale;
-//        if (countryCode.equals("us")) {
-//            changeLocale = getApplicationUrl() + "ru/" + request.getServletPath();
-//        } else {
-//            changeLocale = getApplicationUrl() + "us/en" + request.getServletPath();
-//        }
-
-        changeLocale = "#";
+        if (locale.getLanguage().equals("en")) {
+            changeLocale = buildFullUri(uri, new Locale("ru"));
+        } else {
+            changeLocale = buildFullUri(uri, new Locale("en", "us"));
+        }
         return changeLocale;
     }
 
