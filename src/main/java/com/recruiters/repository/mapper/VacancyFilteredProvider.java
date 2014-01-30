@@ -8,13 +8,19 @@ import java.util.Map;
  * Create SQL query for Filtered List of Vacancies
  */
 public class VacancyFilteredProvider {
+
+    /** Default string size, used for string builder */
+    private static final Integer DEFAULT_STRING_SIZE = 2048;
+
     /**
      * Creating SQL query for getting specific list of vacancies
      * @param params    Parameters prepared by MyBatis
      * @return sql query
      */
-    public static String selectVacancyFiltered(Map params) {
-        String sqlQuery = "SELECT * FROM ( " +
+    public static String selectVacancyFiltered(final Map params) {
+        StringBuilder sqlQuery = new StringBuilder(DEFAULT_STRING_SIZE);
+
+        sqlQuery.append("SELECT * FROM ( " +
                 "SELECT vacancies.*, users.firstname, users.lastname, " +
                 "bids.id as bid_id, deals.id as deal_id " +
                 "FROM vacancies " +
@@ -24,22 +30,22 @@ public class VacancyFilteredProvider {
                 "LEFT JOIN deals ON deals.vacancy_id=vacancies.id AND deals.recruiter_id=#{recruiterId} " +
                 "WHERE vacancies.status NOT LIKE 'ARCHIVED' AND DATE(vacancies.creation_date)=#{date} " +
                 "AND NOT EXISTS " +
-                "(SELECT * FROM deals WHERE vacancy_id=vacancies.id AND recruiter_id!=#{recruiterId}) ";
+                "(SELECT * FROM deals WHERE vacancy_id=vacancies.id AND recruiter_id!=#{recruiterId}) ");
         Object text = params.get("searchLikeText");
         if (text instanceof String) {
         String searchLikeText = (String) text;
         if (!searchLikeText.isEmpty()) {
-            sqlQuery += "AND (vacancies.title LIKE #{searchLikeText} " +
-                    "OR vacancies.description LIKE #{searchLikeText})  ";
+            sqlQuery.append("AND (vacancies.title LIKE #{searchLikeText} " +
+                    "OR vacancies.description LIKE #{searchLikeText})  ");
         }
         }
-        sqlQuery += ") " +
-                "as all_vacancies ";
+        sqlQuery.append(") as all_vacancies ");
         Object specification =  params.get("vacancySpecification");
         if (specification instanceof VacancySpecification) {
             VacancySpecification vacancySpecification = (VacancySpecification) specification;
-            sqlQuery += " WHERE " + vacancySpecification.asSql();
+            sqlQuery.append(" WHERE ");
+            sqlQuery.append(vacancySpecification.asSql());
         }
-        return sqlQuery;
+        return sqlQuery.toString();
     }
 }

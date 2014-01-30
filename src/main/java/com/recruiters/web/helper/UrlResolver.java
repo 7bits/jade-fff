@@ -15,6 +15,8 @@ public class UrlResolver {
     private String server = null;
     private String port = null;
     private String applicationName = null;
+    /** Default string size, used for string builder */
+    private static final Integer DEFAULT_STRING_SIZE = 255;
 
 
     public UrlResolver() {
@@ -26,15 +28,16 @@ public class UrlResolver {
      * @return resources url
      */
     public String getResourceUrl(final String uri) {
-        String fullPath = getApplicationUrl();
-        fullPath += "/resources";
+        StringBuilder resourceUrl = new StringBuilder(DEFAULT_STRING_SIZE);
+        resourceUrl.append(getApplicationUrl());
+        resourceUrl.append("/resources");
         if (uri != null) {
             if (!uri.startsWith("/")) {
-                fullPath += "/";
+                resourceUrl.append("/");
             }
         }
-        fullPath += uri;
-        return fullPath;
+        resourceUrl.append(uri);
+        return resourceUrl.toString();
     }
 
     /**
@@ -60,15 +63,16 @@ public class UrlResolver {
      * @return complete uri with redirect:
      */
     public String buildRedirectUri(final String uri, final Locale locale) {
-        String fullPath = "redirect:";
-        fullPath += makeLocaleUrlPart(locale);
+        StringBuilder redirectUri = new StringBuilder(DEFAULT_STRING_SIZE);
+        redirectUri.append("redirect:");
+        redirectUri.append(makeLocaleUrlPart(locale));
         if (uri != null) {
             if (!uri.startsWith("/")) {
-                fullPath += "/";
+                redirectUri.append("/");
             }
         }
-        fullPath += uri;
-        return fullPath;
+        redirectUri.append(uri);
+        return redirectUri.toString();
     }
 
 
@@ -80,15 +84,18 @@ public class UrlResolver {
      * @return complete uri with redirect:
      */
     public String buildRedirectUri(final String uri, final Long param, final Locale locale) {
-        String fullPath = "redirect:";
-        fullPath += makeLocaleUrlPart(locale);
+        StringBuilder redirectUri = new StringBuilder(DEFAULT_STRING_SIZE);
+        redirectUri.append("redirect:");
+        redirectUri.append(makeLocaleUrlPart(locale));
         if (uri != null) {
             if (!uri.startsWith("/")) {
-                fullPath += "/";
+                redirectUri.append("/");
             }
         }
-        fullPath += uri + "/" + param;
-        return fullPath;
+        redirectUri.append(uri);
+        redirectUri.append("/");
+        redirectUri.append(param);
+        return redirectUri.toString();
     }
 
     /**
@@ -98,15 +105,17 @@ public class UrlResolver {
      * @return complete uri with redirect:
      */
     public String buildFullUri(final String uri, final Locale locale) {
-        String fullPath = "/" + applicationName;
-        fullPath += makeLocaleUrlPart(locale);
+        StringBuilder fullUri = new StringBuilder(DEFAULT_STRING_SIZE);
+        fullUri.append("/");
+        fullUri.append(applicationName);
+        fullUri.append(makeLocaleUrlPart(locale));
         if (uri != null) {
             if (!uri.startsWith("/")) {
-                fullPath += "/";
+                fullUri.append("/");
             }
         }
-        fullPath += uri;
-        return fullPath;
+        fullUri.append(uri);
+        return fullUri.toString();
     }
 
     /**
@@ -117,19 +126,21 @@ public class UrlResolver {
      * @return complete uri with redirect:
      */
     public String buildFullUri(final String uri, final Long param, final Locale locale) {
-        String fullPath = "/" + applicationName;
-        fullPath += makeLocaleUrlPart(locale);
+        StringBuilder fullUri = new StringBuilder(DEFAULT_STRING_SIZE);
+        fullUri.append("/");
+        fullUri.append(applicationName);
+        fullUri.append(makeLocaleUrlPart(locale));
         if (uri != null) {
             if (!uri.startsWith("/")) {
-                fullPath += "/";
+                fullUri.append("/");
             }
-            fullPath += uri;
+            fullUri.append(uri);
             if (!uri.endsWith("/")) {
-                fullPath += "/";
+                fullUri.append("/");
             }
         }
-        fullPath += param;
-        return fullPath;
+        fullUri.append(param);
+        return fullUri.toString();
     }
 
     /**
@@ -139,18 +150,20 @@ public class UrlResolver {
      * @return uri with params
      */
     public String buildRecruiterFilterUri(final VacanciesFilter vacanciesFilter, final Locale locale) {
-        String link = "recruiter-find-new-vacancies";
-        link += "?searchText=";
-        link += vacanciesFilter.getSearchText();
-        link += "&showVacancies=";
-        link += vacanciesFilter.getShowVacancies();
-        link += "&showBids=";
-        link += vacanciesFilter.getShowBids();
-        link += "&showDeals=";
-        link += vacanciesFilter.getShowDeals();
-        link += "&date=" + vacanciesFilter.getDate();
-        link += "&submit=Filter";
-        return buildFullUri(link, locale);
+        StringBuilder uri = new StringBuilder(DEFAULT_STRING_SIZE);
+        uri.append("recruiter-find-new-vacancies");
+        uri.append("?searchText=");
+        uri.append(vacanciesFilter.getSearchText());
+        uri.append("&showVacancies=");
+        uri.append(vacanciesFilter.getShowVacancies());
+        uri.append("&showBids=");
+        uri.append(vacanciesFilter.getShowBids());
+        uri.append("&showDeals=");
+        uri.append(vacanciesFilter.getShowDeals());
+        uri.append("&date=");
+        uri.append(vacanciesFilter.getDate());
+        uri.append("&submit=Filter");
+        return buildFullUri(uri.toString(), locale);
     }
 
 
@@ -191,29 +204,36 @@ public class UrlResolver {
      * Provide full application url
      * @return url of our app
      */
-    private String getApplicationUrl() {
-        String fullPath = protocol + "://" + server;
+    private StringBuilder getApplicationUrl() {
+        StringBuilder url = new StringBuilder(DEFAULT_STRING_SIZE);
+        url.append(protocol);
+        url.append("://");
+        url.append(server);
         if (!StringUtils.isBlank(port)) {
-            fullPath += ":" + port;
+            url.append(":");
+            url.append(port);
         }
         if (!StringUtils.isBlank(applicationName)) {
-            fullPath += "/" + applicationName;
+            url.append("/");
+            url.append(applicationName);
         }
-        return fullPath;
+        return url;
     }
 
-    private String makeLocaleUrlPart(final Locale locale) {
-        String fullPath = "";
+    private StringBuilder makeLocaleUrlPart(final Locale locale) {
+        StringBuilder urlPart = new StringBuilder(DEFAULT_STRING_SIZE);
         if (locale != null) {
             String country = locale.getCountry().toLowerCase();
             String language = locale.getLanguage().toLowerCase();
             if (!language.isEmpty()) {
-                fullPath += "/" + language;
+                urlPart.append("/");
+                urlPart.append(language);
                 if (!country.isEmpty()) {
-                    fullPath += "/" + country;
+                    urlPart.append("/");
+                    urlPart.append(country);
                 }
             }
         }
-        return fullPath;
+        return urlPart;
     }
 }
