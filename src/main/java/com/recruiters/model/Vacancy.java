@@ -16,7 +16,7 @@ public class Vacancy {
     private Long salaryTo;
     private Date creationDate;
     private Date expirationDate;
-    private String testFile;
+    private Attachment testFile;
     private VacancyStatus status = null;
     private Long bidCount = 0L;
     private Long bidId = 0L;
@@ -40,7 +40,7 @@ public class Vacancy {
 
     public Vacancy(final Long id, final Employer employer, final String title,
                    final String description, final Long salaryFrom, final Long salaryTo,
-                   final Date creationDate, final Date expirationDate, final String testFile) {
+                   final Date creationDate, final Date expirationDate, final Attachment testFile) {
         this.id = id;
         this.employer = employer;
         this.title = title;
@@ -117,11 +117,11 @@ public class Vacancy {
         this.expirationDate = expirationDate;
     }
 
-    public String getTestFile() {
+    public Attachment getTestFile() {
         return testFile;
     }
 
-    public void setTestFile(final String testFile) {
+    public void setTestFile(final Attachment testFile) {
         this.testFile = testFile;
     }
 

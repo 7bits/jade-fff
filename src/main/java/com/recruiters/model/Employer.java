@@ -10,6 +10,10 @@ public class Employer {
     public Employer() {
     }
 
+    public Employer(final Long id) {
+        this.id = id;
+    }
+
     public Employer(final Long id, final User user) {
         this.id = id;
         this.user = user;

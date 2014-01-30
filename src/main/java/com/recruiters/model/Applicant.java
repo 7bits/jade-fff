@@ -13,8 +13,8 @@ public class Applicant {
     private String description;
     private String sex;
     private Integer age;
-    private String resumeFile;
-    private String testAnswerFile;
+    private Attachment resumeFile;
+    private Attachment testAnswerFile;
     private ApplicantStatus status = null;
     private Boolean viewed = false;
 
@@ -31,7 +31,7 @@ public class Applicant {
 
     public Applicant(final Long id, final Deal deal, final String firstName,
                      final String lastName, final String description, final String sex,
-                     final Integer age, final String resumeFile, final String testAnswerFile) {
+                     final Integer age, final Attachment resumeFile, final Attachment testAnswerFile) {
         this.id = id;
         this.deal = deal;
         this.firstName = firstName;
@@ -84,19 +84,19 @@ public class Applicant {
         this.description = description;
     }
 
-    public String getResumeFile() {
+    public Attachment getResumeFile() {
         return resumeFile;
     }
 
-    public void setResumeFile(final String resumeFile) {
+    public void setResumeFile(final Attachment resumeFile) {
         this.resumeFile = resumeFile;
     }
 
-    public String getTestAnswerFile() {
+    public Attachment getTestAnswerFile() {
         return testAnswerFile;
     }
 
-    public void setTestAnswerFile(final String testAnswerFile) {
+    public void setTestAnswerFile(final Attachment testAnswerFile) {
         this.testAnswerFile = testAnswerFile;
     }
 

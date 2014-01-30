@@ -15,8 +15,8 @@ public class ApplicantForm {
     private String description = null;
     private MultipartFile resumeFile = null;
     private MultipartFile testAnswerFile = null;
-    private String linkToResumeFile = null;
-    private String linkToTestAnswerFile = null;
+    private Long resumeFileId = null;
+    private Long testAnswerFileId = null;
 
     public ApplicantForm() {
     }
@@ -33,11 +33,13 @@ public class ApplicantForm {
         this.firstName = applicant.getFirstName();
         this.lastName = applicant.getLastName();
         this.description = applicant.getDescription();
-        this.linkToResumeFile = applicant.getResumeFile();
-        this.linkToTestAnswerFile = applicant.getTestAnswerFile();
-        //TODO
-        // temporary solve for dealId (replace by: this.dealId = applicant.getDeal().getId() )
-        this.dealId = applicant.getDeal() != null ? applicant.getDeal().getId() : 1L;
+        if (applicant.getResumeFile() != null) {
+            this.resumeFileId = applicant.getResumeFile().getId();
+        }
+        if (applicant.getTestAnswerFile() != null) {
+            this.testAnswerFileId = applicant.getTestAnswerFile().getId();
+        }
+        this.dealId = applicant.getDeal() != null ? applicant.getDeal().getId() : 0L;
     }
 
     public Applicant fillModel() {
@@ -107,19 +109,19 @@ public class ApplicantForm {
         this.testAnswerFile = testAnswerFile;
     }
 
-    public String getLinkToResumeFile() {
-        return linkToResumeFile;
+    public Long getResumeFileId() {
+        return resumeFileId;
     }
 
-    public void setLinkToResumeFile(final String linkToResumeFile) {
-        this.linkToResumeFile = linkToResumeFile;
+    public void setResumeFileId(final Long resumeFileId) {
+        this.resumeFileId = resumeFileId;
     }
 
-    public String getLinkToTestAnswerFile() {
-        return linkToTestAnswerFile;
+    public Long getTestAnswerFileId() {
+        return testAnswerFileId;
     }
 
-    public void setLinkToTestAnswerFile(final String linkToTestAnswerFile) {
-        this.linkToTestAnswerFile = linkToTestAnswerFile;
+    public void setTestAnswerFileId(final Long testAnswerFileId) {
+        this.testAnswerFileId = testAnswerFileId;
     }
 }

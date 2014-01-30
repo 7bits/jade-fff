@@ -1,6 +1,7 @@
 package com.recruiters.service;
 
 import com.recruiters.model.Applicant;
+import com.recruiters.model.Attachment;
 import com.recruiters.model.status.ApplicantStatus;
 import com.recruiters.model.Bid;
 import com.recruiters.model.status.BidStatus;
@@ -14,7 +15,7 @@ import com.recruiters.repository.ApplicantRepository;
 import com.recruiters.repository.BidRepository;
 import com.recruiters.repository.DealRepository;
 import com.recruiters.repository.EmployerRepository;
-import com.recruiters.repository.FileRepository;
+import com.recruiters.repository.AttachmentRepository;
 import com.recruiters.repository.UserRepository;
 import com.recruiters.repository.VacancyRepository;
 import com.recruiters.service.exception.NotAffiliatedException;
@@ -39,7 +40,7 @@ public class EmployerService {
 
     /** Files Repository provides files manipulation methods */
     @Autowired
-    private FileRepository fileRepository = null;
+    private AttachmentRepository attachmentRepository = null;
     /** Vacancies Repository provides Vacancy DAO */
     @Autowired
     private VacancyRepository vacancyRepository = null;
@@ -546,7 +547,7 @@ public class EmployerService {
             final MultipartFile testFile
     ) throws ServiceException {
         try {
-            String fileNameForTestFile = fileRepository.saveFile(testFile);
+            Attachment fileNameForTestFile = attachmentRepository.save(testFile, "test", null, null);
             vacancy.setTestFile(fileNameForTestFile);
             if (vacancy.getId().equals(0L)) {
                 return vacancyRepository.create(vacancy);
@@ -608,11 +609,11 @@ public class EmployerService {
         this.userRepository = userRepository;
     }
 
-    public FileRepository getFileRepository() {
-        return fileRepository;
+    public AttachmentRepository getAttachmentRepository() {
+        return attachmentRepository;
     }
 
-    public void setFileRepository(final FileRepository fileRepository) {
-        this.fileRepository = fileRepository;
+    public void setAttachmentRepository(final AttachmentRepository attachmentRepository) {
+        this.attachmentRepository = attachmentRepository;
     }
 }

@@ -26,7 +26,7 @@ public interface VacancyMapper {
             @Result(column = "salary_to", property = "salaryTo"),
             @Result(column = "creation_date", property = "creationDate"),
             @Result(column = "expiration_date", property = "expirationDate"),
-            @Result(column = "test_file", property = "testFile"),
+            @Result(column = "test_file", property = "testFile.id"),
             @Result(column = "firstname", property = "employer.user.firstName"),
             @Result(column = "lastname", property = "employer.user.lastName")
     })
@@ -49,7 +49,7 @@ public interface VacancyMapper {
             @Result(column = "salary_to", property = "salaryTo"),
             @Result(column = "creation_date", property = "creationDate"),
             @Result(column = "expiration_date", property = "expirationDate"),
-            @Result(column = "test_file", property = "testFile"),
+            @Result(column = "test_file", property = "testFile.id"),
             @Result(column = "firstname", property = "employer.user.firstName"),
             @Result(column = "lastname", property = "employer.user.lastName"),
             @Result(column = "bid_id", property = "bidId"),
@@ -67,7 +67,7 @@ public interface VacancyMapper {
             @Result(column = "salary_to", property = "salaryTo"),
             @Result(column = "creation_date", property = "creationDate"),
             @Result(column = "expiration_date", property = "expirationDate"),
-            @Result(column = "test_file", property = "testFile"),
+            @Result(column = "test_file", property = "testFile.id"),
             @Result(column = "firstname", property = "employer.user.firstName"),
             @Result(column = "lastname", property = "employer.user.lastName"),
             @Result(column = "bid_id", property = "bidId"),
@@ -98,7 +98,7 @@ public interface VacancyMapper {
             @Result(column = "salary_to", property = "salaryTo"),
             @Result(column = "creation_date", property = "creationDate"),
             @Result(column = "expiration_date", property = "expirationDate"),
-            @Result(column = "test_file", property = "testFile"),
+            @Result(column = "test_file", property = "testFile.id"),
             @Result(column = "bid_count", property = "bidCount"),
             @Result(column = "firstname", property = "employer.user.firstName"),
             @Result(column = "lastname", property = "employer.user.lastName")
@@ -113,7 +113,7 @@ public interface VacancyMapper {
             "test_file, status) " +
             "VALUES (#{employer.id}, #{title}, #{description}, " +
             "#{salaryFrom}, #{salaryTo}, #{creationDate}, #{expirationDate}, " +
-            "#{testFile}, #{status})")
+            "#{testFile.id}, #{status})")
     @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
     Long create(final Vacancy vacancy);
 }

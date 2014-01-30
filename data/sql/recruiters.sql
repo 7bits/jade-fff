@@ -18,25 +18,27 @@ CREATE TABLE IF NOT EXISTS `applicants` (
   `description` varchar(255) NOT NULL,
   `sex` varchar(50) DEFAULT NULL,
   `age` int(11) DEFAULT NULL,
-  `resume_file` varchar(255) DEFAULT NULL,
-  `test_answer_file` varchar(255) DEFAULT NULL,
+  `resume_file` bigint(20) DEFAULT NULL,
+  `test_answer_file` bigint(20) DEFAULT NULL,
   `status` varchar(50) NOT NULL DEFAULT 'IN_PROGRESS',
   `viewed` tinyint(1) NOT NULL DEFAULT '0',
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `deal` (`deal_id`)
+  KEY `deal` (`deal_id`),
+  KEY `resume_file` (`resume_file`),
+  KEY `test_answer_file` (`test_answer_file`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
 
 
 INSERT INTO `applicants` (`id`, `deal_id`, `first_name`, `last_name`, `description`, `sex`, `age`, `resume_file`, `test_answer_file`, `status`, `viewed`, `updated_date`) VALUES
-(1, 1, 'Александр', 'Иванов', 'Программирую даже во сне', 'Мужской', 34, '#', '#', 'IN_PROGRESS', 1, '2014-01-22 04:17:39'),
-(2, 1, 'Павел', 'Никифоров', 'Круто программирует на всём', 'Мужской', 45, '#', '#', 'IN_PROGRESS', 1, '2014-01-22 04:17:40'),
-(3, 2, 'Михаил', 'Луценко', 'Чиню любые трубы: пластик', 'Мужской', 42, '#', '#', 'IN_PROGRESS', 0, '2014-01-22 04:13:37'),
-(4, 3, 'Афанасий', 'Афанасьев', 'фывавы', NULL, NULL, '', '', 'IN_PROGRESS', 0, '2014-01-22 04:15:41'),
-(5, 3, 'Михаил', 'Платонов', 'Аккак', NULL, NULL, '', '', 'IN_PROGRESS', 0, '2014-01-22 04:15:53'),
-(6, 1, 'Игорь', 'Вавилов', 'Папаапап', NULL, NULL, '', '', 'IN_PROGRESS', 0, '2014-01-22 04:16:14'),
-(7, 1, 'Олег', 'Кошевой', 'ываыва', NULL, NULL, '', '', 'REJECTED', 1, '2014-01-22 04:18:08'),
-(8, 1, 'Константин', 'Никольский', 'ыаыв', NULL, NULL, '', '', 'IN_PROGRESS', 0, '2014-01-22 04:16:36');
+(1, 1, 'Александр', 'Иванов', 'Программирую даже во сне', 'Мужской', 34, NULL, NULL, 'IN_PROGRESS', 1, '2014-01-22 04:17:39'),
+(2, 1, 'Павел', 'Никифоров', 'Круто программирует на всём', 'Мужской', 45, NULL, NULL, 'IN_PROGRESS', 1, '2014-01-22 04:17:40'),
+(3, 2, 'Михаил', 'Луценко', 'Чиню любые трубы: пластик', 'Мужской', 42, NULL, NULL, 'IN_PROGRESS', 0, '2014-01-22 04:13:37'),
+(4, 3, 'Афанасий', 'Афанасьев', 'фывавы', NULL, NULL, NULL, NULL, 'IN_PROGRESS', 0, '2014-01-22 04:15:41'),
+(5, 3, 'Михаил', 'Платонов', 'Аккак', NULL, NULL, NULL, NULL, 'IN_PROGRESS', 0, '2014-01-22 04:15:53'),
+(6, 1, 'Игорь', 'Вавилов', 'Папаапап', NULL, NULL, NULL, NULL, 'IN_PROGRESS', 0, '2014-01-22 04:16:14'),
+(7, 1, 'Олег', 'Кошевой', 'ываыва', NULL, NULL, NULL, NULL, 'REJECTED', 1, '2014-01-22 04:18:08'),
+(8, 1, 'Константин', 'Никольский', 'ыаыв', NULL, NULL, NULL, NULL, 'IN_PROGRESS', 0, '2014-01-22 04:16:36');
 
 -- --------------------------------------------------------
 
@@ -169,26 +171,44 @@ CREATE TABLE IF NOT EXISTS `vacancies` (
   `creation_date` timestamp NOT NULL DEFAULT '1970-01-01 00:00:01',
   `expiration_date` timestamp NOT NULL DEFAULT '2038-01-19 00:00:00',
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `test_file` varchar(255) NOT NULL,
+  `test_file` bigint(20) DEFAULT NULL,
   `status` varchar(50) NOT NULL DEFAULT 'ACTIVE',
   PRIMARY KEY (`id`),
-  KEY `employer_id` (`employer_id`)
+  KEY `employer_id` (`employer_id`),
+  KEY `test_file` (`test_file`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
 
 
 INSERT INTO `vacancies` (`id`, `employer_id`, `title`, `description`, `salary_from`, `salary_to`, `creation_date`, `expiration_date`, `updated_date`, `test_file`, `status`) VALUES
-(1, 1, 'Лесоруб', 'Должен уметь рубить лес', 10000, 15000, '2014-01-20 04:36:42', '2014-02-08 17:00:00', '2014-01-22 04:13:37', '#', 'ACTIVE'),
-(2, 1, 'Сантехник', 'Не должен пить!', 20000, 20000, '2014-01-20 04:36:40', '2014-02-16 17:00:00', '2014-01-22 04:13:37', '#', 'ACTIVE'),
-(3, 1, 'Программист', 'Уметь программировать на С++', 100000, 100000, '2014-01-21 04:36:38', '2014-02-14 17:00:00', '2014-01-22 04:13:37', '#', 'ACTIVE'),
-(4, 2, 'Банщик', 'Парит и шпарит', 20000, 25000, '2014-01-14 11:43:41', '2014-02-22 17:00:00', '2014-01-22 04:13:37', '#', 'ACTIVE'),
-(5, 2, 'Водитель', 'Водитель маршрутного такси на полный рабочий день.', 30000, 40000, '2014-01-22 11:44:43', '2014-02-16 17:00:00', '2014-01-22 04:13:37', '#', 'ACTIVE'),
-(6, 3, 'Токарь', 'Токарь 3-го разряда', 15000, 20000, '2014-01-22 11:45:38', '2014-02-16 17:00:00', '2014-01-22 04:13:37', '#', 'ACTIVE'),
-(7, 1, 'Техник', 'Техник технический 2го разряда', 22000, 27000, '2014-01-23 00:00:00', '2014-02-13 00:00:00', '2014-01-22 00:00:00', '#', 'ACTIVE');
+(1, 1, 'Лесоруб', 'Должен уметь рубить лес', 10000, 15000, '2014-01-20 04:36:42', '2014-02-08 17:00:00', '2014-01-22 04:13:37', NULL, 'ACTIVE'),
+(2, 1, 'Сантехник', 'Не должен пить!', 20000, 20000, '2014-01-20 04:36:40', '2014-02-16 17:00:00', '2014-01-22 04:13:37', NULL, 'ACTIVE'),
+(3, 1, 'Программист', 'Уметь программировать на С++', 100000, 100000, '2014-01-21 04:36:38', '2014-02-14 17:00:00', '2014-01-22 04:13:37', NULL, 'ACTIVE'),
+(4, 2, 'Банщик', 'Парит и шпарит', 20000, 25000, '2014-01-14 11:43:41', '2014-02-22 17:00:00', '2014-01-22 04:13:37', NULL, 'ACTIVE'),
+(5, 2, 'Водитель', 'Водитель маршрутного такси на полный рабочий день.', 30000, 40000, '2014-01-22 11:44:43', '2014-02-16 17:00:00', '2014-01-22 04:13:37', NULL, 'ACTIVE'),
+(6, 3, 'Токарь', 'Токарь 3-го разряда', 15000, 20000, '2014-01-22 11:45:38', '2014-02-16 17:00:00', '2014-01-22 04:13:37', NULL, 'ACTIVE'),
+(7, 1, 'Техник', 'Техник технический 2го разряда', 22000, 27000, '2014-01-23 00:00:00', '2014-02-13 00:00:00', '2014-01-22 00:00:00', NULL, 'ACTIVE');
+
+
+DROP TABLE IF EXISTS `attachments`;
+CREATE TABLE IF NOT EXISTS `attachments` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `system_filename` varchar(255) NOT NULL,
+  `public_filename` varchar(255) NOT NULL,
+  `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `employer_id` bigint(20) DEFAULT NULL,
+  `recruiter_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `system_filename` (`system_filename`),
+  KEY `employer_id` (`employer_id`),
+  KEY `recruiter_id` (`recruiter_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 
 ALTER TABLE `applicants`
-  ADD CONSTRAINT `applicants_ibfk_1` FOREIGN KEY (`deal_id`) REFERENCES `deals` (`id`);
+  ADD CONSTRAINT `applicants_ibfk_1` FOREIGN KEY (`deal_id`) REFERENCES `deals` (`id`),
+  ADD CONSTRAINT `applicants_ibfk_2` FOREIGN KEY (`resume_file`) REFERENCES `attachments` (`id`),
+  ADD CONSTRAINT `applicants_ibfk_3` FOREIGN KEY (`test_answer_file`) REFERENCES `attachments` (`id`);
 
 
 ALTER TABLE `bids`
@@ -210,7 +230,13 @@ ALTER TABLE `recruiters`
 
 
 ALTER TABLE `vacancies`
-  ADD CONSTRAINT `vacancies_ibfk_1` FOREIGN KEY (`employer_id`) REFERENCES `employers` (`id`);
+  ADD CONSTRAINT `vacancies_ibfk_1` FOREIGN KEY (`employer_id`) REFERENCES `employers` (`id`),
+  ADD CONSTRAINT `vacancies_ibfk_2` FOREIGN KEY (`test_file`) REFERENCES `attachments` (`id`);
+
+ALTER TABLE `attachments`
+  ADD CONSTRAINT `attachments_ibfk_2` FOREIGN KEY (`recruiter_id`) REFERENCES `recruiters` (`id`),
+  ADD CONSTRAINT `attachments_ibfk_1` FOREIGN KEY (`employer_id`) REFERENCES `employers` (`id`);
+
 SET FOREIGN_KEY_CHECKS=1;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

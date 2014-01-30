@@ -1,6 +1,7 @@
 package com.recruiters.service;
 
 import com.recruiters.model.Applicant;
+import com.recruiters.model.Attachment;
 import com.recruiters.model.Bid;
 import com.recruiters.model.Deal;
 import com.recruiters.model.status.DealStatus;
@@ -8,10 +9,10 @@ import com.recruiters.model.Recruiter;
 import com.recruiters.model.User;
 import com.recruiters.model.Vacancy;
 import com.recruiters.repository.ApplicantRepository;
+import com.recruiters.repository.AttachmentRepository;
 import com.recruiters.repository.BidRepository;
 import com.recruiters.repository.DealRepository;
 import com.recruiters.repository.EmployerRepository;
-import com.recruiters.repository.FileRepository;
 import com.recruiters.repository.RecruiterRepository;
 import com.recruiters.repository.UserRepository;
 import com.recruiters.repository.VacancyRepository;
@@ -34,7 +35,7 @@ public class RecruiterService {
 
     /** Files Repository provides files manipulation methods */
     @Autowired
-    private FileRepository fileRepository = null;
+    private AttachmentRepository attachmentRepository = null;
     /** Vacancies Repository provides Vacancy DAO */
     @Autowired
     private VacancyRepository vacancyRepository = null;
@@ -313,12 +314,30 @@ public class RecruiterService {
             deal = dealRepository.findById(applicant.getDeal().getId());
             if (deal.getRecruiter().getId().equals(recruiterId) &&
                     deal.getStatus().equals(DealStatus.IN_PROGRESS)) {
-                /* TODO: Make FileService instead of FileRepository and use it in Web-layer.
-                Use file names at this method */
-                String fileNameForResume =  this.getFileRepository().saveFile(resumeFile);
-                String fileNameForTestAnswers = this.getFileRepository().saveFile(testAnswerFile);
-                applicant.setResumeFile(fileNameForResume);
-                applicant.setTestAnswerFile(fileNameForTestAnswers);
+                if (!resumeFile.isEmpty()) {
+                    Integer extensionStart = resumeFile.getOriginalFilename().lastIndexOf(".");
+                    String filename = applicant.getFirstName().substring(0, 1) +
+                            "_" + applicant.getLastName() + "_resume" +
+                            resumeFile.getOriginalFilename().substring(extensionStart);
+                    Attachment fileNameForResume =  this.getAttachmentRepository().save(
+                            resumeFile,
+                            filename,
+                            recruiterId,
+                            deal.getVacancy().getEmployer().getId());
+                    applicant.setResumeFile(fileNameForResume);
+                }
+                if (!testAnswerFile.isEmpty()) {
+                    Integer extensionStart = testAnswerFile.getOriginalFilename().lastIndexOf(".");
+                    String filename = applicant.getFirstName().substring(0, 1) +
+                            "_" + applicant.getLastName() + "_test_answer" +
+                            testAnswerFile.getOriginalFilename().substring(extensionStart);
+                    Attachment fileNameForTestAnswers = this.getAttachmentRepository().save(
+                            testAnswerFile,
+                            filename,
+                            recruiterId,
+                            deal.getVacancy().getEmployer().getId());
+                    applicant.setTestAnswerFile(fileNameForTestAnswers);
+                }
                 if (applicant.getId().equals(0L)) {
                     return this.getApplicantRepository().create(applicant);
                 } else {
@@ -429,12 +448,12 @@ public class RecruiterService {
         }
     }
 
-    public FileRepository getFileRepository() {
-        return fileRepository;
+    public AttachmentRepository getAttachmentRepository() {
+        return attachmentRepository;
     }
 
-    public void setFileRepository(final FileRepository fileRepository) {
-        this.fileRepository = fileRepository;
+    public void setAttachmentRepository(final AttachmentRepository attachmentRepository) {
+        this.attachmentRepository = attachmentRepository;
     }
 
     public ApplicantRepository getApplicantRepository() {

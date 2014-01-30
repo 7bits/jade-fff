@@ -22,10 +22,14 @@ block append content
             #{errors.description}
           .form-group
             label(for="resumeFile")=fmt.message("recruiter-edit-applicant.resumeFile", locale)
+            if applicantForm.resumeFileId
+              a.btn.btn-link(href=domain.buildFullUri("/recruiter-download-attachment/", applicantForm.resumeFileId, locale))=fmt.message("recruiter-edit-applicant.resumeExists", locale)
             input(type="file", id="resumeFile", name="resumeFile", placeholder=fmt.message("recruiter-edit-applicant.resumeFile", locale), value=applicantForm.resumeFile)
             #{errors.resumeFile}
           .form-group
             label(for="testAnswerFile")=fmt.message("recruiter-edit-applicant.testAnswerFile", locale)
+            if applicantForm.testAnswerFileId
+              a.btn.btn-link(href=domain.buildFullUri("/recruiter-download-attachment/", applicantForm.testAnswerFileId, locale))=fmt.message("recruiter-edit-applicant.testAnswerExists", locale)
             input(type="file", id="testAnswerFile", name="testAnswerFile", placeholder=fmt.message("recruiter-edit-applicant.testAnswerFile", locale), value=applicantForm.testAnswerFile)
             #{errors.testAnswerFile}
           .form-group

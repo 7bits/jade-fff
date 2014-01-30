@@ -33,8 +33,8 @@ public interface ApplicantMapper {
             @Result(column = "description", property = "description"),
             @Result(column = "sex", property = "sex"),
             @Result(column = "age", property = "age"),
-            @Result(column = "resume_file", property = "resumeFile"),
-            @Result(column = "test_answer_file", property = "testAnswerFile"),
+            @Result(column = "resume_file", property = "resumeFile.id"),
+            @Result(column = "test_answer_file", property = "testAnswerFile.id"),
             @Result(column = "status", property = "status"),
             @Result(column = "deal_id", property = "deal.id"),
             @Result(column = "vacancy_id", property = "deal.vacancy.id"),
@@ -60,8 +60,8 @@ public interface ApplicantMapper {
             @Result(column = "description", property = "description"),
             @Result(column = "sex", property = "sex"),
             @Result(column = "age", property = "age"),
-            @Result(column = "resume_file", property = "resumeFile"),
-            @Result(column = "test_answer_file", property = "testAnswerFile"),
+            @Result(column = "resume_file", property = "resumeFile.id"),
+            @Result(column = "test_answer_file", property = "testAnswerFile.id"),
             @Result(column = "status", property = "status"),
             @Result(column = "deal_id", property = "deal.id"),
             @Result(column = "vacancy_id", property = "deal.vacancy.id"),
@@ -73,13 +73,13 @@ public interface ApplicantMapper {
     @Insert("INSERT INTO applicants (deal_id, first_name, last_name, description, " +
             "sex, age, resume_file, test_answer_file) " +
             "VALUES (#{deal.id}, #{firstName}, #{lastName}, #{description}, " +
-            "#{sex}, #{age}, #{resumeFile}, #{testAnswerFile})")
+            "#{sex}, #{age}, #{resumeFile.id}, #{testAnswerFile.id})")
     void create(final Applicant applicant);
 
     @Update("UPDATE applicants SET first_name=#{firstName}, " +
             "last_name=#{lastName}, description=#{description}, " +
             "sex=#{sex}, age=#{age}, " +
-            "resume_file=#{resumeFile}, test_answer_file=#{testAnswerFile} " +
+            "resume_file=#{resumeFile.id}, test_answer_file=#{testAnswerFile.id} " +
             "WHERE id=#{id}")
     void update(final Applicant applicant);
 
