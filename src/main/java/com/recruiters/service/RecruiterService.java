@@ -15,6 +15,7 @@ import com.recruiters.repository.FileRepository;
 import com.recruiters.repository.RecruiterRepository;
 import com.recruiters.repository.UserRepository;
 import com.recruiters.repository.VacancyRepository;
+import com.recruiters.web.form.VacanciesFilter;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -96,15 +97,14 @@ public class RecruiterService {
      */
     public List<Vacancy> findFilteredVacanciesForRecruiter(
             final Long recruiterId,
-            final String date,
-            final String searchText,
-            final Boolean showVacancies,
-            final Boolean showBids,
-            final Boolean showDeals
+            final VacanciesFilter vacanciesFilter
     ) throws ServiceException {
         try {
             return vacancyRepository.findFilteredVacanciesForRecruiter(
-                    recruiterId, date, searchText, showVacancies, showBids, showDeals
+                    recruiterId,
+                    vacanciesFilter.getDate(),
+                    vacanciesFilter.getSearchText(),
+                    vacanciesFilter.getSpecifications()
             );
         } catch (Exception e) {
             log.error(SERVICE_EXCEPTION_MESSAGE, e);

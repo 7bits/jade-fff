@@ -2,6 +2,7 @@ package com.recruiters.repository.mapper;
 
 import com.recruiters.model.Vacancy;
 import com.recruiters.model.VacancyStatus;
+import com.recruiters.repository.specification.VacancySpecification;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -56,26 +57,7 @@ public interface VacancyMapper {
     })
     Vacancy findByIdAndRecruiterId(@Param("vacancyId") final Long vacancyId, @Param("recruiterId") final Long recruiterId);
 
-    @Select("<script>" +
-            "SELECT * FROM (" +
-            "SELECT vacancies.*, users.firstname, users.lastname, " +
-            "bids.id as bid_id, deals.id as deal_id " +
-            "FROM vacancies " +
-            "INNER JOIN employers ON employers.id = vacancies.employer_id " +
-            "INNER JOIN users  ON employers.user_id=users.id " +
-            "LEFT JOIN bids ON bids.vacancy_id=vacancies.id AND bids.recruiter_id=#{recruiterId} " +
-            "LEFT JOIN deals ON deals.vacancy_id=vacancies.id AND deals.recruiter_id=#{recruiterId} " +
-            "WHERE vacancies.status NOT LIKE 'ARCHIVED' AND DATE(vacancies.creation_date)=#{date} " +
-            "AND NOT EXISTS " +
-            "(SELECT * FROM deals WHERE vacancy_id=vacancies.id AND recruiter_id!=#{recruiterId}) " +
-            "<if test=\"searchLikeText != null\">AND (vacancies.title LIKE #{searchLikeText} " +
-            "OR vacancies.description LIKE #{searchLikeText})  </if>) " +
-            "as all_vacancies " +
-            "WHERE 0 " +
-            "<if test=\"showVacancies == true\">OR (deal_id IS NULL AND bid_id IS NULL)  </if>" +
-            "<if test=\"showBids == true\">OR (deal_id IS NULL AND bid_id IS NOT NULL)  </if>" +
-            "<if test=\"showDeals == true\">OR deal_id IS NOT NULL  </if>" +
-            "</script>")
+    @SelectProvider(type = VacancyFilteredProvider.class, method = "selectVacancyFiltered")
     @Results({
             @Result(column = "id", property = "id"),
             @Result(column = "employer_id", property = "employer.id"),
@@ -95,9 +77,7 @@ public interface VacancyMapper {
             @Param("recruiterId") final Long recruiterId,
             @Param("date") final String date,
             @Param("searchLikeText") final String searchLikeText,
-            @Param("showVacancies") final Boolean showVacancies,
-            @Param("showBids") final Boolean showBids,
-            @Param("showDeals") final Boolean showDeals
+            @Param("vacancySpecification") final VacancySpecification vacancySpecification
                                                     );
 
     @Select("SELECT vacancies.*, count(bids.id) as bid_count, " +

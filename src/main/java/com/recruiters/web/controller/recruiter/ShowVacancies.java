@@ -95,11 +95,7 @@ public class ShowVacancies {
             User user = userUtils.getCurrentUser(request);
             List<Vacancy> vacancies = recruiterService.findFilteredVacanciesForRecruiter(
                     user.getRecruiterId(),
-                    vacanciesFilter.getDate(),
-                    vacanciesFilter.getSearchText(),
-                    vacanciesFilter.getShowVacancies(),
-                    vacanciesFilter.getShowBids(),
-                    vacanciesFilter.getShowDeals()
+                    vacanciesFilter
             );
             filteredVacancies.addObject("vacancies", vacancies);
         } catch (ServiceException e) {

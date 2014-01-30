@@ -3,6 +3,7 @@ package com.recruiters.repository;
 import com.recruiters.model.Vacancy;
 import com.recruiters.model.VacancyStatus;
 import com.recruiters.repository.mapper.VacancyMapper;
+import com.recruiters.repository.specification.VacancySpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -79,9 +80,7 @@ public class VacancyRepository {
             final Long recruiterId,
             final String date,
             final String searchText,
-            final Boolean showVacancies,
-            final Boolean showBids,
-            final Boolean showDeals
+            final VacancySpecification vacancySpecification
     ) throws RepositoryException {
         if (recruiterId == null) {
             throw new RepositoryException("recruiterId is null");
@@ -90,10 +89,12 @@ public class VacancyRepository {
             // prepare LIKE parameter
             String likeSearchText = null;
             if (searchText != null) {
-                likeSearchText = "%" + searchText + "%";
+                if (!searchText.isEmpty()) {
+                    likeSearchText = "%" + searchText + "%";
+                }
             }
             return vacancyMapper.findFilteredVacanciesForRecruiter(
-                    recruiterId, date, likeSearchText, showVacancies, showBids, showDeals
+                    recruiterId, date, likeSearchText, vacancySpecification
             );
         } catch (Exception e) {
             throw new RepositoryException("General database error: ", e);

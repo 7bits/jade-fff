@@ -1,5 +1,11 @@
 package com.recruiters.web.form;
 
+import com.recruiters.repository.specification.VacancyBidSpecification;
+import com.recruiters.repository.specification.VacancyCleanVacancySpecification;
+import com.recruiters.repository.specification.VacancyDealSpecification;
+import com.recruiters.repository.specification.VacancySpecification;
+
+
 /**
  * Vacancy Search Filter Form
  */
@@ -24,6 +30,17 @@ public class VacanciesFilter {
         showBids = vacanciesFilter.getShowBids();
         showDeals = vacanciesFilter.getShowDeals();
         date = vacanciesFilter.getDate();
+    }
+
+    public VacancySpecification getSpecifications() {
+        if (showVacancies && !showBids && !showDeals) return new VacancyCleanVacancySpecification();
+        if (!showVacancies && showBids && !showDeals) return new VacancyBidSpecification();
+        if (!showVacancies && !showBids && showDeals) return new VacancyDealSpecification();
+        if (showVacancies && showBids && !showDeals) return new VacancyCleanVacancySpecification().or(new VacancyBidSpecification());
+        if (showVacancies && !showBids && showDeals) return new VacancyCleanVacancySpecification().or(new VacancyDealSpecification());
+        if (!showVacancies && showBids && showDeals) return new VacancyDealSpecification().or(new VacancyBidSpecification());
+        if (showVacancies && showDeals && showBids) return new VacancyCleanVacancySpecification().or(new VacancyBidSpecification().or(new VacancyDealSpecification()));
+        return null;
     }
 
     public String getSearchText() {
