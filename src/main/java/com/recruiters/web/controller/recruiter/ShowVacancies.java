@@ -57,11 +57,9 @@ public class ShowVacancies {
         ModelAndView filteredVacancies = new ModelAndView("recruiter/recruiter-find-new-vacancies.jade");
         DateTimeUtils dateTimeUtils = new DateTimeUtils();
         Locale locale = RequestContextUtils.getLocale(request);
-        // On first visit make all checked
+        // If this is first page visit
         if (vacanciesFilter.getSubmit() == null) {
-            vacanciesFilter.setShowBids(true);
-            vacanciesFilter.setShowDeals(true);
-            vacanciesFilter.setShowVacancies(true);
+            defaultVacanciesFilter(vacanciesFilter);
         }
         filteredVacancies.addObject("vacanciesFilter", vacanciesFilter);
 
@@ -73,23 +71,23 @@ public class ShowVacancies {
             curDate = dateTimeUtils.urlDateParse(vacanciesFilter.getDate());
         }
 
-        // If requested date is not today
+        // If requested date is not today we need next date link
         if (!dateTimeUtils.isToday(curDate)) {
             Date nextDate = dateTimeUtils.nextDay(curDate);
-            VacanciesFilter vacanciesFilterNext = new VacanciesFilter(vacanciesFilter);
-            vacanciesFilterNext.setDate(dateTimeUtils.dateUrlFormat(nextDate));
-            String nextDateLink = urlResolver.buildRecruiterFilterUri(vacanciesFilterNext, locale);
             filteredVacancies.addObject("nextDate", nextDate);
-            filteredVacancies.addObject("nextDateLink", nextDateLink);
+            filteredVacancies.addObject(
+                    "nextDateLink",
+                    buildFilterLinkByDate(nextDate, vacanciesFilter, locale)
+            );
         }
 
         Date prevDate = dateTimeUtils.previousDay(curDate);
-        VacanciesFilter vacanciesFilterPrev = new VacanciesFilter(vacanciesFilter);
-        vacanciesFilterPrev.setDate(dateTimeUtils.dateUrlFormat(prevDate));
-        String prevDateLink = urlResolver.buildRecruiterFilterUri(vacanciesFilterPrev, locale);
         filteredVacancies.addObject("curDate", curDate);
         filteredVacancies.addObject("prevDate", prevDate);
-        filteredVacancies.addObject("prevDateLink", prevDateLink);
+        filteredVacancies.addObject(
+                "prevDateLink",
+                buildFilterLinkByDate(prevDate, vacanciesFilter, locale)
+        );
 
         try {
             User user = userUtils.getCurrentUser(request);
@@ -104,6 +102,37 @@ public class ShowVacancies {
         }
 
         return filteredVacancies;
+    }
+
+    /**
+     * Default settings for Vacancies Filter
+     * @param vacanciesFilter    Vacancies Filter
+     * @return Vacancies Filter filled out with default settings
+     */
+    private VacanciesFilter defaultVacanciesFilter(final VacanciesFilter vacanciesFilter) {
+        vacanciesFilter.setShowBids(true);
+        vacanciesFilter.setShowDeals(true);
+        vacanciesFilter.setShowVacancies(true);
+        return vacanciesFilter;
+    }
+
+    /**
+     * Build link for list of vacancies on exact date
+     * with filter with exact locale prefix
+     * @param date               Date
+     * @param vacanciesFilter    Vacancies Filter
+     * @param locale             Locale
+     * @return build uri for filtered list of vacancies
+     */
+    private String buildFilterLinkByDate(
+            final Date date,
+            final VacanciesFilter vacanciesFilter,
+            final Locale locale
+    ) {
+        DateTimeUtils dateTimeUtils = new DateTimeUtils();
+        VacanciesFilter vacanciesFilterNext = new VacanciesFilter(vacanciesFilter);
+        vacanciesFilterNext.setDate(dateTimeUtils.dateUrlFormat(date));
+        return urlResolver.buildRecruiterFilterUri(vacanciesFilterNext, locale);
     }
 
     public RecruiterService getRecruiterService() {
