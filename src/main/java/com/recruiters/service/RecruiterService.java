@@ -22,10 +22,12 @@ import com.recruiters.service.exception.ServiceException;
 import com.recruiters.web.form.VacanciesFilter;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Service for Recruiter
@@ -57,6 +59,9 @@ public class RecruiterService {
     /** Bid Repository provides Bid DAO */
     @Autowired
     private BidRepository bidRepository = null;
+    /** Message source */
+    @Autowired
+    private MessageSource messageSource = null;
     /** Logger */
     private final Logger log = Logger.getLogger(RecruiterService.class);
     /** Default message for ServiceException */
@@ -296,6 +301,7 @@ public class RecruiterService {
      * @param resumeFile        Applicant Resume File
      * @param testAnswerFile    Test Answers File
      * @param recruiterId       Id of recruiter
+     * @param locale            Locale
      * @return Applicant instance if applicant deal belongs to
      * recruiter requested apply and there were no any technical issues
      * @throws NotAffiliatedException if applicant deal not belongs to
@@ -307,7 +313,8 @@ public class RecruiterService {
             final Applicant applicant,
             final MultipartFile resumeFile,
             final MultipartFile testAnswerFile,
-            final Long recruiterId
+            final Long recruiterId,
+            final Locale locale
     ) throws NotAffiliatedException, ServiceException {
         Deal deal;
         try {
@@ -317,7 +324,8 @@ public class RecruiterService {
                 if (!resumeFile.isEmpty()) {
                     Integer extensionStart = resumeFile.getOriginalFilename().lastIndexOf(".");
                     String filename = applicant.getFirstName().substring(0, 1) +
-                            "_" + applicant.getLastName() + "_resume" +
+                            "." + applicant.getLastName() +
+                            messageSource.getMessage("file.resume.suffix", null, locale) +
                             resumeFile.getOriginalFilename().substring(extensionStart);
                     Attachment fileNameForResume =  this.getAttachmentRepository().save(
                             resumeFile,
@@ -329,7 +337,8 @@ public class RecruiterService {
                 if (!testAnswerFile.isEmpty()) {
                     Integer extensionStart = testAnswerFile.getOriginalFilename().lastIndexOf(".");
                     String filename = applicant.getFirstName().substring(0, 1) +
-                            "_" + applicant.getLastName() + "_test_answer" +
+                            "." + applicant.getLastName() +
+                            messageSource.getMessage("file.testAnswers.suffix", null, locale) +
                             testAnswerFile.getOriginalFilename().substring(extensionStart);
                     Attachment fileNameForTestAnswers = this.getAttachmentRepository().save(
                             testAnswerFile,

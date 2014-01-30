@@ -85,6 +85,7 @@ public class RecruiterApplicant {
             final HttpServletRequest request,
             final HttpServletResponse response
     ) throws Exception {
+        Locale locale = RequestContextUtils.getLocale(request);
         if (bindingResult.hasErrors()) {
             ModelAndView model = new ModelAndView("recruiter/recruiter-add-applicant.jade");
             model.addObject("applicantForm", applicantForm);
@@ -99,10 +100,10 @@ public class RecruiterApplicant {
                     applicantForm.fillModel(),
                     applicantForm.getResumeFile(),
                     applicantForm.getTestAnswerFile(),
-                    user.getRecruiterId()
+                    user.getRecruiterId(),
+                    locale
             );
             Long dealId = applicantForm.getDealId();
-            Locale locale = RequestContextUtils.getLocale(request);
 
             return new ModelAndView(
                     urlResolver.buildRedirectUri("recruiter-show-in-progress-vacancy", dealId, locale)
@@ -175,6 +176,7 @@ public class RecruiterApplicant {
             final HttpServletRequest request,
             final HttpServletResponse response
     ) throws Exception {
+        Locale locale = RequestContextUtils.getLocale(request);
         if (bindingResult.hasErrors()) {
             ModelAndView model = new ModelAndView("recruiter/recruiter-edit-applicant.jade");
             model.addObject("applicantForm", applicantForm);
@@ -188,10 +190,10 @@ public class RecruiterApplicant {
                     applicantForm.fillModel(),
                     applicantForm.getResumeFile(),
                     applicantForm.getTestAnswerFile(),
-                    user.getRecruiterId()
+                    user.getRecruiterId(),
+                    locale
             );
             Long dealId = applicantForm.getDealId();
-            Locale locale = RequestContextUtils.getLocale(request);
 
             return new ModelAndView(
                     urlResolver.buildRedirectUri("recruiter-show-in-progress-vacancy", dealId, locale)
