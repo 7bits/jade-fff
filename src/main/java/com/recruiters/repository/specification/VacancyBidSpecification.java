@@ -3,7 +3,7 @@ package com.recruiters.repository.specification;
 import com.recruiters.model.Vacancy;
 
 /**
- * Created by fairdev on 29.01.14.
+ * Vacancy is Bid specification
  */
 public class VacancyBidSpecification extends VacancySpecification {
 

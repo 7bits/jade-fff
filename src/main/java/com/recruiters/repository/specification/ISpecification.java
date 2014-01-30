@@ -1,7 +1,7 @@
 package com.recruiters.repository.specification;
 
 /**
- * Created by fairdev on 29.01.14.
+ * Generic Specification interface
  */
 interface ISpecification<Entity> {
     Boolean isSatisfiedBy(final Entity candidate);

@@ -32,14 +32,34 @@ public class VacanciesFilter {
         date = vacanciesFilter.getDate();
     }
 
+    /**
+     * Specification builder
+     * @return Vacancy Specification
+     */
     public VacancySpecification getSpecifications() {
-        if (showVacancies && !showBids && !showDeals) return new VacancyCleanVacancySpecification();
-        if (!showVacancies && showBids && !showDeals) return new VacancyBidSpecification();
-        if (!showVacancies && !showBids && showDeals) return new VacancyDealSpecification();
-        if (showVacancies && showBids && !showDeals) return new VacancyCleanVacancySpecification().or(new VacancyBidSpecification());
-        if (showVacancies && !showBids && showDeals) return new VacancyCleanVacancySpecification().or(new VacancyDealSpecification());
-        if (!showVacancies && showBids && showDeals) return new VacancyDealSpecification().or(new VacancyBidSpecification());
-        if (showVacancies && showDeals && showBids) return new VacancyCleanVacancySpecification().or(new VacancyBidSpecification().or(new VacancyDealSpecification()));
+        if (showVacancies && !showBids && !showDeals) {
+            return new VacancyCleanVacancySpecification();
+        }
+        if (!showVacancies && showBids && !showDeals) {
+            return new VacancyBidSpecification();
+        }
+        if (!showVacancies && !showBids && showDeals) {
+            return new VacancyDealSpecification();
+        }
+        if (showVacancies && showBids && !showDeals) {
+            return new VacancyCleanVacancySpecification().or(new VacancyBidSpecification());
+        }
+        if (showVacancies && !showBids && showDeals) {
+            return new VacancyCleanVacancySpecification().or(new VacancyDealSpecification());
+        }
+        if (!showVacancies && showBids && showDeals) {
+            return new VacancyDealSpecification().or(new VacancyBidSpecification());
+        }
+        if (showVacancies && showDeals && showBids) {
+            return new VacancyCleanVacancySpecification()
+                    .or(new VacancyBidSpecification()
+                            .or(new VacancyDealSpecification()));
+        }
         return null;
     }
 

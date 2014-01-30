@@ -87,12 +87,8 @@ public class RecruiterService {
 
     /**
      * Find and return filtered vacancies list for certain recruiter
-     * @param recruiterId    Id of recruiter
-     * @param date           Date in "YYYY-MM-DD" format
-     * @param searchText     Search text, can be empty, so will bot be used
-     * @param showVacancies  Show vacancies without bids or not
-     * @param showBids       Show bids or not
-     * @param showDeals      Show deals or not
+     * @param recruiterId        Id of recruiter
+     * @param vacanciesFilter    Vacancies Filter object
      * @return List of filtered Vacancies which is available for bidding by
      * this recruiter
      * @throws ServiceException if cannot obtain Vacancy instances from

@@ -3,7 +3,7 @@ package com.recruiters.repository.specification;
 import com.recruiters.model.Vacancy;
 
 /**
- * Created by fairdev on 29.01.14.
+ * Abstract Vacancy Specification
  */
 public abstract class VacancySpecification implements ISpecification<Vacancy> {
 

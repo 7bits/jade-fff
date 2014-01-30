@@ -66,12 +66,10 @@ public class VacancyRepository {
     /**
      * Find and return List of Vacancies for Recruiter
      * Depends on filter properties.
-     * @param recruiterId    Id of recruiter
-     * @param date           Date in "YYYY-MM-DD" format
-     * @param searchText     Search text, can be empty, so will not be used
-     * @param showVacancies  Show vacancies without bids or not
-     * @param showBids       Show bids or not
-     * @param showDeals      Show deals or not
+     * @param recruiterId             Id of recruiter
+     * @param date                    Date in "YYYY-MM-DD" format
+     * @param searchText              Search text, can be empty, so will not be used
+     * @param vacancySpecification    Vacancy Specification
      * @return List of vacancies with no bids and deals from certain recruiter
      * @throws RepositoryException if input parameter is incorrect or there
      * were any technical issues

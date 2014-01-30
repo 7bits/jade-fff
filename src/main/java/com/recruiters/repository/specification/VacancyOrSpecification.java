@@ -3,7 +3,7 @@ package com.recruiters.repository.specification;
 import com.recruiters.model.Vacancy;
 
 /**
- * Created by fairdev on 30.01.14.
+ * Vacancy logic "OR" specification
  */
 public class VacancyOrSpecification extends VacancySpecification {
     private ISpecification<Vacancy> specification1;

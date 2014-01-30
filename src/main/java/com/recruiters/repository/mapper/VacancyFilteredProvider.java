@@ -1,14 +1,18 @@
 package com.recruiters.repository.mapper;
 
 import com.recruiters.repository.specification.VacancySpecification;
-import org.apache.ibatis.jdbc.SQL;
 
 import java.util.Map;
 
 /**
- * Created by fairdev on 29.01.14.
+ * Create SQL query for Filtered List of Vacancies
  */
 public class VacancyFilteredProvider {
+    /**
+     * Creating SQL query for getting specific list of vacancies
+     * @param params    Parameters prepared by MyBatis
+     * @return sql query
+     */
     public static String selectVacancyFiltered(Map params) {
         String sqlQuery = "SELECT * FROM ( " +
                 "SELECT vacancies.*, users.firstname, users.lastname, " +
