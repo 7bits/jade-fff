@@ -1,7 +1,7 @@
 package com.recruiters.repository.mapper;
 
 import com.recruiters.model.Applicant;
-import com.recruiters.model.ApplicantStatus;
+import com.recruiters.model.status.ApplicantStatus;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;

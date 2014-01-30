@@ -79,7 +79,7 @@ public class UrlResolver {
      * @param param     Long type parameter
      * @return complete uri with redirect:
      */
-    public String buildRedirectUriLongParam(final String uri, final Long param, final Locale locale) {
+    public String buildRedirectUri(final String uri, final Long param, final Locale locale) {
         String fullPath = "redirect:";
         fullPath += makeLocaleUrlPart(locale);
         if (uri != null) {

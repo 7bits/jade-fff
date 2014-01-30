@@ -1,15 +1,15 @@
 package com.recruiters.service;
 
 import com.recruiters.model.Applicant;
-import com.recruiters.model.ApplicantStatus;
+import com.recruiters.model.status.ApplicantStatus;
 import com.recruiters.model.Bid;
-import com.recruiters.model.BidStatus;
+import com.recruiters.model.status.BidStatus;
 import com.recruiters.model.Deal;
-import com.recruiters.model.DealStatus;
+import com.recruiters.model.status.DealStatus;
 import com.recruiters.model.Employer;
 import com.recruiters.model.User;
 import com.recruiters.model.Vacancy;
-import com.recruiters.model.VacancyStatus;
+import com.recruiters.model.status.VacancyStatus;
 import com.recruiters.repository.ApplicantRepository;
 import com.recruiters.repository.BidRepository;
 import com.recruiters.repository.DealRepository;
@@ -17,6 +17,9 @@ import com.recruiters.repository.EmployerRepository;
 import com.recruiters.repository.FileRepository;
 import com.recruiters.repository.UserRepository;
 import com.recruiters.repository.VacancyRepository;
+import com.recruiters.service.exception.NotAffiliatedException;
+import com.recruiters.service.exception.NotFoundException;
+import com.recruiters.service.exception.ServiceException;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -90,7 +93,7 @@ public class EmployerService {
      * Get all active deals from DB for current employer
      * @param employerId    Id of Employer
      * @return List of Deals for exact Employer
-     * @throws ServiceException if cannot obtain list of Deals from
+     * @throws com.recruiters.service.exception.ServiceException if cannot obtain list of Deals from
      * repository or any other possible error
      */
     public List<Deal> findDealsForEmployer(final Long employerId)
@@ -109,8 +112,8 @@ public class EmployerService {
      * @param dealId        Id of deal
      * @param employerId    Id of employer
      * @return POJO Deal instance
-     * @throws NotFoundException if Deal was not found
-     * @throws NotAffiliatedException if deal requested not belongs to
+     * @throws com.recruiters.service.exception.NotFoundException if Deal was not found
+     * @throws com.recruiters.service.exception.NotAffiliatedException if deal requested not belongs to
      * employer requested it
      * @throws ServiceException if cannot obtain Deal instance from
      * repository or any other possible error

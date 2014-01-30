@@ -1,7 +1,7 @@
 package com.recruiters.repository.mapper;
 
 import com.recruiters.model.Deal;
-import com.recruiters.model.DealStatus;
+import com.recruiters.model.status.DealStatus;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;

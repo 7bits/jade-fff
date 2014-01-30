@@ -3,9 +3,9 @@ package com.recruiters.web.controller.employer;
 import com.recruiters.model.Applicant;
 import com.recruiters.model.User;
 import com.recruiters.service.EmployerService;
-import com.recruiters.service.NotAffiliatedException;
-import com.recruiters.service.NotFoundException;
-import com.recruiters.service.ServiceException;
+import com.recruiters.service.exception.NotAffiliatedException;
+import com.recruiters.service.exception.NotFoundException;
+import com.recruiters.service.exception.ServiceException;
 import com.recruiters.web.controller.utils.UserUtils;
 import com.recruiters.web.helper.UrlResolver;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -137,7 +137,7 @@ public class EmployerApplicantView {
             Applicant applicant = employerService.findApplicant(applicantId, user.getEmployerId());
             Locale locale = RequestContextUtils.getLocale(request);
 
-            return urlResolver.buildRedirectUriLongParam(
+            return urlResolver.buildRedirectUri(
                     "employer-progress-vacancy-show",
                     applicant.getDeal().getId(),
                     locale

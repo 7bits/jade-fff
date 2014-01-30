@@ -32,6 +32,7 @@
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>3.1.0</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
@@ -45,12 +46,7 @@
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
             <version>1.2</version>
-        </dependency>
-
-        <dependency>
-            <groupId>javax.validation</groupId>
-            <artifactId>validation-api</artifactId>
-            <version>1.0.0.GA</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
@@ -136,24 +132,10 @@
 
 
     <!--    javax   -->
-
-        <dependency>
-            <groupId>javax.persistence</groupId>
-            <artifactId>persistence-api</artifactId>
-            <version>1.0.2</version>
-        </dependency>
-
         <dependency>
             <groupId>javax.inject</groupId>
             <artifactId>javax.inject-tck</artifactId>
             <version>1</version>
-        </dependency>
-
-    <!--    Hibernate   -->
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-            <version>4.2.8.Final</version>
         </dependency>
 
     <!-- JDBC -->

@@ -3,6 +3,7 @@ package com.recruiters.web.controller.employer;
 import com.recruiters.model.Deal;
 import com.recruiters.model.User;
 import com.recruiters.service.*;
+import com.recruiters.service.exception.ServiceException;
 import com.recruiters.web.controller.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

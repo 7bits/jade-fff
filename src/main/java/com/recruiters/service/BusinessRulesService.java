@@ -1,11 +1,11 @@
 package com.recruiters.service;
 
 import com.recruiters.model.Applicant;
-import com.recruiters.model.ApplicantStatus;
+import com.recruiters.model.status.ApplicantStatus;
 import com.recruiters.model.Bid;
-import com.recruiters.model.BidStatus;
+import com.recruiters.model.status.BidStatus;
 import com.recruiters.model.Deal;
-import com.recruiters.model.DealStatus;
+import com.recruiters.model.status.DealStatus;
 import com.recruiters.model.Vacancy;
 import org.springframework.stereotype.Component;
 

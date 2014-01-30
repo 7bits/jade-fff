@@ -1,5 +1,7 @@
 package com.recruiters.model;
 
+import com.recruiters.model.status.DealStatus;
+
 import java.util.Date;
 import java.util.List;
 

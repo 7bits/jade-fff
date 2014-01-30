@@ -3,7 +3,7 @@ package com.recruiters.service;
 import com.recruiters.model.Applicant;
 import com.recruiters.model.Bid;
 import com.recruiters.model.Deal;
-import com.recruiters.model.DealStatus;
+import com.recruiters.model.status.DealStatus;
 import com.recruiters.model.Recruiter;
 import com.recruiters.model.User;
 import com.recruiters.model.Vacancy;
@@ -15,6 +15,9 @@ import com.recruiters.repository.FileRepository;
 import com.recruiters.repository.RecruiterRepository;
 import com.recruiters.repository.UserRepository;
 import com.recruiters.repository.VacancyRepository;
+import com.recruiters.service.exception.NotAffiliatedException;
+import com.recruiters.service.exception.NotFoundException;
+import com.recruiters.service.exception.ServiceException;
 import com.recruiters.web.form.VacanciesFilter;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,7 +73,7 @@ public class RecruiterService {
      * Find and return Recruiter instance by its id
      * @param id    Id of Recruiter
      * @return Recruiter instance
-     * @throws ServiceException if cannot obtain Recruiter instance from
+     * @throws com.recruiters.service.exception.ServiceException if cannot obtain Recruiter instance from
      * repository or any other possible error
      */
     public Recruiter findRecruiter(final Long id) throws ServiceException {
@@ -121,7 +124,7 @@ public class RecruiterService {
      * @return Vacancy instance
      * @throws ServiceException if cannot obtain Vacancy instance from
      * repository or any other possible error
-     * @throws NotFoundException if Vacancy was not found
+     * @throws com.recruiters.service.exception.NotFoundException if Vacancy was not found
      */
     public Vacancy findVacancy(final Long vacancyId, final Long recruiterId)
             throws ServiceException, NotFoundException {
@@ -149,7 +152,7 @@ public class RecruiterService {
      * @throws ServiceException if cannot obtain Bid instance from
      * repository or any other possible error
      * @throws NotFoundException if Bid was not found
-     * @throws NotAffiliatedException if Bid does not belong to exact recruiter
+     * @throws com.recruiters.service.exception.NotAffiliatedException if Bid does not belong to exact recruiter
      */
     public Bid findActiveBid(final Long bidId, final Long recruiterId)
             throws ServiceException, NotAffiliatedException, NotFoundException {

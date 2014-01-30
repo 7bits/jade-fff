@@ -1,16 +1,13 @@
 package com.recruiters.web.helper;
 
-import com.recruiters.model.ApplicantStatus;
-import com.recruiters.model.BidStatus;
-import com.recruiters.model.DealStatus;
-import com.recruiters.model.VacancyStatus;
+import com.recruiters.model.status.ApplicantStatus;
+import com.recruiters.model.status.BidStatus;
+import com.recruiters.model.status.DealStatus;
+import com.recruiters.model.status.VacancyStatus;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.stereotype.Component;
 
-import javax.print.attribute.standard.DateTimeAtCompleted;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;

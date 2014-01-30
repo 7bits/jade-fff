@@ -1,4 +1,4 @@
-package com.recruiters.web.controller.utils;
+package com.recruiters.service.utils;
 
 import org.apache.commons.lang3.time.DateUtils;
 

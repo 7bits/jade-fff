@@ -1,7 +1,7 @@
 package com.recruiters.repository;
 
 import com.recruiters.model.Deal;
-import com.recruiters.model.DealStatus;
+import com.recruiters.model.status.DealStatus;
 import com.recruiters.repository.mapper.DealMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;

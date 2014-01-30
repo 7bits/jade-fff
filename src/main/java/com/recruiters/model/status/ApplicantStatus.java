@@ -1,4 +1,4 @@
-package com.recruiters.model;
+package com.recruiters.model.status;
 
 /**
  * Applicant Statuses

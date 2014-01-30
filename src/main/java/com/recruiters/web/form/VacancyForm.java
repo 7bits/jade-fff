@@ -3,7 +3,7 @@ package com.recruiters.web.form;
 import com.recruiters.model.Employer;
 import com.recruiters.model.User;
 import com.recruiters.model.Vacancy;
-import com.recruiters.model.VacancyStatus;
+import com.recruiters.model.status.VacancyStatus;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;

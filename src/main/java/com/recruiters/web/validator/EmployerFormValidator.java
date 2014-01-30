@@ -2,7 +2,7 @@ package com.recruiters.web.validator;
 
 import com.recruiters.model.Employer;
 import com.recruiters.service.EmployerService;
-import com.recruiters.service.ServiceException;
+import com.recruiters.service.exception.ServiceException;
 import com.recruiters.web.form.EmployerForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

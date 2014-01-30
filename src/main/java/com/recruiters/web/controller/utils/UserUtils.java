@@ -2,7 +2,7 @@ package com.recruiters.web.controller.utils;
 
 import com.recruiters.model.User;
 import com.recruiters.repository.UserRepository;
-import com.recruiters.service.*;
+import com.recruiters.service.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +21,7 @@ public class UserUtils {
      * Find user by session info and return POJO with user info
      * @param request Http Request
      * @return User POJO instance
-     * @throws ServiceException is there are no user assigned to session
+     * @throws com.recruiters.service.exception.ServiceException is there are no user assigned to session
      */
     public User getCurrentUser(final HttpServletRequest request) throws ServiceException {
         User user =  (User) request.getSession().getAttribute("currentUser");

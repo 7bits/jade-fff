@@ -1,4 +1,4 @@
-package com.recruiters.service;
+package com.recruiters.service.exception;
 
 /**
  * General purpose exception for Service Layer

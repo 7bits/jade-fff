@@ -3,7 +3,9 @@ package com.recruiters.web.controller.recruiter;
 import com.recruiters.model.Applicant;
 import com.recruiters.model.User;
 import com.recruiters.service.*;
-import com.recruiters.service.NotAffiliatedException;
+import com.recruiters.service.exception.NotAffiliatedException;
+import com.recruiters.service.exception.NotFoundException;
+import com.recruiters.service.exception.ServiceException;
 import com.recruiters.web.controller.utils.UserUtils;
 import com.recruiters.web.form.ApplicantForm;
 import com.recruiters.web.helper.UrlResolver;
@@ -103,7 +105,7 @@ public class RecruiterApplicant {
             Locale locale = RequestContextUtils.getLocale(request);
 
             return new ModelAndView(
-                    urlResolver.buildRedirectUriLongParam("recruiter-show-in-progress-vacancy", dealId, locale)
+                    urlResolver.buildRedirectUri("recruiter-show-in-progress-vacancy", dealId, locale)
             );
         } catch (NotAffiliatedException e) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
@@ -192,7 +194,7 @@ public class RecruiterApplicant {
             Locale locale = RequestContextUtils.getLocale(request);
 
             return new ModelAndView(
-                    urlResolver.buildRedirectUriLongParam("recruiter-show-in-progress-vacancy", dealId, locale)
+                    urlResolver.buildRedirectUri("recruiter-show-in-progress-vacancy", dealId, locale)
             );
         } catch (NotAffiliatedException e) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
