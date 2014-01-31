@@ -317,10 +317,25 @@ public class RecruiterService {
             final Locale locale
     ) throws NotAffiliatedException, ServiceException {
         Deal deal;
+        Applicant oldApplicant;
         try {
             deal = dealRepository.findById(applicant.getDeal().getId());
+
+            // We should keep old files if recruiter have not changed it
+            if (!applicant.getId().equals(0L)) {
+                oldApplicant = applicantRepository.findById(applicant.getId());
+                if (oldApplicant.getResumeFile() != null) {
+                    applicant.setResumeFile(oldApplicant.getResumeFile());
+                }
+                if (oldApplicant.getTestAnswerFile() != null) {
+                    applicant.setTestAnswerFile(oldApplicant.getTestAnswerFile());
+                }
+            }
+
             if (deal.getRecruiter().getId().equals(recruiterId) &&
                     deal.getStatus().equals(DealStatus.IN_PROGRESS)) {
+
+                // Dealing with resume file
                 if (!resumeFile.isEmpty()) {
                     Integer extensionStart = resumeFile.getOriginalFilename().lastIndexOf(".");
                     String filename = applicant.getFirstName().substring(0, 1) +
@@ -334,6 +349,8 @@ public class RecruiterService {
                             deal.getVacancy().getEmployer().getId());
                     applicant.setResumeFile(fileNameForResume);
                 }
+
+                // Dealing with test anser file
                 if (!testAnswerFile.isEmpty()) {
                     Integer extensionStart = testAnswerFile.getOriginalFilename().lastIndexOf(".");
                     String filename = applicant.getFirstName().substring(0, 1) +
@@ -347,6 +364,7 @@ public class RecruiterService {
                             deal.getVacancy().getEmployer().getId());
                     applicant.setTestAnswerFile(fileNameForTestAnswers);
                 }
+
                 if (applicant.getId().equals(0L)) {
                     return this.getApplicantRepository().create(applicant);
                 } else {
