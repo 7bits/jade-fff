@@ -37,5 +37,4 @@ block append content
             input(type="hidden", id="id", name="id", value=applicantForm.id)
             input(type="hidden", name=csrf.getParameterName(), value=csrf.getToken())
           input.btn.btn-success(type="submit", name="submit", value=fmt.message("recruiter-edit-applicant.save", locale))=fmt.message("recruiter-edit-applicant.save", locale)
-          a.btn.btn-link(href="#")
-            a(href=domain.buildFullUri("/recruiter-show-in-progress-vacancy/", applicantForm.dealId, locale))=fmt.message("recruiter-edit-applicant.back", locale)
+          a.btn.btn-link(href=domain.buildFullUri("/recruiter-show-in-progress-vacancy/", applicantForm.dealId, locale))=fmt.message("recruiter-edit-applicant.back", locale)

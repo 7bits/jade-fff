@@ -33,5 +33,4 @@ block append content
             input(type="hidden", id="id", name="id", value=applicantForm.id)
             input(type="hidden", name=csrf.getParameterName(), value=csrf.getToken())
           input.btn.btn-success(type="submit", name="submit", value=fmt.message("recruiter-add-applicant.add", locale))=fmt.message("recruiter-add-applicant.add", locale)
-          a.btn.btn-link(href="#")
-            a(href=domain.buildFullUri("/recruiter-show-in-progress-vacancy/", applicantForm.dealId, locale))=fmt.message("recruiter-add-applicant.back", locale)
+          a.btn.btn-link(href=domain.buildFullUri("/recruiter-show-in-progress-vacancy/", applicantForm.dealId, locale))=fmt.message("recruiter-add-applicant.back", locale)
