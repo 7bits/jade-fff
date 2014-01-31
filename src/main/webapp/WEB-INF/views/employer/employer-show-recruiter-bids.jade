@@ -20,3 +20,5 @@ block append content
         p #{vacancy.title}
         p #{vacancy.description}
         p=fmt.currencyRange(vacancy.salaryFrom, vacancy.salaryTo, locale)
+        if vacancy.testFile
+          a.btn.btn-link(href=domain.buildFullUri("/employer-download-attachment/", vacancy.testFile.id, locale))=fmt.message("employer-show-recruiter-bids..tests", locale)
