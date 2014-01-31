@@ -337,7 +337,9 @@ public class EmployerService {
         try {
             attachment = attachmentRepository.findById(attachmentId);
             if (attachment != null) {
-                if (attachment.getEmployer().getId().equals(employerId)) {
+                if (attachment.getEmployer() == null) {
+                    return attachment;
+                } else if (attachment.getEmployer().getId().equals(employerId)) {
                     return attachment;
                 }
             }
