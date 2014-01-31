@@ -49,7 +49,7 @@ public interface BidMapper {
     @Select("SELECT bids.id, bids.message, bids.status, " +
             "vacancies.id as vacancy_id,  vacancies.employer_id, vacancies.title, " +
             "vacancies.description, vacancies.salary_from, vacancies.salary_to, " +
-            "vacancies.creation_date, vacancies.expiration_date, " +
+            "vacancies.creation_date, vacancies.expiration_date, vacancies.test_file, " +
             "recruiters.id as recruiter_id, " +
             "users.firstname, users.lastname, " +
             "deals.id as deal_id " +
@@ -71,6 +71,7 @@ public interface BidMapper {
             @Result(column = "salary_to", property = "vacancy.salaryTo"),
             @Result(column = "creation_date", property = "vacancy.creationDate"),
             @Result(column = "expiration_date", property = "vacancy.expirationDate"),
+            @Result(column = "test_file", property = "vacancy.testFile.id"),
             @Result(column = "recruiter_id", property = "recruiter.id"),
             @Result(column = "firstname", property = "recruiter.user.firstName"),
             @Result(column = "lastname", property = "recruiter.user.lastName"),

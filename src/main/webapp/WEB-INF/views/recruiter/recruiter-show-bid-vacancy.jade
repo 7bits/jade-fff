@@ -18,3 +18,7 @@ block append content
       dd #{fmt.date(bid.vacancy.expirationDate, locale)}
       dt=fmt.message("recruiter-show-bid-vacancy.dt.status", locale)
       dd #{fmt.bidStatus(bid.status, locale)}
+      if bid.vacancy.testFile
+        dt=fmt.message("recruiter-show-bid-vacancy.dt.tests", locale)
+        dd
+          a(href=domain.buildFullUri("/recruiter-download-attachment/", bid.vacancy.testFile.id, locale))=fmt.message("recruiter-show-bid-vacancy.dd.tests", locale)

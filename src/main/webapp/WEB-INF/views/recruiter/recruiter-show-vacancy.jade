@@ -16,6 +16,10 @@ block append content
       dd #{fmt.date(vacancy.creationDate, locale)}
       dt=fmt.message("recruiter-show-vacancy.dt.expirationDate", locale)
       dd #{fmt.date(vacancy.expirationDate, locale)}
+      if vacancy.testFile
+        dt=fmt.message("recruiter-show-vacancy.dt.tests", locale)
+        dd
+          a(href=domain.buildFullUri("/recruiter-download-attachment/", vacancy.testFile.id, locale))=fmt.message("recruiter-show-vacancy.dd.tests", locale)
     if test.canApplyToVacancy(vacancy)
       form(name="", action="", method="post")
         .row

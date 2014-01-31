@@ -24,6 +24,10 @@ block append content
           if test.isRecruiterFired(deal)
             dt=fmt.message("recruiter-show-in-progress-vacancy.dt.fire_reason", locale)
             dd #{deal.fireReason}
+          if deal.vacancy.testFile
+            dt=fmt.message("recruiter-show-in-progress-vacancy.dt.tests", locale)
+            dd
+              a(href=domain.buildFullUri("/recruiter-download-attachment/", deal.vacancy.testFile.id, locale))=fmt.message("recruiter-show-in-progress-vacancy.dd.tests", locale)
 
       .col-md-4
         h2=fmt.message("recruiter-show-in-progress-vacancy.employer", locale)

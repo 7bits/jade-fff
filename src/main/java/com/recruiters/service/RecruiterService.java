@@ -313,7 +313,9 @@ public class RecruiterService {
         try {
             attachment = attachmentRepository.findById(attachmentId);
             if (attachment != null) {
-                if (attachment.getRecruiter().getId().equals(recruiterId)) {
+                if (attachment.getRecruiter() == null) {
+                    return attachment;
+                } else if (attachment.getRecruiter().getId().equals(recruiterId)) {
                     return attachment;
                 }
             }
