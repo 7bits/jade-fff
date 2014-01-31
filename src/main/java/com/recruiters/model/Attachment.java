@@ -1,5 +1,6 @@
 package com.recruiters.model;
 
+import java.io.InputStream;
 import java.util.Date;
 
 /**
@@ -12,6 +13,7 @@ public class Attachment {
     private Date creationDate;
     private Employer employer;
     private Recruiter recruiter;
+    private InputStream fileStream;
 
     public Attachment() {
     }
@@ -62,5 +64,13 @@ public class Attachment {
 
     public void setRecruiter(final Recruiter recruiter) {
         this.recruiter = recruiter;
+    }
+
+    public InputStream getFileStream() {
+        return fileStream;
+    }
+
+    public void setFileStream(final InputStream fileStream) {
+        this.fileStream = fileStream;
     }
 }

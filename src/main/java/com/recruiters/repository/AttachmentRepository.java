@@ -11,6 +11,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -29,6 +30,21 @@ public class AttachmentRepository {
     /** Environment for getting properties */
     @Autowired
     private Environment environment;
+
+    public Attachment findById(final Long attachmentId) throws RepositoryException {
+        if (attachmentId == null) {
+            throw new RepositoryException("attachmentId is null");
+        }
+        try {
+            Attachment attachment = attachmentMapper.findById(attachmentId);
+            File file = new File(attachment.getSystemFilename());
+            InputStream is = new FileInputStream(file);
+            attachment.setFileStream(is);
+            return attachment;
+        } catch (Exception e) {
+            throw new RepositoryException("Database or file reading error ", e);
+        }
+    }
 
     /**
      * Saves file and returns url for it

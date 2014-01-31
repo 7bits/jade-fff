@@ -295,6 +295,45 @@ public class RecruiterService {
     }
 
     /**
+     * Find and return attachment, verifying it belongs to recruiter
+     * requested it
+     * @param attachmentId    Id of attachment
+     * @param recruiterId     Id of recruiter
+     * @return Attachment instance if certain attachment belongs to
+     * recruiter requested it and there were no any technical issues
+     * @throws NotFoundException if attachment was not found
+     * @throws NotAffiliatedException if attachment requested not belongs to
+     * recruiter requested it
+     * @throws ServiceException if cannot obtain Attachment instance from
+     * repository or any other possible error
+     */
+    public Attachment findAttachment(final Long attachmentId, final Long recruiterId)
+            throws NotAffiliatedException, ServiceException, NotFoundException {
+        Attachment attachment;
+        try {
+            attachment = attachmentRepository.findById(attachmentId);
+            if (attachment != null) {
+                if (attachment.getRecruiter().getId().equals(recruiterId)) {
+                    return attachment;
+                }
+            }
+        } catch (Exception e) {
+            log.error(SERVICE_EXCEPTION_MESSAGE, e);
+            throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
+        }
+        if (attachment == null) {
+            String notFoundMessage = NOT_FOUND_EXCEPTION_MESSAGE_PART1 + Attachment.class.getSimpleName() +
+                    NOT_FOUND_EXCEPTION_MESSAGE_PART2;
+            log.error(notFoundMessage);
+            throw new NotFoundException(notFoundMessage);
+        }
+        String securityMessage = SECURITY_EXCEPTION_MESSAGE_PART1 + Attachment.class.getSimpleName() +
+                SECURITY_EXCEPTION_MESSAGE_PART2;
+        log.error(securityMessage);
+        throw new NotAffiliatedException(securityMessage);
+    }
+
+    /**
      * Add new applicant to Deal, verifying deal belongs to recruiter
      * requested apply
      * @param applicant         Applicant instance
