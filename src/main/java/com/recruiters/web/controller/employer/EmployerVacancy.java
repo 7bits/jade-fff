@@ -84,15 +84,15 @@ public class EmployerVacancy {
 
             return model;
         }
+        Locale locale = RequestContextUtils.getLocale(request);
         try {
             User user = userUtils.getCurrentUser(request);
             Vacancy vacancy = vacancyForm.fillModel(user);
-            employerService.saveVacancy(vacancy, vacancyForm.getTestFile());
+            employerService.saveVacancy(vacancy, vacancyForm.getTestFile(), locale);
         } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             return null;
         }
-        Locale locale = RequestContextUtils.getLocale(request);
 
         return new ModelAndView(
                 urlResolver.buildRedirectUri("employer-progress-vacancies-list", locale)

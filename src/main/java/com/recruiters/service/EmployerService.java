@@ -23,6 +23,7 @@ import com.recruiters.service.exception.NotFoundException;
 import com.recruiters.service.exception.ServiceException;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
@@ -31,6 +32,7 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Service for Employer
@@ -62,6 +64,9 @@ public class EmployerService {
     /** Platform transaction Manager */
     @Autowired
     private PlatformTransactionManager txManager = null;
+    /** Message source */
+    @Autowired
+    private MessageSource messageSource = null;
     /** Transaction settings object */
     private DefaultTransactionDefinition employerTx = null;
     /** Logger */
@@ -578,17 +583,31 @@ public class EmployerService {
      * First one have 0L id
      * @param vacancy     Vacancy instance
      * @param testFile    Test file
+     * @param locale      Current locale
      * @return created or updated vacancy if no errors occurs
      * @throws ServiceException if Repository cannot process request
      * or any other possible error
      */
     public Vacancy saveVacancy(
             final Vacancy vacancy,
-            final MultipartFile testFile
+            final MultipartFile testFile,
+            final Locale locale
     ) throws ServiceException {
         try {
-            Attachment fileNameForTestFile = attachmentRepository.save(testFile, "test", null, null);
-            vacancy.setTestFile(fileNameForTestFile);
+            // Dealing with tests file
+            if (!testFile.isEmpty()) {
+                Integer extensionStart = testFile.getOriginalFilename().lastIndexOf(".");
+                String filename = vacancy.getTitle() +
+                        messageSource.getMessage("file.tests.suffix", null, locale) +
+                        testFile.getOriginalFilename().substring(extensionStart);
+                Attachment testsFile =  attachmentRepository.save(
+                        testFile,
+                        filename,
+                        null,
+                        vacancy.getEmployer().getId());
+                vacancy.setTestFile(testsFile);
+            }
+
             if (vacancy.getId().equals(0L)) {
                 return vacancyRepository.create(vacancy);
             } else {
