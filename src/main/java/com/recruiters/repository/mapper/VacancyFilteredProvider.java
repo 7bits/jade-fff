@@ -45,6 +45,8 @@ public class VacancyFilteredProvider {
             VacancySpecification vacancySpecification = (VacancySpecification) specification;
             sqlQuery.append(" WHERE ");
             sqlQuery.append(vacancySpecification.asSql());
+        } else {
+            sqlQuery.append(" WHERE 0 ");
         }
         return sqlQuery.toString();
     }
