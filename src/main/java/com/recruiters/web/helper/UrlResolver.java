@@ -106,8 +106,10 @@ public class UrlResolver {
      */
     public String buildFullUri(final String uri, final Locale locale) {
         StringBuilder fullUri = new StringBuilder(DEFAULT_STRING_SIZE);
-        fullUri.append("/");
-        fullUri.append(applicationName);
+        if (!applicationName.isEmpty()) {
+            fullUri.append("/");
+            fullUri.append(applicationName);
+        }
         fullUri.append(makeLocaleUrlPart(locale));
         if (uri != null) {
             if (!uri.startsWith("/")) {
@@ -127,8 +129,10 @@ public class UrlResolver {
      */
     public String buildFullUri(final String uri, final Long param, final Locale locale) {
         StringBuilder fullUri = new StringBuilder(DEFAULT_STRING_SIZE);
-        fullUri.append("/");
-        fullUri.append(applicationName);
+        if (!applicationName.isEmpty()) {
+            fullUri.append("/");
+            fullUri.append(applicationName);
+        }
         fullUri.append(makeLocaleUrlPart(locale));
         if (uri != null) {
             if (!uri.startsWith("/")) {
