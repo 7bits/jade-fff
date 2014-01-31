@@ -37,6 +37,8 @@ public class ShowVacancies {
     /** Url Builder */
     @Autowired
     private UrlResolver urlResolver;
+    /** Session attribute name for Vacancies Filter */
+    private static final String SESSION_FILTER_NAME = VacanciesFilter.class.getName() + ".filter";
     /**
      * Shows vacancies with filter applied for recruiter
      * @param request           Http Request
@@ -59,8 +61,9 @@ public class ShowVacancies {
         Locale locale = RequestContextUtils.getLocale(request);
         // If this is first page visit
         if (vacanciesFilter.getSubmit() == null) {
-            defaultVacanciesFilter(vacanciesFilter);
+            fillVacanciesFilter(vacanciesFilter, request);
         }
+        addFilterToSession(vacanciesFilter, request);
         filteredVacancies.addObject("vacanciesFilter", vacanciesFilter);
 
         Date curDate;
@@ -105,15 +108,28 @@ public class ShowVacancies {
     }
 
     /**
-     * Default settings for Vacancies Filter
+     * Load default settings for Vacancies Filter or
+     * get settings from session
      * @param vacanciesFilter    Vacancies Filter
-     * @return Vacancies Filter filled out with default settings
+     * @param request            Http Request
      */
-    private VacanciesFilter defaultVacanciesFilter(final VacanciesFilter vacanciesFilter) {
-        vacanciesFilter.setShowBids(true);
-        vacanciesFilter.setShowDeals(true);
-        vacanciesFilter.setShowVacancies(true);
-        return vacanciesFilter;
+    private void fillVacanciesFilter(
+            final VacanciesFilter vacanciesFilter,
+            final HttpServletRequest request
+    ) {
+        Object o = request.getSession().getAttribute(SESSION_FILTER_NAME);
+        if (o instanceof VacanciesFilter) {
+            vacanciesFilter.setShowVacancies(((VacanciesFilter) o).getShowVacancies());
+            vacanciesFilter.setShowDeals(((VacanciesFilter) o).getShowDeals());
+            vacanciesFilter.setShowBids(((VacanciesFilter) o).getShowBids());
+            vacanciesFilter.setDate(((VacanciesFilter) o).getDate());
+            vacanciesFilter.setSearchText(((VacanciesFilter) o).getSearchText());
+        } else {
+            // Default settings
+            vacanciesFilter.setShowBids(true);
+            vacanciesFilter.setShowDeals(true);
+            vacanciesFilter.setShowVacancies(true);
+        }
     }
 
     /**
@@ -133,6 +149,18 @@ public class ShowVacancies {
         VacanciesFilter vacanciesFilterNext = new VacanciesFilter(vacanciesFilter);
         vacanciesFilterNext.setDate(dateTimeUtils.dateUrlFormat(date));
         return urlResolver.buildRecruiterFilterUri(vacanciesFilterNext, locale);
+    }
+
+    /**
+     * Add Filter to Session Attributes
+     * @param vacanciesFilter    Vacancies Filter
+     * @param request            Http Request
+     */
+    private void addFilterToSession(
+            final VacanciesFilter vacanciesFilter,
+            final HttpServletRequest request
+    ) {
+        request.getSession().setAttribute(SESSION_FILTER_NAME,vacanciesFilter);
     }
 
     public RecruiterService getRecruiterService() {
