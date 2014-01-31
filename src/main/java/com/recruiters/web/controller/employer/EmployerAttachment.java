@@ -54,7 +54,7 @@ public class EmployerAttachment {
     ) throws Exception {
         try {
             User user = userUtils.getCurrentUser(request);
-            Attachment attachment = employerService.findAttachment(attachmentId, user.getRecruiterId());
+            Attachment attachment = employerService.findAttachment(attachmentId, user.getEmployerId());
             String userAgent = request.getHeader("User-Agent");
             String encodedFileName = null;
             // Different browsers using different technique for recognizing UTF-8 filenames
