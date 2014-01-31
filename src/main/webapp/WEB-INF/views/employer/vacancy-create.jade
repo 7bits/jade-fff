@@ -36,8 +36,7 @@ block append content
             input(type="file", id="testFile", name="testFile", value=vacancyForm.testFile, placeholder=fmt.message("employer-vacancy-create.form.testFile", locale))
             #{errors.testFile}
           .checkbox
-            label(for="publish")=fmt.message("employer-vacancy-create.form.publish", locale)
-            input(type="checkbox", id="publish", name="publish", value="1", checked=vacancyForm.publish)
+            input(type="hidden", name="publish", value="1")
             input(type="hidden", name=csrf.getParameterName(), value=csrf.getToken())
             #{errors.publish}
           input.btn.btn-success(type="submit", name="submit", value=fmt.message("employer-vacancy-create.form.add", locale))=fmt.message("employer-vacancy-create.form.add", locale)
