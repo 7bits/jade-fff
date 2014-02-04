@@ -1,4 +1,7 @@
 $ ->
+  $("#searchText").trigger "change"
+
+$ ->
   dp = $(".datepicker")
   dp.datepicker().on "changeDate", (ev) ->
     dp.val(ev.target.value).trigger "change"
@@ -44,7 +47,7 @@ $ ->
 
       while i < vacancyList.length
         obj = vacancyList[i]
-        addHtml += "<tr><td>" + obj.title + "</td><td>" + obj.description + "</td><td>" + obj.creationDate + "</td><td>" + obj.status + "</td><td>" + "<a href='recruiter-show-vacancy/" + obj.id + "'>link</a>" + "</td></tr>"
+        addHtml += "<tr><td>" + obj.title + "</td><td>" + obj.description + "</td><td>" + obj.created + "</td><td>" + obj.status + "</td><td>" + "<a href='" + obj.url + "'>" + obj.urltext + "</a>" + "</td></tr>"
         i++
       $("#vacancies").find("tbody").html addHtml
       return

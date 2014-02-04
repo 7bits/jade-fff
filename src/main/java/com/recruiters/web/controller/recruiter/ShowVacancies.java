@@ -8,6 +8,7 @@ import com.recruiters.service.utils.DateTimeUtils;
 import com.recruiters.web.controller.utils.UserUtils;
 import com.recruiters.web.form.VacanciesFilter;
 import com.recruiters.web.helper.UrlResolver;
+import com.recruiters.web.service.JsonConverterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -25,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * Show Vacancies for recruiter with all available actions
@@ -44,8 +46,7 @@ public class ShowVacancies {
     /** Session attribute name for Vacancies Filter */
     private static final String SESSION_FILTER_NAME = VacanciesFilter.class.getName() + ".filter";
     @Autowired
-    @Qualifier("contentNegotiatingViewResolver")
-    private ViewResolver contentNegotiatingViewResolver;
+    private JsonConverterService jsonConverterService;
 
 
     /**
@@ -127,7 +128,7 @@ public class ShowVacancies {
      * or servlet Exception to be thrown
      */
     @RequestMapping(value = "/recruiter-vacancies-filter-ajax.json", method = RequestMethod.POST)
-    public List<Vacancy>  ajaxFilteredVacancies(
+    public List<Map<String,String>> ajaxFilteredVacancies(
             final HttpServletRequest request,
             final HttpServletResponse response,
             @ModelAttribute("VacanciesFilter") final VacanciesFilter vacanciesFilter
@@ -138,7 +139,8 @@ public class ShowVacancies {
                     user.getRecruiterId(),
                     vacanciesFilter
             );
-            return vacancies;
+            Locale locale = RequestContextUtils.getLocale(request);
+            return jsonConverterService.recruiterVacanciesFilteredList(vacancies, locale);
         } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             return null;
