@@ -5,29 +5,35 @@ block append head
 block append content
   .container
     h1=fmt.message("recruiter-find-new-vacancies.h1", locale)
-    form(name="vacanciesFilter", action="", method="get")
+    form(name="vacanciesFilter", id="vacanciesFilter", action="", method="get")
       .row
         .col-md-6
-          .form-group
+          .input-group
             label(for="searchText")
             input(type="text", class="form-control", id="searchText", name="searchText", value=vacanciesFilter.searchText, placeholder=fmt.message("recruiter-find-new-vacancies.form.search", locale))
-          .checkbox
-            label(for="showVacancies")=fmt.message("recruiter-find-new-vacancies.form.vacancies", locale)
-            input(type="checkbox", id="showVacancies", name="showVacancies", value="1", checked=vacanciesFilter.showVacancies)
-          .checkbox
-            label(for="showBids")=fmt.message("recruiter-find-new-vacancies.form.bids", locale)
-            input(type="checkbox", id="showBids", name="showBids", value="1", checked=vacanciesFilter.showBids)
-          .checkbox
-            label(for="showDeals")=fmt.message("recruiter-find-new-vacancies.form.deals", locale)
-            input(type="checkbox", id="showDeals", name="showDeals", value="1", checked=vacanciesFilter.showDeals)
-            input(type="hidden", id="date", name="date", value=vacanciesFilter.date)
-      .btn-row
-        input.btn.btn-success(type="submit", name="submit", value=fmt.message("recruiter-find-new-vacancies.form.submit", locale))
-    if locals.nextDate
-      a.btn.btn-link(href=nextDateLink)=fmt.date(nextDate, locale)
-    span=fmt.date(curDate, locale)
-    a.btn.btn-link(href=prevDateLink)=fmt.date(prevDate, locale)
-    table.table.table-striped
+            span.input-group-addon
+              span.glyphicon.glyphicon-search
+          .btn-group(data-toggle="buttons")
+            label.btn.btn-primary#showAll=fmt.message("recruiter-find-new-vacancies.form.show-all", locale)
+              input(type="checkbox", name="showAll", value="1")
+          .btn-group(data-toggle="buttons")
+            label.btn.btn-primary#hideVacancies=fmt.message("recruiter-find-new-vacancies.form.hide-vacancies", locale)
+              input(type="checkbox", name="hideVacancies", value="1")
+            label.btn.btn-primary#hideBids=fmt.message("recruiter-find-new-vacancies.form.hide-bids", locale)
+              input(type="checkbox", name="hideBids", value="1")
+            label.btn.btn-primary#hideDeals=fmt.message("recruiter-find-new-vacancies.form.hide-deals", locale)
+              input(type="checkbox", name="hideDeals", value="1")
+          .input-group
+            if locals.nextDate
+              a.btn.btn-link#nextDateLink(href=nextDateLink)=fmt.date(nextDate, locale)
+            input.datepicker(size=16, type="text", name="date", data-date-format="yyyy-mm-dd", value=vacanciesFilter.date)
+            span.input-group-addon#autowidth
+              span.glyphicon.glyphicon-calendar
+            input(type="hidden", name="prevDate", value=prevDate)
+            input(type="hidden", name="nextDate", value=nextDate)
+            input(type="hidden", name=csrf.getParameterName(), value=csrf.getToken())
+            a.btn.btn-link#prevDateLink(href=prevDateLink)=fmt.date(prevDate, locale)
+    table.table.table-striped#vacancies
       thead
         tr
           th=fmt.message("recruiter-find-new-vacancies.table.name", locale)

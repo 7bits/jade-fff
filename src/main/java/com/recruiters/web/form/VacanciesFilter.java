@@ -5,15 +5,17 @@ import com.recruiters.repository.specification.VacancyCleanVacancySpecification;
 import com.recruiters.repository.specification.VacancyDealSpecification;
 import com.recruiters.repository.specification.VacancySpecification;
 
+import java.io.Serializable;
+
 
 /**
  * Vacancy Search Filter Form
  */
 public class VacanciesFilter {
     private String searchText = "";
-    private Boolean showVacancies = false;
-    private Boolean showBids = false;
-    private Boolean showDeals = false;
+    private Boolean hideVacancies = false;
+    private Boolean hideBids = false;
+    private Boolean hideDeals = false;
     private String date = "";
     private String submit = null;
 
@@ -26,9 +28,9 @@ public class VacanciesFilter {
      */
     public VacanciesFilter(final VacanciesFilter vacanciesFilter) {
         searchText = vacanciesFilter.getSearchText();
-        showVacancies = vacanciesFilter.getShowVacancies();
-        showBids = vacanciesFilter.getShowBids();
-        showDeals = vacanciesFilter.getShowDeals();
+        hideVacancies = vacanciesFilter.getHideVacancies();
+        hideBids = vacanciesFilter.getHideBids();
+        hideDeals = vacanciesFilter.getHideDeals();
         date = vacanciesFilter.getDate();
     }
 
@@ -37,25 +39,25 @@ public class VacanciesFilter {
      * @return Vacancy Specification
      */
     public VacancySpecification getSpecifications() {
-        if (showVacancies && !showBids && !showDeals) {
+        if (!hideVacancies && hideBids && hideDeals) {
             return new VacancyCleanVacancySpecification();
         }
-        if (!showVacancies && showBids && !showDeals) {
+        if (hideVacancies && !hideBids && hideDeals) {
             return new VacancyBidSpecification();
         }
-        if (!showVacancies && !showBids && showDeals) {
+        if (hideVacancies && hideBids && !hideDeals) {
             return new VacancyDealSpecification();
         }
-        if (showVacancies && showBids && !showDeals) {
+        if (!hideVacancies && !hideBids && hideDeals) {
             return new VacancyCleanVacancySpecification().or(new VacancyBidSpecification());
         }
-        if (showVacancies && !showBids && showDeals) {
+        if (!hideVacancies && hideBids && !hideDeals) {
             return new VacancyCleanVacancySpecification().or(new VacancyDealSpecification());
         }
-        if (!showVacancies && showBids && showDeals) {
+        if (hideVacancies && !hideBids && !hideDeals) {
             return new VacancyDealSpecification().or(new VacancyBidSpecification());
         }
-        if (showVacancies && showDeals && showBids) {
+        if (!hideVacancies && !hideDeals && !hideBids) {
             return new VacancyCleanVacancySpecification()
                     .or(new VacancyBidSpecification()
                             .or(new VacancyDealSpecification()));
@@ -71,28 +73,28 @@ public class VacanciesFilter {
         this.searchText = searchText;
     }
 
-    public Boolean getShowVacancies() {
-        return showVacancies;
+    public Boolean getHideVacancies() {
+        return hideVacancies;
     }
 
-    public void setShowVacancies(final Boolean showVacancies) {
-        this.showVacancies = showVacancies;
+    public void setHideVacancies(final Boolean hideVacancies) {
+        this.hideVacancies = hideVacancies;
     }
 
-    public Boolean getShowBids() {
-        return showBids;
+    public Boolean getHideBids() {
+        return hideBids;
     }
 
-    public void setShowBids(final Boolean showBids) {
-        this.showBids = showBids;
+    public void setHideBids(final Boolean hideBids) {
+        this.hideBids = hideBids;
     }
 
-    public Boolean getShowDeals() {
-        return showDeals;
+    public Boolean getHideDeals() {
+        return hideDeals;
     }
 
-    public void setShowDeals(final Boolean showDeals) {
-        this.showDeals = showDeals;
+    public void setHideDeals(final Boolean hideDeals) {
+        this.hideDeals = hideDeals;
     }
 
     public String getDate() {

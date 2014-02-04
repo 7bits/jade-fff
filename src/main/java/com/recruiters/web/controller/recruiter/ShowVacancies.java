@@ -9,12 +9,16 @@ import com.recruiters.web.controller.utils.UserUtils;
 import com.recruiters.web.form.VacanciesFilter;
 import com.recruiters.web.helper.UrlResolver;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.support.RequestContextUtils;
+import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -39,6 +43,11 @@ public class ShowVacancies {
     private UrlResolver urlResolver;
     /** Session attribute name for Vacancies Filter */
     private static final String SESSION_FILTER_NAME = VacanciesFilter.class.getName() + ".filter";
+    @Autowired
+    @Qualifier("contentNegotiatingViewResolver")
+    private ViewResolver contentNegotiatingViewResolver;
+
+
     /**
      * Shows vacancies with filter applied for recruiter
      * @param request           Http Request
@@ -106,6 +115,36 @@ public class ShowVacancies {
 
         return filteredVacancies;
     }
+    /**
+     * Shows vacancies with filter applied for recruiter
+     * @param request           Http Request
+     * @param response          Http Response
+     * @param vacanciesFilter   Vacancies Filter
+     * @return model and view with list of vacancies,
+     * Internal Server Error page if something is wrong with obtaining data
+     * due to technical or any other reasons
+     * @throws Exception in very rare circumstances: it should be runtime
+     * or servlet Exception to be thrown
+     */
+    @RequestMapping(value = "/recruiter-vacancies-filter-ajax.json", method = RequestMethod.POST)
+    public List<Vacancy>  ajaxFilteredVacancies(
+            final HttpServletRequest request,
+            final HttpServletResponse response,
+            @ModelAttribute("VacanciesFilter") final VacanciesFilter vacanciesFilter
+    ) throws Exception {
+        try {
+            User user = userUtils.getCurrentUser(request);
+            List<Vacancy> vacancies = recruiterService.findFilteredVacanciesForRecruiter(
+                    user.getRecruiterId(),
+                    vacanciesFilter
+            );
+            return vacancies;
+        } catch (ServiceException e) {
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return null;
+        }
+
+    }
 
     /**
      * Load default settings for Vacancies Filter or
@@ -119,16 +158,16 @@ public class ShowVacancies {
     ) {
         Object o = request.getSession().getAttribute(SESSION_FILTER_NAME);
         if (o instanceof VacanciesFilter) {
-            vacanciesFilter.setShowVacancies(((VacanciesFilter) o).getShowVacancies());
-            vacanciesFilter.setShowDeals(((VacanciesFilter) o).getShowDeals());
-            vacanciesFilter.setShowBids(((VacanciesFilter) o).getShowBids());
+            vacanciesFilter.setHideVacancies(((VacanciesFilter) o).getHideVacancies());
+            vacanciesFilter.setHideBids(((VacanciesFilter) o).getHideBids());
+            vacanciesFilter.setHideDeals(((VacanciesFilter) o).getHideDeals());
             vacanciesFilter.setDate(((VacanciesFilter) o).getDate());
             vacanciesFilter.setSearchText(((VacanciesFilter) o).getSearchText());
         } else {
             // Default settings
-            vacanciesFilter.setShowBids(true);
-            vacanciesFilter.setShowDeals(true);
-            vacanciesFilter.setShowVacancies(true);
+            vacanciesFilter.setHideVacancies(false);
+            vacanciesFilter.setHideBids(false);
+            vacanciesFilter.setHideDeals(false);
         }
     }
 

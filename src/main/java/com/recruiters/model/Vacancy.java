@@ -2,12 +2,13 @@ package com.recruiters.model;
 
 import com.recruiters.model.status.VacancyStatus;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Vacancy POJO
  */
-public class Vacancy {
+public class Vacancy implements Serializable {
     private Long id;
     private Employer employer = null;
     private String title;

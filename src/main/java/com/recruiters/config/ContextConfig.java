@@ -25,7 +25,7 @@ public class ContextConfig extends AbstractAnnotationConfigDispatcherServletInit
      */
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class<?>[] { SecurityConfig.class, MyBatisConfig.class, JspConfig.class, JadeConfig.class };
+        return new Class<?>[] { SecurityConfig.class, MyBatisConfig.class };
     }
 
     /**

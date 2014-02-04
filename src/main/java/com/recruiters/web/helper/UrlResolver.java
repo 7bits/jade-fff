@@ -156,15 +156,7 @@ public class UrlResolver {
     public String buildRecruiterFilterUri(final VacanciesFilter vacanciesFilter, final Locale locale) {
         StringBuilder uri = new StringBuilder(DEFAULT_STRING_SIZE);
         uri.append("recruiter-find-new-vacancies");
-        uri.append("?searchText=");
-        uri.append(vacanciesFilter.getSearchText());
-        uri.append("&showVacancies=");
-        uri.append(vacanciesFilter.getShowVacancies());
-        uri.append("&showBids=");
-        uri.append(vacanciesFilter.getShowBids());
-        uri.append("&showDeals=");
-        uri.append(vacanciesFilter.getShowDeals());
-        uri.append("&date=");
+        uri.append("?date=");
         uri.append(vacanciesFilter.getDate());
         uri.append("&submit=Filter");
         return buildFullUri(uri.toString(), locale);

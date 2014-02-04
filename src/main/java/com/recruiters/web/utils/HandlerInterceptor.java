@@ -78,57 +78,67 @@ public class HandlerInterceptor extends HandlerInterceptorAdapter {
             final ModelAndView mav
     ) throws Exception {
         if (mav != null) {
-
-            // Resolving if ModelAndView have any form data, getting errors from it (if any)
-            // and adding them to HashMap with pre-configured name into ModelAndView
-            Map<String, Object> modelMap = mav.getModelMap();
-            Map<String, String> errors = new HashMap<String, String>();
-            for (Map.Entry<String, Object> entry : modelMap.entrySet()) {
-                String key = entry.getKey();
-                Object value = entry.getValue();
-                if (key.contains(TYPE_WITH_BINDING_RESULT)) {
-                    BindingResult bindingResult = (BindingResult) value;
-                    if (bindingResult.getFieldErrors().size() != 0) {
-                        List<FieldError> fieldErrors = bindingResult.getFieldErrors();
-                        for (FieldError error : fieldErrors) {
-                            // Resolving error codes with MessageSource
-                            String[] codes = error.getCodes();
-                            String resolvedMessage = "";
-                            String tempMessage = "";
-                            for (String code: codes) {
-                                tempMessage = messageSource.getMessage(code, null, null);
-                                if (!tempMessage.equals(code)) {
-                                    resolvedMessage = tempMessage;
+            // Add model data only when there is some view associated, or it'll be
+            // associated in future
+            if (mav.getView() != null || mav.getViewName().endsWith(".jade")
+                    || mav.getViewName().startsWith("redirect:")) {
+                // Resolving if ModelAndView have any form data, getting errors from it (if any)
+                // and adding them to HashMap with pre-configured name into ModelAndView
+                Map<String, Object> modelMap = mav.getModelMap();
+                Map<String, String> errors = new HashMap<String, String>();
+                for (Map.Entry<String, Object> entry : modelMap.entrySet()) {
+                    String key = entry.getKey();
+                    Object value = entry.getValue();
+                    if (key.contains(TYPE_WITH_BINDING_RESULT)) {
+                        BindingResult bindingResult = (BindingResult) value;
+                        if (bindingResult.getFieldErrors().size() != 0) {
+                            List<FieldError> fieldErrors = bindingResult.getFieldErrors();
+                            for (FieldError error : fieldErrors) {
+                                // Resolving error codes with MessageSource
+                                String[] codes = error.getCodes();
+                                String resolvedMessage = "";
+                                String tempMessage = "";
+                                for (String code: codes) {
+                                    tempMessage = messageSource.getMessage(code, null, null);
+                                    if (!tempMessage.equals(code)) {
+                                        resolvedMessage = tempMessage;
+                                    }
                                 }
+                                errors.put(error.getField(), resolvedMessage);
                             }
-                            errors.put(error.getField(), resolvedMessage);
                         }
                     }
                 }
+                // Should be outside ModelMap iterating otherwise we will get exception
+                // Adding is forced because otherwise jade is output some sh!t when it shouldn't
+                mav.addObject(MODEL_ERRORS_NAME, errors);
+
+                // Adding language and country code to model
+                Locale locale = RequestContextUtils.getLocale(request);
+                mav.addObject(MODEL_LOCALE_NAME, locale);
+                // Message resolver added
+                mav.addObject(MODEL_MESSAGE_RESOLVER_NAME, messageResolver);
+                // Url resolver added
+                mav.addObject(DOMAIN_NAME_VARIABLE, urlResolver);
+
+                // Condition tester
+                mav.addObject(CONDITION_TESTER_NAME, new BusinessRulesService());
+
+                // CSRF Token Resolver
+                mav.addObject(CSRF_RESOLVER_NAME, new CsrfResolver(request));
+
+                // User resolver
+                mav.addObject(SECURITY_SERVICE_NAME, new UserResolver());
+
+                // User resolver
+                mav.addObject(CURRENT_URI, request.getServletPath());
+            } else {
+                // Removing any objects bind to model except last one
+                Integer size = mav.getModel().size();
+                Object toKeep = mav.getModel().entrySet().toArray()[size - 1];
+                mav.getModel().clear();
+                mav.addObject(toKeep);
             }
-            // Should be outside ModelMap iterating otherwise we will get exception
-            // Adding is forced because otherwise jade is output some sh!t when it shouldn't
-            mav.addObject(MODEL_ERRORS_NAME, errors);
-
-            // Adding language and country code to model
-            Locale locale = RequestContextUtils.getLocale(request);
-            mav.addObject(MODEL_LOCALE_NAME, locale);
-            // Message resolver added
-            mav.addObject(MODEL_MESSAGE_RESOLVER_NAME, messageResolver);
-            // Url resolver added
-            mav.addObject(DOMAIN_NAME_VARIABLE, urlResolver);
-
-            // Condition tester
-            mav.addObject(CONDITION_TESTER_NAME, new BusinessRulesService());
-
-            // CSRF Token Resolver
-            mav.addObject(CSRF_RESOLVER_NAME, new CsrfResolver(request));
-
-            // User resolver
-            mav.addObject(SECURITY_SERVICE_NAME, new UserResolver());
-
-            // User resolver
-            mav.addObject(CURRENT_URI, request.getServletPath());
         }
     }
 
