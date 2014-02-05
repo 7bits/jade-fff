@@ -36,9 +36,6 @@ public class ShowVacancies {
     /** User utils for obtaining any session user information */
     @Autowired
     private UserUtils userUtils = null;
-    /** Url Builder */
-    @Autowired
-    private UrlResolver urlResolver;
     /** Session attribute name for Vacancies Filter */
     private static final String SESSION_FILTER_NAME = VacanciesFilter.class.getName() + ".filter";
     /** Json converter service */
@@ -47,7 +44,7 @@ public class ShowVacancies {
 
 
     /**
-     * Shows vacancies with filter applied for recruiter
+     * Shows "filtered vacancies" page
      * @param request           Http Request
      * @param response          Http Response
      * @param vacanciesFilter   Vacancies Filter
@@ -64,55 +61,13 @@ public class ShowVacancies {
             @ModelAttribute("VacanciesFilter") final VacanciesFilter vacanciesFilter
     ) throws Exception {
         ModelAndView filteredVacancies = new ModelAndView("recruiter/recruiter-find-new-vacancies.jade");
-        DateTimeUtils dateTimeUtils = new DateTimeUtils();
-        Locale locale = RequestContextUtils.getLocale(request);
-        // If this is first page visit
-        if (vacanciesFilter.getSubmit() == null) {
-            fillVacanciesFilter(vacanciesFilter, request);
-        }
+        fillVacanciesFilter(vacanciesFilter, request);
         addFilterToSession(vacanciesFilter, request);
         filteredVacancies.addObject("vacanciesFilter", vacanciesFilter);
 
-        Date curDate;
-        if (vacanciesFilter.getDate().isEmpty()) {
-            curDate = new Date();
-            vacanciesFilter.setDate(dateTimeUtils.dateUrlFormat(curDate));
-        } else {
-            curDate = dateTimeUtils.urlDateParse(vacanciesFilter.getDate());
-        }
-
-        // If requested date is not today we need next date link
-        if (!dateTimeUtils.isToday(curDate)) {
-            Date nextDate = dateTimeUtils.nextDay(curDate);
-            filteredVacancies.addObject("nextDate", nextDate);
-            filteredVacancies.addObject(
-                    "nextDateLink",
-                    buildFilterLinkByDate(nextDate, vacanciesFilter, locale)
-            );
-        }
-
-        Date prevDate = dateTimeUtils.previousDay(curDate);
-        filteredVacancies.addObject("curDate", curDate);
-        filteredVacancies.addObject("prevDate", prevDate);
-        filteredVacancies.addObject(
-                "prevDateLink",
-                buildFilterLinkByDate(prevDate, vacanciesFilter, locale)
-        );
-
-        try {
-            User user = userUtils.getCurrentUser(request);
-            List<Vacancy> vacancies = recruiterService.findFilteredVacanciesForRecruiter(
-                    user.getRecruiterId(),
-                    vacanciesFilter
-            );
-            filteredVacancies.addObject("vacancies", vacancies);
-        } catch (ServiceException e) {
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            return null;
-        }
-
         return filteredVacancies;
     }
+
     /**
      * Shows vacancies with filter applied for recruiter
      * @param request           Http Request
@@ -168,26 +123,9 @@ public class ShowVacancies {
             vacanciesFilter.setHideVacancies(false);
             vacanciesFilter.setHideBids(false);
             vacanciesFilter.setHideDeals(false);
+            DateTimeUtils dateTimeUtils = new DateTimeUtils();
+            vacanciesFilter.setDate(dateTimeUtils.dateUrlFormat(new Date()));
         }
-    }
-
-    /**
-     * Build link for list of vacancies on exact date
-     * with filter with exact locale prefix
-     * @param date               Date
-     * @param vacanciesFilter    Vacancies Filter
-     * @param locale             Locale
-     * @return build uri for filtered list of vacancies
-     */
-    private String buildFilterLinkByDate(
-            final Date date,
-            final VacanciesFilter vacanciesFilter,
-            final Locale locale
-    ) {
-        DateTimeUtils dateTimeUtils = new DateTimeUtils();
-        VacanciesFilter vacanciesFilterNext = new VacanciesFilter(vacanciesFilter);
-        vacanciesFilterNext.setDate(dateTimeUtils.dateUrlFormat(date));
-        return urlResolver.buildRecruiterFilterUri(vacanciesFilterNext, locale);
     }
 
     /**

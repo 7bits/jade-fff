@@ -1,3 +1,5 @@
+prevDate = new Date()
+nextDate = new Date()
 $ ->
   firstVisit = ->
     $("#searchText").trigger "change"
@@ -8,6 +10,7 @@ $ ->
     hideDeals = $("#hideDeals").find("input").prop("checked")
     $("#hideDeals").addClass "active"  if hideDeals
     showAllCheck ""
+    modifyDates new Date($(".datepicker").val())
     return
 
   setTimeout firstVisit, 100
@@ -28,11 +31,34 @@ showAllCheck = (button) ->
   $("#showAll").addClass "active"  if not hideVacancies and not hideBids and not hideDeals and not showAllActive
   return
 
+modifyDates = (inputDate) ->
+  curDate = new Date(inputDate)
+  nextDate = new Date(curDate.getTime())
+  prevDate = new Date(curDate.getTime())
+  prevDate.setDate prevDate.getDate() - 1
+  nextDate.setDate nextDate.getDate() + 1
+
+dateToString = (inputDate) ->
+  day = undefined
+  month = undefined
+  year = undefined
+  year = inputDate.getFullYear()
+  month = inputDate.getMonth() + 1
+  day = inputDate.getDate()
+  stringDate = year + "-"
+  stringDate += "0"  if month < 10
+  stringDate += month + "-"
+  stringDate += "0"  if day < 10
+  stringDate += day
+  stringDate
+
 $ ->
   dp = $(".datepicker")
   dp.datepicker().on "changeDate", (ev) ->
     dp.val(ev.target.value).trigger "change"
     dp.datepicker "hide"
+    modifyDates ev.date.valueOf()
+    return
 
 $ ->
   $("#showAll").on "click", ->
@@ -87,10 +113,12 @@ $ ->
 $ ->
   $("#prevDateLink").on "click", (event) ->
     event.preventDefault()
-    $(".datepicker").val($("#prevDate").val()).trigger "change"
+    $(".datepicker").datepicker("update", dateToString(prevDate))
+    modifyDates(prevDate)
 
 $ ->
-  $("a#nextDateLink").on "click", (event) ->
+  $("#nextDateLink").on "click", (event) ->
     event.preventDefault()
-    $(".datepicker").val($("#nextDate").val()).trigger "change"
+    $(".datepicker").datepicker("update", dateToString(nextDate))
+    modifyDates(nextDate)
 

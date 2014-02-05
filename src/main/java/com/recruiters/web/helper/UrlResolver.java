@@ -147,22 +147,6 @@ public class UrlResolver {
         return fullUri.toString();
     }
 
-    /**
-     * Generate uri for recruiter filter request
-     * @param vacanciesFilter    Vacancies filter object
-     * @param locale             Locale
-     * @return uri with params
-     */
-    public String buildRecruiterFilterUri(final VacanciesFilter vacanciesFilter, final Locale locale) {
-        StringBuilder uri = new StringBuilder(DEFAULT_STRING_SIZE);
-        uri.append("recruiter-find-new-vacancies");
-        uri.append("?date=");
-        uri.append(vacanciesFilter.getDate());
-        uri.append("&submit=Filter");
-        return buildFullUri(uri.toString(), locale);
-    }
-
-
     public String getProtocol() {
         return protocol;
     }

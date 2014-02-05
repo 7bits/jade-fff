@@ -24,15 +24,14 @@ block append content
             label.btn.btn-primary#hideDeals=fmt.message("recruiter-find-new-vacancies.form.hide-deals", locale)
               input(type="checkbox", name="hideDeals", value="1", checked=vacanciesFilter.hideDeals)
           .input-group
-            if locals.nextDate
-              a.btn.btn-link#nextDateLink(href=nextDateLink)=fmt.date(nextDate, locale)
+            a.btn.btn-link#nextDateLink(href="#")=fmt.message("recruiter-find-new-vacancies.nextDate", locale)
             input.datepicker(size=16, type="text", name="date", data-date-format="yyyy-mm-dd", value=vacanciesFilter.date)
             span.input-group-addon#autowidth
               span.glyphicon.glyphicon-calendar
             input(type="hidden", name="prevDate", value=prevDate)
             input(type="hidden", name="nextDate", value=nextDate)
             input(type="hidden", name=csrf.getParameterName(), value=csrf.getToken())
-            a.btn.btn-link#prevDateLink(href=prevDateLink)=fmt.date(prevDate, locale)
+            a.btn.btn-link#prevDateLink(href="#")=fmt.message("recruiter-find-new-vacancies.prevDate", locale)
     table.table.table-striped#vacancies
       thead
         tr
