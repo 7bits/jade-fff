@@ -17,6 +17,6 @@ public class VacancyBidSpecification extends VacancySpecification {
 
     @Override
     public String asSql() {
-        return " (deal_id IS NULL AND bid_id IS NOT NULL) ";
+        return " deal_id IS NULL AND bid_id IS NOT NULL ";
     }
 }

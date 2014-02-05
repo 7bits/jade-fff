@@ -8,6 +8,8 @@ import com.recruiters.model.Vacancy;
 public class VacancyOrSpecification extends VacancySpecification {
     private ISpecification<Vacancy> specification1;
     private ISpecification<Vacancy> specification2;
+    /** Default string size, used for string builder */
+    private static final Integer DEFAULT_STRING_SIZE = 1024;
 
     public VacancyOrSpecification(final ISpecification<Vacancy> specification1, final ISpecification<Vacancy> specification2) {
         this.specification1 = specification1;
@@ -22,6 +24,13 @@ public class VacancyOrSpecification extends VacancySpecification {
 
     @Override
     public String asSql() {
-        return specification1.asSql() + " OR " + specification2.asSql();
+        StringBuilder sb = new StringBuilder(DEFAULT_STRING_SIZE);
+        sb.append(" (");
+        sb.append(specification1.asSql());
+        sb.append(") OR (");
+        sb.append(specification2.asSql());
+        sb.append(") ");
+
+        return sb.toString();
     }
 }
