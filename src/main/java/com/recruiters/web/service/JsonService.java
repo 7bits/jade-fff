@@ -17,7 +17,7 @@ import java.util.Map;
  * Creates json maps for web layer
  */
 @Component
-public class JsonConverterService {
+public class JsonService {
     @Autowired
     private MessageResolver messageResolver;
     @Autowired

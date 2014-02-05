@@ -8,18 +8,14 @@ import com.recruiters.service.utils.DateTimeUtils;
 import com.recruiters.web.controller.utils.UserUtils;
 import com.recruiters.web.form.VacanciesFilter;
 import com.recruiters.web.helper.UrlResolver;
-import com.recruiters.web.service.JsonConverterService;
+import com.recruiters.web.service.JsonService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.support.RequestContextUtils;
-import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -45,8 +41,9 @@ public class ShowVacancies {
     private UrlResolver urlResolver;
     /** Session attribute name for Vacancies Filter */
     private static final String SESSION_FILTER_NAME = VacanciesFilter.class.getName() + ".filter";
+    /** Json converter service */
     @Autowired
-    private JsonConverterService jsonConverterService;
+    private JsonService jsonService;
 
 
     /**
@@ -133,6 +130,7 @@ public class ShowVacancies {
             final HttpServletResponse response,
             @ModelAttribute("VacanciesFilter") final VacanciesFilter vacanciesFilter
     ) throws Exception {
+        addFilterToSession(vacanciesFilter, request);
         try {
             User user = userUtils.getCurrentUser(request);
             List<Vacancy> vacancies = recruiterService.findFilteredVacanciesForRecruiter(
@@ -140,7 +138,7 @@ public class ShowVacancies {
                     vacanciesFilter
             );
             Locale locale = RequestContextUtils.getLocale(request);
-            return jsonConverterService.recruiterVacanciesFilteredList(vacancies, locale);
+            return jsonService.recruiterVacanciesFilteredList(vacancies, locale);
         } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             return null;
