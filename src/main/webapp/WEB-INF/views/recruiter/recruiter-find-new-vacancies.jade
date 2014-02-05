@@ -18,11 +18,11 @@ block append content
               input(type="checkbox", name="showAll", value="1")
           .btn-group(data-toggle="buttons")
             label.btn.btn-primary#hideVacancies=fmt.message("recruiter-find-new-vacancies.form.hide-vacancies", locale)
-              input(type="checkbox", name="hideVacancies", value="1")
+              input(type="checkbox", name="hideVacancies", value="1", checked=vacanciesFilter.hideVacancies)
             label.btn.btn-primary#hideBids=fmt.message("recruiter-find-new-vacancies.form.hide-bids", locale)
-              input(type="checkbox", name="hideBids", value="1")
+              input(type="checkbox", name="hideBids", value="1", checked=vacanciesFilter.hideBids)
             label.btn.btn-primary#hideDeals=fmt.message("recruiter-find-new-vacancies.form.hide-deals", locale)
-              input(type="checkbox", name="hideDeals", value="1")
+              input(type="checkbox", name="hideDeals", value="1", checked=vacanciesFilter.hideDeals)
           .input-group
             if locals.nextDate
               a.btn.btn-link#nextDateLink(href=nextDateLink)=fmt.date(nextDate, locale)
