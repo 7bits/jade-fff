@@ -29,7 +29,9 @@ block append content
             label(for="expirationDate")=fmt.message("employer-vacancy-create.form.expirationDate", locale)
             .row
               .col-xs-4
-                input(type="text", class="form-control datepicker", id="expirationDate", name="expirationDate", value=vacancyForm.expirationDate, placeholder=fmt.message("employer-vacancy-create.form.expirationDate", locale))
+                input.datepicker(size=16, type="text", name="expirationDate", name="expirationDate", value=vacancyForm.expirationDate, placeholder=fmt.message("employer-vacancy-create.form.expirationDate", locale), data-date-format="yyyy-mm-dd")
+                span.input-group-addon#autowidth
+                  span.glyphicon.glyphicon-calendar
             #{errors.expirationDate}
           .form-group
             label(for="testFile")=fmt.message("employer-vacancy-create.form.testFile", locale)

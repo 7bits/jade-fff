@@ -4,6 +4,7 @@ import com.recruiters.model.Employer;
 import com.recruiters.model.User;
 import com.recruiters.model.Vacancy;
 import com.recruiters.model.status.VacancyStatus;
+import com.recruiters.service.utils.DateTimeUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
@@ -17,7 +18,7 @@ public class VacancyForm {
     private String description = null;
     private Long salaryFrom = 0L;
     private Long salaryTo = 0L;
-    private Date expirationDate = null;
+    private String expirationDate = null;
     private MultipartFile testFile = null;
     private Boolean publish = false;
 
@@ -32,7 +33,8 @@ public class VacancyForm {
         vacancy.setSalaryFrom(salaryFrom);
         vacancy.setSalaryTo(salaryTo);
         vacancy.setCreationDate(new Date());
-        vacancy.setExpirationDate(expirationDate);
+        DateTimeUtils dateTimeUtils = new DateTimeUtils();
+        vacancy.setExpirationDate(dateTimeUtils.urlDateParse(expirationDate));
         vacancy.setEmployer(new Employer(user.getEmployerId(), user));
         if (publish) {
             vacancy.setStatus(VacancyStatus.ACTIVE);
@@ -66,11 +68,11 @@ public class VacancyForm {
         this.salaryTo = salaryTo;
     }
 
-    public Date getExpirationDate() {
+    public String getExpirationDate() {
         return expirationDate;
     }
 
-    public void setExpirationDate(final Date expirationDate) {
+    public void setExpirationDate(final String expirationDate) {
         this.expirationDate = expirationDate;
     }
 
