@@ -78,7 +78,7 @@ public interface VacancyMapper {
             @Param("recruiterId") final Long recruiterId,
             @Param("date") final String date,
             @Param("searchLikeText") final String searchLikeText,
-            @Param("vacancySpecification") final VacancyListSpecification vacancyListSpecification
+            @Param("vacancyListSpecification") final VacancyListSpecification vacancyListSpecification
                                                     );
 
     @Select("SELECT vacancies.*, count(bids.id) as bid_count, " +

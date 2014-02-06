@@ -41,13 +41,10 @@ public class VacancyFilteredProvider {
             }
         }
         sqlQuery.append(") as all_vacancies ");
-        Object specification =  params.get("vacancySpecification");
+        Object specification =  params.get("vacancyListSpecification");
         if (specification instanceof VacancyListSpecification) {
             VacancyListSpecification vacancyListSpecification = (VacancyListSpecification) specification;
             sqlQuery.append(vacancyListSpecification.asSql());
-        } else {
-            // TODO think how to solve inconsistency between SQL and Code language
-            sqlQuery.append(" WHERE 0 ");
         }
         return sqlQuery.toString();
     }

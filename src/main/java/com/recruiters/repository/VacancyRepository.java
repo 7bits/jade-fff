@@ -81,8 +81,8 @@ public class VacancyRepository {
             final String searchText,
             final VacancyListSpecification vacancyListSpecification
     ) throws RepositoryException {
-        if (recruiterId == null) {
-            throw new RepositoryException("recruiterId is null");
+        if (recruiterId == null || vacancyListSpecification == null || date == null) {
+            throw new RepositoryException("recruiterId or vacancyListSpecification or date is null");
         }
         try {
             // prepare LIKE parameter
