@@ -27,7 +27,8 @@ block append content
           input.datepicker(size=16, type="text", name="date", data-date-format="yyyy-mm-dd", value=vacanciesFilter.date)
           span.input-group-addon.autowidth
             span.glyphicon.glyphicon-calendar
-          input(type="hidden", name="sortingOrder", id="sortingOrder")
+          input(type="hidden", name="sortColumn", id="sortColumn")
+          input(type="hidden", name="sortAsc", id="sortAsc")
           input(type="hidden", name=csrf.getParameterName(), value=csrf.getToken())
           a.btn.btn-link#prevDateLink(href="#")=fmt.message("recruiter-find-new-vacancies.prevDate", locale)
     table.table.table-striped#vacancies

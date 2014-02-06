@@ -25,6 +25,8 @@ public class VacanciesFilter {
     private Boolean hideDeals = false;
     private String date = "";
     private String sortingOrder;
+    private String sortColumn;
+    private Boolean sortAsc;
 
     public VacanciesFilter() {
     }
@@ -70,7 +72,7 @@ public class VacanciesFilter {
                     .or(new VacancyBidSpecification()
                             .or(new VacancyDealSpecification()));
         }
-
+        if (sortingOrder == null) return vacancySpecification;
         if (sortingOrder.equals("title_asc")) {
             vacancySpecification = new VacancyOrderSpecification(vacancySpecification, new VacancyOrderTitleAsc());
         }
@@ -144,5 +146,21 @@ public class VacanciesFilter {
 
     public void setSortingOrder(final String sortingOrder) {
         this.sortingOrder = sortingOrder;
+    }
+
+    public String getSortColumn() {
+        return sortColumn;
+    }
+
+    public void setSortColumn(final String sortColumn) {
+        this.sortColumn = sortColumn;
+    }
+
+    public Boolean getSortAsc() {
+        return sortAsc;
+    }
+
+    public void setSortAsc(final Boolean sortAsc) {
+        this.sortAsc = sortAsc;
     }
 }
