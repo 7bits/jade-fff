@@ -17,7 +17,7 @@ public class VacancyFilteredProvider {
      * @param params    Parameters prepared by MyBatis
      * @return sql query
      */
-    public static String selectVacancyFiltered(final Map params) {
+    public static String selectVacancyFiltered(final Map<String, Object> params) {
         StringBuilder sqlQuery = new StringBuilder(DEFAULT_STRING_SIZE);
 
         sqlQuery.append("SELECT * FROM ( " +
@@ -33,11 +33,11 @@ public class VacancyFilteredProvider {
                 "(SELECT * FROM deals WHERE vacancy_id=vacancies.id AND recruiter_id!=#{recruiterId}) ");
         Object text = params.get("searchLikeText");
         if (text instanceof String) {
-        String searchLikeText = (String) text;
-        if (!searchLikeText.isEmpty()) {
-            sqlQuery.append("AND (vacancies.title LIKE #{searchLikeText} " +
-                    "OR vacancies.description LIKE #{searchLikeText})  ");
-        }
+            String searchLikeText = (String) text;
+            if (!searchLikeText.isEmpty()) {
+                sqlQuery.append("AND (vacancies.title LIKE #{searchLikeText} " +
+                        "OR vacancies.description LIKE #{searchLikeText})  ");
+            }
         }
         sqlQuery.append(") as all_vacancies ");
         Object specification =  params.get("vacancySpecification");
@@ -46,6 +46,7 @@ public class VacancyFilteredProvider {
             sqlQuery.append(" WHERE ");
             sqlQuery.append(vacancySpecification.asSql());
         } else {
+            // TODO think how to solve inconsistency between SQL and Code language
             sqlQuery.append(" WHERE 0 ");
         }
         return sqlQuery.toString();

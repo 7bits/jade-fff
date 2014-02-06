@@ -29,6 +29,7 @@ public class VacancyOrderSpecification extends VacancySpecification {
         if (specification != null) {
             sb.append(specification.asSql());
         } else  {
+            // TODO think how to solve inconsistency between SQL and Code language
             sb.append(" 0 ");
         }
         sb.append(" ORDER BY ");
