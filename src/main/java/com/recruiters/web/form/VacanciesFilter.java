@@ -1,18 +1,14 @@
 package com.recruiters.web.form;
 
+import com.recruiters.repository.specification.vacancy.VacancyListSpecification;
+import com.recruiters.repository.specification.vacancy.order.VacancyListOrderCreated;
+import com.recruiters.repository.specification.vacancy.order.VacancyListOrderDescription;
+import com.recruiters.repository.specification.vacancy.order.VacancyListOrderTitle;
+import com.recruiters.repository.specification.vacancy.order.VacancyListOrderType;
 import com.recruiters.repository.specification.vacancy.VacancyBidSpecification;
 import com.recruiters.repository.specification.vacancy.VacancyCleanVacancySpecification;
 import com.recruiters.repository.specification.vacancy.VacancyDealSpecification;
 import com.recruiters.repository.specification.vacancy.VacancySpecification;
-import com.recruiters.repository.specification.vacancy.order.VacancyOrderCreatedAsc;
-import com.recruiters.repository.specification.vacancy.order.VacancyOrderCreatedDesc;
-import com.recruiters.repository.specification.vacancy.order.VacancyOrderDescriptionAsc;
-import com.recruiters.repository.specification.vacancy.order.VacancyOrderDescriptionDesc;
-import com.recruiters.repository.specification.vacancy.order.VacancyOrderSpecification;
-import com.recruiters.repository.specification.vacancy.order.VacancyOrderTitleAsc;
-import com.recruiters.repository.specification.vacancy.order.VacancyOrderTitleDesc;
-import com.recruiters.repository.specification.vacancy.order.VacancyOrderTypeAsc;
-import com.recruiters.repository.specification.vacancy.order.VacancyOrderTypeDesc;
 
 
 /**
@@ -47,7 +43,7 @@ public class VacanciesFilter {
      * Specification builder
      * @return Vacancy Specification
      */
-    public VacancySpecification getSpecifications() {
+    public VacancyListSpecification getListSpecifications() {
         VacancySpecification vacancySpecification = null;
         if (!hideVacancies && hideBids && hideDeals) {
             vacancySpecification = new VacancyCleanVacancySpecification();
@@ -72,32 +68,22 @@ public class VacanciesFilter {
                     .or(new VacancyBidSpecification()
                             .or(new VacancyDealSpecification()));
         }
-        if (sortingOrder == null) return vacancySpecification;
-        if (sortingOrder.equals("title_asc")) {
-            vacancySpecification = new VacancyOrderSpecification(vacancySpecification, new VacancyOrderTitleAsc());
+        if (sortColumn == null || sortAsc == null) {
+            return new VacancyListSpecification(vacancySpecification, null);
         }
-        if (sortingOrder.equals("title_desc")) {
-            vacancySpecification = new VacancyOrderSpecification(vacancySpecification, new VacancyOrderTitleDesc());
+        if (sortColumn.equals("title")) {
+            return new VacancyListSpecification(vacancySpecification, new VacancyListOrderTitle(sortAsc));
         }
-        if (sortingOrder.equals("desc_asc")) {
-            vacancySpecification = new VacancyOrderSpecification(vacancySpecification, new VacancyOrderDescriptionAsc());
+        if (sortColumn.equals("desc")) {
+            return new VacancyListSpecification(vacancySpecification, new VacancyListOrderDescription(sortAsc));
         }
-        if (sortingOrder.equals("desc_desc")) {
-            vacancySpecification = new VacancyOrderSpecification(vacancySpecification, new VacancyOrderDescriptionDesc());
+        if (sortColumn.equals("date")) {
+            return new VacancyListSpecification(vacancySpecification, new VacancyListOrderCreated(sortAsc));
         }
-        if (sortingOrder.equals("date_asc")) {
-            vacancySpecification = new VacancyOrderSpecification(vacancySpecification, new VacancyOrderCreatedAsc());
+        if (sortColumn.equals("type")) {
+            return new VacancyListSpecification(vacancySpecification, new VacancyListOrderType(sortAsc));
         }
-        if (sortingOrder.equals("date_desc")) {
-            vacancySpecification = new VacancyOrderSpecification(vacancySpecification, new VacancyOrderCreatedDesc());
-        }
-        if (sortingOrder.equals("type_asc")) {
-            vacancySpecification = new VacancyOrderSpecification(vacancySpecification, new VacancyOrderTypeAsc());
-        }
-        if (sortingOrder.equals("type_desc")) {
-            vacancySpecification = new VacancyOrderSpecification(vacancySpecification, new VacancyOrderTypeDesc());
-        }
-        return vacancySpecification;
+        return new VacancyListSpecification(null, null);
     }
 
     public String getSearchText() {

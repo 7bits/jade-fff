@@ -1,5 +1,6 @@
 package com.recruiters.repository.mapper;
 
+import com.recruiters.repository.specification.vacancy.VacancyListSpecification;
 import com.recruiters.repository.specification.vacancy.VacancySpecification;
 
 import java.util.Map;
@@ -41,10 +42,9 @@ public class VacancyFilteredProvider {
         }
         sqlQuery.append(") as all_vacancies ");
         Object specification =  params.get("vacancySpecification");
-        if (specification instanceof VacancySpecification) {
-            VacancySpecification vacancySpecification = (VacancySpecification) specification;
-            sqlQuery.append(" WHERE ");
-            sqlQuery.append(vacancySpecification.asSql());
+        if (specification instanceof VacancyListSpecification) {
+            VacancyListSpecification vacancyListSpecification = (VacancyListSpecification) specification;
+            sqlQuery.append(vacancyListSpecification.asSql());
         } else {
             // TODO think how to solve inconsistency between SQL and Code language
             sqlQuery.append(" WHERE 0 ");

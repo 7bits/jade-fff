@@ -3,6 +3,7 @@ package com.recruiters.repository;
 import com.recruiters.model.Vacancy;
 import com.recruiters.model.status.VacancyStatus;
 import com.recruiters.repository.mapper.VacancyMapper;
+import com.recruiters.repository.specification.vacancy.VacancyListSpecification;
 import com.recruiters.repository.specification.vacancy.VacancySpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -69,7 +70,7 @@ public class VacancyRepository {
      * @param recruiterId             Id of recruiter
      * @param date                    Date in "YYYY-MM-DD" format
      * @param searchText              Search text, can be empty, so will not be used
-     * @param vacancySpecification    Vacancy Specification
+     * @param vacancyListSpecification    Vacancy List specification
      * @return List of vacancies with no bids and deals from certain recruiter
      * @throws RepositoryException if input parameter is incorrect or there
      * were any technical issues
@@ -78,7 +79,7 @@ public class VacancyRepository {
             final Long recruiterId,
             final String date,
             final String searchText,
-            final VacancySpecification vacancySpecification
+            final VacancyListSpecification vacancyListSpecification
     ) throws RepositoryException {
         if (recruiterId == null) {
             throw new RepositoryException("recruiterId is null");
@@ -92,7 +93,7 @@ public class VacancyRepository {
                 }
             }
             return vacancyMapper.findFilteredVacanciesForRecruiter(
-                    recruiterId, date, likeSearchText, vacancySpecification
+                    recruiterId, date, likeSearchText, vacancyListSpecification
             );
         } catch (Exception e) {
             throw new RepositoryException("General database error: ", e);

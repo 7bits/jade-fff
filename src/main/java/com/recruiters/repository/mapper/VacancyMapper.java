@@ -2,6 +2,7 @@ package com.recruiters.repository.mapper;
 
 import com.recruiters.model.Vacancy;
 import com.recruiters.model.status.VacancyStatus;
+import com.recruiters.repository.specification.vacancy.VacancyListSpecification;
 import com.recruiters.repository.specification.vacancy.VacancySpecification;
 import org.apache.ibatis.annotations.*;
 
@@ -77,7 +78,7 @@ public interface VacancyMapper {
             @Param("recruiterId") final Long recruiterId,
             @Param("date") final String date,
             @Param("searchLikeText") final String searchLikeText,
-            @Param("vacancySpecification") final VacancySpecification vacancySpecification
+            @Param("vacancySpecification") final VacancyListSpecification vacancyListSpecification
                                                     );
 
     @Select("SELECT vacancies.*, count(bids.id) as bid_count, " +

@@ -109,7 +109,7 @@ public class RecruiterService {
                     recruiterId,
                     vacanciesFilter.getDate(),
                     vacanciesFilter.getSearchText(),
-                    vacanciesFilter.getSpecifications()
+                    vacanciesFilter.getListSpecifications()
             );
         } catch (Exception e) {
             log.error(SERVICE_EXCEPTION_MESSAGE, e);
