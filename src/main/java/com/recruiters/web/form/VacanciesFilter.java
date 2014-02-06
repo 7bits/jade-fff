@@ -1,11 +1,18 @@
 package com.recruiters.web.form;
 
-import com.recruiters.repository.specification.VacancyBidSpecification;
-import com.recruiters.repository.specification.VacancyCleanVacancySpecification;
-import com.recruiters.repository.specification.VacancyDealSpecification;
-import com.recruiters.repository.specification.VacancySpecification;
-
-import java.io.Serializable;
+import com.recruiters.repository.specification.vacancy.VacancyBidSpecification;
+import com.recruiters.repository.specification.vacancy.VacancyCleanVacancySpecification;
+import com.recruiters.repository.specification.vacancy.VacancyDealSpecification;
+import com.recruiters.repository.specification.vacancy.VacancySpecification;
+import com.recruiters.repository.specification.vacancy.order.VacancyOrderCreatedAsc;
+import com.recruiters.repository.specification.vacancy.order.VacancyOrderCreatedDesc;
+import com.recruiters.repository.specification.vacancy.order.VacancyOrderDescriptionAsc;
+import com.recruiters.repository.specification.vacancy.order.VacancyOrderDescriptionDesc;
+import com.recruiters.repository.specification.vacancy.order.VacancyOrderSpecification;
+import com.recruiters.repository.specification.vacancy.order.VacancyOrderTitleAsc;
+import com.recruiters.repository.specification.vacancy.order.VacancyOrderTitleDesc;
+import com.recruiters.repository.specification.vacancy.order.VacancyOrderTypeAsc;
+import com.recruiters.repository.specification.vacancy.order.VacancyOrderTypeDesc;
 
 
 /**
@@ -17,7 +24,7 @@ public class VacanciesFilter {
     private Boolean hideBids = false;
     private Boolean hideDeals = false;
     private String date = "";
-    private String submit = null;
+    private String sortingOrder;
 
     public VacanciesFilter() {
     }
@@ -39,30 +46,56 @@ public class VacanciesFilter {
      * @return Vacancy Specification
      */
     public VacancySpecification getSpecifications() {
+        VacancySpecification vacancySpecification = null;
         if (!hideVacancies && hideBids && hideDeals) {
-            return new VacancyCleanVacancySpecification();
+            vacancySpecification = new VacancyCleanVacancySpecification();
         }
         if (hideVacancies && !hideBids && hideDeals) {
-            return new VacancyBidSpecification();
+            vacancySpecification = new VacancyBidSpecification();
         }
         if (hideVacancies && hideBids && !hideDeals) {
-            return new VacancyDealSpecification();
+            vacancySpecification = new VacancyDealSpecification();
         }
         if (!hideVacancies && !hideBids && hideDeals) {
-            return new VacancyCleanVacancySpecification().or(new VacancyBidSpecification());
+            vacancySpecification = new VacancyCleanVacancySpecification().or(new VacancyBidSpecification());
         }
         if (!hideVacancies && hideBids && !hideDeals) {
-            return new VacancyCleanVacancySpecification().or(new VacancyDealSpecification());
+            vacancySpecification = new VacancyCleanVacancySpecification().or(new VacancyDealSpecification());
         }
         if (hideVacancies && !hideBids && !hideDeals) {
-            return new VacancyDealSpecification().or(new VacancyBidSpecification());
+            vacancySpecification = new VacancyDealSpecification().or(new VacancyBidSpecification());
         }
         if (!hideVacancies && !hideDeals && !hideBids) {
-            return new VacancyCleanVacancySpecification()
+            vacancySpecification = new VacancyCleanVacancySpecification()
                     .or(new VacancyBidSpecification()
                             .or(new VacancyDealSpecification()));
         }
-        return null;
+
+        if (sortingOrder.equals("title_asc")) {
+            vacancySpecification = new VacancyOrderSpecification(vacancySpecification, new VacancyOrderTitleAsc());
+        }
+        if (sortingOrder.equals("title_desc")) {
+            vacancySpecification = new VacancyOrderSpecification(vacancySpecification, new VacancyOrderTitleDesc());
+        }
+        if (sortingOrder.equals("desc_asc")) {
+            vacancySpecification = new VacancyOrderSpecification(vacancySpecification, new VacancyOrderDescriptionAsc());
+        }
+        if (sortingOrder.equals("desc_desc")) {
+            vacancySpecification = new VacancyOrderSpecification(vacancySpecification, new VacancyOrderDescriptionDesc());
+        }
+        if (sortingOrder.equals("date_asc")) {
+            vacancySpecification = new VacancyOrderSpecification(vacancySpecification, new VacancyOrderCreatedAsc());
+        }
+        if (sortingOrder.equals("date_desc")) {
+            vacancySpecification = new VacancyOrderSpecification(vacancySpecification, new VacancyOrderCreatedDesc());
+        }
+        if (sortingOrder.equals("type_asc")) {
+            vacancySpecification = new VacancyOrderSpecification(vacancySpecification, new VacancyOrderTypeAsc());
+        }
+        if (sortingOrder.equals("type_desc")) {
+            vacancySpecification = new VacancyOrderSpecification(vacancySpecification, new VacancyOrderTypeDesc());
+        }
+        return vacancySpecification;
     }
 
     public String getSearchText() {
@@ -105,11 +138,11 @@ public class VacanciesFilter {
         this.date = date;
     }
 
-    public String getSubmit() {
-        return submit;
+    public String getSortingOrder() {
+        return sortingOrder;
     }
 
-    public void setSubmit(final String submit) {
-        this.submit = submit;
+    public void setSortingOrder(final String sortingOrder) {
+        this.sortingOrder = sortingOrder;
     }
 }

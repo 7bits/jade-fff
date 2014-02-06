@@ -1,6 +1,7 @@
-package com.recruiters.repository.specification;
+package com.recruiters.repository.specification.vacancy;
 
 import com.recruiters.model.Vacancy;
+import com.recruiters.repository.specification.ISpecification;
 
 /**
  * Abstract Vacancy Specification

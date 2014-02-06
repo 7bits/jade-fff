@@ -1,4 +1,4 @@
-package com.recruiters.repository.specification;
+package com.recruiters.repository.specification.vacancy;
 
 import com.recruiters.model.Vacancy;
 

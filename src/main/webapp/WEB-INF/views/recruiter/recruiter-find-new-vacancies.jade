@@ -27,16 +27,15 @@ block append content
           input.datepicker(size=16, type="text", name="date", data-date-format="yyyy-mm-dd", value=vacanciesFilter.date)
           span.input-group-addon.autowidth
             span.glyphicon.glyphicon-calendar
-          input(type="hidden", name="prevDate", value=prevDate)
-          input(type="hidden", name="nextDate", value=nextDate)
+          input(type="hidden", name="sortingOrder", id="sortingOrder")
           input(type="hidden", name=csrf.getParameterName(), value=csrf.getToken())
           a.btn.btn-link#prevDateLink(href="#")=fmt.message("recruiter-find-new-vacancies.prevDate", locale)
     table.table.table-striped#vacancies
       thead
         tr
-          th=fmt.message("recruiter-find-new-vacancies.table.name", locale)
-          th=fmt.message("recruiter-find-new-vacancies.table.description", locale)
-          th=fmt.message("recruiter-find-new-vacancies.table.date", locale)
-          th=fmt.message("recruiter-find-new-vacancies.table.bidOrDeal", locale)
+          th.sorting#stitle=fmt.message("recruiter-find-new-vacancies.table.name", locale)
+          th.sorting#sdesc=fmt.message("recruiter-find-new-vacancies.table.description", locale)
+          th.sorting#sdate=fmt.message("recruiter-find-new-vacancies.table.date", locale)
+          th.sorting#stype=fmt.message("recruiter-find-new-vacancies.table.bidOrDeal", locale)
           th
       tbody

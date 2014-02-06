@@ -1,6 +1,6 @@
 package com.recruiters.repository.mapper;
 
-import com.recruiters.repository.specification.VacancySpecification;
+import com.recruiters.repository.specification.vacancy.VacancySpecification;
 
 import java.util.Map;
 

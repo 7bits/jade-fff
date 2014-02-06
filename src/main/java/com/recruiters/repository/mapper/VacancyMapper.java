@@ -2,7 +2,7 @@ package com.recruiters.repository.mapper;
 
 import com.recruiters.model.Vacancy;
 import com.recruiters.model.status.VacancyStatus;
-import com.recruiters.repository.specification.VacancySpecification;
+import com.recruiters.repository.specification.vacancy.VacancySpecification;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
