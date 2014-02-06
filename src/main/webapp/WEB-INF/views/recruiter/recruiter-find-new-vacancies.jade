@@ -7,31 +7,30 @@ block append content
     h1=fmt.message("recruiter-find-new-vacancies.h1", locale)
     form(name="vacanciesFilter", id="vacanciesFilter", action="", method="get")
       .row
-        .col-md-6
-          .input-group
-            label(for="searchText")
-            input(type="text", class="form-control", id="searchText", name="searchText", value=vacanciesFilter.searchText, placeholder=fmt.message("recruiter-find-new-vacancies.form.search", locale))
-            span.input-group-addon
-              span.glyphicon.glyphicon-search
-          .btn-group(data-toggle="buttons")
-            label.btn.btn-primary#showAll=fmt.message("recruiter-find-new-vacancies.form.show-all", locale)
-              input(type="checkbox", name="showAll", value="1")
-          .btn-group(data-toggle="buttons")
-            label.btn.btn-primary#hideVacancies=fmt.message("recruiter-find-new-vacancies.form.hide-vacancies", locale)
-              input(type="checkbox", name="hideVacancies", value="1", checked=vacanciesFilter.hideVacancies)
-            label.btn.btn-primary#hideBids=fmt.message("recruiter-find-new-vacancies.form.hide-bids", locale)
-              input(type="checkbox", name="hideBids", value="1", checked=vacanciesFilter.hideBids)
-            label.btn.btn-primary#hideDeals=fmt.message("recruiter-find-new-vacancies.form.hide-deals", locale)
-              input(type="checkbox", name="hideDeals", value="1", checked=vacanciesFilter.hideDeals)
-          .input-group
-            a.btn.btn-link#nextDateLink(href="#")=fmt.message("recruiter-find-new-vacancies.nextDate", locale)
-            input.datepicker(size=16, type="text", name="date", data-date-format="yyyy-mm-dd", value=vacanciesFilter.date)
-            span.input-group-addon#autowidth
-              span.glyphicon.glyphicon-calendar
-            input(type="hidden", name="prevDate", value=prevDate)
-            input(type="hidden", name="nextDate", value=nextDate)
-            input(type="hidden", name=csrf.getParameterName(), value=csrf.getToken())
-            a.btn.btn-link#prevDateLink(href="#")=fmt.message("recruiter-find-new-vacancies.prevDate", locale)
+        .input-group.floatleft
+          label(for="searchText")
+          input(type="text", size=25, id="searchText", name="searchText", value=vacanciesFilter.searchText, placeholder=fmt.message("recruiter-find-new-vacancies.form.search", locale))
+          span.input-group-addon.autowidth
+            span.glyphicon.glyphicon-search
+        .btn-group.btn-group-xs.floatleft(data-toggle="buttons")
+          label.btn.btn-default#showAll=fmt.message("recruiter-find-new-vacancies.form.show-all", locale)
+            input(type="checkbox", name="showAll", value="1")
+        .btn-group.btn-group-xs.floatleft(data-toggle="buttons")
+          label.btn.btn-default#hideVacancies=fmt.message("recruiter-find-new-vacancies.form.hide-vacancies", locale)
+            input(type="checkbox", name="hideVacancies", value="1", checked=vacanciesFilter.hideVacancies)
+          label.btn.btn-default#hideBids=fmt.message("recruiter-find-new-vacancies.form.hide-bids", locale)
+            input(type="checkbox", name="hideBids", value="1", checked=vacanciesFilter.hideBids)
+          label.btn.btn-default#hideDeals=fmt.message("recruiter-find-new-vacancies.form.hide-deals", locale)
+            input(type="checkbox", name="hideDeals", value="1", checked=vacanciesFilter.hideDeals)
+        .input-group.clearleft
+          a.btn.btn-link#nextDateLink(href="#")=fmt.message("recruiter-find-new-vacancies.nextDate", locale)
+          input.datepicker(size=16, type="text", name="date", data-date-format="yyyy-mm-dd", value=vacanciesFilter.date)
+          span.input-group-addon.autowidth
+            span.glyphicon.glyphicon-calendar
+          input(type="hidden", name="prevDate", value=prevDate)
+          input(type="hidden", name="nextDate", value=nextDate)
+          input(type="hidden", name=csrf.getParameterName(), value=csrf.getToken())
+          a.btn.btn-link#prevDateLink(href="#")=fmt.message("recruiter-find-new-vacancies.prevDate", locale)
     table.table.table-striped#vacancies
       thead
         tr

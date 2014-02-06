@@ -5,6 +5,13 @@
 .help {
   cursor: help;
 }
-#autowidth {
+.autowidth {
   width: auto;
+}
+.floatleft {
+  float: left;
+  margin-left: 6px;
+}
+.clearleft {
+  clear: left;
 }
