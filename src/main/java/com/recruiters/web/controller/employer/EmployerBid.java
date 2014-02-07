@@ -119,7 +119,7 @@ public class EmployerBid {
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
-    @RequestMapping(value = "}/employer-recruiter-decline/{bidId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/employer-recruiter-decline/{bidId}", method = RequestMethod.GET)
     public String declineRecruiterBid(
             @PathVariable final Long bidId,
             final HttpServletRequest request,
