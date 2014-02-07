@@ -243,6 +243,7 @@ public class EmployerService {
             bid = bidRepository.findById(bidId);
             if (bid != null) {
                 if (bid.getVacancy().getEmployer().getId().equals(employerId)) {
+                    bidRepository.setViewed(bid.getId());
 
                     return bid;
                 }

@@ -127,6 +127,27 @@ public class BidRepository {
         }
     }
 
+
+    /**
+     * Set Bid viewed state to true
+     * @param bidId    Bid Id
+     * @return Bid Id if it was successfully updated
+     * @throws RepositoryException if input parameter is incorrect or there
+     * were any technical issues
+     */
+    public Long setViewed(final Long bidId) throws RepositoryException {
+        if (bidId == null) {
+            throw new RepositoryException("bidId is null");
+        }
+        try {
+
+            bidMapper.setViewed(bidId);
+            return bidId;
+        } catch (Exception e) {
+            throw new RepositoryException("General database error: ", e);
+        }
+    }
+
     public BidMapper getBidMapper() {
         return bidMapper;
     }

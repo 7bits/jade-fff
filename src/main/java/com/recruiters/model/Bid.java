@@ -12,6 +12,7 @@ public class Bid {
     private String message = null;
     private BidStatus status = null;
     private Long dealId = 0L;
+    private Boolean viewed = false;
 
     public Bid() {
 
@@ -78,5 +79,13 @@ public class Bid {
 
     public void setDealId(final Long dealId) {
         this.dealId = dealId;
+    }
+
+    public Boolean getViewed() {
+        return viewed;
+    }
+
+    public void setViewed(final Boolean viewed) {
+        this.viewed = viewed;
     }
 }

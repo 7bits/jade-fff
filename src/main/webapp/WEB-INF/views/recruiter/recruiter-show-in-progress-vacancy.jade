@@ -41,6 +41,7 @@ block append content
           th=fmt.message("recruiter-show-in-progress-vacancy.table.lastName", locale)
           th=fmt.message("recruiter-show-in-progress-vacancy.table.status", locale)
           th=fmt.message("recruiter-show-in-progress-vacancy.table.creationDate", locale)
+          th=fmt.message("recruiter-show-in-progress-vacancy.table.viewed", locale)
           th
       if deal.applicants
         for applicant in deal.applicants
@@ -49,6 +50,9 @@ block append content
             td #{applicant.lastName}
             td #{fmt.applicantStatus(applicant.status, locale)}
             td #{fmt.date(deal.vacancy.creationDate, locale)}
+            td
+              if applicant.viewed
+                #{fmt.message("recruiter-show-in-progress-vacancy.table.viewed", locale)}
             td
               if test.isApplicantEditable(applicant, deal)
                 a.btn.btn-link.pull-right(href= domain.buildFullUri("/recruiter-edit-applicant/", applicant.id, locale))=fmt.message("recruiter-show-in-progress-vacancy.table.change", locale)

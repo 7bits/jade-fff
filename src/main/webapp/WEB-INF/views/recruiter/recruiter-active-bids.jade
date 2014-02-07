@@ -11,6 +11,7 @@ block append content
           th=fmt.message("recruiter-active-bids.table.name", locale)
           th=fmt.message("recruiter-active-bids.table.description", locale)
           th=fmt.message("recruiter-active-bids.table.status", locale)
+          th=fmt.message("recruiter-active-bids.table.viewed", locale)
           th=fmt.message("recruiter-active-bids.table.date", locale)
           th
       tbody
@@ -19,6 +20,9 @@ block append content
             td #{bid.vacancy.title}
             td #{bid.vacancy.description}
             td #{fmt.bidStatus(bid.status, locale)}
+            td
+              if bid.viewed
+                #{fmt.message("recruiter-active-bids.table.viewed", locale)}
             td #{fmt.date(bid.vacancy.creationDate, locale)}
             td
               a.btn.btn-link(href=domain.buildFullUri("/recruiter-show-bid-vacancy", bid.id, locale))=fmt.message("recruiter-active-bids.more", locale)

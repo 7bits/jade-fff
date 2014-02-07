@@ -17,7 +17,7 @@ import java.util.List;
  */
 public interface BidMapper {
 
-    @Select("SELECT bid.id, bid.message, bid.status, " +
+    @Select("SELECT bid.id, bid.message, bid.status, bid.viewed, " +
             "vacancy.id as vacancy_id,  vacancy.employer_id, vacancy.title, " +
             "vacancy.description, vacancy.salary_from, vacancy.salary_to, " +
             "vacancy.creation_date, vacancy.expiration_date, " +
@@ -32,6 +32,7 @@ public interface BidMapper {
             @Result(column = "id", property = "id"),
             @Result(column = "message", property = "message"),
             @Result(column = "status", property = "status"),
+            @Result(column = "viewed", property = "viewed"),
             @Result(column = "vacancy_id", property = "vacancy.id"),
             @Result(column = "employer_id", property = "vacancy.employer.id"),
             @Result(column = "title", property = "vacancy.title"),
@@ -115,4 +116,8 @@ public interface BidMapper {
 
     @Update("UPDATE bid SET status = #{status} WHERE id = #{bidId} ")
     void updateStatus(@Param(value = "bidId") final Long bidId, @Param(value = "status") final BidStatus status);
+
+    @Update("UPDATE bid SET viewed = 1 " +
+            "WHERE id=#{bidId} AND viewed = 0")
+    void setViewed(final Long bidId);
 }
