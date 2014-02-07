@@ -30,7 +30,7 @@ block append content
             .row
               .col-xs-5
                 input.datepicker(size=16, type="text", name="expirationDate", name="expirationDate", value=vacancyForm.expirationDate, placeholder=fmt.message("employer-vacancy-create.form.expirationDate", locale), data-date-format="yyyy-mm-dd")
-                span.input-group-addon.autowidth
+                span.input-group-addon.autowidth#dateicon
                   span.glyphicon.glyphicon-calendar
             #{errors.expirationDate}
           .form-group

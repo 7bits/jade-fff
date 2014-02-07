@@ -54,6 +54,9 @@ dateToString = (inputDate) ->
 
 $ ->
   dp = $(".datepicker")
+  $("#dateicon").on "click", ->
+    dp.datepicker "show"
+    return
   dp.datepicker().on "changeDate", (ev) ->
     dp.val(ev.target.value).trigger "change"
     dp.datepicker "hide"
