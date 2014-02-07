@@ -1,6 +1,7 @@
 package com.recruiters.web.form;
 
 import com.recruiters.repository.specification.vacancy.VacancyListSpecification;
+import com.recruiters.repository.specification.vacancy.VacancyTextSpecification;
 import com.recruiters.repository.specification.vacancy.order.VacancyListOrderCreated;
 import com.recruiters.repository.specification.vacancy.order.VacancyListOrderDescription;
 import com.recruiters.repository.specification.vacancy.order.VacancyListOrderTitle;
@@ -68,6 +69,11 @@ public class VacanciesFilter {
                     .or(new VacancyBidSpecification()
                             .or(new VacancyDealSpecification()));
         }
+
+        if(!searchText.isEmpty() && vacancySpecification != null) {
+            vacancySpecification = vacancySpecification.and(new VacancyTextSpecification(searchText));
+        }
+
         if (sortColumn == null || sortAsc == null) {
             return new VacancyListSpecification(vacancySpecification, null);
         }
@@ -83,7 +89,7 @@ public class VacanciesFilter {
         if (sortColumn.equals("type")) {
             return new VacancyListSpecification(vacancySpecification, new VacancyListOrderType(sortAsc));
         }
-        return new VacancyListSpecification(null, null);
+        return new VacancyListSpecification(vacancySpecification, null);
     }
 
     public String getSearchText() {

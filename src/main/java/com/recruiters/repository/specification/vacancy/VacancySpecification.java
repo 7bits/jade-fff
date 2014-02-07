@@ -25,4 +25,9 @@ public abstract class VacancySpecification implements ISpecification<Vacancy> {
     public VacancySpecification or(final ISpecification<Vacancy> other) {
         return new VacancyOrSpecification(this, other);
     }
+
+    @Override
+    public VacancySpecification and(final ISpecification<Vacancy> other) {
+        return new VacancyAndSpecification(this, other);
+    }
 }
