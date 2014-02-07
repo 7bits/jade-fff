@@ -8,12 +8,12 @@ import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 
 /**
- * Mapper for Attachment POJO
+ * Mapper for Attachment
  */
 public interface AttachmentMapper {
 
     @Select("SELECT * " +
-            "FROM attachments " +
+            "FROM attachment " +
             "WHERE id=#{attachmentId}")
     @Results({
             @Result(column = "id", property = "id"),
@@ -27,7 +27,7 @@ public interface AttachmentMapper {
 
 
 
-    @Insert("INSERT INTO attachments (system_filename, public_filename, employer_id, recruiter_id) " +
+    @Insert("INSERT INTO attachment (system_filename, public_filename, employer_id, recruiter_id) " +
             "VALUES (#{systemFilename}, #{publicFilename}, #{employer.id}, #{recruiter.id})")
     @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
     void create(final Attachment attachment);

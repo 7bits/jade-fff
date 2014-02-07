@@ -6,15 +6,15 @@ import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 
 /**
- * Mapper for Recruiter POJO
+ * Mapper for Recruiter
  */
 public interface RecruiterMapper {
 
-    @Select("SELECT recruiters.id, recruiters.user_id, " +
-            "users.firstname, users.lastname, users.username, users.password, users.description " +
-            "FROM recruiters " +
-            "RIGHT JOIN users ON users.id = recruiters.user_id " +
-            "WHERE recruiters.id=#{recruiterId}")
+    @Select("SELECT recruiter.id, recruiter.user_id, " +
+            "user.firstname, user.lastname, user.username, user.password, user.description " +
+            "FROM recruiter " +
+            "RIGHT JOIN user ON user.id = recruiter.user_id " +
+            "WHERE recruiter.id=#{recruiterId}")
     @Results({
             @Result(column = "id", property = "id"),
             @Result(column = "user_id", property = "user.id"),

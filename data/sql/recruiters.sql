@@ -18,17 +18,17 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `recruiters`
+-- Database: `recruiter`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `applicants`
+-- Table structure for table `applicant`
 --
 
-DROP TABLE IF EXISTS `applicants`;
-CREATE TABLE IF NOT EXISTS `applicants` (
+DROP TABLE IF EXISTS `applicant`;
+CREATE TABLE IF NOT EXISTS `applicant` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `deal_id` bigint(20) NOT NULL,
   `first_name` varchar(255) NOT NULL,
@@ -48,20 +48,20 @@ CREATE TABLE IF NOT EXISTS `applicants` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
 
 --
--- RELATIONS FOR TABLE `applicants`:
+-- RELATIONS FOR TABLE `applicant`:
 --   `deal_id`
---       `deals` -> `id`
+--       `deal` -> `id`
 --   `resume_file`
---       `attachments` -> `id`
+--       `attachment` -> `id`
 --   `test_answer_file`
---       `attachments` -> `id`
+--       `attachment` -> `id`
 --
 
 --
--- Dumping data for table `applicants`
+-- Dumping data for table `applicant`
 --
 
-INSERT INTO `applicants` (`id`, `deal_id`, `first_name`, `last_name`, `description`, `sex`, `age`, `resume_file`, `test_answer_file`, `status`, `viewed`, `updated_date`) VALUES
+INSERT INTO `applicant` (`id`, `deal_id`, `first_name`, `last_name`, `description`, `sex`, `age`, `resume_file`, `test_answer_file`, `status`, `viewed`, `updated_date`) VALUES
 (1, 1, 'Александр', 'Иванов', 'Программирую даже во сне', 'Мужской', 34, NULL, NULL, 'IN_PROGRESS', 1, '2014-01-22 04:17:39'),
 (2, 1, 'Павел', 'Никифоров', 'Круто программирует на всём', 'Мужской', 45, NULL, NULL, 'IN_PROGRESS', 1, '2014-01-22 04:17:40'),
 (3, 2, 'Михаил', 'Луценко', 'Чиню любые трубы: пластик', 'Мужской', 42, NULL, NULL, 'IN_PROGRESS', 0, '2014-01-22 04:13:37'),
@@ -74,11 +74,11 @@ INSERT INTO `applicants` (`id`, `deal_id`, `first_name`, `last_name`, `descripti
 -- --------------------------------------------------------
 
 --
--- Table structure for table `attachments`
+-- Table structure for table `attachment`
 --
 
-DROP TABLE IF EXISTS `attachments`;
-CREATE TABLE IF NOT EXISTS `attachments` (
+DROP TABLE IF EXISTS `attachment`;
+CREATE TABLE IF NOT EXISTS `attachment` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `system_filename` varchar(255) NOT NULL,
   `public_filename` varchar(255) NOT NULL,
@@ -92,21 +92,21 @@ CREATE TABLE IF NOT EXISTS `attachments` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
--- RELATIONS FOR TABLE `attachments`:
+-- RELATIONS FOR TABLE `attachment`:
 --   `recruiter_id`
---       `recruiters` -> `id`
+--       `recruiter` -> `id`
 --   `employer_id`
---       `employers` -> `id`
+--       `employer` -> `id`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `bids`
+-- Table structure for table `bid`
 --
 
-DROP TABLE IF EXISTS `bids`;
-CREATE TABLE IF NOT EXISTS `bids` (
+DROP TABLE IF EXISTS `bid`;
+CREATE TABLE IF NOT EXISTS `bid` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `vacancy_id` bigint(20) NOT NULL,
   `recruiter_id` bigint(20) NOT NULL,
@@ -119,18 +119,18 @@ CREATE TABLE IF NOT EXISTS `bids` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=14 ;
 
 --
--- RELATIONS FOR TABLE `bids`:
+-- RELATIONS FOR TABLE `bid`:
 --   `vacancy_id`
---       `vacancies` -> `id`
+--       `vacancy` -> `id`
 --   `recruiter_id`
---       `recruiters` -> `id`
+--       `recruiter` -> `id`
 --
 
 --
--- Dumping data for table `bids`
+-- Dumping data for table `bid`
 --
 
-INSERT INTO `bids` (`id`, `vacancy_id`, `recruiter_id`, `message`, `status`, `updated_date`) VALUES
+INSERT INTO `bid` (`id`, `vacancy_id`, `recruiter_id`, `message`, `status`, `updated_date`) VALUES
 (1, 1, 1, 'Условия такие условия, такие интересные условия', 'APPROVED', '2014-01-22 04:14:55'),
 (2, 1, 2, 'Какие то другие условия.', 'ACTIVE', '2014-01-22 04:13:37'),
 (3, 1, 3, 'Условия Условия Условия Условия Условия Условия Условия Условия " +                 "Условия Условия Условия Условия Условия Условия Условия Условия Условия Условия', 'ACTIVE', '2014-01-22 04:13:37'),
@@ -147,11 +147,11 @@ INSERT INTO `bids` (`id`, `vacancy_id`, `recruiter_id`, `message`, `status`, `up
 -- --------------------------------------------------------
 
 --
--- Table structure for table `deals`
+-- Table structure for table `deal`
 --
 
-DROP TABLE IF EXISTS `deals`;
-CREATE TABLE IF NOT EXISTS `deals` (
+DROP TABLE IF EXISTS `deal`;
+CREATE TABLE IF NOT EXISTS `deal` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `vacancy_id` bigint(20) NOT NULL,
   `recruiter_id` bigint(20) NOT NULL,
@@ -166,18 +166,18 @@ CREATE TABLE IF NOT EXISTS `deals` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
 
 --
--- RELATIONS FOR TABLE `deals`:
+-- RELATIONS FOR TABLE `deal`:
 --   `vacancy_id`
---       `vacancies` -> `id`
+--       `vacancy` -> `id`
 --   `recruiter_id`
---       `recruiters` -> `id`
+--       `recruiter` -> `id`
 --
 
 --
--- Dumping data for table `deals`
+-- Dumping data for table `deal`
 --
 
-INSERT INTO `deals` (`id`, `vacancy_id`, `recruiter_id`, `status`, `recruiter_archived`, `employer_archived`, `updated_date`, `fire_reason`) VALUES
+INSERT INTO `deal` (`id`, `vacancy_id`, `recruiter_id`, `status`, `recruiter_archived`, `employer_archived`, `updated_date`, `fire_reason`) VALUES
 (1, 3, 1, 'IN_PROGRESS', 0, 0, '2014-01-22 04:13:37', NULL),
 (2, 2, 2, 'IN_PROGRESS', 0, 0, '2014-01-22 04:13:37', NULL),
 (3, 1, 1, 'IN_PROGRESS', 0, 0, '2014-01-22 04:14:55', NULL),
@@ -187,28 +187,28 @@ INSERT INTO `deals` (`id`, `vacancy_id`, `recruiter_id`, `status`, `recruiter_ar
 -- --------------------------------------------------------
 
 --
--- Table structure for table `employers`
+-- Table structure for table `employer`
 --
 
-DROP TABLE IF EXISTS `employers`;
-CREATE TABLE IF NOT EXISTS `employers` (
+DROP TABLE IF EXISTS `employer`;
+CREATE TABLE IF NOT EXISTS `employer` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_employers_1` (`user_id`)
+  KEY `fk_employer_1` (`user_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
--- RELATIONS FOR TABLE `employers`:
+-- RELATIONS FOR TABLE `employer`:
 --   `user_id`
---       `users` -> `id`
+--       `user` -> `id`
 --
 
 --
--- Dumping data for table `employers`
+-- Dumping data for table `employer`
 --
 
-INSERT INTO `employers` (`id`, `user_id`) VALUES
+INSERT INTO `employer` (`id`, `user_id`) VALUES
 (1, 2),
 (2, 5),
 (3, 6);
@@ -216,28 +216,28 @@ INSERT INTO `employers` (`id`, `user_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `recruiters`
+-- Table structure for table `recruiter`
 --
 
-DROP TABLE IF EXISTS `recruiters`;
-CREATE TABLE IF NOT EXISTS `recruiters` (
+DROP TABLE IF EXISTS `recruiter`;
+CREATE TABLE IF NOT EXISTS `recruiter` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_recruiters_1` (`user_id`)
+  KEY `fk_recruiter_1` (`user_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
--- RELATIONS FOR TABLE `recruiters`:
+-- RELATIONS FOR TABLE `recruiter`:
 --   `user_id`
---       `users` -> `id`
+--       `user` -> `id`
 --
 
 --
--- Dumping data for table `recruiters`
+-- Dumping data for table `recruiter`
 --
 
-INSERT INTO `recruiters` (`id`, `user_id`) VALUES
+INSERT INTO `recruiter` (`id`, `user_id`) VALUES
 (1, 1),
 (2, 3),
 (3, 4);
@@ -245,11 +245,11 @@ INSERT INTO `recruiters` (`id`, `user_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Table structure for table `user`
 --
 
-DROP TABLE IF EXISTS `users`;
-CREATE TABLE IF NOT EXISTS `users` (
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE IF NOT EXISTS `user` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
@@ -261,10 +261,10 @@ CREATE TABLE IF NOT EXISTS `users` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
 --
--- Dumping data for table `users`
+-- Dumping data for table `user`
 --
 
-INSERT INTO `users` (`id`, `username`, `password`, `firstname`, `lastname`, `description`) VALUES
+INSERT INTO `user` (`id`, `username`, `password`, `firstname`, `lastname`, `description`) VALUES
 (1, 'recruiter', '123123', 'Павел', 'Потапов', 'Лучший рекрутер на правом берегу Иртыша '),
 (2, 'employer', '123123', 'Артём', 'Иванов', 'ОАО "Шанс"'),
 (3, 'test1', 'test1', 'Алексей', 'Пивоваров', 'Нахожу новых кандидатов быстрее света'),
@@ -275,11 +275,11 @@ INSERT INTO `users` (`id`, `username`, `password`, `firstname`, `lastname`, `des
 -- --------------------------------------------------------
 
 --
--- Table structure for table `vacancies`
+-- Table structure for table `vacancy`
 --
 
-DROP TABLE IF EXISTS `vacancies`;
-CREATE TABLE IF NOT EXISTS `vacancies` (
+DROP TABLE IF EXISTS `vacancy`;
+CREATE TABLE IF NOT EXISTS `vacancy` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `employer_id` bigint(20) NOT NULL,
   `title` varchar(255) NOT NULL,
@@ -297,18 +297,18 @@ CREATE TABLE IF NOT EXISTS `vacancies` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=20 ;
 
 --
--- RELATIONS FOR TABLE `vacancies`:
+-- RELATIONS FOR TABLE `vacancy`:
 --   `employer_id`
---       `employers` -> `id`
+--       `employer` -> `id`
 --   `test_file`
---       `attachments` -> `id`
+--       `attachment` -> `id`
 --
 
 --
--- Dumping data for table `vacancies`
+-- Dumping data for table `vacancy`
 --
 
-INSERT INTO `vacancies` (`id`, `employer_id`, `title`, `description`, `salary_from`, `salary_to`, `creation_date`, `expiration_date`, `updated_date`, `test_file`, `status`) VALUES
+INSERT INTO `vacancy` (`id`, `employer_id`, `title`, `description`, `salary_from`, `salary_to`, `creation_date`, `expiration_date`, `updated_date`, `test_file`, `status`) VALUES
 (1, 1, 'Лесоруб', 'Должен уметь рубить лес', 10000, 15000, '2014-01-20 04:36:42', '2014-02-08 17:00:00', '2014-01-22 04:13:37', NULL, 'ACTIVE'),
 (2, 1, 'Сантехник', 'Не должен пить!', 20000, 20000, '2014-01-20 04:36:40', '2014-02-16 17:00:00', '2014-01-22 04:13:37', NULL, 'ACTIVE'),
 (3, 1, 'Программист', 'Уметь программировать на С++', 100000, 100000, '2014-01-21 04:36:38', '2014-02-14 17:00:00', '2014-01-22 04:13:37', NULL, 'ACTIVE'),
@@ -334,52 +334,52 @@ INSERT INTO `vacancies` (`id`, `employer_id`, `title`, `description`, `salary_fr
 --
 
 --
--- Constraints for table `applicants`
+-- Constraints for table `applicant`
 --
-ALTER TABLE `applicants`
-  ADD CONSTRAINT `applicants_ibfk_1` FOREIGN KEY (`deal_id`) REFERENCES `deals` (`id`),
-  ADD CONSTRAINT `applicants_ibfk_2` FOREIGN KEY (`resume_file`) REFERENCES `attachments` (`id`),
-  ADD CONSTRAINT `applicants_ibfk_3` FOREIGN KEY (`test_answer_file`) REFERENCES `attachments` (`id`);
+ALTER TABLE `applicant`
+  ADD CONSTRAINT `applicant_ibfk_1` FOREIGN KEY (`deal_id`) REFERENCES `deal` (`id`),
+  ADD CONSTRAINT `applicant_ibfk_2` FOREIGN KEY (`resume_file`) REFERENCES `attachment` (`id`),
+  ADD CONSTRAINT `applicant_ibfk_3` FOREIGN KEY (`test_answer_file`) REFERENCES `attachment` (`id`);
 
 --
--- Constraints for table `attachments`
+-- Constraints for table `attachment`
 --
-ALTER TABLE `attachments`
-  ADD CONSTRAINT `attachments_ibfk_2` FOREIGN KEY (`recruiter_id`) REFERENCES `recruiters` (`id`),
-  ADD CONSTRAINT `attachments_ibfk_1` FOREIGN KEY (`employer_id`) REFERENCES `employers` (`id`);
+ALTER TABLE `attachment`
+  ADD CONSTRAINT `attachment_ibfk_2` FOREIGN KEY (`recruiter_id`) REFERENCES `recruiter` (`id`),
+  ADD CONSTRAINT `attachment_ibfk_1` FOREIGN KEY (`employer_id`) REFERENCES `employer` (`id`);
 
 --
--- Constraints for table `bids`
+-- Constraints for table `bid`
 --
-ALTER TABLE `bids`
-  ADD CONSTRAINT `bids_ibfk_1` FOREIGN KEY (`vacancy_id`) REFERENCES `vacancies` (`id`),
-  ADD CONSTRAINT `bids_ibfk_2` FOREIGN KEY (`recruiter_id`) REFERENCES `recruiters` (`id`);
+ALTER TABLE `bid`
+  ADD CONSTRAINT `bid_ibfk_1` FOREIGN KEY (`vacancy_id`) REFERENCES `vacancy` (`id`),
+  ADD CONSTRAINT `bid_ibfk_2` FOREIGN KEY (`recruiter_id`) REFERENCES `recruiter` (`id`);
 
 --
--- Constraints for table `deals`
+-- Constraints for table `deal`
 --
-ALTER TABLE `deals`
-  ADD CONSTRAINT `deals_ibfk_1` FOREIGN KEY (`vacancy_id`) REFERENCES `vacancies` (`id`),
-  ADD CONSTRAINT `deals_ibfk_2` FOREIGN KEY (`recruiter_id`) REFERENCES `recruiters` (`id`);
+ALTER TABLE `deal`
+  ADD CONSTRAINT `deal_ibfk_1` FOREIGN KEY (`vacancy_id`) REFERENCES `vacancy` (`id`),
+  ADD CONSTRAINT `deal_ibfk_2` FOREIGN KEY (`recruiter_id`) REFERENCES `recruiter` (`id`);
 
 --
--- Constraints for table `employers`
+-- Constraints for table `employer`
 --
-ALTER TABLE `employers`
-  ADD CONSTRAINT `fk_employers_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+ALTER TABLE `employer`
+  ADD CONSTRAINT `fk_employer_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
 --
--- Constraints for table `recruiters`
+-- Constraints for table `recruiter`
 --
-ALTER TABLE `recruiters`
-  ADD CONSTRAINT `fk_recruiters_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+ALTER TABLE `recruiter`
+  ADD CONSTRAINT `fk_recruiter_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
 --
--- Constraints for table `vacancies`
+-- Constraints for table `vacancy`
 --
-ALTER TABLE `vacancies`
-  ADD CONSTRAINT `vacancies_ibfk_1` FOREIGN KEY (`employer_id`) REFERENCES `employers` (`id`),
-  ADD CONSTRAINT `vacancies_ibfk_2` FOREIGN KEY (`test_file`) REFERENCES `attachments` (`id`);
+ALTER TABLE `vacancy`
+  ADD CONSTRAINT `vacancy_ibfk_1` FOREIGN KEY (`employer_id`) REFERENCES `employer` (`id`),
+  ADD CONSTRAINT `vacancy_ibfk_2` FOREIGN KEY (`test_file`) REFERENCES `attachment` (`id`);
 SET FOREIGN_KEY_CHECKS=1;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

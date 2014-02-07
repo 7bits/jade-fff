@@ -6,15 +6,15 @@ import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 
 /**
- * Mapper for Employer POJO
+ * Mapper for Employer
  */
 public interface EmployerMapper {
 
-    @Select("SELECT employers.id, employers.user_id, " +
-            "users.firstname, users.lastname, users.username, users.password, users.description " +
-            "FROM employers " +
-            "RIGHT JOIN users ON users.id = employers.user_id " +
-            "WHERE employers.id=#{employerId}")
+    @Select("SELECT employer.id, employer.user_id, " +
+            "user.firstname, user.lastname, user.username, user.password, user.description " +
+            "FROM employer " +
+            "RIGHT JOIN user ON user.id = employer.user_id " +
+            "WHERE employer.id=#{employerId}")
     @Results({
             @Result(column = "id", property = "id"),
             @Result(column = "user_id", property = "user.id"),
@@ -26,11 +26,11 @@ public interface EmployerMapper {
     })
     Employer findById(final Long employerId);
 
-    @Select("SELECT employers.id, employers.user_id, " +
-            "users.firstname, users.lastname, users.username, users.password, users.description " +
-            "FROM employers " +
-            "RIGHT JOIN users ON users.id = employers.user_id " +
-            "WHERE employers.user_id=#{userId}")
+    @Select("SELECT employer.id, employer.user_id, " +
+            "user.firstname, user.lastname, user.username, user.password, user.description " +
+            "FROM employer " +
+            "RIGHT JOIN user ON user.id = employer.user_id " +
+            "WHERE employer.user_id=#{userId}")
     @Results({
             @Result(column = "id", property = "id"),
             @Result(column = "user_id", property = "user.id"),

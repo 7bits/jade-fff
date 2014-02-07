@@ -12,20 +12,20 @@ import org.apache.ibatis.annotations.Update;
 import java.util.List;
 
 /**
- * Mapper for Applicant POJO
+ * Mapper for Applicant
  */
 public interface ApplicantMapper {
 
-    @Select("SELECT applicants.*, " +
-            "vacancies.id as vacancy_id, " +
-            "vacancies.employer_id, " +
-            "recruiters.id as recruiter_id, " +
-            "deals.status as deal_status " +
-            "FROM applicants " +
-            "INNER JOIN deals ON deals.id=applicants.deal_id " +
-            "INNER JOIN vacancies ON vacancies.id=deals.vacancy_id " +
-            "INNER JOIN recruiters  ON recruiters.id=deals.recruiter_id " +
-            "WHERE applicants.id=#{applicantId}")
+    @Select("SELECT applicant.*, " +
+            "vacancy.id as vacancy_id, " +
+            "vacancy.employer_id, " +
+            "recruiter.id as recruiter_id, " +
+            "deal.status as deal_status " +
+            "FROM applicant " +
+            "INNER JOIN deal ON deal.id=applicant.deal_id " +
+            "INNER JOIN vacancy ON vacancy.id=deal.vacancy_id " +
+            "INNER JOIN recruiter  ON recruiter.id=deal.recruiter_id " +
+            "WHERE applicant.id=#{applicantId}")
     @Results({
             @Result(column = "id", property = "id"),
             @Result(column = "first_name", property = "firstName"),
@@ -44,15 +44,15 @@ public interface ApplicantMapper {
     })
     Applicant findById(final Long applicantId);
 
-    @Select("SELECT applicants.*, " +
-            "vacancies.id as vacancy_id, " +
-            "vacancies.employer_id, " +
-            "recruiters.id as recruiter_id " +
-            "FROM applicants " +
-            "INNER JOIN deals ON deals.id=applicants.deal_id " +
-            "INNER JOIN vacancies ON vacancies.id=deals.vacancy_id " +
-            "INNER JOIN recruiters  ON recruiters.id=deals.recruiter_id " +
-            "WHERE applicants.deal_id=#{dealId}")
+    @Select("SELECT applicant.*, " +
+            "vacancy.id as vacancy_id, " +
+            "vacancy.employer_id, " +
+            "recruiter.id as recruiter_id " +
+            "FROM applicant " +
+            "INNER JOIN deal ON deal.id=applicant.deal_id " +
+            "INNER JOIN vacancy ON vacancy.id=deal.vacancy_id " +
+            "INNER JOIN recruiter  ON recruiter.id=deal.recruiter_id " +
+            "WHERE applicant.deal_id=#{dealId}")
     @Results({
             @Result(column = "id", property = "id"),
             @Result(column = "first_name", property = "firstName"),
@@ -70,25 +70,25 @@ public interface ApplicantMapper {
     })
     List<Applicant> findApplicantsByDealId(final Long dealId);
 
-    @Insert("INSERT INTO applicants (deal_id, first_name, last_name, description, " +
+    @Insert("INSERT INTO applicant (deal_id, first_name, last_name, description, " +
             "sex, age, resume_file, test_answer_file) " +
             "VALUES (#{deal.id}, #{firstName}, #{lastName}, #{description}, " +
             "#{sex}, #{age}, #{resumeFile.id}, #{testAnswerFile.id})")
     void create(final Applicant applicant);
 
-    @Update("UPDATE applicants SET first_name=#{firstName}, " +
+    @Update("UPDATE applicant SET first_name=#{firstName}, " +
             "last_name=#{lastName}, description=#{description}, " +
             "sex=#{sex}, age=#{age}, " +
             "resume_file=#{resumeFile.id}, test_answer_file=#{testAnswerFile.id} " +
             "WHERE id=#{id}")
     void update(final Applicant applicant);
 
-    @Update("UPDATE applicants SET status=#{status} " +
+    @Update("UPDATE applicant SET status=#{status} " +
             "WHERE id=#{applicantId}")
     void updateStatus(@Param("applicantId") final Long applicantId,
                       @Param("status") final ApplicantStatus applicantStatus);
 
-    @Update("UPDATE applicants SET viewed = 1 " +
+    @Update("UPDATE applicant SET viewed = 1 " +
             "WHERE id=#{applicantId} AND viewed = 0")
     void setViewed(final Long applicantId);
 }

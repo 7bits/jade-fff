@@ -37,16 +37,16 @@ public class VacancyListSpecification implements IListSpecification<Vacancy> {
     public String asSql() {
         StringBuilder sqlQuery = new StringBuilder(DEFAULT_STRING_SIZE);
         sqlQuery.append("SELECT * FROM ( " +
-                "SELECT vacancies.*, users.firstname, users.lastname, " +
-                "bids.id as bid_id, deals.id as deal_id " +
-                "FROM vacancies " +
-                "INNER JOIN employers ON employers.id = vacancies.employer_id " +
-                "INNER JOIN users  ON employers.user_id=users.id " +
-                "LEFT JOIN bids ON bids.vacancy_id=vacancies.id AND bids.recruiter_id=#{recruiterId} " +
-                "LEFT JOIN deals ON deals.vacancy_id=vacancies.id AND deals.recruiter_id=#{recruiterId} " +
-                "WHERE vacancies.status NOT LIKE 'ARCHIVED' AND DATE(vacancies.creation_date)=#{date} " +
+                "SELECT vacancy.*, user.firstname, user.lastname, " +
+                "bid.id as bid_id, deal.id as deal_id " +
+                "FROM vacancy " +
+                "INNER JOIN employer ON employer.id = vacancy.employer_id " +
+                "INNER JOIN user  ON employer.user_id=user.id " +
+                "LEFT JOIN bid ON bid.vacancy_id=vacancy.id AND bid.recruiter_id=#{recruiterId} " +
+                "LEFT JOIN deal ON deal.vacancy_id=vacancy.id AND deal.recruiter_id=#{recruiterId} " +
+                "WHERE vacancy.status NOT LIKE 'ARCHIVED' AND DATE(vacancy.creation_date)=#{date} " +
                 "AND NOT EXISTS " +
-                "(SELECT * FROM deals WHERE vacancy_id=vacancies.id AND recruiter_id!=#{recruiterId}) " +
+                "(SELECT * FROM deal WHERE vacancy_id=vacancy.id AND recruiter_id!=#{recruiterId}) " +
                 ") as all_vacancies ");
         if (vacancySpecification == null) {
             sqlQuery.append(" WHERE 0 ");

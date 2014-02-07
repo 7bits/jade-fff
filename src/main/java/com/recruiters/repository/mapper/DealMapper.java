@@ -2,29 +2,36 @@ package com.recruiters.repository.mapper;
 
 import com.recruiters.model.Deal;
 import com.recruiters.model.status.DealStatus;
-import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Many;
+import org.apache.ibatis.annotations.Options;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Result;
+import org.apache.ibatis.annotations.Results;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
 /**
- * Mapper for Deal POJO
+ * Mapper for Deal
  */
 public interface DealMapper {
 
-    @Select("SELECT deals.id, deals.status, deals.fire_reason, " +
-            "vacancies.id as vacancy_id, vacancies.employer_id, vacancies.title, " +
-            "vacancies.description, vacancies.salary_from, vacancies.salary_to, " +
-            "vacancies.creation_date, vacancies.expiration_date, vacancies.test_file, " +
-            "recruiters.id as recruiter_id, " +
+    @Select("SELECT deal.id, deal.status, deal.fire_reason, " +
+            "vacancy.id as vacancy_id, vacancy.employer_id, vacancy.title, " +
+            "vacancy.description, vacancy.salary_from, vacancy.salary_to, " +
+            "vacancy.creation_date, vacancy.expiration_date, vacancy.test_file, " +
+            "recruiter.id as recruiter_id, " +
             "u1.firstname as recruiter_firstname, u1.lastname as recruiter_lastname, " +
             "u2.firstname as employer_firstname, u2.lastname as employer_lastname " +
-            "FROM deals " +
-            "INNER JOIN vacancies ON vacancies.id=deals.vacancy_id " +
-            "INNER JOIN recruiters ON recruiters.id=deals.recruiter_id " +
-            "INNER JOIN employers ON employers.id = vacancies.employer_id " +
-            "INNER JOIN users u1 ON recruiters.user_id=u1.id " +
-            "INNER JOIN users u2 ON employers.user_id=u2.id " +
-            "WHERE deals.id=#{dealId}")
+            "FROM deal " +
+            "INNER JOIN vacancy ON vacancy.id=deal.vacancy_id " +
+            "INNER JOIN recruiter ON recruiter.id=deal.recruiter_id " +
+            "INNER JOIN employer ON employer.id = vacancy.employer_id " +
+            "INNER JOIN user u1 ON recruiter.user_id=u1.id " +
+            "INNER JOIN user u2 ON employer.user_id=u2.id " +
+            "WHERE deal.id=#{dealId}")
     @Results({
             @Result(column = "id", property = "id", javaType = Long.class),
             @Result(column = "status", property = "status"),
@@ -48,39 +55,39 @@ public interface DealMapper {
     })
     Deal findById(@Param(value = "dealId") final Long dealId);
 
-    @Select("SELECT deals.id, deals.status, " +
-            "vacancies.id as vacancy_id,  vacancies.employer_id, vacancies.title, " +
-            "vacancies.description, vacancies.salary_from, vacancies.salary_to, " +
-            "vacancies.creation_date, " +
-            "recruiters.id as recruiter_id, " +
-            "users.firstname, users.lastname, " +
-            "(SELECT COUNT(applicants.id) FROM applicants " +
-            "WHERE deal_id=deals.id) as all_applicants, " +
-            "(SELECT COUNT(applicants.id) FROM applicants " +
-            "WHERE deal_id=deals.id AND viewed=1) as viewed_applicants, " +
-            "(SELECT COUNT(applicants.id) FROM applicants " +
-            "WHERE deal_id=deals.id AND viewed=0) as unseen_applicants, " +
-            "(SELECT COUNT(applicants.id) FROM applicants " +
-            "WHERE deal_id=deals.id AND status=\"REJECTED\") as rejected_applicants, " +
+    @Select("SELECT deal.id, deal.status, " +
+            "vacancy.id as vacancy_id,  vacancy.employer_id, vacancy.title, " +
+            "vacancy.description, vacancy.salary_from, vacancy.salary_to, " +
+            "vacancy.creation_date, " +
+            "recruiter.id as recruiter_id, " +
+            "user.firstname, user.lastname, " +
+            "(SELECT COUNT(applicant.id) FROM applicant " +
+            "WHERE deal_id=deal.id) as all_applicants, " +
+            "(SELECT COUNT(applicant.id) FROM applicant " +
+            "WHERE deal_id=deal.id AND viewed=1) as viewed_applicants, " +
+            "(SELECT COUNT(applicant.id) FROM applicant " +
+            "WHERE deal_id=deal.id AND viewed=0) as unseen_applicants, " +
+            "(SELECT COUNT(applicant.id) FROM applicant " +
+            "WHERE deal_id=deal.id AND status=\"REJECTED\") as rejected_applicants, " +
             "max_updated.max_updated_date " +
-            "FROM deals " +
-            "INNER JOIN vacancies ON vacancies.id=deals.vacancy_id " +
-            "INNER JOIN recruiters  ON recruiters.id=deals.recruiter_id " +
-            "INNER JOIN users ON recruiters.user_id=users.id " +
+            "FROM deal " +
+            "INNER JOIN vacancy ON vacancy.id=deal.vacancy_id " +
+            "INNER JOIN recruiter  ON recruiter.id=deal.recruiter_id " +
+            "INNER JOIN user ON recruiter.user_id=user.id " +
             "INNER JOIN (SELECT id, MAX(updated_date) as max_updated_date FROM " +
-            "(SELECT id,updated_date FROM deals WHERE recruiter_id=#{recruiterId} " +
+            "(SELECT id,updated_date FROM deal WHERE recruiter_id=#{recruiterId} " +
             "UNION ALL " +
-            "SELECT deals.id, vacancies.updated_date FROM vacancies " +
-            "INNER JOIN deals ON deals.vacancy_id=vacancies.id " +
-            "WHERE deals.recruiter_id=#{recruiterId} " +
+            "SELECT deal.id, vacancy.updated_date FROM vacancy " +
+            "INNER JOIN deal ON deal.vacancy_id=vacancy.id " +
+            "WHERE deal.recruiter_id=#{recruiterId} " +
             "UNION ALL " +
-            "SELECT deals.id, MAX(applicants.updated_date)  FROM applicants " +
-            "INNER JOIN deals ON applicants.deal_id=deals.id " +
-            "WHERE deals.recruiter_id=#{recruiterId})as updated_dates GROUP BY id) as max_updated " +
-            "ON max_updated.id=deals.id " +
-            "WHERE recruiters.id=#{recruiterId} AND " +
-            "deals.status IN(\"IN_PROGRESS\", \"FIRED\", \"APPROVED\") AND " +
-            "deals.recruiter_archived = 0")
+            "SELECT deal.id, MAX(applicant.updated_date)  FROM applicant " +
+            "INNER JOIN deal ON applicant.deal_id=deal.id " +
+            "WHERE deal.recruiter_id=#{recruiterId})as updated_dates GROUP BY id) as max_updated " +
+            "ON max_updated.id=deal.id " +
+            "WHERE recruiter.id=#{recruiterId} AND " +
+            "deal.status IN(\"IN_PROGRESS\", \"FIRED\", \"APPROVED\") AND " +
+            "deal.recruiter_archived = 0")
     @Results({
             @Result(column = "id", property = "id"),
             @Result(column = "status", property = "status"),
@@ -102,17 +109,17 @@ public interface DealMapper {
     })
     List<Deal> findActiveDealsByRecruiterId(final Long recruiterId);
 
-    @Select("SELECT deals.id, deals.status, " +
-            "vacancies.id as vacancy_id,  vacancies.employer_id, vacancies.title, " +
-            "vacancies.description, vacancies.salary_from, vacancies.salary_to, " +
-            "vacancies.creation_date, " +
-            "recruiters.id as recruiter_id, " +
-            "users.firstname, users.lastname " +
-            "FROM deals " +
-            "INNER JOIN vacancies ON vacancies.id=deals.vacancy_id " +
-            "INNER JOIN recruiters  ON recruiters.id=deals.recruiter_id " +
-            "INNER JOIN users ON recruiters.user_id=users.id " +
-            "WHERE vacancies.employer_id=#{employerId} AND deals.status=\"IN_PROGRESS\"")
+    @Select("SELECT deal.id, deal.status, " +
+            "vacancy.id as vacancy_id,  vacancy.employer_id, vacancy.title, " +
+            "vacancy.description, vacancy.salary_from, vacancy.salary_to, " +
+            "vacancy.creation_date, " +
+            "recruiter.id as recruiter_id, " +
+            "user.firstname, user.lastname " +
+            "FROM deal " +
+            "INNER JOIN vacancy ON vacancy.id=deal.vacancy_id " +
+            "INNER JOIN recruiter  ON recruiter.id=deal.recruiter_id " +
+            "INNER JOIN user ON recruiter.user_id=user.id " +
+            "WHERE vacancy.employer_id=#{employerId} AND deal.status=\"IN_PROGRESS\"")
     @Results({
             @Result(column = "id", property = "id"),
             @Result(column = "status", property = "status"),
@@ -129,25 +136,25 @@ public interface DealMapper {
     })
     List<Deal> findActiveDealsByEmployerId(final Long employerId);
 
-    @Insert("INSERT INTO deals (vacancy_id, recruiter_id, status) " +
-            "SELECT v.id, b.recruiter_id, \"IN_PROGRESS\" FROM vacancies v " +
-            "INNER JOIN bids b on v.id = b.vacancy_id " +
+    @Insert("INSERT INTO deal (vacancy_id, recruiter_id, status) " +
+            "SELECT v.id, b.recruiter_id, \"IN_PROGRESS\" FROM vacancy v " +
+            "INNER JOIN bid b on v.id = b.vacancy_id " +
             "WHERE b.id = #{bidId}")
     @Options(useGeneratedKeys = true, keyProperty = "deal.id", keyColumn = "id")
     void create(@Param(value = "bidId") final Long bidId, @Param(value = "deal") final Deal deal);
 
-    @Update("UPDATE deals SET status = #{status} WHERE id = #{dealId} ")
+    @Update("UPDATE deal SET status = #{status} WHERE id = #{dealId} ")
     void updateStatus(@Param(value = "dealId") final Long dealId, @Param(value = "status") final DealStatus status);
 
-    @Update("UPDATE deals SET status = \"FIRED\", fire_reason=#{message} WHERE id = #{dealId} ")
+    @Update("UPDATE deal SET status = \"FIRED\", fire_reason=#{message} WHERE id = #{dealId} ")
     void fireRecruiter(@Param(value = "dealId") final Long dealId, @Param(value = "message") final String message);
 
-    @Update("UPDATE deals SET recruiter_archived = 1 " +
+    @Update("UPDATE deal SET recruiter_archived = 1 " +
             "WHERE recruiter_id = #{recruiterId}  AND recruiter_archived = 0 " +
             "AND status = \"FIRED\"")
     void clearFiredByRecruiterId(final Long recruiterId);
 
-    @Update("UPDATE deals SET recruiter_archived = 1 " +
+    @Update("UPDATE deal SET recruiter_archived = 1 " +
             "WHERE recruiter_id = #{recruiterId}  AND recruiter_archived = 0 " +
             "AND status = \"APPROVED\"")
     void clearApprovedByRecruiterId(final Long recruiterId);

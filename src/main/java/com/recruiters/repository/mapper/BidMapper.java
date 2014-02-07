@@ -13,21 +13,21 @@ import org.apache.ibatis.annotations.Update;
 import java.util.List;
 
 /**
- * Mapper for Bid POJO
+ * Mapper for Bid
  */
 public interface BidMapper {
 
-    @Select("SELECT bids.id, bids.message, bids.status, " +
-            "vacancies.id as vacancy_id,  vacancies.employer_id, vacancies.title, " +
-            "vacancies.description, vacancies.salary_from, vacancies.salary_to, " +
-            "vacancies.creation_date, vacancies.expiration_date, " +
-            "recruiters.id as recruiter_id, " +
-            "users.firstname, users.lastname " +
-            "FROM bids " +
-            "INNER JOIN vacancies ON vacancies.id=bids.vacancy_id " +
-            "INNER JOIN recruiters  ON recruiters.id=bids.recruiter_id " +
-            "INNER JOIN users ON recruiters.user_id=users.id " +
-            "WHERE bids.recruiter_id=#{recruiterId}")
+    @Select("SELECT bid.id, bid.message, bid.status, " +
+            "vacancy.id as vacancy_id,  vacancy.employer_id, vacancy.title, " +
+            "vacancy.description, vacancy.salary_from, vacancy.salary_to, " +
+            "vacancy.creation_date, vacancy.expiration_date, " +
+            "recruiter.id as recruiter_id, " +
+            "user.firstname, user.lastname " +
+            "FROM bid " +
+            "INNER JOIN vacancy ON vacancy.id=bid.vacancy_id " +
+            "INNER JOIN recruiter  ON recruiter.id=bid.recruiter_id " +
+            "INNER JOIN user ON recruiter.user_id=user.id " +
+            "WHERE bid.recruiter_id=#{recruiterId}")
     @Results({
             @Result(column = "id", property = "id"),
             @Result(column = "message", property = "message"),
@@ -46,19 +46,19 @@ public interface BidMapper {
     })
     List<Bid> findBidsByRecruiterId(final Long recruiterId);
 
-    @Select("SELECT bids.id, bids.message, bids.status, " +
-            "vacancies.id as vacancy_id,  vacancies.employer_id, vacancies.title, " +
-            "vacancies.description, vacancies.salary_from, vacancies.salary_to, " +
-            "vacancies.creation_date, vacancies.expiration_date, vacancies.test_file, " +
-            "recruiters.id as recruiter_id, " +
-            "users.firstname, users.lastname, " +
-            "deals.id as deal_id " +
-            "FROM bids " +
-            "INNER JOIN vacancies ON vacancies.id=bids.vacancy_id " +
-            "INNER JOIN recruiters  ON recruiters.id=bids.recruiter_id " +
-            "INNER JOIN users ON recruiters.user_id=users.id " +
-            "LEFT JOIN deals ON deals.vacancy_id=bids.vacancy_id " +
-            "WHERE bids.id=#{bidId}")
+    @Select("SELECT bid.id, bid.message, bid.status, " +
+            "vacancy.id as vacancy_id,  vacancy.employer_id, vacancy.title, " +
+            "vacancy.description, vacancy.salary_from, vacancy.salary_to, " +
+            "vacancy.creation_date, vacancy.expiration_date, vacancy.test_file, " +
+            "recruiter.id as recruiter_id, " +
+            "user.firstname, user.lastname, " +
+            "deal.id as deal_id " +
+            "FROM bid " +
+            "INNER JOIN vacancy ON vacancy.id=bid.vacancy_id " +
+            "INNER JOIN recruiter  ON recruiter.id=bid.recruiter_id " +
+            "INNER JOIN user ON recruiter.user_id=user.id " +
+            "LEFT JOIN deal ON deal.vacancy_id=bid.vacancy_id " +
+            "WHERE bid.id=#{bidId}")
     @Results({
             @Result(column = "id", property = "id"),
             @Result(column = "message", property = "message"),
@@ -79,17 +79,17 @@ public interface BidMapper {
     })
     Bid findById(final Long bidId);
 
-    @Select("SELECT bids.id, bids.message, bids.status, " +
-            "vacancies.id as vacancy_id,  vacancies.employer_id, vacancies.title, " +
-            "vacancies.description, vacancies.salary_from, vacancies.salary_to, " +
-            "vacancies.creation_date, vacancies.expiration_date, " +
-            "recruiters.id as recruiter_id, " +
-            "users.firstname, users.lastname " +
-            "FROM bids " +
-            "INNER JOIN vacancies ON vacancies.id=bids.vacancy_id " +
-            "INNER JOIN recruiters  ON recruiters.id=bids.recruiter_id " +
-            "INNER JOIN users ON recruiters.user_id=users.id " +
-            "WHERE bids.vacancy_id=#{vacancyId} ")
+    @Select("SELECT bid.id, bid.message, bid.status, " +
+            "vacancy.id as vacancy_id,  vacancy.employer_id, vacancy.title, " +
+            "vacancy.description, vacancy.salary_from, vacancy.salary_to, " +
+            "vacancy.creation_date, vacancy.expiration_date, " +
+            "recruiter.id as recruiter_id, " +
+            "user.firstname, user.lastname " +
+            "FROM bid " +
+            "INNER JOIN vacancy ON vacancy.id=bid.vacancy_id " +
+            "INNER JOIN recruiter  ON recruiter.id=bid.recruiter_id " +
+            "INNER JOIN user ON recruiter.user_id=user.id " +
+            "WHERE bid.vacancy_id=#{vacancyId} ")
     @Results({
             @Result(column = "id", property = "id"),
             @Result(column = "message", property = "message"),
@@ -108,11 +108,11 @@ public interface BidMapper {
     })
     List<Bid> findBidsByVacancyId(final Long vacancyId);
 
-    @Insert("INSERT INTO bids (vacancy_id, recruiter_id, message) " +
+    @Insert("INSERT INTO bid (vacancy_id, recruiter_id, message) " +
             "VALUES (#{vacancy.id}, #{recruiter.id}, #{message})")
     @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
     void create(final Bid bid);
 
-    @Update("UPDATE bids SET status = #{status} WHERE id = #{bidId} ")
+    @Update("UPDATE bid SET status = #{status} WHERE id = #{bidId} ")
     void updateStatus(@Param(value = "bidId") final Long bidId, @Param(value = "status") final BidStatus status);
 }
