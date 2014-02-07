@@ -99,7 +99,7 @@ public class RecruiterDeals {
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
-    @RequestMapping(value = "/{locale}/recruiter-clear-approved-deals", method = RequestMethod.GET)
+    @RequestMapping(value = "/recruiter-clear-approved-deals", method = RequestMethod.GET)
     public String clearApprovedDeals(
             final HttpServletRequest request,
             final HttpServletResponse response

@@ -27,7 +27,7 @@ public interface BidMapper {
             "INNER JOIN vacancy ON vacancy.id=bid.vacancy_id " +
             "INNER JOIN recruiter  ON recruiter.id=bid.recruiter_id " +
             "INNER JOIN user ON recruiter.user_id=user.id " +
-            "WHERE bid.recruiter_id=#{recruiterId}")
+            "WHERE bid.recruiter_id=#{recruiterId} AND recruiter_archived=0")
     @Results({
             @Result(column = "id", property = "id"),
             @Result(column = "message", property = "message"),
@@ -120,4 +120,14 @@ public interface BidMapper {
     @Update("UPDATE bid SET viewed = 1 " +
             "WHERE id=#{bidId} AND viewed = 0")
     void setViewed(final Long bidId);
+
+    @Update("UPDATE bid SET recruiter_archived = 1 " +
+            "WHERE recruiter_id = #{recruiterId}  AND recruiter_archived = 0 " +
+            "AND status = \"REJECTED\"")
+    void clearRejectedByRecruiterId(final Long recruiterId);
+
+    @Update("UPDATE bid SET recruiter_archived = 1 " +
+            "WHERE recruiter_id = #{recruiterId}  AND recruiter_archived = 0 " +
+            "AND status = \"APPROVED\"")
+    void clearApprovedByRecruiterId(final Long recruiterId);
 }

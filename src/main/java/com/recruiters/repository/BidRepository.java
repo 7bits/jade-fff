@@ -148,6 +148,46 @@ public class BidRepository {
         }
     }
 
+    /**
+     * Clear rejected bids (move to archive) for exact recruiter
+     * @param recruiterId    Id of recruiter
+     * @return Id of recruiter if success
+     * @throws RepositoryException if input parameter is incorrect or there
+     * were any technical issues
+     */
+    public Long clearRejectedByRecruiterId(final Long recruiterId) throws RepositoryException {
+        if (recruiterId == null) {
+            throw new RepositoryException("recruiterId is null");
+        }
+        try {
+            bidMapper.clearRejectedByRecruiterId(recruiterId);
+
+            return recruiterId;
+        } catch (Exception e) {
+            throw new RepositoryException("General database error: ", e);
+        }
+    }
+
+    /**
+     * Clear approved bids (move to archive) for exact recruiter
+     * @param recruiterId    Id of recruiter
+     * @return Id of recruiter if success
+     * @throws RepositoryException if input parameter is incorrect or there
+     * were any technical issues
+     */
+    public Long clearApprovedByRecruiterId(final Long recruiterId) throws RepositoryException {
+        if (recruiterId == null) {
+            throw new RepositoryException("recruiterId is null");
+        }
+        try {
+            bidMapper.clearApprovedByRecruiterId(recruiterId);
+
+            return recruiterId;
+        } catch (Exception e) {
+            throw new RepositoryException("General database error: ", e);
+        }
+    }
+
     public BidMapper getBidMapper() {
         return bidMapper;
     }

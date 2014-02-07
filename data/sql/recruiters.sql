@@ -112,6 +112,8 @@ CREATE TABLE IF NOT EXISTS `bid` (
   `recruiter_id` bigint(20) NOT NULL,
   `message` varchar(255) DEFAULT NULL,
   `status` varchar(50) NOT NULL DEFAULT 'ACTIVE',
+  `recruiter_archived` tinyint(1) NOT NULL DEFAULT '0',
+  `employer_archived` tinyint(1) NOT NULL DEFAULT '0',
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `viewed` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),

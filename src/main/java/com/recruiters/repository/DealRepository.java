@@ -145,6 +145,7 @@ public class DealRepository {
             throw new RepositoryException("General database error: ", e);
         }
     }
+
     /**
      * Clear fired deals (move to archive) for exact recruiter
      * @param recruiterId    Id of recruiter

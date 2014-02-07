@@ -516,6 +516,40 @@ public class RecruiterService {
         }
     }
 
+    /**
+     * Clear bids (move to archive) in which current recruiter was rejected
+     * @param recruiterId    Id of recruiter
+     * @return recruiter Id
+     * @throws ServiceException if cannot perform command with repository
+     * or any other possible error
+     */
+    public Long clearRejectedBidsForRecruiter(final Long recruiterId)
+            throws ServiceException {
+        try {
+            return bidRepository.clearRejectedByRecruiterId(recruiterId);
+        } catch (Exception e) {
+            log.error(SERVICE_EXCEPTION_MESSAGE, e);
+            throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
+        }
+    }
+
+    /**
+     * Clear bids (move to archive) in which current recruiter was approved
+     * @param recruiterId    Id of recruiter
+     * @return recruiter Id
+     * @throws ServiceException if cannot perform command with repository
+     * or any other possible error
+     */
+    public Long clearApprovedBidsForRecruiter(final Long recruiterId)
+            throws ServiceException {
+        try {
+            return bidRepository.clearApprovedByRecruiterId(recruiterId);
+        } catch (Exception e) {
+            log.error(SERVICE_EXCEPTION_MESSAGE, e);
+            throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
+        }
+    }
+
     public AttachmentRepository getAttachmentRepository() {
         return attachmentRepository;
     }
