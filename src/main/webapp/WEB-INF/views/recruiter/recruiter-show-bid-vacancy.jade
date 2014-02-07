@@ -22,3 +22,7 @@ block append content
         dt=fmt.message("recruiter-show-bid-vacancy.dt.tests", locale)
         dd
           a(href=domain.buildFullUri("/recruiter-download-attachment/", bid.vacancy.testFile.id, locale))=fmt.message("recruiter-show-bid-vacancy.dd.tests", locale)
+      if bid.dealId
+        dt=fmt.message("recruiter-show-bid-vacancy.dt.deal", locale)
+        dd
+          a(href=domain.buildFullUri("/recruiter-show-in-progress-vacancy/", bid.dealId, locale))=fmt.message("recruiter-show-bid-vacancy.dd.deal", locale)
