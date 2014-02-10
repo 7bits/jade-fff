@@ -184,19 +184,16 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
      */
     @Override
     public void configureContentNegotiation(final ContentNegotiationConfigurer configurer) {
-//        configurer.mediaType("html", MediaType.TEXT_HTML);
-//        configurer.mediaType("json", MediaType.APPLICATION_JSON);
         configurer.ignoreAcceptHeader(true);
         configurer.defaultContentType(MediaType.TEXT_HTML);
-//        configurer.useJaf(true);
     }
 
     /**
      * Setup content negotiation view resolver
      */
     @Bean
-    public ViewResolver contentNegotiatingViewResolver(
-            ContentNegotiationManager manager) throws Exception {
+    public ViewResolver contentNegotiatingViewResolver(ContentNegotiationManager manager)
+            throws Exception {
         List<ViewResolver> resolvers = new ArrayList<ViewResolver>();
         ViewResolver jadeViewResolver = jadeViewResolver();
         ViewResolver jsonViewResolver = jsonViewResolver();
@@ -224,6 +221,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         templateLoader.setBasePath("/WEB-INF/views/");
         templateLoader.setEncoding("UTF-8");
         templateLoader.setSuffix(".jade");
+
         return templateLoader;
     }
 
@@ -236,6 +234,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         JadeConfiguration configuration = new JadeConfiguration();
         configuration.setCaching(false);
         configuration.setTemplateLoader(templateLoader());
+
         return configuration;
     }
 
@@ -249,6 +248,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         CustomJadeViewResolver jadeViewResolver = new CustomJadeViewResolver();
         jadeViewResolver.setConfiguration(jadeConfiguration());
         jadeViewResolver.setOrder(0);
+
         return jadeViewResolver;
     }
 
@@ -258,8 +258,8 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
      */
     @Bean
     public ViewResolver jsonViewResolver() {
-        JsonViewResolver jsonViewResolver = new JsonViewResolver();
-        return jsonViewResolver;
+
+        return new JsonViewResolver();
     }
 
 
