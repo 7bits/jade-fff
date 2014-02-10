@@ -48,3 +48,23 @@ block append content
               #{applicant.firstName} #{applicant.lastName}
               a.btn.btn-link.pull-right(href = domain.buildFullUri("/employer-applicant-show/", applicant.id, locale)).
                 #{fmt.message("employer-progress-vacancy-show.applicants.more", locale)}
+
+    h2=fmt.message("employer-progress-vacancy-show.chat", locale)
+    table.table.table-striped#chat
+      thead
+        tr
+          th=fmt.message("employer-progress-vacancy-show.chat.from", locale)
+          th=fmt.message("employer-progress-vacancy-show.chat.time", locale)
+          th=fmt.message("employer-progress-vacancy-show.chat.message", locale)
+          th
+      tbody
+
+    form#messagesend
+      .row
+        .col-md-6
+          textarea(class="form-control", name="message", placeholder=fmt.message("employer-progress-vacancy-show.chat.enter-message", locale), rows="4")
+      .btn-row
+        input(type="hidden", name=csrf.getParameterName(), value=csrf.getToken())
+        input(type="hidden", name="id", value=deal.id)
+        input(type="hidden", name="role", value="employer")
+        input.btn.btn-success(type="submit", name="submit", value=fmt.message("employer-progress-vacancy-show.chat.send", locale))

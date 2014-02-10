@@ -1,5 +1,6 @@
 package com.recruiters.web.service;
 
+import com.recruiters.model.ChatMessage;
 import com.recruiters.model.Vacancy;
 import com.recruiters.web.helper.MessageResolver;
 import com.recruiters.web.helper.UrlResolver;
@@ -77,5 +78,33 @@ public class JsonService {
         }
 
         return vacanciesJson;
+    }
+
+    /**
+     * Convert List of ChatMessages to Json ready list of maps for use in view
+     * @param messages     List of messages
+     * @param locale       Request locale
+     * @return list of maps
+     */
+    public List<Map<String,String>> chatMessageList(
+            final List<ChatMessage> messages,
+            final Locale locale
+    ) {
+        List<Map<String,String>> messagesJson = new ArrayList<Map<String, String>>();
+        for (ChatMessage message: messages) {
+            Map<String, String> currentMessageJson = new HashMap<String, String>();
+            currentMessageJson.put("id", message.getId().toString());
+            if (message.getRecruiter() != null) {
+                currentMessageJson.put("from", message.getRecruiter().getUser().getFirstName() +
+                        " " + message.getRecruiter().getUser().getLastName());
+            } else if (message.getEmployer() != null) {
+                currentMessageJson.put("from", message.getEmployer().getUser().getFirstName() +
+                        " " + message.getEmployer().getUser().getLastName());
+            }
+            currentMessageJson.put("date", messageResolver.date(message.getDate(), locale));
+            currentMessageJson.put("message", message.getMessage());
+            messagesJson.add(currentMessageJson);
+        }
+        return messagesJson;
     }
 }

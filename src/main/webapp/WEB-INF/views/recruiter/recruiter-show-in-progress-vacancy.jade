@@ -58,3 +58,24 @@ block append content
                 a.btn.btn-link.pull-right(href= domain.buildFullUri("/recruiter-edit-applicant/", applicant.id, locale))=fmt.message("recruiter-show-in-progress-vacancy.table.change", locale)
     if test.canAddApplicant(deal)
       a.btn.btn-success(href= domain.buildFullUri("/recruiter-add-applicant/", deal.id, locale))=fmt.message("recruiter-show-in-progress-vacancy.add", locale)
+    h2=fmt.message("recruiter-show-in-progress-vacancy.chat", locale)
+    table.table.table-striped#chat
+      thead
+        tr
+          th=fmt.message("recruiter-show-in-progress-vacancy.chat.from", locale)
+          th=fmt.message("recruiter-show-in-progress-vacancy.chat.time", locale)
+          th=fmt.message("recruiter-show-in-progress-vacancy.chat.message", locale)
+          th
+      tbody
+
+    form#messagesend
+      .row
+        .col-md-6
+          textarea(class="form-control", name="message", placeholder=fmt.message("recruiter-show-in-progress-vacancy.chat.enter-message", locale), rows="4")
+      .btn-row
+        input(type="hidden", name=csrf.getParameterName(), value=csrf.getToken())
+        input(type="hidden", name="id", value=deal.id)
+        input(type="hidden", name="role", value="recruiter")
+        input.btn.btn-success(type="submit", name="submit", value=fmt.message("recruiter-show-in-progress-vacancy.chat.send", locale))
+
+

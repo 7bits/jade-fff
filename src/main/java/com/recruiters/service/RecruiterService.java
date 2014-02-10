@@ -3,6 +3,7 @@ package com.recruiters.service;
 import com.recruiters.model.Applicant;
 import com.recruiters.model.Attachment;
 import com.recruiters.model.Bid;
+import com.recruiters.model.ChatMessage;
 import com.recruiters.model.Deal;
 import com.recruiters.model.status.DealStatus;
 import com.recruiters.model.Recruiter;
@@ -11,6 +12,7 @@ import com.recruiters.model.Vacancy;
 import com.recruiters.repository.ApplicantRepository;
 import com.recruiters.repository.AttachmentRepository;
 import com.recruiters.repository.BidRepository;
+import com.recruiters.repository.ChatRepository;
 import com.recruiters.repository.DealRepository;
 import com.recruiters.repository.EmployerRepository;
 import com.recruiters.repository.RecruiterRepository;
@@ -59,6 +61,9 @@ public class RecruiterService {
     /** Bid Repository provides Bid DAO */
     @Autowired
     private BidRepository bidRepository = null;
+    /** Chat Repository provides Chat DAO */
+    @Autowired
+    private ChatRepository chatRepository = null;
     /** Message source */
     @Autowired
     private MessageSource messageSource = null;
@@ -335,6 +340,38 @@ public class RecruiterService {
         throw new NotAffiliatedException(securityMessage);
     }
 
+
+    /**
+     * Find and return messages from chat related to exact deal
+     * @param dealId         Id of deal
+     * @param messageId      Starting message id, can be null
+     * @param recruiterId    Id of recruiter
+     * @return list of messages if related deal belongs to
+     * recruiter requested it and there were no any technical issues
+     * @throws NotAffiliatedException if related deal not belongs to
+     * recruiter requested it
+     * @throws ServiceException if cannot obtain messages from
+     * repository or any other possible error
+     */
+    public List<ChatMessage> findMessages(final Long dealId, final Long messageId, final Long recruiterId)
+            throws NotAffiliatedException, ServiceException {
+        Deal deal;
+        try {
+            deal = dealRepository.findById(dealId);
+            if (deal.getRecruiter().getId().equals(recruiterId)) {
+                return chatRepository.findByDealIdSinceId(dealId, messageId);
+            }
+        } catch (Exception e) {
+            log.error(SERVICE_EXCEPTION_MESSAGE, e);
+            throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
+        }
+        String securityMessage = SECURITY_EXCEPTION_MESSAGE_PART1 + Deal.class.getSimpleName() +
+                SECURITY_EXCEPTION_MESSAGE_PART2;
+        log.error(securityMessage);
+        throw new NotAffiliatedException(securityMessage);
+    }
+
+
     /**
      * Add new applicant to Deal, verifying deal belongs to recruiter
      * requested apply
@@ -550,6 +587,39 @@ public class RecruiterService {
         }
     }
 
+    /**
+     * Send message
+     * @param dealId         Chat related deal
+     * @param message        Chat message
+     * @param recruiterId    Id of recruiter which wants to send message
+     * @return Id of saved message if there were no any technical issues
+     * @throws NotAffiliatedException if related deal not belongs to
+     * recruiter requested method
+     * @throws ServiceException if Repository cannot process request
+     * or any other possible error
+     */
+    public ChatMessage sendMessage(final Long dealId, final String message, final Long recruiterId)
+            throws ServiceException, NotAffiliatedException {
+        try {
+            Deal deal = dealRepository.findById(dealId);
+            if (deal.getRecruiter().getId().equals(recruiterId)) {
+                ChatMessage chatMessage = new ChatMessage();
+                chatMessage.setDeal(deal);
+                chatMessage.setRecruiter(new Recruiter(recruiterId));
+                chatMessage.setMessage(message);
+
+                return chatRepository.create(chatMessage);
+            }
+        } catch (Exception e) {
+            log.error(SERVICE_EXCEPTION_MESSAGE, e);
+            throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
+        }
+        String securityMessage = SECURITY_EXCEPTION_MESSAGE_PART1 + Deal.class.getSimpleName() +
+                SECURITY_EXCEPTION_MESSAGE_PART2;
+        log.error(securityMessage);
+        throw new NotAffiliatedException(securityMessage);
+    }
+
     public AttachmentRepository getAttachmentRepository() {
         return attachmentRepository;
     }
@@ -612,5 +682,13 @@ public class RecruiterService {
 
     public void setBidRepository(final BidRepository bidRepository) {
         this.bidRepository = bidRepository;
+    }
+
+    public ChatRepository getChatRepository() {
+        return chatRepository;
+    }
+
+    public void setChatRepository(final ChatRepository chatRepository) {
+        this.chatRepository = chatRepository;
     }
 }
