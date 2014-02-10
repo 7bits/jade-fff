@@ -71,8 +71,10 @@ public class DateTimeUtils {
     public Date urlDateParse(final String urlDate) {
         SimpleDateFormat linkDateFormatter = new SimpleDateFormat(DATE_PATTERN);
         try {
+
             return linkDateFormatter.parse(urlDate);
         } catch (ParseException e) {
+
             return null;
         }
     }

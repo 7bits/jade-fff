@@ -10,7 +10,7 @@ import com.recruiters.model.Vacancy;
 import org.springframework.stereotype.Component;
 
 /**
- * Helper implementing checking some conditions for use in templates
+ * Some business rules we could resolve using filled models
  */
 @Component
 public class BusinessRulesService {
