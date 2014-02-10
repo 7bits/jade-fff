@@ -7,12 +7,12 @@ import com.recruiters.repository.specification.ISpecification;
  */
 public class EmptySpecification implements ISpecification<Object>{
     @Override
-    public ISpecification<Object> and(final ISpecification<Object> other) {
+    public ISpecification and(final ISpecification other) {
         return new CommonAndSpecification(this, other);
     }
 
     @Override
-    public ISpecification<Object> or(final ISpecification<Object> other) {
+    public ISpecification or(final ISpecification other) {
         return new CommonOrSpecification(this, other);
     }
 

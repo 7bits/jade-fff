@@ -6,6 +6,6 @@ package com.recruiters.repository.specification;
 public interface ISpecification<Entity> {
     public Boolean isSatisfiedBy(final Entity candidate);
     public String asSql();
-    public ISpecification or(final ISpecification<Entity> other);
-    public ISpecification and(final ISpecification<Entity> other);
+    public ISpecification or(final ISpecification other);
+    public ISpecification and(final ISpecification other);
 }
