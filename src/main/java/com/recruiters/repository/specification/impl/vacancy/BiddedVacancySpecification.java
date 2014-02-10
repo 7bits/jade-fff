@@ -1,13 +1,13 @@
-package com.recruiters.repository.specification.vacancy;
+package com.recruiters.repository.specification.impl.vacancy;
 
 import com.recruiters.model.Vacancy;
 
 /**
  * Vacancy is Bid specification
  */
-public class VacancyBidSpecification extends VacancySpecification {
+public class BiddedVacancySpecification extends VacancySpecification {
 
-    public VacancyBidSpecification() {}
+    public BiddedVacancySpecification() {}
 
     @Override
     public Boolean isSatisfiedBy(final Vacancy candidate) {

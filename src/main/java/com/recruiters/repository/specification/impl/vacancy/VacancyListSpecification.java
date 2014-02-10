@@ -1,36 +1,35 @@
-package com.recruiters.repository.specification.vacancy;
+package com.recruiters.repository.specification.impl.vacancy;
 
 import com.recruiters.model.Vacancy;
 import com.recruiters.repository.specification.IListSpecification;
 import com.recruiters.repository.specification.IOrderSpecification;
 import com.recruiters.repository.specification.ISpecification;
-import com.recruiters.repository.specification.vacancy.order.VacancyListOrderSpecification;
 
 /**
  * Specification for Vacancy List
  */
 public class VacancyListSpecification implements IListSpecification<Vacancy> {
-    private VacancySpecification vacancySpecification;
-    private VacancyListOrderSpecification vacancyListOrderSpecification;
+    private ISpecification vacancySpecification;
+    private IOrderSpecification listOrderSpecification;
     /** Default string size, used for string builder */
     private static final Integer DEFAULT_STRING_SIZE = 2048;
 
     public VacancyListSpecification(
-            final VacancySpecification vacancySpecification,
-            final VacancyListOrderSpecification vacancyListOrderSpecification
+            final ISpecification vacancySpecification,
+            final IOrderSpecification listOrderSpecification
     ) {
         this.vacancySpecification = vacancySpecification;
-        this.vacancyListOrderSpecification = vacancyListOrderSpecification;
+        this.listOrderSpecification = listOrderSpecification;
     }
 
     @Override
-    public ISpecification<Vacancy> getEntitySpecification() {
+    public ISpecification getEntitySpecification() {
         return vacancySpecification;
     }
 
     @Override
     public IOrderSpecification getOrderSpecification() {
-        return vacancyListOrderSpecification;
+        return listOrderSpecification;
     }
 
     @Override
@@ -48,15 +47,13 @@ public class VacancyListSpecification implements IListSpecification<Vacancy> {
                 "AND NOT EXISTS " +
                 "(SELECT * FROM deal WHERE vacancy_id=vacancy.id AND recruiter_id!=#{recruiterId}) " +
                 ") as all_vacancies ");
-        if (vacancySpecification == null) {
-            sqlQuery.append(" WHERE 0 ");
-        } else if (vacancyListOrderSpecification == null) {
+        if (listOrderSpecification == null) {
             sqlQuery.append(" WHERE ");
             sqlQuery.append(vacancySpecification.asSql());
         } else {
             sqlQuery.append(" WHERE ");
             sqlQuery.append(vacancySpecification.asSql());
-            sqlQuery.append(vacancyListOrderSpecification.asSql());
+            sqlQuery.append(listOrderSpecification.asSql());
         }
         return sqlQuery.toString();
     }

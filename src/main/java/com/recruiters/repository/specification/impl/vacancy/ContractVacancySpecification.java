@@ -1,13 +1,13 @@
-package com.recruiters.repository.specification.vacancy;
+package com.recruiters.repository.specification.impl.vacancy;
 
 import com.recruiters.model.Vacancy;
 
 /**
  * Vacancy is Deal Specification
  */
-public class VacancyDealSpecification extends VacancySpecification {
+public class ContractVacancySpecification extends VacancySpecification {
 
-    public VacancyDealSpecification() {}
+    public ContractVacancySpecification() {}
 
     @Override
     public Boolean isSatisfiedBy(final Vacancy candidate) {

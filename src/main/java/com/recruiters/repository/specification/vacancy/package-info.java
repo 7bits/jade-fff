@@ -1,1 +1,0 @@
-package com.recruiters.repository.specification.vacancy;

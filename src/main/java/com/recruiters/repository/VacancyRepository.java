@@ -3,8 +3,7 @@ package com.recruiters.repository;
 import com.recruiters.model.Vacancy;
 import com.recruiters.model.status.VacancyStatus;
 import com.recruiters.repository.mapper.VacancyMapper;
-import com.recruiters.repository.specification.vacancy.VacancyListSpecification;
-import com.recruiters.repository.specification.vacancy.VacancySpecification;
+import com.recruiters.repository.specification.impl.vacancy.VacancyListSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

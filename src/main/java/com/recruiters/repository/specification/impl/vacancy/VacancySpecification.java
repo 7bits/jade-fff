@@ -1,7 +1,9 @@
-package com.recruiters.repository.specification.vacancy;
+package com.recruiters.repository.specification.impl.vacancy;
 
 import com.recruiters.model.Vacancy;
 import com.recruiters.repository.specification.ISpecification;
+import com.recruiters.repository.specification.impl.CommonAndSpecification;
+import com.recruiters.repository.specification.impl.CommonOrSpecification;
 
 /**
  * Abstract Vacancy Specification
@@ -22,12 +24,12 @@ public abstract class VacancySpecification implements ISpecification<Vacancy> {
     }
 
     @Override
-    public VacancySpecification or(final ISpecification<Vacancy> other) {
-        return new VacancyOrSpecification(this, other);
+    public ISpecification or(final ISpecification other) {
+        return new CommonOrSpecification(this, other);
     }
 
     @Override
-    public VacancySpecification and(final ISpecification<Vacancy> other) {
-        return new VacancyAndSpecification(this, other);
+    public ISpecification and(final ISpecification other) {
+        return new CommonAndSpecification(this, other);
     }
 }

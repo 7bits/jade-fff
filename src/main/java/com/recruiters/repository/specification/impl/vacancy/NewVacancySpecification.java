@@ -1,13 +1,13 @@
-package com.recruiters.repository.specification.vacancy;
+package com.recruiters.repository.specification.impl.vacancy;
 
 import com.recruiters.model.Vacancy;
 
 /**
- * Vacancy is clean Vacancy without Deal or Bids Specification
+ * Vacancy is clean Vacancy without Deal or Bid Specification
  */
-public class VacancyCleanVacancySpecification extends VacancySpecification {
+public class NewVacancySpecification extends VacancySpecification {
 
-    public VacancyCleanVacancySpecification() {}
+    public NewVacancySpecification() {}
 
     @Override
     public Boolean isSatisfiedBy(final Vacancy candidate) {
