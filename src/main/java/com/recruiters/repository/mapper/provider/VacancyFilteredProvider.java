@@ -1,4 +1,4 @@
-package com.recruiters.repository.mapper;
+package com.recruiters.repository.mapper.provider;
 
 import com.recruiters.repository.specification.impl.vacancy.VacancyListSpecification;
 
