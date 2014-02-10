@@ -18,12 +18,12 @@ public abstract class CommonSpecification implements ISpecification<Object> {
     }
 
     @Override
-    public ISpecification<Object> or(final ISpecification<Object> other) {
+    public ISpecification or(final ISpecification other) {
         return new CommonOrSpecification(this, other);
     }
 
     @Override
-    public ISpecification<Object> and(final ISpecification<Object> other) {
+    public ISpecification and(final ISpecification other) {
         return new CommonAndSpecification(this, other);
     }
 }
