@@ -75,6 +75,7 @@ public class JsonService {
             );
             vacanciesJson.add(currentVacancyJson);
         }
+
         return vacanciesJson;
     }
 }

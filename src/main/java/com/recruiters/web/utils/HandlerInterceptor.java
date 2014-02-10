@@ -82,8 +82,7 @@ public class HandlerInterceptor extends HandlerInterceptorAdapter {
             if (!request.getServletPath().endsWith(".json")) {
 
                 // Adding errors to model
-                Map<String, String> errors = parseErrors(mav);
-                mav.addObject(MODEL_ERRORS_NAME, errors);
+                mav.addObject(MODEL_ERRORS_NAME,  parseErrors(mav));
 
                 // Adding language and country code to model
                 Locale locale = RequestContextUtils.getLocale(request);
