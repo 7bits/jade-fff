@@ -13,4 +13,6 @@
 
     <context:annotation-config />
 
+    <!-- All configuration in .config package -->
+
 </beans>
