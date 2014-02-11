@@ -28,18 +28,6 @@ public class VacanciesFilter {
     }
 
     /**
-     * Copy constructor
-     * @param vacanciesFilter    VacanciesFilter instance
-     */
-    public VacanciesFilter(final VacanciesFilter vacanciesFilter) {
-        searchText = vacanciesFilter.getSearchText();
-        hideVacancies = vacanciesFilter.getHideVacancies();
-        hideBids = vacanciesFilter.getHideBids();
-        hideDeals = vacanciesFilter.getHideDeals();
-        date = vacanciesFilter.getDate();
-    }
-
-    /**
      * Specification builder
      * @return Vacancy Specification
      */
@@ -64,7 +52,7 @@ public class VacanciesFilter {
             return new VacancyListSpecification(vacancySpecification, null);
         }
 
-        if (sortColumn.equals("title") || sortColumn.equals("desc") || sortColumn.equals("date")) {
+        if (sortColumn.equals("title") || sortColumn.equals("description") || sortColumn.equals("creation_date")) {
             return new VacancyListSpecification(vacancySpecification, new OrderByParam(sortColumn, sortAsc));
         }
         if (sortColumn.equals("type")) {
