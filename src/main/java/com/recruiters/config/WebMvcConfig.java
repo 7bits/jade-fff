@@ -51,7 +51,7 @@ import java.util.StringTokenizer;
  * Spring Web Configuration
  */
 @Configuration
-@PropertySource({"classpath:server.properties", "classpath:language.properties"})
+@PropertySource("classpath:server.properties")
 @EnableWebMvc
 @ComponentScan(basePackages = { "com.recruiters" })
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
@@ -98,34 +98,6 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     }
 
     /**
-     * Configure Locale Resolver with country and language codes,
-     * for which our application have translations
-     * @return Locale Resolver
-     */
-    @Bean
-    public LocaleResolver localeResolver() {
-        String defaultLocale = environment.getProperty("recruiter-language.default");
-        String[] languages = environment.getProperty("recruiter-language.languages").split(",");
-        Map<String, Set<String>> countryLanguages = new HashMap<String, Set<String>>();
-        for (String language : languages) {
-            String propertyCode = "recruiter-language.languages" + "." + language;
-            StringTokenizer st = new StringTokenizer(
-                    environment.getProperty(propertyCode),
-                    ","
-            );
-            Set<String> countries = new HashSet<String>();
-            while (st.hasMoreTokens()) {
-                countries.add(st.nextToken());
-            }
-            countryLanguages.put(language, countries);
-        }
-        AttributeLocaleResolver localeResolver = attributeLocaleResolver();
-        localeResolver.setCountryLanguages(countryLanguages);
-        localeResolver.setDefaultLocale(new Locale(defaultLocale));
-        return localeResolver;
-    }
-
-    /**
      * Configure Request Mapping Handler
      * @return Request Mapping Handler
      */
@@ -154,15 +126,6 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         return new MessageResolver();
     }
 
-    /**
-     * Create Bean for our custom Locale Resolver via attributes
-     * added with filter to Session scope
-     * @return Locale resolver
-     */
-    @Bean
-    public AttributeLocaleResolver attributeLocaleResolver() {
-        return new AttributeLocaleResolver();
-    }
 
     /**
      * Create and configure bean for Url Resolver, used to generate all uris
