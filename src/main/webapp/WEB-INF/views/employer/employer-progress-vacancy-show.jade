@@ -50,13 +50,11 @@ block append content
                 #{fmt.message("employer-progress-vacancy-show.applicants.more", locale)}
 
     h2=fmt.message("employer-progress-vacancy-show.chat", locale)
-    table.table.table-striped#chat
-      thead
-        tr
-          th=fmt.message("employer-progress-vacancy-show.chat.from", locale)
-          th=fmt.message("employer-progress-vacancy-show.chat.time", locale)
-          th=fmt.message("employer-progress-vacancy-show.chat.message", locale)
-      tbody
+    .row.h4
+      .col-md-2=fmt.message("employer-progress-vacancy-show.chat.from", locale)
+      .col-md-1=fmt.message("employer-progress-vacancy-show.chat.time", locale)
+      .col-md-6=fmt.message("employer-progress-vacancy-show.chat.message", locale)
+    #chat
 
     form#messagesend
       .row

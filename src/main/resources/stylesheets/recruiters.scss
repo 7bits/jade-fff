@@ -18,7 +18,8 @@
 #dateicon {
   cursor: pointer;
 }
-#scrollable {
-  height: 100px;
+#chat {
+  height: 200px;
   overflow-y: auto;
+  overflow-x: hidden;
 }

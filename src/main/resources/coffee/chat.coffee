@@ -38,11 +38,13 @@ $ ->
         i = 0
         while i < messageList.length
           obj = messageList[i]
-          addHtml += "<tr><td>" + obj.from + "</td><td>" + obj.date + "</td><td>" + obj.message + "</td></tr>"
+          addHtml += "<div class='row'><div class='col-md-2'>" + obj.from + "</div><div class='col-md-1'>" + obj.date + "</div><div class='col-md-6'>" + obj.message + "</div></div>"
           i++
         if messageList.length > 0
           lastMessageId = messageList[i-1].id
-        $("#chat").find("tbody").append addHtml
+        $("#chat").append addHtml
+        scrollBottom = $("#chat").height()
+        $("#chat").scrollTop scrollBottom
         setTimeout waitForMsg(), 1000
         return
 

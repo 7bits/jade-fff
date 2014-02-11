@@ -59,13 +59,11 @@ block append content
     if test.canAddApplicant(deal)
       a.btn.btn-success(href= domain.buildFullUri("/recruiter-add-applicant/", deal.id, locale))=fmt.message("recruiter-show-in-progress-vacancy.add", locale)
     h2=fmt.message("recruiter-show-in-progress-vacancy.chat", locale)
-    table.table.table-striped#chat
-      thead
-        tr
-          th=fmt.message("recruiter-show-in-progress-vacancy.chat.from", locale)
-          th=fmt.message("recruiter-show-in-progress-vacancy.chat.time", locale)
-          th=fmt.message("recruiter-show-in-progress-vacancy.chat.message", locale)
-      tbody
+    .row.h4
+      .col-md-2=fmt.message("recruiter-show-in-progress-vacancy.chat.from", locale)
+      .col-md-1=fmt.message("recruiter-show-in-progress-vacancy.chat.time", locale)
+      .col-md-6=fmt.message("recruiter-show-in-progress-vacancy.chat.message", locale)
+    #chat
 
     form#messagesend
       .row

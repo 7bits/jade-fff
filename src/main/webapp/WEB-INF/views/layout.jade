@@ -27,7 +27,7 @@ html
           .navbar-header
             a.navbar-brand(href=domain.buildFullUri("", locale)).
               #{fmt.message("layout.logo", locale)}
-            a.btn.btn-link#lang(href=domain.getLangChangeUrl(uri, locale))=fmt.message("language.change", locale)
+          a.btn.btn-link#lang(href=domain.getLangChangeUrl(uri, locale))=fmt.message("language.change", locale)
           if security.isUserInRole("ROLE_RECRUITER")
             .navbar-collapse.collapse
               ul.nav.navbar-nav.navbar-right

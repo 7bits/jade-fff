@@ -98,7 +98,9 @@ public class EmployerChat {
             Integer i = 0;
             while (messages.isEmpty() && i < 60) {
                 messages = employerService.findMessages(dealId, messageId, user.getEmployerId());
-                TimeUnit.SECONDS.sleep(1);
+                if (messages.isEmpty()) {
+                    TimeUnit.SECONDS.sleep(1);
+                }
                 i++;
             }
         } catch (NotAffiliatedException e) {
