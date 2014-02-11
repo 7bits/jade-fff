@@ -357,9 +357,14 @@ public class RecruiterService {
             throws NotAffiliatedException, ServiceException {
         Deal deal;
         try {
+            // Performance optimization
+            List<ChatMessage> messages = chatRepository.findByDealIdSinceId(dealId, messageId);
+            if (messages.isEmpty()) {
+                return messages;
+            }
             deal = dealRepository.findById(dealId);
             if (deal.getRecruiter().getId().equals(recruiterId)) {
-                return chatRepository.findByDealIdSinceId(dealId, messageId);
+                return messages;
             }
         } catch (Exception e) {
             log.error(SERVICE_EXCEPTION_MESSAGE, e);
