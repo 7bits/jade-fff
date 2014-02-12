@@ -26,12 +26,14 @@ public interface DealMapper {
             "vacancy.description, vacancy.salary_from, vacancy.salary_to, " +
             "vacancy.creation_date, vacancy.expiration_date, vacancy.test_file, " +
             "recruiter.id as recruiter_id, " +
+            "bid.id as bid_id, bid.message, " +
             "u1.firstname as recruiter_firstname, u1.lastname as recruiter_lastname, " +
-            "u2.firstname as employer_firstname, u2.lastname as employer_lastname " +
+            "u2.firstname as employer_firstname, u2.lastname as employer_lastname  " +
             "FROM deal " +
             "INNER JOIN vacancy ON vacancy.id=deal.vacancy_id " +
             "INNER JOIN recruiter ON recruiter.id=deal.recruiter_id " +
             "INNER JOIN employer ON employer.id = vacancy.employer_id " +
+            "INNER JOIN bid ON bid.id = deal.bid_id " +
             "INNER JOIN user u1 ON recruiter.user_id=u1.id " +
             "INNER JOIN user u2 ON employer.user_id=u2.id " +
             "WHERE deal.id=#{dealId}")
@@ -50,6 +52,8 @@ public interface DealMapper {
             @Result(column = "creation_date", property = "vacancy.creationDate"),
             @Result(column = "expiration_date", property = "vacancy.expirationDate"),
             @Result(column = "test_file", property = "vacancy.testFile.id"),
+            @Result(column = "bid_id", property = "bid.id"),
+            @Result(column = "message", property = "bid.message"),
             @Result(column = "recruiter_id", property = "recruiter.id"),
             @Result(column = "recruiter_firstname", property = "recruiter.user.firstName"),
             @Result(column = "recruiter_lastname", property = "recruiter.user.lastName"),

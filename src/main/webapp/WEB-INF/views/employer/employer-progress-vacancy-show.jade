@@ -20,22 +20,27 @@ block append content
           dt=fmt.message("employer-progress-vacancy-show.dt.expiration", locale)
           dd #{fmt.date(deal.vacancy.expirationDate, locale)}
       .col-md-4
-        h2=fmt.message("employer-progress-vacancy-show.recruiter.h2", locale)
-        p
-          #{deal.recruiter.user.firstName} #{deal.recruiter.user.lastName}
-          .tools
-            dl.dl
-              dt=fmt.message("employer-progress-vacancy-show.recruiter.dt.status", locale)
-              dd #{fmt.dealStatus(deal.status, locale)}
-              if test.isRecruiterFired(deal)
-                dt=fmt.message("employer-progress-vacancy-show.recruiter.dt.fire_reason", locale)
-                dd #{deal.fireReason}
-            if test.canFireRecruiter(deal)
-              form(name="", action=domain.buildFullUri("/employer-fire-recruiter", locale), method="post")
-                .row
-                  .col-md-6
-                    textarea(class="form-control", name="message", placeholder=fmt.message("employer-progress-vacancy-show.recruiter.decline.reason", locale), rows="4")
-                .btn-row
+        h2.text-center=fmt.message("employer-progress-vacancy-show.recruiter.h2", locale)
+        .tools
+          dl.dl-horizontal
+            dt=fmt.message("employer-progress-vacancy-show.recruiter.dt.name", locale)
+            dd #{deal.recruiter.user.firstName} #{deal.recruiter.user.lastName}
+            dt=fmt.message("employer-progress-vacancy-show.recruiter.dt.terms", locale)
+            dd #{deal.bid.message}
+            dt=fmt.message("employer-progress-vacancy-show.recruiter.dt.status", locale)
+            dd #{fmt.dealStatus(deal.status, locale)}
+            if test.isRecruiterFired(deal)
+              dt=fmt.message("employer-progress-vacancy-show.recruiter.dt.fire_reason", locale)
+              dd #{deal.fireReason}
+          if test.canFireRecruiter(deal)
+            form(name="", action=domain.buildFullUri("/employer-fire-recruiter", locale), method="post")
+              .row
+                .col-md-3
+                .col-md-9
+                  textarea(class="form-control", name="message", placeholder=fmt.message("employer-progress-vacancy-show.recruiter.decline.reason", locale), rows="4")
+              .btn-row
+                .col-md-4
+                .col-md-6
                   input(type="hidden", name=csrf.getParameterName(), value=csrf.getToken())
                   input(type="hidden", name="id", value=deal.id)
                   input.btn.btn-danger(type="submit", name="submit", value=fmt.message("employer-progress-vacancy-show.recruiter.decline", locale))
