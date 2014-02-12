@@ -1,14 +1,15 @@
 prevDate = new Date()
 nextDate = new Date()
+showAll = "form.form-sort label#showAll"
+hideButtons = "form.form-sort label[id^=hide]"
 $ ->
   firstVisit = ->
     $("#searchText").trigger "change"
-    hideVacancies = $("#hideVacancies").find("input").prop("checked")
-    $("#hideVacancies").addClass "active"  if hideVacancies
-    hideBids = $("#hideBids").find("input").prop("checked")
-    $("#hideBids").addClass "active"  if hideBids
-    hideDeals = $("#hideDeals").find("input").prop("checked")
-    $("#hideDeals").addClass "active"  if hideDeals
+    $(hideButtons).each ->
+      currentState = $(this).find("input").prop("checked")
+      $(this).addClass "active"  if currentState
+      return
+
     showAllCheck ""
     modifyDates new Date($(".datepicker").val())
     return
@@ -17,18 +18,17 @@ $ ->
   return
 
 showAllCheck = (button) ->
-  hideBids = undefined
-  hideDeals = undefined
-  hideVacancies = undefined
-  showAllActive = undefined
-  hideVacancies = $("#hideVacancies").hasClass("active")
-  hideBids = $("#hideBids").hasClass("active")
-  hideDeals = $("#hideDeals").hasClass("active")
-  showAllActive = $("#showAll").hasClass("active")
-  hideVacancies = not hideVacancies  if button is "hideVacancies"
-  hideBids = not hideBids  if button is "hideBids"
-  hideDeals = not hideDeals  if button is "hideDeals"
-  $("#showAll").addClass "active"  if not hideVacancies and not hideBids and not hideDeals and not showAllActive
+  showAllState = true
+  unless $(hideButtons).hasClass("active")
+    showAllState = false
+  else
+    $(hideButtons).each ->
+      currentActive = $(this).hasClass("active")
+      currentId = $(this).attr("id")
+      showAllState = false  if currentActive and (currentId isnt button)
+      return
+
+  $(showAll).addClass "active"  if showAllState
   return
 
 modifyDates = (inputDate) ->
@@ -64,31 +64,17 @@ $ ->
     return
 
 $ ->
-  $("#showAll").on "click", ->
-    $("#hideVacancies").removeClass("active")
-    $("#hideVacancies").find("input").prop("checked", false)
-    $("#hideBids").removeClass("active")
-    $("#hideBids").find("input").prop("checked", false)
-    $("#hideDeals").removeClass("active")
-    $("#hideDeals").find("input").prop("checked", false)
+  $(showAll).on "click", ->
+    $(hideButtons).removeClass("active")
+    $(hideButtons).find("input").prop("checked", false)
 
 $ ->
-  $("#hideVacancies").on "click", ->
-    $("#showAll").removeClass("active")
-    $("#showAll").find("input").prop("checked", false)
-    showAllCheck "hideVacancies"
-
-$ ->
-  $("#hideBids").on "click", ->
-    $("#showAll").removeClass("active")
-    $("#showAll").find("input").prop("checked", false)
-    showAllCheck "hideBids"
-
-$ ->
-  $("#hideDeals").on "click", ->
-    $("#showAll").removeClass("active")
-    $("#showAll").find("input").prop("checked", false)
-    showAllCheck "hideDeals"
+  $(hideButtons).on "click", (e) ->
+    hideButton = $(e.target).attr("id")
+    $(showAll).removeClass "active"
+    $(showAll).find("input").prop "checked", false
+    showAllCheck hideButton
+    return
 
 $ ->
   $("#vacanciesFilter :input").on "change", ->
@@ -108,7 +94,7 @@ $ ->
         obj = vacancyList[i]
         addHtml += "<tr><td>" + obj.title + "</td><td>" + obj.description + "</td><td>" + obj.created + "</td><td>" + obj.status + "</td><td>" + "<a href='" + obj.url + "'>" + obj.urltext + "</a>" + "</td></tr>"
         i++
-      $("#vacancies").find("tbody").html addHtml
+      $("#table-sort").find("tbody").html addHtml
       return
 
     request.fail ->

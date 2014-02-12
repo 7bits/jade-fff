@@ -5,7 +5,7 @@ block append head
 block append content
   .container
     h1=fmt.message("recruiter-find-new-vacancies.h1", locale)
-    form(name="vacanciesFilter", id="vacanciesFilter", action="", method="get")
+    form.form-sort(name="vacanciesFilter", id="vacanciesFilter", action="", method="get")
       .row
         .col-md-3
           .input-group
@@ -41,12 +41,12 @@ block append content
           ul.pager
             li.previous
               a#nextDateLink(href="#") >
-    table.table.table-striped#vacancies
+    table.table.table-striped#table-sort
       thead
         tr
           th.sorting#stitle=fmt.message("recruiter-find-new-vacancies.table.name", locale)
-          th.sorting#sdesc=fmt.message("recruiter-find-new-vacancies.table.description", locale)
-          th.sorting#sdate=fmt.message("recruiter-find-new-vacancies.table.date", locale)
+          th.sorting#sdescription=fmt.message("recruiter-find-new-vacancies.table.description", locale)
+          th.sorting#screation_date=fmt.message("recruiter-find-new-vacancies.table.date", locale)
           th.sorting#stype=fmt.message("recruiter-find-new-vacancies.table.bidOrDeal", locale)
           th
       tbody
