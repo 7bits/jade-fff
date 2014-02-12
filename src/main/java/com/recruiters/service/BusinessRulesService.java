@@ -101,4 +101,15 @@ public class BusinessRulesService {
         Boolean thereAreNoDeal = bid.getDealId().equals(0L);
         return (bidIsActive && thereAreNoDeal);
     }
+
+
+    /**
+     * Test if it's allowed to send messages
+     * @param deal    Deal
+     * @return true if you can send messages to deal
+     */
+    public Boolean canSendMessage(final Deal deal) {
+
+        return (deal.getStatus() == DealStatus.IN_PROGRESS);
+    }
 }

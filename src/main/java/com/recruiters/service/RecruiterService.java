@@ -634,7 +634,8 @@ public class RecruiterService {
             throws ServiceException, NotAffiliatedException {
         try {
             Deal deal = dealRepository.findById(dealId);
-            if (deal.getRecruiter().getId().equals(recruiterId)) {
+            if (deal.getRecruiter().getId().equals(recruiterId) &&
+                    deal.getStatus().equals(DealStatus.IN_PROGRESS)) {
                 ChatMessage chatMessage = new ChatMessage();
                 chatMessage.setDeal(deal);
                 chatMessage.setRecruiter(new Recruiter(recruiterId));

@@ -38,7 +38,7 @@ $ ->
         i = 0
         while i < messageList.length
           obj = messageList[i]
-          addHtml += "<div class='row'><div class='col-md-2'>" + obj.from + "</div><div class='col-md-1'>" + obj.date + "</div><div class='col-md-6'>" + obj.message + "</div></div>"
+          addHtml += "<div class='row'><div class='col-md-2'>" + obj.from + "</div><div class='col-md-2'>" + obj.date + "</div><div class='col-md-6'>" + obj.message + "</div></div>"
           i++
         if messageList.length > 0
           lastMessageId = messageList[i-1].id

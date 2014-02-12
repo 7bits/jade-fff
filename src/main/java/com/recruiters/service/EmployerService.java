@@ -720,7 +720,8 @@ public class EmployerService {
             throws ServiceException, NotAffiliatedException {
         try {
             Deal deal = dealRepository.findById(dealId);
-            if (deal.getVacancy().getEmployer().getId().equals(employerId)) {
+            if (deal.getVacancy().getEmployer().getId().equals(employerId) &&
+                    deal.getStatus().equals(DealStatus.IN_PROGRESS)) {
                 ChatMessage chatMessage = new ChatMessage();
                 chatMessage.setDeal(deal);
                 chatMessage.setEmployer(new Employer(employerId));

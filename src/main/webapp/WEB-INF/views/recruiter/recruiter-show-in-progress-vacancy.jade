@@ -64,18 +64,18 @@ block append content
     h2=fmt.message("recruiter-show-in-progress-vacancy.chat", locale)
     .row.h4
       .col-md-2=fmt.message("recruiter-show-in-progress-vacancy.chat.from", locale)
-      .col-md-1=fmt.message("recruiter-show-in-progress-vacancy.chat.time", locale)
+      .col-md-2=fmt.message("recruiter-show-in-progress-vacancy.chat.time", locale)
       .col-md-6=fmt.message("recruiter-show-in-progress-vacancy.chat.message", locale)
     #chat
-
     form#messagesend
-      .row
-        .col-md-6
-          textarea(class="form-control", name="message", placeholder=fmt.message("recruiter-show-in-progress-vacancy.chat.enter-message", locale), rows="4")
-      .btn-row
-        input(type="hidden", name=csrf.getParameterName(), value=csrf.getToken())
-        input(type="hidden", name="id", value=deal.id)
-        input(type="hidden", name="role", value="recruiter")
-        input.btn.btn-success(type="submit", name="submit", value=fmt.message("recruiter-show-in-progress-vacancy.chat.send", locale))
+      if test.canSendMessage(deal)
+        .row
+          .col-md-6
+            textarea(class="form-control", name="message", placeholder=fmt.message("recruiter-show-in-progress-vacancy.chat.enter-message", locale), rows="4")
+        .btn-row
+          input.btn.btn-success(type="submit", name="submit", value=fmt.message("recruiter-show-in-progress-vacancy.chat.send", locale))
+      input(type="hidden", name=csrf.getParameterName(), value=csrf.getToken())
+      input(type="hidden", name="id", value=deal.id)
+      input(type="hidden", name="role", value="recruiter")
 
 
