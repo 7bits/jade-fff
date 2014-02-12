@@ -3,6 +3,7 @@ package com.recruiters.service;
 import com.recruiters.model.Applicant;
 import com.recruiters.model.Attachment;
 import com.recruiters.model.ChatMessage;
+import com.recruiters.model.Recruiter;
 import com.recruiters.model.status.ApplicantStatus;
 import com.recruiters.model.Bid;
 import com.recruiters.model.status.BidStatus;
@@ -18,6 +19,7 @@ import com.recruiters.repository.ChatRepository;
 import com.recruiters.repository.DealRepository;
 import com.recruiters.repository.EmployerRepository;
 import com.recruiters.repository.AttachmentRepository;
+import com.recruiters.repository.RecruiterRepository;
 import com.recruiters.repository.UserRepository;
 import com.recruiters.repository.VacancyRepository;
 import com.recruiters.service.exception.NotAffiliatedException;
@@ -61,6 +63,9 @@ public class EmployerService {
     /** Employer Repository provides Employer DAO */
     @Autowired
     private EmployerRepository employerRepository = null;
+    /** Recruiter Repository provides Recruiter DAO */
+    @Autowired
+    private RecruiterRepository recruiterRepository= null;
     /** User Repository provides User DAO */
     @Autowired
     private UserRepository userRepository = null;
@@ -522,6 +527,32 @@ public class EmployerService {
         }
     }
 
+
+    /**
+     * Finds Recruiter POJO instance by its  id
+     * @param recruiterId    Recruiter Id
+     * @return Recruiter POJO instance
+     * @throws ServiceException if Repository cannot process request
+     * or any other possible error,
+     * NotFoundException if recruiter with such id not exists
+     */
+    public Recruiter findRecruiter(final Long recruiterId)
+            throws ServiceException, NotFoundException {
+        try {
+            Recruiter recruiter = recruiterRepository.findById(recruiterId);
+            if (recruiter != null) {
+                return recruiterRepository.findById(recruiterId);
+            }
+        } catch (Exception e) {
+            log.error(SERVICE_EXCEPTION_MESSAGE, e);
+            throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
+        }
+        String notFoundMessage = NOT_FOUND_EXCEPTION_MESSAGE_PART1 + Recruiter.class.getSimpleName() +
+                NOT_FOUND_EXCEPTION_MESSAGE_PART2;
+        log.error(notFoundMessage);
+        throw new NotFoundException(notFoundMessage);
+    }
+
     /**
      * Apply Applicant, finishes deal
      * @param applicantId      Id of applicant
@@ -769,5 +800,13 @@ public class EmployerService {
 
     public void setChatRepository(final ChatRepository chatRepository) {
         this.chatRepository = chatRepository;
+    }
+
+    public RecruiterRepository getRecruiterRepository() {
+        return recruiterRepository;
+    }
+
+    public void setRecruiterRepository(final RecruiterRepository recruiterRepository) {
+        this.recruiterRepository = recruiterRepository;
     }
 }

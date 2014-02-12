@@ -24,7 +24,9 @@ block append content
         .tools
           dl.dl-horizontal
             dt=fmt.message("employer-progress-vacancy-show.recruiter.dt.name", locale)
-            dd #{deal.recruiter.user.firstName} #{deal.recruiter.user.lastName}
+            dd
+              a(href = domain.buildFullUri("/employer-show-recruiter-profile/", deal.recruiter.id, locale))
+                #{deal.recruiter.user.firstName} #{deal.recruiter.user.lastName}
             dt=fmt.message("employer-progress-vacancy-show.recruiter.dt.terms", locale)
             dd #{deal.bid.message}
             dt=fmt.message("employer-progress-vacancy-show.recruiter.dt.status", locale)

@@ -7,7 +7,9 @@ block append content
     .row
       .col-md-8
         h2=fmt.message("employer-recruiter-show.h2.recruiter", locale)
-        p #{bid.recruiter.user.firstName} #{bid.recruiter.user.lastName}
+        p
+          a(href = domain.buildFullUri("/employer-show-recruiter-profile/", bid.recruiter.id, locale))
+            #{bid.recruiter.user.firstName} #{bid.recruiter.user.lastName}
         p #{bid.message}
       .col-md-4
         h2=fmt.message("employer-recruiter-show.h2.vacancy", locale)

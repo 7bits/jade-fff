@@ -103,6 +103,10 @@ public class JsonService {
             currentDealJson.put("recruiter", deal.getRecruiter().getUser().getFirstName() + " " +
             deal.getRecruiter().getUser().getLastName());
             currentDealJson.put(
+                    "recruiterUrl",
+                    urlResolver.buildFullUri("/employer-show-recruiter-profile/", deal.getRecruiter().getId(), locale)
+            );
+            currentDealJson.put(
                     "terms",
                     StringEscapeUtils.escapeHtml4(deal.getBid().getMessage())
                     );
