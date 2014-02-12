@@ -22,6 +22,8 @@ public class Deal {
     private Long unseenApplicantCount = 0L;
     private Date lastModified = null;
     private String fireReason = null;
+    private Bid bid;
+    private Long bidCount;
 
     public Deal(final Long id, final Vacancy vacancy, final Recruiter recruiter, final List<Applicant> applicants) {
         this.id = id;
@@ -140,5 +142,21 @@ public class Deal {
 
     public void setFireReason(final String fireReason) {
         this.fireReason = fireReason;
+    }
+
+    public Bid getBid() {
+        return bid;
+    }
+
+    public void setBid(final Bid bid) {
+        this.bid = bid;
+    }
+
+    public Long getBidCount() {
+        return bidCount;
+    }
+
+    public void setBidCount(final Long bidCount) {
+        this.bidCount = bidCount;
     }
 }

@@ -38,9 +38,9 @@ public class EmployerDealsFilter {
             return new DealListSpecification(dealSpecification, null);
         }
 
-        if (sortColumn.equals("title") || sortColumn.equals("description") ||
+        if (sortColumn.equals("title") ||
                 sortColumn.equals("creation_date") || sortColumn.equals("lastname") ||
-                sortColumn.equals("status")) {
+                sortColumn.equals("status") || sortColumn.equals("bids")) {
             return new DealListSpecification(dealSpecification, new OrderByParam(sortColumn, sortAsc));
         }
         return new DealListSpecification(dealSpecification, null);

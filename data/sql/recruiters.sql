@@ -158,6 +158,7 @@ CREATE TABLE IF NOT EXISTS `deal` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `vacancy_id` bigint(20) NOT NULL,
   `recruiter_id` bigint(20) NOT NULL,
+  `bid_id` bigint(20) NOT NULL,
   `status` varchar(50) NOT NULL DEFAULT 'IN_PROGRESS',
   `recruiter_archived` tinyint(1) NOT NULL DEFAULT '0',
   `employer_archived` tinyint(1) NOT NULL DEFAULT '0',
@@ -165,7 +166,8 @@ CREATE TABLE IF NOT EXISTS `deal` (
   `fire_reason` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `vacancy_id` (`vacancy_id`),
-  KEY `recruiter_id` (`recruiter_id`)
+  KEY `recruiter_id` (`recruiter_id`),
+  KEY `bid_id` (`bid_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
 
 --
@@ -174,18 +176,20 @@ CREATE TABLE IF NOT EXISTS `deal` (
 --       `vacancy` -> `id`
 --   `recruiter_id`
 --       `recruiter` -> `id`
+--   `bid_id`
+--       `bid` -> `id`
 --
 
 --
 -- Dumping data for table `deal`
 --
 
-INSERT INTO `deal` (`id`, `vacancy_id`, `recruiter_id`, `status`, `recruiter_archived`, `employer_archived`, `updated_date`, `fire_reason`) VALUES
-(1, 3, 1, 'IN_PROGRESS', 0, 0, '2014-01-22 04:13:37', NULL),
-(2, 2, 2, 'IN_PROGRESS', 0, 0, '2014-01-22 04:13:37', NULL),
-(3, 1, 1, 'IN_PROGRESS', 0, 0, '2014-01-22 04:14:55', NULL),
-(4, 8, 1, 'IN_PROGRESS', 0, 0, '2014-02-06 09:26:04', NULL),
-(5, 10, 1, 'IN_PROGRESS', 0, 0, '2014-02-06 09:26:10', NULL);
+INSERT INTO `deal` (`id`, `vacancy_id`, `recruiter_id`, `bid_id`, `status`, `recruiter_archived`, `employer_archived`, `updated_date`, `fire_reason`) VALUES
+(1, 3, 1, 8, 'IN_PROGRESS', 0, 0, '2014-01-22 04:13:37', NULL),
+(2, 2, 2, 5, 'IN_PROGRESS', 0, 0, '2014-01-22 04:13:37', NULL),
+(3, 1, 1, 1, 'IN_PROGRESS', 0, 0, '2014-01-22 04:14:55', NULL),
+(4, 8, 1, 13,'IN_PROGRESS', 0, 0, '2014-02-06 09:26:04', NULL),
+(5, 10, 1, 9, 'IN_PROGRESS', 0, 0, '2014-02-06 09:26:10', NULL);
 
 -- --------------------------------------------------------
 
@@ -401,7 +405,8 @@ ALTER TABLE `bid`
 --
 ALTER TABLE `deal`
   ADD CONSTRAINT `deal_ibfk_1` FOREIGN KEY (`vacancy_id`) REFERENCES `vacancy` (`id`),
-  ADD CONSTRAINT `deal_ibfk_2` FOREIGN KEY (`recruiter_id`) REFERENCES `recruiter` (`id`);
+  ADD CONSTRAINT `deal_ibfk_2` FOREIGN KEY (`recruiter_id`) REFERENCES `recruiter` (`id`),
+  ADD CONSTRAINT `deal_ibfk_3` FOREIGN KEY (`bid_id`) REFERENCES `bid` (`id`);
 
 --
 -- Constraints for table `employer`

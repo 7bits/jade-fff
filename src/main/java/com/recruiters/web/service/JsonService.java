@@ -5,6 +5,7 @@ import com.recruiters.model.Deal;
 import com.recruiters.model.Vacancy;
 import com.recruiters.web.helper.MessageResolver;
 import com.recruiters.web.helper.UrlResolver;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
@@ -89,7 +90,10 @@ public class JsonService {
         for (Deal deal: deals) {
             Map<String, String> currentDealJson = new HashMap<String, String>();
             currentDealJson.put("title", deal.getVacancy().getTitle());
-            currentDealJson.put("description", deal.getVacancy().getDescription());
+            currentDealJson.put(
+                    "description",
+                    StringEscapeUtils.escapeHtml4(deal.getVacancy().getDescription())
+            );
             currentDealJson.put("created", messageResolver.date(deal.getVacancy().getCreationDate(), locale));
             currentDealJson.put(
                     "status",
@@ -97,6 +101,11 @@ public class JsonService {
             );
             currentDealJson.put("recruiter", deal.getRecruiter().getUser().getFirstName() + " " +
             deal.getRecruiter().getUser().getLastName());
+            currentDealJson.put(
+                    "terms",
+                    StringEscapeUtils.escapeHtml4(deal.getBid().getMessage())
+                    );
+            currentDealJson.put("bids", deal.getBidCount().toString());
             currentDealJson.put(
                     "url",
                     urlResolver.buildFullUri("/employer-progress-vacancy-show/", deal.getId(), locale)

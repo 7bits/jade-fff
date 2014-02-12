@@ -35,17 +35,22 @@ public class DealListSpecification implements IListSpecification<Vacancy> {
     @Override
     public String asSql() {
         StringBuilder sqlQuery = new StringBuilder(DEFAULT_STRING_SIZE);
-        sqlQuery.append("SELECT * FROM (SELECT deal.id, deal.status, " +
+        sqlQuery.append("SELECT * FROM (SELECT deal.id, deal.status, deal.bid_id, " +
                 "vacancy.id as vacancy_id,  vacancy.employer_id, vacancy.title, " +
                 "vacancy.description, vacancy.salary_from, vacancy.salary_to, " +
                 "vacancy.creation_date, " +
                 "recruiter.id as recruiter_id, " +
-                "user.firstname, user.lastname " +
+                "user.firstname, user.lastname, " +
+                "b1.message, COUNT(b2.id) as bids " +
                 "FROM deal " +
                 "INNER JOIN vacancy ON vacancy.id=deal.vacancy_id " +
                 "INNER JOIN recruiter  ON recruiter.id=deal.recruiter_id " +
                 "INNER JOIN user ON recruiter.user_id=user.id " +
-                "WHERE vacancy.employer_id=#{employerId}) as deals ");
+                "INNER JOIN bid b1 ON b1.id=deal.bid_id " +
+                "LEFT JOIN bid b2 ON b2.vacancy_id=deal.vacancy_id " +
+                "WHERE vacancy.employer_id=#{employerId} " +
+                "GROUP BY b2.vacancy_id)" +
+                " as deals ");
         if (listOrderSpecification == null) {
             sqlQuery.append(" WHERE ");
             sqlQuery.append(dealSpecification.asSql());

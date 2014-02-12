@@ -125,15 +125,18 @@ public interface DealMapper {
             @Result(column = "creation_date", property = "vacancy.creationDate"),
             @Result(column = "recruiter_id", property = "recruiter.id"),
             @Result(column = "firstname", property = "recruiter.user.firstName"),
-            @Result(column = "lastname", property = "recruiter.user.lastName")
+            @Result(column = "lastname", property = "recruiter.user.lastName"),
+            @Result(column = "bid_id", property = "bid.id"),
+            @Result(column = "message", property = "bid.message"),
+            @Result(column = "bids", property = "bidCount")
     })
     List<Deal> findFilteredDealsByEmployerId(
             @Param("employerId") final Long employerId,
             @Param("dealListSpecification") final DealListSpecification dealListSpecification
     );
 
-    @Insert("INSERT INTO deal (vacancy_id, recruiter_id, status) " +
-            "SELECT v.id, b.recruiter_id, \"IN_PROGRESS\" FROM vacancy v " +
+    @Insert("INSERT INTO deal (vacancy_id, recruiter_id, bid_id, status) " +
+            "SELECT v.id, b.recruiter_id, #{bidId}, \"IN_PROGRESS\" FROM vacancy v " +
             "INNER JOIN bid b on v.id = b.vacancy_id " +
             "WHERE b.id = #{bidId}")
     @Options(useGeneratedKeys = true, keyProperty = "deal.id", keyColumn = "id")
