@@ -5,6 +5,7 @@ import com.recruiters.model.Attachment;
 import com.recruiters.model.Bid;
 import com.recruiters.model.ChatMessage;
 import com.recruiters.model.Deal;
+import com.recruiters.model.Employer;
 import com.recruiters.model.status.DealStatus;
 import com.recruiters.model.Recruiter;
 import com.recruiters.model.User;
@@ -94,6 +95,32 @@ public class RecruiterService {
             log.error(SERVICE_EXCEPTION_MESSAGE, e);
             throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
         }
+    }
+
+
+    /**
+     * Finds Employer POJO instance by its  id
+     * @param employerId    Employer Id
+     * @return Employer POJO instance
+     * @throws ServiceException if Repository cannot process request
+     * or any other possible error,
+     * NotFoundException if employer with such id not exists
+     */
+    public Employer findEmployer(final Long employerId)
+            throws ServiceException, NotFoundException {
+        try {
+            Employer employer = employerRepository.findById(employerId);
+            if (employer != null) {
+                return employer;
+            }
+        } catch (Exception e) {
+            log.error(SERVICE_EXCEPTION_MESSAGE, e);
+            throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
+        }
+        String notFoundMessage = NOT_FOUND_EXCEPTION_MESSAGE_PART1 + Employer.class.getSimpleName() +
+                NOT_FOUND_EXCEPTION_MESSAGE_PART2;
+        log.error(notFoundMessage);
+        throw new NotFoundException(notFoundMessage);
     }
 
     /**

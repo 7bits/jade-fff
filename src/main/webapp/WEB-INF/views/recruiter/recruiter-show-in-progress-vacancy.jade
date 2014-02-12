@@ -31,7 +31,10 @@ block append content
 
       .col-md-4
         h2=fmt.message("recruiter-show-in-progress-vacancy.employer", locale)
-        p #{deal.vacancy.employer.user.firstName} #{deal.vacancy.employer.user.lastName}
+        p
+          a(href = domain.buildFullUri("/recruiter-show-employer-profile/", deal.vacancy.employer.id, locale))
+            #{deal.vacancy.employer.user.firstName} #{deal.vacancy.employer.user.lastName}
+
 
     h2=fmt.message("recruiter-show-in-progress-vacancy.h2", locale)
     table.table.table-striped

@@ -1,0 +1,20 @@
+extends ../layout
+
+block append head
+  title=fmt.message("recruiter-show-employer-profile.title", locale)
+block append content
+  .container
+    h1.text-center=fmt.message("recruiter-show-employer-profile.h1", locale)
+    .row
+      .col-md-4
+        img(src=domain.getResourceUrl('/stylesheets/images/empty_avatar.jpg'))
+      .col-md-8
+        h2
+        dl.dl-horizontal
+          dt=fmt.message("recruiter-show-employer-profile.dt.name", locale)
+          dd #{employer.user.firstName} #{employer.user.lastName}
+          dt=fmt.message("recruiter-show-employer-profile.dt.description", locale)
+          dd #{employer.user.description}
+    h2.text-center=fmt.message("recruiter-show-employer-profile.feedback.h2", locale)
+    .row
+      .col-md-6
