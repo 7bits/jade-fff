@@ -3,6 +3,8 @@ package com.recruiters.repository;
 import com.recruiters.model.Deal;
 import com.recruiters.model.status.DealStatus;
 import com.recruiters.repository.mapper.DealMapper;
+import com.recruiters.repository.specification.IListSpecification;
+import com.recruiters.repository.specification.impl.deal.DealListSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -41,21 +43,24 @@ public class DealRepository {
     }
 
     /**
-     * Find and return all active deals for certain employer
+     * Find and return filtered deals for certain employer
      * @param employerId    Id of employer
+     * @param dealListSpecification Specification for list of
      * @return List of Deal instances, which belongs to exact employer and
-     * have "IN PROGRESS" Status
+     * match specification
      * @throws RepositoryException if input parameter is incorrect or there
      * were any technical issues
      */
-    public List<Deal> findActiveDealsByEmployerId(final Long employerId)
-            throws RepositoryException {
-        if (employerId == null) {
-            throw new RepositoryException("employerId is null");
+    public List<Deal> findFilteredDealsByEmployerId(
+            final Long employerId,
+            final DealListSpecification dealListSpecification
+    ) throws RepositoryException {
+        if (employerId == null || dealListSpecification == null) {
+            throw new RepositoryException("employerId or listSpecification is null");
         }
         try {
 
-            return dealMapper.findActiveDealsByEmployerId(employerId);
+            return dealMapper.findFilteredDealsByEmployerId(employerId, dealListSpecification);
         } catch (Exception e) {
             throw new RepositoryException("General database error: ", e);
         }

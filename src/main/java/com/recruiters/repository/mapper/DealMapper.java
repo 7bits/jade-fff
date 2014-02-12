@@ -2,6 +2,8 @@ package com.recruiters.repository.mapper;
 
 import com.recruiters.model.Deal;
 import com.recruiters.model.status.DealStatus;
+import com.recruiters.repository.mapper.provider.DealFilteredProvider;
+import com.recruiters.repository.specification.impl.deal.DealListSpecification;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Many;
 import org.apache.ibatis.annotations.Options;
@@ -9,6 +11,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectProvider;
 import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
@@ -109,17 +112,7 @@ public interface DealMapper {
     })
     List<Deal> findActiveDealsByRecruiterId(final Long recruiterId);
 
-    @Select("SELECT deal.id, deal.status, " +
-            "vacancy.id as vacancy_id,  vacancy.employer_id, vacancy.title, " +
-            "vacancy.description, vacancy.salary_from, vacancy.salary_to, " +
-            "vacancy.creation_date, " +
-            "recruiter.id as recruiter_id, " +
-            "user.firstname, user.lastname " +
-            "FROM deal " +
-            "INNER JOIN vacancy ON vacancy.id=deal.vacancy_id " +
-            "INNER JOIN recruiter  ON recruiter.id=deal.recruiter_id " +
-            "INNER JOIN user ON recruiter.user_id=user.id " +
-            "WHERE vacancy.employer_id=#{employerId} AND deal.status=\"IN_PROGRESS\"")
+    @SelectProvider(type = DealFilteredProvider.class, method = "selectDealsFiltered")
     @Results({
             @Result(column = "id", property = "id"),
             @Result(column = "status", property = "status"),
@@ -134,7 +127,10 @@ public interface DealMapper {
             @Result(column = "firstname", property = "recruiter.user.firstName"),
             @Result(column = "lastname", property = "recruiter.user.lastName")
     })
-    List<Deal> findActiveDealsByEmployerId(final Long employerId);
+    List<Deal> findFilteredDealsByEmployerId(
+            @Param("employerId") final Long employerId,
+            @Param("dealListSpecification") final DealListSpecification dealListSpecification
+    );
 
     @Insert("INSERT INTO deal (vacancy_id, recruiter_id, status) " +
             "SELECT v.id, b.recruiter_id, \"IN_PROGRESS\" FROM vacancy v " +

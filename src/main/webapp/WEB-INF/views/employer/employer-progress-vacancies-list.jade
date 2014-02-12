@@ -5,22 +5,30 @@ block append head
 block append content
   .container
     h1=fmt.message("employer-progress-vacancies-list.h1", locale)
-    table.table.table-striped
+    form.form-sort(name="employerDealsFilter", id="employerDealsFilter", action="", method="get")
+      .row
+        .col-md-6
+          .btn-group.btn-group-xs(data-toggle="buttons")
+            label.btn.btn-default#showAll=fmt.message("employer-progress-vacancies-list.form.show-all", locale)
+              input(type="checkbox", name="showAll", value="1")
+          .btn-group.btn-group-xs(data-toggle="buttons")
+            label.btn.btn-default#hideFired=fmt.message("employer-progress-vacancies-list.form.hide-fired", locale)
+              input(type="checkbox", name="hideFired", value="1", checked=employerDealsFilter.hideFired)
+            label.btn.btn-default#hideApproved=fmt.message("employer-progress-vacancies-list.form.hide-approved", locale)
+              input(type="checkbox", name="hideApproved", value="1", checked=employerDealsFilter.hideApproved)
+            input(type="hidden", name="sortColumn", id="sortColumn")
+            input(type="hidden", name="sortAsc", id="sortAsc")
+            input(type="hidden", name=csrf.getParameterName(), value=csrf.getToken())
+
+    table.table.table-striped#table-sort
       thead
         tr
-          th=fmt.message("employer-progress-vacancies-list.table.name", locale)
-          th=fmt.message("employer-progress-vacancies-list.table.description", locale)
-          th=fmt.message("employer-progress-vacancies-list.table.creation", locale)
-          th=fmt.message("employer-progress-vacancies-list.table.recruiter", locale)
+          th.sorting#stitle=fmt.message("employer-progress-vacancies-list.table.title", locale)
+          th.sorting#sdescription=fmt.message("employer-progress-vacancies-list.table.description", locale)
+          th.sorting#screation_date=fmt.message("employer-progress-vacancies-list.table.creation", locale)
+          th.sorting#sstatus=fmt.message("employer-progress-vacancies-list.table.status", locale)
+          th.sorting#slastname=fmt.message("employer-progress-vacancies-list.table.recruiter", locale)
+          th.sorting#sapplicants=fmt.message("employer-progress-vacancies-list.table.applicants", locale)
           th
       tbody
-        for deal in deals
-          tr
-            td #{deal.vacancy.title}
-            td #{deal.vacancy.description}
-            td #{fmt.date(deal.vacancy.creationDate, locale)}
-            td #{deal.recruiter.user.firstName} #{deal.recruiter.user.lastName}
-            td
-              a.btn.btn-link(href = domain.buildFullUri("/employer-progress-vacancy-show/", deal.id, locale)).
-                    #{fmt.message("employer-progress-vacancies-list.more", locale)}
     a.btn.btn-link(href=domain.buildFullUri("employer-vacancy-create", locale))=fmt.message("employer-progress-vacancies-list.createVacancy", locale)

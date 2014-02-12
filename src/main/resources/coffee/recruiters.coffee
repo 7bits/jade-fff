@@ -4,7 +4,7 @@ showAll = "form.form-sort label#showAll"
 hideButtons = "form.form-sort label[id^=hide]"
 $ ->
   firstVisit = ->
-    $("#searchText").trigger "change"
+    $(showAll).find("input").trigger "change"
     $(hideButtons).each ->
       currentState = $(this).find("input").prop("checked")
       $(this).addClass "active"  if currentState
@@ -19,7 +19,7 @@ $ ->
 
 showAllCheck = (button) ->
   showAllState = true
-  unless $(hideButtons).hasClass("active")
+  if not $(hideButtons).hasClass("active") and button isnt ""
     showAllState = false
   else
     $(hideButtons).each ->
@@ -77,6 +77,18 @@ $ ->
     return
 
 $ ->
+  $("#prevDateLink").on "click", (event) ->
+    event.preventDefault()
+    $(".datepicker").datepicker("update", dateToString(prevDate))
+    modifyDates(prevDate)
+
+$ ->
+  $("#nextDateLink").on "click", (event) ->
+    event.preventDefault()
+    $(".datepicker").datepicker("update", dateToString(nextDate))
+    modifyDates(nextDate)
+
+$ ->
   $("#vacanciesFilter :input").on "change", ->
     data = $("#vacanciesFilter").serialize()
     request = $.ajax(
@@ -100,14 +112,25 @@ $ ->
     request.fail ->
 
 $ ->
-  $("#prevDateLink").on "click", (event) ->
-    event.preventDefault()
-    $(".datepicker").datepicker("update", dateToString(prevDate))
-    modifyDates(prevDate)
+  $("#employerDealsFilter :input").on "change", ->
+    data = $("#employerDealsFilter").serialize()
+    request = $.ajax(
+      url: "employer-deals-filter-ajax.json"
+      type: "POST"
+      data: data
+      dataType: "json"
+    )
+    request.done (data) ->
+      addHtml = ""
+      vacancyList = data.entry.value
+      i = 0
 
-$ ->
-  $("#nextDateLink").on "click", (event) ->
-    event.preventDefault()
-    $(".datepicker").datepicker("update", dateToString(nextDate))
-    modifyDates(nextDate)
+      while i < vacancyList.length
+        obj = vacancyList[i]
+        addHtml += "<tr><td>" + obj.title + "</td><td>" + obj.description + "</td><td>" + obj.created + "</td><td>" + obj.status + "</td><td>" + obj.recruiter + "</td><td tittle='" + obj.applicantsTooltip + "'>" + obj.applicants + "</td><td>" + "<a href='" + obj.url + "'>" + obj.urltext + "</a>" + "</td></tr>"
+        i++
+      $("#table-sort").find("tbody").html addHtml
+      return
+
+    request.fail ->
 

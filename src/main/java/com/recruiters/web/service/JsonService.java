@@ -1,6 +1,7 @@
 package com.recruiters.web.service;
 
 import com.recruiters.model.ChatMessage;
+import com.recruiters.model.Deal;
 import com.recruiters.model.Vacancy;
 import com.recruiters.web.helper.MessageResolver;
 import com.recruiters.web.helper.UrlResolver;
@@ -78,6 +79,36 @@ public class JsonService {
         }
 
         return vacanciesJson;
+    }
+
+    public List<Map<String,String>> employerDealsFilteredList(
+            final List<Deal> deals,
+            final Locale locale
+    ) {
+        List<Map<String,String>> dealsJson = new ArrayList<Map<String, String>>();
+        for (Deal deal: deals) {
+            Map<String, String> currentDealJson = new HashMap<String, String>();
+            currentDealJson.put("title", deal.getVacancy().getTitle());
+            currentDealJson.put("description", deal.getVacancy().getDescription());
+            currentDealJson.put("created", messageResolver.date(deal.getVacancy().getCreationDate(), locale));
+            currentDealJson.put(
+                    "status",
+                    messageResolver.dealStatus(deal.getStatus(), locale)
+            );
+            currentDealJson.put("recruiter", deal.getRecruiter().getUser().getFirstName() + " " +
+            deal.getRecruiter().getUser().getLastName());
+            currentDealJson.put(
+                    "url",
+                    urlResolver.buildFullUri("/employer-progress-vacancy-show/", deal.getId(), locale)
+            );
+            currentDealJson.put(
+                    "urltext",
+                    messageResolver.message("employer-progress-vacancies-list.more", locale)
+            );
+            dealsJson.add(currentDealJson);
+        }
+
+        return dealsJson;
     }
 
     /**

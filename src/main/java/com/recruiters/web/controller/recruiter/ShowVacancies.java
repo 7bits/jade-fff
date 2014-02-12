@@ -69,11 +69,11 @@ public class ShowVacancies {
     }
 
     /**
-     * Shows vacancies with filter applied for recruiter
+     * Shows vacancies with filter applied by recruiter
      * @param request           Http Request
      * @param response          Http Response
      * @param vacanciesFilter   Vacancies Filter
-     * @return model and view with list of vacancies,
+     * @return json type list of vacancies,
      * Internal Server Error page if something is wrong with obtaining data
      * due to technical or any other reasons
      * @throws Exception in very rare circumstances: it should be runtime

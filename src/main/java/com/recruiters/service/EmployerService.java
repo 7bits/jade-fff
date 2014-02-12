@@ -23,6 +23,7 @@ import com.recruiters.repository.VacancyRepository;
 import com.recruiters.service.exception.NotAffiliatedException;
 import com.recruiters.service.exception.NotFoundException;
 import com.recruiters.service.exception.ServiceException;
+import com.recruiters.web.form.EmployerDealsFilter;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -101,17 +102,23 @@ public class EmployerService {
     }
 
     /**
-     * Get all active deals from DB for current employer
+     * Get filtered list of deals from DB for current employer
      * @param employerId    Id of Employer
+     * @param dealsFilter   Deals filter
      * @return List of Deals for exact Employer
      * @throws com.recruiters.service.exception.ServiceException if cannot obtain list of Deals from
      * repository or any other possible error
      */
-    public List<Deal> findDealsForEmployer(final Long employerId)
-            throws ServiceException {
+    public List<Deal> findDealsForEmployer(
+            final Long employerId,
+            final EmployerDealsFilter dealsFilter
+    ) throws ServiceException {
         try {
 
-            return dealRepository.findActiveDealsByEmployerId(employerId);
+            return dealRepository.findFilteredDealsByEmployerId(
+                    employerId,
+                    dealsFilter.getListSpecifications()
+            );
         } catch (Exception e) {
             log.error(SERVICE_EXCEPTION_MESSAGE, e);
             throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
