@@ -1,11 +1,7 @@
 package com.recruiters.web.controller.employer;
 
-import com.recruiters.model.Bid;
 import com.recruiters.model.Recruiter;
-import com.recruiters.model.User;
-import com.recruiters.model.Vacancy;
 import com.recruiters.service.EmployerService;
-import com.recruiters.service.exception.NotAffiliatedException;
 import com.recruiters.service.exception.NotFoundException;
 import com.recruiters.service.exception.ServiceException;
 import com.recruiters.web.controller.utils.UserUtils;
@@ -17,16 +13,17 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 /**
- * Show all bids for certain vacancy
+ * Show recruiter profile for Employer
  */
 @Controller
 public class EmployerShowRecruiterProfile {
 
+    /** Employer Service provides all Employer related methods */
     @Autowired
     private EmployerService employerService = null;
+    /** User utils for obtaining any session user information */
     @Autowired
     private UserUtils userUtils = null;
 
@@ -49,10 +46,10 @@ public class EmployerShowRecruiterProfile {
             final HttpServletResponse response
     ) throws Exception {
 
-        ModelAndView recruiterBids = new ModelAndView("employer/employer-show-recruiter-profile.jade");
+        ModelAndView recruiterProfile = new ModelAndView("employer/employer-show-recruiter-profile.jade");
         try {
             Recruiter recruiter = employerService.findRecruiter(recruiterId);
-            recruiterBids.addObject("recruiter", recruiter);
+            recruiterProfile.addObject("recruiter", recruiter);
         } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             return null;
@@ -61,7 +58,7 @@ public class EmployerShowRecruiterProfile {
             return null;
         }
 
-        return recruiterBids;
+        return recruiterProfile;
     }
 
     public EmployerService getEmployerService() {

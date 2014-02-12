@@ -541,7 +541,7 @@ public class EmployerService {
         try {
             Recruiter recruiter = recruiterRepository.findById(recruiterId);
             if (recruiter != null) {
-                return recruiterRepository.findById(recruiterId);
+                return recruiter;
             }
         } catch (Exception e) {
             log.error(SERVICE_EXCEPTION_MESSAGE, e);
