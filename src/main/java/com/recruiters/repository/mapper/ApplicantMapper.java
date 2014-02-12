@@ -52,7 +52,8 @@ public interface ApplicantMapper {
             "INNER JOIN deal ON deal.id=applicant.deal_id " +
             "INNER JOIN vacancy ON vacancy.id=deal.vacancy_id " +
             "INNER JOIN recruiter  ON recruiter.id=deal.recruiter_id " +
-            "WHERE applicant.deal_id=#{dealId}")
+            "WHERE applicant.deal_id=#{dealId} " +
+            "ORDER BY applicant.viewed")
     @Results({
             @Result(column = "id", property = "id"),
             @Result(column = "first_name", property = "firstName"),

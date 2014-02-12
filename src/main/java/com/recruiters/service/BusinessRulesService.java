@@ -58,6 +58,16 @@ public class BusinessRulesService {
     }
 
     /**
+     * Test if exact applicant is new (unseen by employer)
+     * @param applicant    Applicant
+     * @return true if applicant was not viewed, otherwise false
+     */
+    public Boolean isApplicantNew(final Applicant applicant) {
+
+        return  (!applicant.getViewed());
+    }
+
+    /**
      * Test if it's allowed to add new applicants for exact deal
      * @param deal    Deal
      * @return true if you can add new applicants to this deal,

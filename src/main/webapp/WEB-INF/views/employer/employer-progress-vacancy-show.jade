@@ -50,7 +50,11 @@ block append content
         ul.list-group
           for applicant in deal.applicants
             li.list-group-item
-              #{applicant.firstName} #{applicant.lastName}
+              if test.isApplicantNew(applicant)
+                strong
+                  #{applicant.firstName} #{applicant.lastName}
+              else
+                #{applicant.firstName} #{applicant.lastName}
               a.btn.btn-link.pull-right(href = domain.buildFullUri("/employer-applicant-show/", applicant.id, locale)).
                 #{fmt.message("employer-progress-vacancy-show.applicants.more", locale)}
 
