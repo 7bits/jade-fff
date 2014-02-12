@@ -129,6 +129,10 @@ public interface DealMapper {
             @Result(column = "bid_id", property = "bid.id"),
             @Result(column = "message", property = "bid.message"),
             @Result(column = "bids", property = "bidCount"),
+            @Result(column = "all_applicants", property = "allApplicantCount"),
+            @Result(column = "viewed_applicants", property = "viewedApplicantCount"),
+            @Result(column = "unseen_applicants", property = "unseenApplicantCount"),
+            @Result(column = "rejected_applicants", property = "rejectedApplicantCount"),
             @Result(column = "max_updated_date", property = "lastModified")
 })
     List<Deal> findFilteredDealsByEmployerId(

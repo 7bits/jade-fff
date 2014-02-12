@@ -42,7 +42,17 @@ public class DealListSpecification implements IListSpecification<Vacancy> {
                 "recruiter.id as recruiter_id, " +
                 "user.firstname, user.lastname, " +
                 "b1.message, COUNT(b2.id) as bids, " +
-                "max_updated.max_updated_date " +
+                "max_updated.max_updated_date, " +
+                "" +
+                "(SELECT COUNT(applicant.id) FROM applicant " +
+                "WHERE deal_id=deal.id) as all_applicants, " +
+                "(SELECT COUNT(applicant.id) FROM applicant " +
+                "WHERE deal_id=deal.id AND viewed=1) as viewed_applicants, " +
+                "(SELECT COUNT(applicant.id) FROM applicant " +
+                "WHERE deal_id=deal.id AND viewed=0) as unseen_applicants, " +
+                "(SELECT COUNT(applicant.id) FROM applicant " +
+                "WHERE deal_id=deal.id AND status=\"REJECTED\") as rejected_applicants " +
+                "" +
                 "FROM deal " +
                 "INNER JOIN vacancy ON vacancy.id=deal.vacancy_id " +
                 "INNER JOIN recruiter  ON recruiter.id=deal.recruiter_id " +

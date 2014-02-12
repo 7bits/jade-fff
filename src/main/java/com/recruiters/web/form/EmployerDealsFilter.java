@@ -41,7 +41,7 @@ public class EmployerDealsFilter {
         if (sortColumn.equals("title") ||
                 sortColumn.equals("creation_date") || sortColumn.equals("lastname") ||
                 sortColumn.equals("status") || sortColumn.equals("bids") ||
-                sortColumn.equals("max_updated_date")) {
+                sortColumn.equals("max_updated_date") || sortColumn.equals("unseen_applicants")) {
             return new DealListSpecification(dealSpecification, new OrderByParam(sortColumn, sortAsc));
         }
         return new DealListSpecification(dealSpecification, null);

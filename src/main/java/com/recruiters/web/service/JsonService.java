@@ -115,6 +115,22 @@ public class JsonService {
                     "urltext",
                     messageResolver.message("employer-progress-vacancies-list.more", locale)
             );
+            currentDealJson.put(
+                    "applicants",
+                    "<span class=\"green\">" + deal.getUnseenApplicantCount() + "</span>/<span>" +
+                            deal.getAllApplicantCount() + " (</span><span class=\"red\">" +
+                            deal.getRejectedApplicantCount() + "</span>/<span class=\"yellow\">" +
+                            deal.getViewedApplicantCount() + "</span>)"
+            );
+            currentDealJson.put(
+                    "applicantsTooltip",
+                    messageResolver.applicantsTooltip(
+                            deal.getUnseenApplicantCount(),
+                            deal.getAllApplicantCount(),
+                            deal.getRejectedApplicantCount(),
+                            deal.getViewedApplicantCount(), locale)
+            );
+
             dealsJson.add(currentDealJson);
         }
 

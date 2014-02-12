@@ -127,7 +127,7 @@ $ ->
 
       while i < vacancyList.length
         obj = vacancyList[i]
-        addHtml += "<tr><td class='help' title='" + obj.description + "'>" + obj.title + "</td><td>" + obj.created  + "</td><td>" + obj.updated + "</td><td>" + obj.status + "</td><td>" + obj.bids + "</td><td class='help' title='" + obj.terms + "'>" + obj.recruiter + "</td><td class='help' tittle='" + obj.applicantsTooltip + "'>" + obj.applicants + "</td><td>" + "<a href='" + obj.url + "'>" + obj.urltext + "</a>" + "</td></tr>"
+        addHtml += "<tr><td class='help' title='" + obj.description + "'>" + obj.title + "</td><td>" + obj.created  + "</td><td>" + obj.updated + "</td><td>" + obj.status + "</td><td>" + obj.bids + "</td><td class='help' title='" + obj.terms + "'>" + obj.recruiter + "</td><td class='help' title='" + obj.applicantsTooltip + "'>" + obj.applicants + "</td><td>" + "<a href='" + obj.url + "'>" + obj.urltext + "</a>" + "</td></tr>"
         i++
       $("#table-sort").find("tbody").html addHtml
       return
