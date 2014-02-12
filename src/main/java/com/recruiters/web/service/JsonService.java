@@ -95,6 +95,7 @@ public class JsonService {
                     StringEscapeUtils.escapeHtml4(deal.getVacancy().getDescription())
             );
             currentDealJson.put("created", messageResolver.date(deal.getVacancy().getCreationDate(), locale));
+            currentDealJson.put("updated", messageResolver.date(deal.getLastModified(), locale));
             currentDealJson.put(
                     "status",
                     messageResolver.dealStatus(deal.getStatus(), locale)

@@ -128,8 +128,9 @@ public interface DealMapper {
             @Result(column = "lastname", property = "recruiter.user.lastName"),
             @Result(column = "bid_id", property = "bid.id"),
             @Result(column = "message", property = "bid.message"),
-            @Result(column = "bids", property = "bidCount")
-    })
+            @Result(column = "bids", property = "bidCount"),
+            @Result(column = "max_updated_date", property = "lastModified")
+})
     List<Deal> findFilteredDealsByEmployerId(
             @Param("employerId") final Long employerId,
             @Param("dealListSpecification") final DealListSpecification dealListSpecification

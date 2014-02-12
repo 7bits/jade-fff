@@ -41,11 +41,28 @@ public class DealListSpecification implements IListSpecification<Vacancy> {
                 "vacancy.creation_date, " +
                 "recruiter.id as recruiter_id, " +
                 "user.firstname, user.lastname, " +
-                "b1.message, COUNT(b2.id) as bids " +
+                "b1.message, COUNT(b2.id) as bids, " +
+                "max_updated.max_updated_date " +
                 "FROM deal " +
                 "INNER JOIN vacancy ON vacancy.id=deal.vacancy_id " +
                 "INNER JOIN recruiter  ON recruiter.id=deal.recruiter_id " +
                 "INNER JOIN user ON recruiter.user_id=user.id " +
+                "" +
+                "INNER JOIN (SELECT id, MAX(updated_date) as max_updated_date FROM " +
+                "(SELECT deal.id,deal.updated_date FROM deal " +
+                "INNER JOIN vacancy ON vacancy.id=deal.vacancy_id " +
+                "WHERE vacancy.employer_id=1 " +
+                "UNION ALL " +
+                "SELECT deal.id, vacancy.updated_date FROM vacancy " +
+                "INNER JOIN deal ON deal.vacancy_id=vacancy.id " +
+                "WHERE vacancy.employer_id=1 " +
+                "UNION ALL " +
+                "SELECT deal.id, MAX(applicant.updated_date)  FROM applicant " +
+                "INNER JOIN deal ON applicant.deal_id=deal.id " +
+                "INNER JOIN vacancy ON vacancy.id=deal.vacancy_id " +
+                "WHERE vacancy.employer_id=1)as updated_dates GROUP BY id) as max_updated " +
+                "ON max_updated.id=deal.id " +
+                "" +
                 "INNER JOIN bid b1 ON b1.id=deal.bid_id " +
                 "LEFT JOIN bid b2 ON b2.vacancy_id=deal.vacancy_id " +
                 "WHERE vacancy.employer_id=#{employerId} " +
