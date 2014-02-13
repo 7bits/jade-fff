@@ -6,6 +6,7 @@ import com.recruiters.model.Bid;
 import com.recruiters.model.ChatMessage;
 import com.recruiters.model.Deal;
 import com.recruiters.model.Employer;
+import com.recruiters.model.Feedback;
 import com.recruiters.model.status.DealStatus;
 import com.recruiters.model.Recruiter;
 import com.recruiters.model.User;
@@ -16,6 +17,7 @@ import com.recruiters.repository.BidRepository;
 import com.recruiters.repository.ChatRepository;
 import com.recruiters.repository.DealRepository;
 import com.recruiters.repository.EmployerRepository;
+import com.recruiters.repository.FeedbackRepository;
 import com.recruiters.repository.RecruiterRepository;
 import com.recruiters.repository.UserRepository;
 import com.recruiters.repository.VacancyRepository;
@@ -29,6 +31,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -65,6 +68,9 @@ public class RecruiterService {
     /** Chat Repository provides Chat DAO */
     @Autowired
     private ChatRepository chatRepository = null;
+    /** Feedback Repository provides Feedback DAO */
+    @Autowired
+    private FeedbackRepository feedbackRepository = null;
     /** Message source */
     @Autowired
     private MessageSource messageSource = null;
@@ -403,7 +409,6 @@ public class RecruiterService {
         throw new NotAffiliatedException(securityMessage);
     }
 
-
     /**
      * Add new applicant to Deal, verifying deal belongs to recruiter
      * requested apply
@@ -652,6 +657,40 @@ public class RecruiterService {
         log.error(securityMessage);
         throw new NotAffiliatedException(securityMessage);
     }
+
+
+    /**
+     * Leave feedback for exact deal
+     * @param dealId                   Related deal
+     * @param recruiterFeedback        Feedback
+     * @param recruiterId              Id of recruiter who wants to leave feedback
+     * @return Filled feedback if there were no any technical issues
+     * @throws NotAffiliatedException if related deal not belongs to
+     * employer requested method
+     * @throws ServiceException if Repository cannot process request
+     * or any other possible error
+     */
+    public Feedback leaveFeedback(final Long dealId, final String recruiterFeedback, final Long recruiterId)
+            throws ServiceException, NotAffiliatedException {
+        try {
+            Feedback feedback = feedbackRepository.findByDealId(dealId);
+            if (feedback.getRecruiter().getId().equals(recruiterId) &&
+                    feedback.getRecruiterFeedback() == null) {
+                feedbackRepository.updateRecruiterFeedback(dealId, recruiterFeedback);
+                feedback.setRecruiterFeedback(recruiterFeedback);
+                feedback.setRecruiterTime(new Date());
+                return feedback;
+            }
+        } catch (Exception e) {
+            log.error(SERVICE_EXCEPTION_MESSAGE, e);
+            throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
+        }
+        String securityMessage = SECURITY_EXCEPTION_MESSAGE_PART1 + Deal.class.getSimpleName() +
+                SECURITY_EXCEPTION_MESSAGE_PART2;
+        log.error(securityMessage);
+        throw new NotAffiliatedException(securityMessage);
+    }
+
 
     public AttachmentRepository getAttachmentRepository() {
         return attachmentRepository;

@@ -21,9 +21,6 @@ block append content
           dd #{fmt.date(deal.vacancy.expirationDate, locale)}
           dt=fmt.message("recruiter-show-in-progress-vacancy.dt.status", locale)
           dd #{fmt.dealStatus(deal.status, locale)}
-          if test.isRecruiterFired(deal)
-            dt=fmt.message("recruiter-show-in-progress-vacancy.dt.fire_reason", locale)
-            dd #{deal.fireReason}
           if deal.vacancy.testFile
             dt=fmt.message("recruiter-show-in-progress-vacancy.dt.tests", locale)
             dd

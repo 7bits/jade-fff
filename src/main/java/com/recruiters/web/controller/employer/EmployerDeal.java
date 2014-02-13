@@ -77,7 +77,6 @@ public class EmployerDeal {
 
     /**
      * Fire Recruiter for Employer
-     * @param message     Reason of firing
      * @param dealId      Id of deal
      * @param request     Http request
      * @param response    Http response
@@ -90,14 +89,49 @@ public class EmployerDeal {
      */
     @RequestMapping(value = "/employer-fire-recruiter", method = RequestMethod.POST)
     public String fireRecruiter(
-            @RequestParam(value = "message", required = false) final String message,
             @RequestParam(value = "id", required = true) final Long dealId,
             final HttpServletRequest request,
             final HttpServletResponse response
     ) throws Exception {
         try {
             User user = userUtils.getCurrentUser(request);
-            employerService.fireRecruiter(dealId, message, user.getEmployerId());
+            employerService.fireRecruiter(dealId, user.getEmployerId());
+        } catch (NotAffiliatedException e) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN);
+            return null;
+        } catch (ServiceException e) {
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return null;
+        }
+        Locale locale = RequestContextUtils.getLocale(request);
+
+        return  urlResolver.buildRedirectUri("employer-progress-vacancy-show", dealId, locale);
+    }
+
+
+    /**
+     * Leave feedback for deal ended
+     * @param feedback    Feedback
+     * @param dealId      Id of deal
+     * @param request     Http request
+     * @param response    Http response
+     * @return redirect to "vacancies list" page if everything goes fine,
+     * Forbidden page if this deal does not belong to this employer,
+     * Internal Server Error page if something is wrong with obtaining data
+     * due to technical or any other reasons
+     * @throws Exception in very rare circumstances: it should be runtime
+     * or servlet Exception to be thrown
+     */
+    @RequestMapping(value = "/employer-deal-leave-feedback", method = RequestMethod.POST)
+    public String leaveFeedback(
+            @RequestParam(value = "feedback", required = false) final String feedback,
+            @RequestParam(value = "id", required = true) final Long dealId,
+            final HttpServletRequest request,
+            final HttpServletResponse response
+    ) throws Exception {
+        try {
+            User user = userUtils.getCurrentUser(request);
+            employerService.leaveFeedback(dealId, feedback, user.getEmployerId());
         } catch (NotAffiliatedException e) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
             return null;

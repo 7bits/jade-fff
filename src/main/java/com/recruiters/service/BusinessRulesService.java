@@ -18,16 +18,6 @@ public class BusinessRulesService {
     public BusinessRulesService(){}
 
     /**
-     * Test if recruiter status is fired for exact deal
-     * @param deal    Deal
-     * @return true if recruiter is fired, otherwise false
-     */
-    public Boolean isRecruiterFired(final Deal deal) {
-
-        return  (deal.getStatus() == DealStatus.FIRED);
-    }
-
-    /**
      * Test if employer can fire recruiter from exact deal
      * @param deal   Deal
      * @return true if recruiter is fired, otherwise false
@@ -111,5 +101,35 @@ public class BusinessRulesService {
     public Boolean canSendMessage(final Deal deal) {
 
         return (deal.getStatus() == DealStatus.IN_PROGRESS);
+    }
+
+    /**
+     * Test if feedback stage started for deal
+     * @param deal    Deal
+     * @return true if it's feedback stage
+     */
+    public Boolean isFeedbackStage(final Deal deal) {
+
+        return (deal.getFeedback() != null);
+    }
+
+    /**
+     * Test if recruiter left feedback
+     * @param deal    Deal
+     * @return true if recruiter left feedback
+     */
+    public Boolean recruiterLeftFeedback(Deal deal) {
+
+        return (deal.getFeedback().getRecruiterFeedback() != null);
+    }
+
+    /**
+     * Test if employer left feedback
+     * @param deal    Deal
+     * @return true if employer left feedback
+     */
+    public Boolean employerLeftFeedback(Deal deal) {
+
+        return (deal.getFeedback().getEmployerFeedback() != null);
     }
 }

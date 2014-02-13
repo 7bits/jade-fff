@@ -5,9 +5,35 @@ block append head
 block append content
   .container
     h1=fmt.message("employer-progress-vacancy-show.h1", locale)
-    .row
+    if test.isFeedbackStage(deal)
+      .row
+        .col-md-8
+          h2=fmt.message("employer-progress-vacancy-show.feedback.h2", locale)
+          if test.employerLeftFeedback(deal)
+            dl.dl-horizontal
+              dt=fmt.message("employer-progress-vacancy-show.feedback.left", locale)
+              dd #{deal.feedback.employerFeedback}
+              dt=fmt.message("employer-progress-vacancy-show.feedback.time", locale)
+              dd #{fmt.date(deal.feedback.employerTime, locale)}
+              if test.recruiterLeftFeedback(deal)
+                dt=fmt.message("employer-progress-vacancy-show.feedback.recruiter-left", locale)
+                dd #{deal.feedback.employerFeedback}
+                dt=fmt.message("employer-progress-vacancy-show.feedback.time", locale)
+                dd #{fmt.date(deal.feedback.employerTime, locale)}
+          else
+            h3=fmt.message("employer-progress-vacancy-show.feedback.leave", locale)
+            form(name="", action=domain.buildFullUri("/employer-deal-leave-feedback", locale), method="post")
+              .row
+                .col-md-8
+                  textarea(class="form-control", name="feedback", placeholder=fmt.message("employer-progress-vacancy-show.feedback.placeholder", locale), rows="4")
+              .btn-row
+                .col-md-6
+                  input(type="hidden", name=csrf.getParameterName(), value=csrf.getToken())
+                  input(type="hidden", name="id", value=deal.id)
+                  input.btn.btn-success(type="submit", name="submit", value=fmt.message("employer-progress-vacancy-show.feedback.ok", locale))
+
+    .row.spacer
       .col-md-8
-        h2
         dl.dl-horizontal
           dt=fmt.message("employer-progress-vacancy-show.dt.name", locale)
           dd #{deal.vacancy.title}
@@ -31,15 +57,8 @@ block append content
             dd #{deal.bid.message}
             dt=fmt.message("employer-progress-vacancy-show.recruiter.dt.status", locale)
             dd #{fmt.dealStatus(deal.status, locale)}
-            if test.isRecruiterFired(deal)
-              dt=fmt.message("employer-progress-vacancy-show.recruiter.dt.fire_reason", locale)
-              dd #{deal.fireReason}
           if test.canFireRecruiter(deal)
             form(name="", action=domain.buildFullUri("/employer-fire-recruiter", locale), method="post")
-              .row
-                .col-md-3
-                .col-md-9
-                  textarea(class="form-control", name="message", placeholder=fmt.message("employer-progress-vacancy-show.recruiter.decline.reason", locale), rows="4")
               .btn-row
                 .col-md-4
                 .col-md-6

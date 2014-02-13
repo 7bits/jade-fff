@@ -21,14 +21,16 @@ import java.util.List;
  */
 public interface DealMapper {
 
-    @Select("SELECT deal.id, deal.status, deal.fire_reason, " +
+    @Select("SELECT deal.id, deal.status, " +
             "vacancy.id as vacancy_id, vacancy.employer_id, vacancy.title, " +
             "vacancy.description, vacancy.salary_from, vacancy.salary_to, " +
             "vacancy.creation_date, vacancy.expiration_date, vacancy.test_file, " +
             "recruiter.id as recruiter_id, " +
             "bid.id as bid_id, bid.message, " +
             "u1.firstname as recruiter_firstname, u1.lastname as recruiter_lastname, " +
-            "u2.firstname as employer_firstname, u2.lastname as employer_lastname  " +
+            "u2.firstname as employer_firstname, u2.lastname as employer_lastname, " +
+            "feedback.id as feedback_id, feedback.employer_feedback, feedback.employer_time, " +
+            "feedback.recruiter_feedback, feedback.recruiter_time " +
             "FROM deal " +
             "INNER JOIN vacancy ON vacancy.id=deal.vacancy_id " +
             "INNER JOIN recruiter ON recruiter.id=deal.recruiter_id " +
@@ -36,11 +38,11 @@ public interface DealMapper {
             "INNER JOIN bid ON bid.id = deal.bid_id " +
             "INNER JOIN user u1 ON recruiter.user_id=u1.id " +
             "INNER JOIN user u2 ON employer.user_id=u2.id " +
+            "LEFT JOIN feedback ON feedback.deal_id=deal.id " +
             "WHERE deal.id=#{dealId}")
     @Results({
             @Result(column = "id", property = "id", javaType = Long.class),
             @Result(column = "status", property = "status"),
-            @Result(column = "fire_reason", property = "fireReason"),
             @Result(column = "vacancy_id", property = "vacancy.id"),
             @Result(column = "employer_id", property = "vacancy.employer.id"),
             @Result(column = "employer_firstname", property = "vacancy.employer.user.firstName"),
@@ -57,6 +59,11 @@ public interface DealMapper {
             @Result(column = "recruiter_id", property = "recruiter.id"),
             @Result(column = "recruiter_firstname", property = "recruiter.user.firstName"),
             @Result(column = "recruiter_lastname", property = "recruiter.user.lastName"),
+            @Result(column = "feedback_id", property = "feedback.id"),
+            @Result(column = "recruiter_feedback", property = "feedback.recruiterFeedback"),
+            @Result(column = "recruiter_time", property = "feedback.recruiterTime"),
+            @Result(column = "employer_feedback", property = "feedback.employerFeedback"),
+            @Result(column = "employer_time", property = "feedback.employerTime"),
             @Result(property = "applicants", column = "id", javaType = List.class,
                     many = @Many(select = "com.recruiters.repository.mapper.ApplicantMapper.findApplicantsByDealId"))
     })
@@ -154,8 +161,8 @@ public interface DealMapper {
     @Update("UPDATE deal SET status = #{status} WHERE id = #{dealId} ")
     void updateStatus(@Param(value = "dealId") final Long dealId, @Param(value = "status") final DealStatus status);
 
-    @Update("UPDATE deal SET status = \"FIRED\", fire_reason=#{message} WHERE id = #{dealId} ")
-    void fireRecruiter(@Param(value = "dealId") final Long dealId, @Param(value = "message") final String message);
+    @Update("UPDATE deal SET status = \"FIRED\" WHERE id = #{dealId} ")
+    void fireRecruiter(final Long dealId);
 
     @Update("UPDATE deal SET recruiter_archived = 1 " +
             "WHERE recruiter_id = #{recruiterId}  AND recruiter_archived = 0 " +

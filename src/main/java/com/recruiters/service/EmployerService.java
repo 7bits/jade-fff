@@ -3,6 +3,7 @@ package com.recruiters.service;
 import com.recruiters.model.Applicant;
 import com.recruiters.model.Attachment;
 import com.recruiters.model.ChatMessage;
+import com.recruiters.model.Feedback;
 import com.recruiters.model.Recruiter;
 import com.recruiters.model.status.ApplicantStatus;
 import com.recruiters.model.Bid;
@@ -19,6 +20,7 @@ import com.recruiters.repository.ChatRepository;
 import com.recruiters.repository.DealRepository;
 import com.recruiters.repository.EmployerRepository;
 import com.recruiters.repository.AttachmentRepository;
+import com.recruiters.repository.FeedbackRepository;
 import com.recruiters.repository.RecruiterRepository;
 import com.recruiters.repository.UserRepository;
 import com.recruiters.repository.VacancyRepository;
@@ -36,6 +38,7 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -72,6 +75,9 @@ public class EmployerService {
     /** Chat Repository provides Chat DAO */
     @Autowired
     private ChatRepository chatRepository = null;
+    /** Feedback Repository provides Feedback DAO */
+    @Autowired
+    private FeedbackRepository feedbackRepository = null;
     /** Platform transaction Manager */
     @Autowired
     private PlatformTransactionManager txManager = null;
@@ -578,6 +584,12 @@ public class EmployerService {
                         VacancyStatus.ARCHIVED
                 );
                 dealRepository.updateStatus(applicant.getDeal().getId(), DealStatus.APPROVED);
+                Feedback newFeedback = new Feedback(
+                        applicant.getDeal(),
+                        applicant.getDeal().getRecruiter(),
+                        applicant.getDeal().getVacancy().getEmployer()
+                );
+                feedbackRepository.create(newFeedback);
                 txManager.commit(status);
                 return applicantId;
             }
@@ -627,7 +639,6 @@ public class EmployerService {
     /**
      * Fire recruiter from vacancy
      * @param dealId     Id of deal
-     * @param message    Reason of firing
      * @param employerId Id of employer
      * @return true if success, otherwise false
      * @throws NotAffiliatedException if deal not belongs to
@@ -635,7 +646,7 @@ public class EmployerService {
      * @throws ServiceException if Repository cannot process request
      * or any other possible error
      */
-    public Long fireRecruiter(final Long dealId, final String message, final Long employerId)
+    public Long fireRecruiter(final Long dealId, final Long employerId)
             throws NotAffiliatedException, ServiceException {
         TransactionStatus status = null;
         Deal deal;
@@ -645,7 +656,9 @@ public class EmployerService {
                     deal.getStatus().equals(DealStatus.IN_PROGRESS)) {
                 status = txManager.getTransaction(employerTx);
                 vacancyRepository.updateStatus(deal.getVacancy().getId(), VacancyStatus.ARCHIVED);
-                Long statusId = dealRepository.fireRecruiter(dealId, message);
+                Feedback newFeedback = new Feedback(deal, deal.getRecruiter(), deal.getVacancy().getEmployer());
+                feedbackRepository.create(newFeedback);
+                Long statusId = dealRepository.fireRecruiter(dealId);
                 txManager.commit(status);
                 return statusId;
             }
@@ -704,12 +717,11 @@ public class EmployerService {
         }
     }
 
-
     /**
      * Send message
      * @param dealId         Chat related deal
      * @param message        Chat message
-     * @param employerId     Id of employer which wants to send message
+     * @param employerId     Id of employer who wants to send message
      * @return Id of saved message if there were no any technical issues
      * @throws NotAffiliatedException if related deal not belongs to
      * employer requested method
@@ -728,6 +740,39 @@ public class EmployerService {
                 chatMessage.setMessage(message);
 
                 return chatRepository.create(chatMessage);
+            }
+        } catch (Exception e) {
+            log.error(SERVICE_EXCEPTION_MESSAGE, e);
+            throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
+        }
+        String securityMessage = SECURITY_EXCEPTION_MESSAGE_PART1 + Deal.class.getSimpleName() +
+                SECURITY_EXCEPTION_MESSAGE_PART2;
+        log.error(securityMessage);
+        throw new NotAffiliatedException(securityMessage);
+    }
+
+
+    /**
+     * Leave feedback for exact deal
+     * @param dealId                  Related deal
+     * @param employerFeedback        Feedback
+     * @param employerId              Id of employer which wants to leave feedback
+     * @return Filled feedback if there were no any technical issues
+     * @throws NotAffiliatedException if related deal not belongs to
+     * employer requested method
+     * @throws ServiceException if Repository cannot process request
+     * or any other possible error
+     */
+    public Feedback leaveFeedback(final Long dealId, final String employerFeedback, final Long employerId)
+            throws ServiceException, NotAffiliatedException {
+        try {
+            Feedback feedback = feedbackRepository.findByDealId(dealId);
+            if (feedback.getEmployer().getId().equals(employerId) &&
+                    feedback.getEmployerFeedback() == null) {
+                feedbackRepository.updateEmployerFeedback(dealId, employerFeedback);
+                feedback.setEmployerFeedback(employerFeedback);
+                feedback.setEmployerTime(new Date());
+                return feedback;
             }
         } catch (Exception e) {
             log.error(SERVICE_EXCEPTION_MESSAGE, e);

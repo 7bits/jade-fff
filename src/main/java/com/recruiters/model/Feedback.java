@@ -1,5 +1,7 @@
 package com.recruiters.model;
 
+import java.util.Date;
+
 /**
  * Feedback POJO
  */
@@ -9,10 +11,18 @@ public class Feedback {
     private Recruiter recruiter = null;
     private Employer employer = null;
     private String recruiterFeedback = null;
+    private Date recruiterTime = null;
     private String employerFeedback = null;
+    private Date employerTime = null;
 
     public Feedback() {
 
+    }
+
+    public Feedback(final Deal deal, final Recruiter recruiter, final Employer employer) {
+        this.deal = deal;
+        this.recruiter = recruiter;
+        this.employer = employer;
     }
 
     public Long getId() {
@@ -61,5 +71,21 @@ public class Feedback {
 
     public void setEmployerFeedback(final String employerFeedback) {
         this.employerFeedback = employerFeedback;
+    }
+
+    public Date getRecruiterTime() {
+        return recruiterTime;
+    }
+
+    public void setRecruiterTime(final Date recruiterTime) {
+        this.recruiterTime = recruiterTime;
+    }
+
+    public Date getEmployerTime() {
+        return employerTime;
+    }
+
+    public void setEmployerTime(final Date employerTime) {
+        this.employerTime = employerTime;
     }
 }
