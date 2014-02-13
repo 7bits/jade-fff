@@ -5,7 +5,34 @@ block append head
 block append content
   .container
     h1=fmt.message("recruiter-show-in-progress-vacancy.h1", locale)
-    .row
+    if test.isFeedbackStage(deal)
+      .row
+        .col-md-8
+          h2=fmt.message("recruiter-show-in-progress-vacancy.feedback.h2", locale)
+          if test.recruiterLeftFeedback(deal)
+            dl.dl-horizontal
+              dt=fmt.message("recruiter-show-in-progress-vacancy.feedback.left", locale)
+              dd #{deal.feedback.recruiterFeedback}
+              dt=fmt.message("recruiter-show-in-progress-vacancy.feedback.time", locale)
+              dd #{fmt.date(deal.feedback.recruiterTime, locale)}
+              if test.employerLeftFeedback(deal)
+                dt=fmt.message("recruiter-show-in-progress-vacancy.feedback.employer-left", locale)
+                dd #{deal.feedback.employerFeedback}
+                dt=fmt.message("recruiter-show-in-progress-vacancy.feedback.time", locale)
+                dd #{fmt.date(deal.feedback.employerTime, locale)}
+          else
+            h3=fmt.message("recruiter-show-in-progress-vacancy.feedback.leave", locale)
+            form(name="", action=domain.buildFullUri("/recruiter-deal-leave-feedback", locale), method="post")
+              .row
+                .col-md-8
+                  textarea(class="form-control", name="feedback", placeholder=fmt.message("recruiter-show-in-progress-vacancy.feedback.placeholder", locale), rows="4")
+              .btn-row
+                .col-md-6
+                  input(type="hidden", name=csrf.getParameterName(), value=csrf.getToken())
+                  input(type="hidden", name="id", value=deal.id)
+                  input.btn.btn-success(type="submit", name="submit", value=fmt.message("recruiter-show-in-progress-vacancy.feedback.ok", locale))
+
+    .row.spacer
       .col-md-8
         h2
         dl.dl-horizontal
