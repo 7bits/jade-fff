@@ -374,6 +374,27 @@ INSERT INTO `chat` (`id`, `deal_id`, `recruiter_id`, `employer_id`, `date`, `mes
 (1, 1, 1, NULL, '2014-02-10 07:43:29', 'тест'),
 (2, 1, 1, NULL, '2014-02-10 07:43:38', 'ёлки, неужели работает?!');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `feedback`
+--
+
+DROP TABLE IF EXISTS `feedback`;
+CREATE TABLE IF NOT EXISTS `feedback` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `deal_id` bigint(20) NOT NULL,
+  `recruiter_id` bigint(20) NOT NULL,
+  `employer_id` bigint(20) NOT NULL,
+  `recruiter_feedback` varchar(255) DEFAULT NULL,
+  `employer_feedback` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `deal_id` (`deal_id`),
+  KEY `recruiter_id` (`recruiter_id`),
+  KEY `employer_id` (`employer_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
 --
 -- Constraints for dumped tables
 --
@@ -435,6 +456,14 @@ ALTER TABLE `chat`
   ADD CONSTRAINT `chat_ibfk_3` FOREIGN KEY (`employer_id`) REFERENCES `employer` (`id`),
   ADD CONSTRAINT `chat_ibfk_1` FOREIGN KEY (`deal_id`) REFERENCES `deal` (`id`),
   ADD CONSTRAINT `chat_ibfk_2` FOREIGN KEY (`recruiter_id`) REFERENCES `recruiter` (`id`);
+
+  --
+  -- Constraints for table `feedback`
+  --
+  ALTER TABLE `feedback`
+    ADD CONSTRAINT `feedback_ibfk_3` FOREIGN KEY (`employer_id`) REFERENCES `recruiter` (`id`),
+    ADD CONSTRAINT `feedback_ibfk_1` FOREIGN KEY (`deal_id`) REFERENCES `deal` (`id`),
+    ADD CONSTRAINT `feedback_ibfk_2` FOREIGN KEY (`recruiter_id`) REFERENCES `employer` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
