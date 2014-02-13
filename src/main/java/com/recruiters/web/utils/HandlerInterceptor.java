@@ -5,17 +5,13 @@ import com.recruiters.web.helper.UrlResolver;
 import com.recruiters.web.helper.UserResolver;
 import com.recruiters.web.helper.CsrfResolver;
 import com.recruiters.web.helper.MessageResolver;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.core.env.Environment;
+import org.springframework.http.MediaType;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-import org.springframework.web.servlet.support.RequestContext;
 import org.springframework.web.servlet.support.RequestContextUtils;
-import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -48,6 +44,8 @@ public class HandlerInterceptor extends HandlerInterceptorAdapter {
     static final String CONDITION_TESTER_NAME = "test";
     /** Current uri, needed for language switching */
     static final String CURRENT_URI = "uri";
+    /** Accept Http header */
+    static final String ACCEPT_HEADER = "accept";
 
     private String protocol = null;
     private String server = null;
@@ -79,7 +77,7 @@ public class HandlerInterceptor extends HandlerInterceptorAdapter {
     ) throws Exception {
         if (mav != null) {
             // Add model data only if it's not json request
-            if (!request.getServletPath().endsWith(".json")) {
+            if (!request.getHeader(ACCEPT_HEADER).contains(MediaType.APPLICATION_JSON_VALUE)) {
 
                 // Adding errors to model
                 mav.addObject(MODEL_ERRORS_NAME,  parseErrors(mav));
