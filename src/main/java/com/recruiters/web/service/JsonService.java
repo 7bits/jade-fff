@@ -119,13 +119,10 @@ public class JsonService {
                     "urltext",
                     messageResolver.message("employer-progress-vacancies-list.more", locale)
             );
-            currentDealJson.put(
-                    "applicants",
-                    "<span class=\"green\">" + deal.getUnseenApplicantCount() + "</span>/<span>" +
-                            deal.getAllApplicantCount() + " (</span><span class=\"red\">" +
-                            deal.getRejectedApplicantCount() + "</span>/<span class=\"yellow\">" +
-                            deal.getViewedApplicantCount() + "</span>)"
-            );
+            currentDealJson.put("unseenApplicantCount", deal.getUnseenApplicantCount().toString());
+            currentDealJson.put("allApplicantCount", deal.getAllApplicantCount().toString());
+            currentDealJson.put("rejectedApplicantCount", deal.getRejectedApplicantCount().toString());
+            currentDealJson.put("viewedApplicantCount", deal.getViewedApplicantCount().toString());
             currentDealJson.put(
                     "applicantsTooltip",
                     messageResolver.applicantsTooltip(
