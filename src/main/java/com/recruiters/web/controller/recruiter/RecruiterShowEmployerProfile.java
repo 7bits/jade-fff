@@ -46,10 +46,10 @@ public class RecruiterShowEmployerProfile {
             final HttpServletResponse response
     ) throws Exception {
 
-        ModelAndView employerProfile = new ModelAndView("employer/employer-show-recruiter-profile.jade");
+        ModelAndView employerProfile = new ModelAndView("recruiter/recruiter-show-employer-profile.jade");
         try {
-            Employer employer = recruiterService.findEmployer(employerId);
-            employerProfile.addObject("recruiter", employer);
+            Employer employer = recruiterService.findEmployerForProfile(employerId);
+            employerProfile.addObject("employer", employer);
         } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             return null;

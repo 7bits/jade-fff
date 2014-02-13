@@ -112,10 +112,10 @@ public class RecruiterService {
      * or any other possible error,
      * NotFoundException if employer with such id not exists
      */
-    public Employer findEmployer(final Long employerId)
+    public Employer findEmployerForProfile(final Long employerId)
             throws ServiceException, NotFoundException {
         try {
-            Employer employer = employerRepository.findById(employerId);
+            Employer employer = employerRepository.findForProfileById(employerId);
             if (employer != null) {
                 return employer;
             }

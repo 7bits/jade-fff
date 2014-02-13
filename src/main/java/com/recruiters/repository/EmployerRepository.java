@@ -35,6 +35,27 @@ public class EmployerRepository {
         }
     }
 
+
+    /**
+     * Find and return employer instance for profile by its id
+     * Will contain feedbacks and will not contain password etc
+     * @param employerId    Id of recruiter
+     * @return Employer instance
+     * @throws RepositoryException if input parameter is incorrect or there
+     * were any technical issues
+     */
+    public Employer findForProfileById(final Long employerId) throws RepositoryException {
+        if (employerId == null) {
+            throw new RepositoryException("employerId is null");
+        }
+        try {
+
+            return employerMapper.findForProfileById(employerId);
+        } catch (Exception e) {
+            throw new RepositoryException("General database error: ", e);
+        }
+    }
+
     public EmployerMapper getEmployerMapper() {
         return employerMapper;
     }
