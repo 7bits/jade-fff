@@ -62,6 +62,9 @@ html
                     b.caret
                   ul(class="dropdown-menu", role="menu", aria-labelledby="menu")
                     li(role="presentation")
+                      a(href=domain.buildFullUri("/employer-control-panel", locale), role="menuitem", tabindex="-1").
+                        #{fmt.message("layout.employer.control_panel", locale)}
+                    li(role="presentation")
                       a(href=domain.buildFullUri("/employer-profile", locale), role="menuitem", tabindex="-1").
                         #{fmt.message("layout.employer.profile", locale)}
                     li(role="presentation")

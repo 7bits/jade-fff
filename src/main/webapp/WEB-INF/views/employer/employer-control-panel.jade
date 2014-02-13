@@ -1,0 +1,34 @@
+extends ../layout
+
+block append head
+  title=fmt.message("employer-control-panel.title", locale)
+block append content
+  .container
+    h1.text-center=fmt.message("employer-control-panel.h1", locale)
+    .row
+      .col-md-9
+        h2.text-center=fmt.message("employer-control-panel.feedback.h2", locale)
+        table.table.table-striped#employer-feedback
+          thead
+            tr
+              th=fmt.message("employer-control-panel.feedback.vacancy", locale)
+              th=fmt.message("employer-control-panel.feedback.recruiter", locale)
+              th=fmt.message("employer-control-panel.feedback.status", locale)
+              th=fmt.message("employer-control-panel.feedback.date", locale)
+          tbody
+        .spacer
+        h2.text-center=fmt.message("employer-control-panel.applicants.h2", locale)
+        table.table.table-striped#employer-feedback
+          thead
+            tr
+              th=fmt.message("employer-control-panel.applicants.vacancy", locale)
+              th=fmt.message("employer-control-panel.applicants.recruiter", locale)
+              th=fmt.message("employer-control-panel.applicants.date", locale)
+              th=fmt.message("employer-control-panel.applicants.applicant", locale)
+          tbody
+      .col-md-3
+        h2=fmt.message("employer-control-panel.about.h2", locale)
+        p #{employer.user.firstName} #{employer.user.lastName}
+        img(src=domain.getResourceUrl('/stylesheets/images/empty_avatar.jpg'))
+        p #{employer.user.description}
+        a.btn.btn-link(href=domain.buildFullUri("/employer-profile", locale))=fmt.message("employer-control-panel.about.profile", locale)

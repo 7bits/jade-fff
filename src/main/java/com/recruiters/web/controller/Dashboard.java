@@ -35,7 +35,7 @@ public class Dashboard {
             return urlResolver.buildRedirectUri("recruiter-active-deals", locale);
         }
         if (request.isUserInRole("ROLE_EMPLOYER")) {
-            return urlResolver.buildRedirectUri("employer-progress-vacancies-list", locale);
+            return urlResolver.buildRedirectUri("employer-control-panel", locale);
         }
 
         return urlResolver.buildRedirectUri("login-page", locale);
