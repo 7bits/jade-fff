@@ -461,9 +461,9 @@ ALTER TABLE `chat`
   -- Constraints for table `feedback`
   --
   ALTER TABLE `feedback`
-    ADD CONSTRAINT `feedback_ibfk_3` FOREIGN KEY (`employer_id`) REFERENCES `recruiter` (`id`),
+    ADD CONSTRAINT `feedback_ibfk_3` FOREIGN KEY (`employer_id`) REFERENCES `employer` (`id`),
     ADD CONSTRAINT `feedback_ibfk_1` FOREIGN KEY (`deal_id`) REFERENCES `deal` (`id`),
-    ADD CONSTRAINT `feedback_ibfk_2` FOREIGN KEY (`recruiter_id`) REFERENCES `employer` (`id`);
+    ADD CONSTRAINT `feedback_ibfk_2` FOREIGN KEY (`recruiter_id`) REFERENCES `recruiter` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
