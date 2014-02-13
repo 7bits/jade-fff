@@ -57,8 +57,8 @@ public interface FeedbackMapper {
             "FROM feedback f " +
             "INNER JOIN deal ON deal.id = f.deal_id " +
             "INNER JOIN vacancy ON vacancy.id = deal.vacancy_id " +
-            "INNER JOIN recruiter ON recruiter.id = f.recruiter_id " +
-            "INNER JOIN user ON user.id = recruiter.user_id " +
+            "INNER JOIN employer ON employer.id = f.employer_id " +
+            "INNER JOIN user ON user.id = employer.user_id " +
             "WHERE f.recruiter_id=#{recruiterId} AND " +
             "f.employer_feedback IS NOT NULL AND f.recruiter_feedback IS NOT NULL")
     @Results({

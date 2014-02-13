@@ -38,7 +38,7 @@ public class EmployerRepository {
 
     /**
      * Find and return employer instance for profile by its id
-     * Will contain feedbacks and will not contain password etc
+     * Will contain feedback and will not contain password etc
      * @param employerId    Id of recruiter
      * @return Employer instance
      * @throws RepositoryException if input parameter is incorrect or there

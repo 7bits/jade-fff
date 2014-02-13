@@ -1,11 +1,14 @@
 package com.recruiters.model;
 
+import java.util.List;
+
 /**
  * Recruiter POJO
  */
 public class Recruiter {
     private Long id = null;
     private User user = null;
+    private List<Feedback> feedbacks = null;
 
     public Recruiter() {
     }
@@ -33,6 +36,14 @@ public class Recruiter {
 
     public void setUser(final User user) {
         this.user = user;
+    }
+
+    public List<Feedback> getFeedbacks() {
+        return feedbacks;
+    }
+
+    public void setFeedbacks(final List<Feedback> feedbacks) {
+        this.feedbacks = feedbacks;
     }
 }
 

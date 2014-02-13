@@ -48,7 +48,7 @@ public class EmployerShowRecruiterProfile {
 
         ModelAndView recruiterProfile = new ModelAndView("employer/employer-show-recruiter-profile.jade");
         try {
-            Recruiter recruiter = employerService.findRecruiter(recruiterId);
+            Recruiter recruiter = employerService.findRecruiterForProfile(recruiterId);
             recruiterProfile.addObject("recruiter", recruiter);
         } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);

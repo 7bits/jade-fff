@@ -35,6 +35,25 @@ public class RecruiterRepository {
         }
     }
 
+    /**
+     * Find and return recruiter instance for profile by its id
+     * Will contain feedback and will not contain password etc
+     * @param recruiterId    Id of recruiter
+     * @return Recruiter instance
+     * @throws RepositoryException if input parameters is incorrect or there
+     * were any technical issues
+     */
+    public Recruiter findForProfileById(final Long recruiterId) throws RepositoryException {
+        if (recruiterId == null) {
+            throw new RepositoryException("recruiterId is null");
+        }
+        try {
+
+            return recruiterMapper.findForProfileById(recruiterId);
+        } catch (Exception e) {
+            throw new RepositoryException("General database error: ", e);
+        }
+    }
     public RecruiterMapper getRecruiterMapper() {
         return recruiterMapper;
     }

@@ -535,17 +535,17 @@ public class EmployerService {
 
 
     /**
-     * Finds Recruiter POJO instance by its  id
+     * Finds Recruiter for Profile by its  id
      * @param recruiterId    Recruiter Id
      * @return Recruiter POJO instance
      * @throws ServiceException if Repository cannot process request
      * or any other possible error,
      * NotFoundException if recruiter with such id not exists
      */
-    public Recruiter findRecruiter(final Long recruiterId)
+    public Recruiter findRecruiterForProfile(final Long recruiterId)
             throws ServiceException, NotFoundException {
         try {
-            Recruiter recruiter = recruiterRepository.findById(recruiterId);
+            Recruiter recruiter = recruiterRepository.findForProfileById(recruiterId);
             if (recruiter != null) {
                 return recruiter;
             }

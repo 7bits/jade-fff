@@ -16,5 +16,17 @@ block append content
           dt=fmt.message("employer-show-recruiter-profile.dt.description", locale)
           dd #{recruiter.user.description}
     h2.text-center=fmt.message("employer-show-recruiter-profile.feedback.h2", locale)
-    .row
-      .col-md-6
+    table.table.table-striped
+      thead
+        tr
+          th=fmt.message("employer-show-recruiter-profile.table.vacancy", locale)
+          th=fmt.message("employer-show-recruiter-profile.table.employer", locale)
+          th=fmt.message("employer-show-recruiter-profile.table.feedback-time", locale)
+          th=fmt.message("employer-show-recruiter-profile.table.feedback", locale)
+      tbody
+        for feedback in recruiter.feedbacks
+          tr
+            td #{feedback.deal.vacancy.title}
+            td #{feedback.employer.user.firstName} #{feedback.employer.user.lastName}
+            td #{fmt.date(feedback.employerTime, locale)}
+            td #{feedback.employerFeedback}
