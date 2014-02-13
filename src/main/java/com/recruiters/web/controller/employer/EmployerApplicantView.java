@@ -95,8 +95,10 @@ public class EmployerApplicantView {
             final HttpServletRequest request,
             final HttpServletResponse response
     ) throws Exception {
+        Applicant applicant;
         try {
             User user = userUtils.getCurrentUser(request);
+            applicant = employerService.findApplicant(applicantId,user.getEmployerId());
             employerService.applyApplicant(applicantId, user.getEmployerId());
         } catch (NotAffiliatedException e) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
@@ -107,7 +109,7 @@ public class EmployerApplicantView {
         }
         Locale locale = RequestContextUtils.getLocale(request);
 
-        return  urlResolver.buildRedirectUri("employer-progress-vacancies-list", locale);
+        return  urlResolver.buildRedirectUri("/employer-progress-vacancy-show", applicant.getDeal().getId(), locale);
     }
 
 

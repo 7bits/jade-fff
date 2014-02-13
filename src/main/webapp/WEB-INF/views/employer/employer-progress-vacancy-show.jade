@@ -17,9 +17,9 @@ block append content
               dd #{fmt.date(deal.feedback.employerTime, locale)}
               if test.recruiterLeftFeedback(deal)
                 dt=fmt.message("employer-progress-vacancy-show.feedback.recruiter-left", locale)
-                dd #{deal.feedback.employerFeedback}
+                dd #{deal.feedback.recruiterFeedback}
                 dt=fmt.message("employer-progress-vacancy-show.feedback.time", locale)
-                dd #{fmt.date(deal.feedback.employerTime, locale)}
+                dd #{fmt.date(deal.feedback.recruiterTime, locale)}
           else
             h3=fmt.message("employer-progress-vacancy-show.feedback.leave", locale)
             form(name="", action=domain.buildFullUri("/employer-deal-leave-feedback", locale), method="post")
