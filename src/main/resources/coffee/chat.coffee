@@ -45,7 +45,10 @@ $ ->
         $("#chat").append addHtml
         scrollBottom = $("#chat").height()
         $("#chat").scrollTop scrollBottom
-        setTimeout waitForMsg(), 1000
+        setTimeout (->
+          waitForMsg()
+          return
+        ), 1000
         return
 
       request.fail ->
