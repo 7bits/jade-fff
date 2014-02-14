@@ -151,6 +151,32 @@ public interface DealMapper {
             @Param("dealListSpecification") final DealListSpecification dealListSpecification
     );
 
+
+    @Select("SELECT deal.id, deal.status, deal.updated_date," +
+            "vacancy.id as vacancy_id,  vacancy.employer_id, vacancy.title," +
+            "recruiter.id as recruiter_id, " +
+            "user.firstname, user.lastname " +
+            "FROM deal " +
+            "INNER JOIN vacancy ON vacancy.id=deal.vacancy_id " +
+            "INNER JOIN recruiter ON recruiter.id=deal.recruiter_id " +
+            "INNER JOIN user ON recruiter.user_id=user.id " +
+            "LEFT JOIN feedback ON feedback.deal_id=deal.id " +
+            "WHERE vacancy.employer_id=1 AND deal.status != \"IN_PROGRESS\" " +
+            "AND feedback.employer_feedback IS NULL")
+    @Results({
+            @Result(column = "id", property = "id"),
+            @Result(column = "status", property = "status"),
+            @Result(column = "vacancy_id", property = "vacancy.id"),
+            @Result(column = "employer_id", property = "vacancy.employer.id"),
+            @Result(column = "title", property = "vacancy.title"),
+            @Result(column = "recruiter_id", property = "recruiter.id"),
+            @Result(column = "firstname", property = "recruiter.user.firstName"),
+            @Result(column = "lastname", property = "recruiter.user.lastName"),
+            @Result(column = "updated_date", property = "lastModified")
+    })
+    List<Deal> findDealsForEmployerFeedback(final Long employerId);
+
+
     @Insert("INSERT INTO deal (vacancy_id, recruiter_id, bid_id, status) " +
             "SELECT v.id, b.recruiter_id, #{bidId}, \"IN_PROGRESS\" FROM vacancy v " +
             "INNER JOIN bid b on v.id = b.vacancy_id " +

@@ -461,6 +461,23 @@ public class EmployerService {
     }
 
     /**
+     * Find all deals employer need to leave feedback for
+     * @param employerId    Employer Id
+     * @return List of deals
+     * @throws ServiceException if cannot obtain vacancies from
+     * repository or any other possible error
+     */
+    public List<Deal> findDealsForFeedback(final Long employerId)
+            throws ServiceException {
+        try {
+            return dealRepository.findDealsForEmployerFeedback(employerId);
+        } catch (Exception e) {
+            log.error(SERVICE_EXCEPTION_MESSAGE, e);
+            throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
+        }
+    }
+
+    /**
      * Decline recruiter bid.
      * @param bidId         Id of bid
      * @param employerId    Id of employer

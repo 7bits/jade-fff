@@ -86,6 +86,27 @@ public class DealRepository {
         }
     }
 
+
+    /**
+     * Find and return ended deals without employer feedback
+     * @param employerId    Id of employer
+     * @return List of Deal instances that match conditions
+     * @throws RepositoryException if input parameter is incorrect or there
+     * were any technical issues
+     */
+    public List<Deal> findDealsForEmployerFeedback(final Long employerId)
+            throws  RepositoryException {
+        if (employerId == null) {
+            throw new RepositoryException("employerId is null");
+        }
+        try {
+
+            return dealMapper.findDealsForEmployerFeedback(employerId);
+        } catch (Exception e) {
+            throw new RepositoryException("General database error: ", e);
+        }
+    }
+
     /**
      * Create deal from bid, do not touch bid
      * @param bidId    Id of bid
