@@ -274,6 +274,7 @@ public class RecruiterService {
             deal = dealRepository.findById(dealId);
             if (deal != null) {
                 if (deal.getRecruiter().getId().equals(recruiterId)) {
+                    dealRepository.setViewed(dealId);
                     return deal;
                 }
             }

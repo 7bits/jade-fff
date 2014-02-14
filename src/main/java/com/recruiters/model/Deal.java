@@ -16,6 +16,7 @@ public class Deal {
     private DealStatus status = null;
     private Boolean employerArchived = false;
     private Boolean recruiterArchived = false;
+    private Boolean viewed = false;
     private Long allApplicantCount = 0L;
     private Long rejectedApplicantCount = 0L;
     private Long viewedApplicantCount = 0L;
@@ -167,5 +168,13 @@ public class Deal {
 
     public void setDateCreated(final Date dateCreated) {
         this.dateCreated = dateCreated;
+    }
+
+    public Boolean getViewed() {
+        return viewed;
+    }
+
+    public void setViewed(final Boolean viewed) {
+        this.viewed = viewed;
     }
 }

@@ -200,4 +200,9 @@ public interface DealMapper {
             "WHERE recruiter_id = #{recruiterId}  AND recruiter_archived = 0 " +
             "AND status = \"APPROVED\"")
     void clearApprovedByRecruiterId(final Long recruiterId);
+
+
+    @Update("UPDATE deal SET viewed = 1 " +
+            "WHERE id=#{dealId} AND viewed = 0")
+    void setViewed(final Long dealId);
 }

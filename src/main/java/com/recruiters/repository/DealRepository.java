@@ -211,6 +211,27 @@ public class DealRepository {
         }
     }
 
+
+    /**
+     * Set Deal viewed state to true
+     * @param dealId    Deal Id
+     * @return Deal Id if it was successfully updated
+     * @throws RepositoryException if input parameter is incorrect or there
+     * were any technical issues
+     */
+    public Long setViewed(final Long dealId) throws RepositoryException {
+        if (dealId == null) {
+            throw new RepositoryException("bidId is null");
+        }
+        try {
+
+            dealMapper.setViewed(dealId);
+            return dealId;
+        } catch (Exception e) {
+            throw new RepositoryException("General database error: ", e);
+        }
+    }
+
     public DealMapper getDealMapper() {
         return dealMapper;
     }

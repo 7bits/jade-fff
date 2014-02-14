@@ -205,6 +205,7 @@ CREATE TABLE IF NOT EXISTS `deal` (
   `employer_archived` tinyint(1) NOT NULL DEFAULT '0',
   `creation_date` timestamp NOT NULL DEFAULT '1970-01-01 00:00:01',
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `viewed` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `vacancy_id` (`vacancy_id`),
   KEY `recruiter_id` (`recruiter_id`),
@@ -225,12 +226,12 @@ CREATE TABLE IF NOT EXISTS `deal` (
 -- Dumping data for table `deal`
 --
 
-INSERT INTO `deal` (`id`, `vacancy_id`, `recruiter_id`, `bid_id`, `status`, `recruiter_archived`, `employer_archived`, `creation_date`, `updated_date`) VALUES
-(1, 3, 1, 8, 'IN_PROGRESS', 0, 0, '2014-01-22 04:13:37', '2014-01-22 04:13:37'),
-(2, 2, 2, 5, 'IN_PROGRESS', 0, 0, '2014-01-22 04:13:37', '2014-01-22 04:13:37'),
-(3, 1, 1, 1, 'IN_PROGRESS', 0, 0, '2014-01-22 04:14:55', '2014-01-22 04:14:55'),
-(4, 8, 1, 13, 'FIRED', 0, 0, '2014-02-13 06:55:52', '2014-02-14 06:55:52'),
-(5, 10, 1, 9, 'APPROVED', 0, 0, '2014-02-13 07:01:26', '2014-02-14 07:01:26');
+INSERT INTO `deal` (`id`, `vacancy_id`, `recruiter_id`, `bid_id`, `status`, `recruiter_archived`, `employer_archived`, `creation_date`, `updated_date`, `viewed`) VALUES
+(1, 3, 1, 8, 'IN_PROGRESS', 0, 0, '2014-01-22 04:13:37', '2014-01-22 04:13:37', 1),
+(2, 2, 2, 5, 'IN_PROGRESS', 0, 0, '2014-01-22 04:13:37', '2014-01-22 04:13:37', 1),
+(3, 1, 1, 1, 'IN_PROGRESS', 0, 0, '2014-01-22 04:14:55', '2014-01-22 04:14:55' , 1),
+(4, 8, 1, 13, 'FIRED', 0, 0, '2014-02-13 06:55:52', '2014-02-14 06:55:52', 1),
+(5, 10, 1, 9, 'APPROVED', 0, 0, '2014-02-13 07:01:26', '2014-02-14 07:01:26', 1);
 
 -- --------------------------------------------------------
 
