@@ -109,6 +109,26 @@ public interface BidMapper {
     })
     List<Bid> findBidsByVacancyId(final Long vacancyId);
 
+    @Select("SELECT bid.id, bid.updated_date, " +
+            "vacancy.id AS vacancy_id, vacancy.title, " +
+            "recruiter.id AS recruiter_id, " +
+            "user.firstname, user.lastname " +
+            "FROM bid " +
+            "INNER JOIN vacancy ON vacancy.id=bid.vacancy_id " +
+            "INNER JOIN recruiter  ON recruiter.id=bid.recruiter_id " +
+            "INNER JOIN user ON recruiter.user_id=user.id " +
+            "WHERE vacancy.employer_id=#{employerId} AND bid.viewed=0 ")
+    @Results({
+            @Result(column = "id", property = "id"),
+            @Result(column = "updated_date", property = "lastModified"),
+            @Result(column = "vacancy_id", property = "vacancy.id"),
+            @Result(column = "title", property = "vacancy.title"),
+            @Result(column = "recruiter_id", property = "recruiter.id"),
+            @Result(column = "firstname", property = "recruiter.user.firstName"),
+            @Result(column = "lastname", property = "recruiter.user.lastName")
+    })
+    List<Bid> findNewBidsForEmployer(final Long employerId);
+
     @Insert("INSERT INTO bid (vacancy_id, recruiter_id, message) " +
             "VALUES (#{vacancy.id}, #{recruiter.id}, #{message})")
     @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")

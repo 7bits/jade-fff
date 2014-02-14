@@ -2,6 +2,8 @@ package com.recruiters.model;
 
 import com.recruiters.model.status.BidStatus;
 
+import java.util.Date;
+
 /**
  * Bid POJO
  */
@@ -13,6 +15,7 @@ public class Bid {
     private BidStatus status = null;
     private Long dealId = 0L;
     private Boolean viewed = false;
+    private Date lastModified;
 
     public Bid() {
 
@@ -87,5 +90,13 @@ public class Bid {
 
     public void setViewed(final Boolean viewed) {
         this.viewed = viewed;
+    }
+
+    public Date getLastModified() {
+        return lastModified;
+    }
+
+    public void setLastModified(final Date lastModified) {
+        this.lastModified = lastModified;
     }
 }

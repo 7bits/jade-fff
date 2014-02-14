@@ -26,6 +26,16 @@ block append content
               th=fmt.message("employer-control-panel.applicants.date", locale)
               th=fmt.message("employer-control-panel.applicants.applicant", locale)
           tbody
+        .spacer
+        h2.text-center=fmt.message("employer-control-panel.bids.h2", locale)
+        table.table.table-striped#employer-bids
+          thead
+            tr
+              th=fmt.message("employer-control-panel.bids.vacancy", locale)
+              th=fmt.message("employer-control-panel.bids.recruiter", locale)
+              th=fmt.message("employer-control-panel.bids.date", locale)
+              th
+          tbody
       .col-md-3
         h2=fmt.message("employer-control-panel.about.h2", locale)
         p #{employer.user.firstName} #{employer.user.lastName}

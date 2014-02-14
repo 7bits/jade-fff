@@ -77,6 +77,26 @@ public class BidRepository {
         }
     }
 
+
+    /**
+     * Find and return all new bids for exact employer
+     * @param employerId    Id of employer
+     * @return List of new Bid instances, which belongs to exact employer
+     * @throws RepositoryException if input parameter is incorrect or there
+     * were any technical issues
+     */
+    public List<Bid> findNewBidsForEmployer(final Long employerId) throws RepositoryException {
+        if (employerId == null) {
+            throw new RepositoryException("employerId is null");
+        }
+        try {
+
+            return bidMapper.findNewBidsForEmployer(employerId);
+        } catch (Exception e) {
+            throw new RepositoryException("General database error: ", e);
+        }
+    }
+
     /**
      * Create bid from certain vacancy, applying to it Recruiter
      * with custom message

@@ -1,6 +1,7 @@
 package com.recruiters.web.service;
 
 import com.recruiters.model.Applicant;
+import com.recruiters.model.Bid;
 import com.recruiters.model.ChatMessage;
 import com.recruiters.model.Deal;
 import com.recruiters.model.Vacancy;
@@ -231,11 +232,11 @@ public class JsonService {
             final List<Applicant> applicants,
             final Locale locale
     ) {
-        List<Map<String,String>> dealsJson = new ArrayList<Map<String, String>>();
+        List<Map<String,String>> applicantsJson = new ArrayList<Map<String, String>>();
         for (Applicant applicant: applicants) {
-            Map<String, String> currentDealJson = new HashMap<String, String>();
-            currentDealJson.put("vacancy", applicant.getDeal().getVacancy().getTitle());
-            currentDealJson.put(
+            Map<String, String> currentApplicantJson = new HashMap<String, String>();
+            currentApplicantJson.put("vacancy", applicant.getDeal().getVacancy().getTitle());
+            currentApplicantJson.put(
                     "vacancyUrl",
                     urlResolver.buildFullUri(
                             "/employer-progress-vacancy-show/",
@@ -243,10 +244,10 @@ public class JsonService {
                             locale
                     )
             );
-            currentDealJson.put("updated", messageResolver.date(applicant.getLastModified(), locale));
-            currentDealJson.put("recruiter", applicant.getDeal().getRecruiter().getUser().getFirstName() +
+            currentApplicantJson.put("updated", messageResolver.date(applicant.getLastModified(), locale));
+            currentApplicantJson.put("recruiter", applicant.getDeal().getRecruiter().getUser().getFirstName() +
                     " " + applicant.getDeal().getRecruiter().getUser().getLastName());
-            currentDealJson.put(
+            currentApplicantJson.put(
                     "recruiterUrl",
                     urlResolver.buildFullUri(
                             "/employer-show-recruiter-profile/",
@@ -254,8 +255,8 @@ public class JsonService {
                             locale
                     )
             );
-            currentDealJson.put("applicant", applicant.getFirstName() + " " + applicant.getLastName());
-            currentDealJson.put(
+            currentApplicantJson.put("applicant", applicant.getFirstName() + " " + applicant.getLastName());
+            currentApplicantJson.put(
                     "applicantUrl",
                     urlResolver.buildFullUri(
                             "/employer-applicant-show/",
@@ -264,9 +265,60 @@ public class JsonService {
                     )
             );
 
-            dealsJson.add(currentDealJson);
+            applicantsJson.add(currentApplicantJson);
         }
 
-        return dealsJson;
+        return applicantsJson;
+    }
+
+
+    /**
+     * Convert List of bids to Json ready list of maps for
+     * use in employer control panel to display new bids
+     * @param bids         List of bids
+     * @param locale       Request locale
+     * @return list of maps
+     */
+    public List<Map<String,String>> employerNewBids(
+            final List<Bid> bids,
+            final Locale locale
+    ) {
+        List<Map<String,String>> bidsJson = new ArrayList<Map<String, String>>();
+        for (Bid bid: bids) {
+            Map<String, String> currentBidJson = new HashMap<String, String>();
+            currentBidJson.put("vacancy", bid.getVacancy().getTitle());
+            currentBidJson.put(
+                    "vacancyUrl",
+                    urlResolver.buildFullUri(
+                            "/employer-show-recruiter-bids/",
+                            bid.getId(),
+                            locale
+                    )
+            );
+            currentBidJson.put("updated", messageResolver.date(bid.getLastModified(), locale));
+            currentBidJson.put("recruiter", bid.getRecruiter().getUser().getFirstName() +
+                    " " + bid.getRecruiter().getUser().getLastName());
+            currentBidJson.put(
+                    "recruiterUrl",
+                    urlResolver.buildFullUri(
+                            "/employer-show-recruiter-profile/",
+                            bid.getRecruiter().getId(),
+                            locale
+                    )
+            );
+            currentBidJson.put("bid", messageResolver.message("employer-control-panel.bids.view", locale));
+            currentBidJson.put(
+                    "bidUrl",
+                    urlResolver.buildFullUri(
+                            "/employer-recruiter-show/",
+                            bid.getId(),
+                            locale
+                    )
+            );
+
+            bidsJson.add(currentBidJson);
+        }
+
+        return bidsJson;
     }
 }

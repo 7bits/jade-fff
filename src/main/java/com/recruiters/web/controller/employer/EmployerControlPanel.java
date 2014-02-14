@@ -1,6 +1,7 @@
 package com.recruiters.web.controller.employer;
 
 import com.recruiters.model.Applicant;
+import com.recruiters.model.Bid;
 import com.recruiters.model.Deal;
 import com.recruiters.model.Employer;
 import com.recruiters.model.User;
@@ -117,6 +118,34 @@ public class EmployerControlPanel {
         Locale locale = RequestContextUtils.getLocale(request);
         return jsonService.employerNewApplicants(applicants, locale);
     }
+
+
+    /**
+     * Show new bids employer have not seen
+     * @param request     Http Request
+     * @param response    Http Response
+     * @return list of bids
+     * Internal Server Error page if something is wrong with
+     * saving data due to technical or any other reasons
+     * @throws Exception in very rare circumstances: it should be runtime
+     * or servlet Exception to be thrown     */
+    @RequestMapping(value = "/employer-control-panel-bids.json", method = RequestMethod.GET)
+    public List<Map<String,String>> showNewBids(
+            final HttpServletRequest request,
+            final HttpServletResponse response
+    ) throws Exception {
+        List<Bid> bids;
+        try {
+            User user = userUtils.getCurrentUser(request);
+            bids = employerService.findNewBids(user.getEmployerId());
+        } catch (ServiceException e) {
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return null;
+        }
+        Locale locale = RequestContextUtils.getLocale(request);
+        return jsonService.employerNewBids(bids, locale);
+    }
+
 
     public EmployerService getEmployerService() {
         return employerService;

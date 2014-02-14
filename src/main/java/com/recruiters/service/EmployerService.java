@@ -495,6 +495,23 @@ public class EmployerService {
     }
 
     /**
+     * Find all new bids employer have not seen
+     * @param employerId    Employer Id
+     * @return List of bids
+     * @throws ServiceException if cannot obtain bids from
+     * repository or any other possible error
+     */
+    public List<Bid> findNewBids(final Long employerId)
+            throws ServiceException {
+        try {
+            return bidRepository.findNewBidsForEmployer(employerId);
+        } catch (Exception e) {
+            log.error(SERVICE_EXCEPTION_MESSAGE, e);
+            throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
+        }
+    }
+
+    /**
      * Decline recruiter bid.
      * @param bidId         Id of bid
      * @param employerId    Id of employer
