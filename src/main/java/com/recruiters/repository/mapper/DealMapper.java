@@ -177,6 +177,50 @@ public interface DealMapper {
     })
     List<Deal> findDealsForEmployerFeedback(final Long employerId);
 
+    @Select("SELECT deal.id, deal.status, deal.updated_date," +
+            "vacancy.id as vacancy_id,  vacancy.employer_id, vacancy.title," +
+            "user.firstname, user.lastname " +
+            "FROM deal " +
+            "INNER JOIN vacancy ON vacancy.id=deal.vacancy_id " +
+            "INNER JOIN employer ON employer.id=vacancy.employer_id " +
+            "INNER JOIN user ON employer.user_id=user.id " +
+            "LEFT JOIN feedback ON feedback.deal_id=deal.id " +
+            "WHERE deal.recruiter_id=#{recruiterId} AND deal.status != \"IN_PROGRESS\" " +
+            "AND feedback.recruiter_feedback IS NULL " +
+            "ORDER BY deal.updated_date DESC ")
+    @Results({
+            @Result(column = "id", property = "id"),
+            @Result(column = "status", property = "status"),
+            @Result(column = "vacancy_id", property = "vacancy.id"),
+            @Result(column = "employer_id", property = "vacancy.employer.id"),
+            @Result(column = "title", property = "vacancy.title"),
+            @Result(column = "firstname", property = "vacancy.employer.user.firstName"),
+            @Result(column = "lastname", property = "vacancy.employer.user.lastName"),
+            @Result(column = "updated_date", property = "lastModified")
+    })
+    List<Deal> findDealsForRecruiterFeedback(final Long recruiterId);
+
+    @Select("SELECT deal.id, deal.status, deal.creation_date," +
+            "vacancy.id as vacancy_id,  vacancy.employer_id, vacancy.title," +
+            "user.firstname, user.lastname " +
+            "FROM deal " +
+            "INNER JOIN vacancy ON vacancy.id=deal.vacancy_id " +
+            "INNER JOIN employer ON employer.id=vacancy.employer_id " +
+            "INNER JOIN user ON employer.user_id=user.id " +
+            "LEFT JOIN feedback ON feedback.deal_id=deal.id " +
+            "WHERE deal.recruiter_id=#{recruiterId} AND deal.viewed=0 " +
+            "ORDER BY deal.updated_date DESC ")
+    @Results({
+            @Result(column = "id", property = "id"),
+            @Result(column = "status", property = "status"),
+            @Result(column = "vacancy_id", property = "vacancy.id"),
+            @Result(column = "employer_id", property = "vacancy.employer.id"),
+            @Result(column = "title", property = "vacancy.title"),
+            @Result(column = "firstname", property = "vacancy.employer.user.firstName"),
+            @Result(column = "lastname", property = "vacancy.employer.user.lastName"),
+            @Result(column = "creation_date", property = "dateCreated")
+    })
+    List<Deal> findNewDealsForRecruiter(final Long recruiterId);
 
     @Insert("INSERT INTO deal (vacancy_id, recruiter_id, bid_id, status, creation_date) " +
             "SELECT v.id, b.recruiter_id, #{bidId}, \"IN_PROGRESS\", NOW() FROM vacancy v " +

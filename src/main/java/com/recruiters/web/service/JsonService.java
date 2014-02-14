@@ -177,12 +177,12 @@ public class JsonService {
     /**
      * Convert List of deals to Json ready list of maps for
      * use in employer control panel to display deals
-     * that needs feedback to leave
+     * needed feedback to leave
      * @param deals    List of deals
      * @param locale       Request locale
      * @return list of maps
      */
-    public List<Map<String,String>> dealsForFeedback(
+    public List<Map<String,String>> employerDealsForFeedback(
             final List<Deal> deals,
             final Locale locale
     ) {
@@ -311,6 +311,160 @@ public class JsonService {
                     "bidUrl",
                     urlResolver.buildFullUri(
                             "/employer-recruiter-show/",
+                            bid.getId(),
+                            locale
+                    )
+            );
+
+            bidsJson.add(currentBidJson);
+        }
+
+        return bidsJson;
+    }
+
+
+    /**
+     * Convert List of deals to Json ready list of maps for
+     * use in recruiter control panel to display deals
+     * needed feedback to leave
+     * @param deals    List of deals
+     * @param locale       Request locale
+     * @return list of maps
+     */
+    public List<Map<String,String>> recruiterDealsForFeedback(
+            final List<Deal> deals,
+            final Locale locale
+    ) {
+        List<Map<String,String>> dealsJson = new ArrayList<Map<String, String>>();
+        for (Deal deal: deals) {
+            Map<String, String> currentDealJson = new HashMap<String, String>();
+            currentDealJson.put("vacancy", deal.getVacancy().getTitle());
+            currentDealJson.put(
+                    "vacancyUrl",
+                    urlResolver.buildFullUri("/recruiter-show-in-progress-vacancy/", deal.getId(), locale)
+            );
+            currentDealJson.put("updated", messageResolver.date(deal.getLastModified(), locale));
+            currentDealJson.put(
+                    "status",
+                    messageResolver.dealStatus(deal.getStatus(), locale)
+            );
+            currentDealJson.put("employer", deal.getVacancy().getEmployer().getUser().getFirstName() + " " +
+                    deal.getVacancy().getEmployer().getUser().getLastName());
+            currentDealJson.put(
+                    "employerUrl",
+                    urlResolver.buildFullUri(
+                            "/recruiter-show-employer-profile/",
+                            deal.getVacancy().getEmployer().getId(),
+                            locale
+                    )
+            );
+            currentDealJson.put(
+                    "feedback",
+                    messageResolver.message("recruiter-control-panel.feedback.leave", locale)
+            );
+            currentDealJson.put(
+                    "feedbackUrl",
+                    urlResolver.buildFullUri("/recruiter-show-in-progress-vacancy/", deal.getId(), locale)
+            );
+
+            dealsJson.add(currentDealJson);
+        }
+
+        return dealsJson;
+    }
+
+
+    /**
+     * Convert List of deals to Json ready list of maps for
+     * use in recruiter control panel to display unseen deals
+     * @param deals    List of deals
+     * @param locale       Request locale
+     * @return list of maps
+     */
+    public List<Map<String,String>> recruiterNewDeals(
+            final List<Deal> deals,
+            final Locale locale
+    ) {
+        List<Map<String,String>> dealsJson = new ArrayList<Map<String, String>>();
+        for (Deal deal: deals) {
+            Map<String, String> currentDealJson = new HashMap<String, String>();
+            currentDealJson.put("vacancy", deal.getVacancy().getTitle());
+            currentDealJson.put(
+                    "vacancyUrl",
+                    urlResolver.buildFullUri("/recruiter-show-in-progress-vacancy/", deal.getId(), locale)
+            );
+            currentDealJson.put("created", messageResolver.date(deal.getDateCreated(), locale));
+            currentDealJson.put("employer", deal.getVacancy().getEmployer().getUser().getFirstName() + " " +
+                    deal.getVacancy().getEmployer().getUser().getLastName());
+            currentDealJson.put(
+                    "employerUrl",
+                    urlResolver.buildFullUri(
+                            "/recruiter-show-employer-profile/",
+                            deal.getVacancy().getEmployer().getId(),
+                            locale
+                    )
+            );
+            currentDealJson.put(
+                    "deal",
+                    messageResolver.message("recruiter-control-panel.deals.view", locale)
+            );
+            currentDealJson.put(
+                    "dealUrl",
+                    urlResolver.buildFullUri("/recruiter-show-in-progress-vacancy/", deal.getId(), locale)
+            );
+
+            dealsJson.add(currentDealJson);
+        }
+
+        return dealsJson;
+    }
+
+
+    /**
+     * Convert List of bids to Json ready list of maps for
+     * use in employer control panel to display status of last bids
+     * @param bids         List of bids
+     * @param locale       Request locale
+     * @return list of maps
+     */
+    public List<Map<String,String>> recruiterLastBids(
+            final List<Bid> bids,
+            final Locale locale
+    ) {
+        List<Map<String,String>> bidsJson = new ArrayList<Map<String, String>>();
+        for (Bid bid: bids) {
+            Map<String, String> currentBidJson = new HashMap<String, String>();
+            currentBidJson.put("vacancy", bid.getVacancy().getTitle());
+            currentBidJson.put(
+                    "vacancyUrl",
+                    urlResolver.buildFullUri(
+                            "/recruiter-show-bid-vacancy/",
+                            bid.getVacancy().getId(),
+                            locale
+                    )
+            );
+            currentBidJson.put("updated", messageResolver.date(bid.getDateCreated(), locale));
+            currentBidJson.put("employer", bid.getVacancy().getEmployer().getUser().getFirstName() + " " +
+                    bid.getVacancy().getEmployer().getUser().getLastName());
+            currentBidJson.put(
+                    "employerUrl",
+                    urlResolver.buildFullUri(
+                            "/recruiter-show-employer-profile/",
+                            bid.getVacancy().getEmployer().getId(),
+                            locale
+                    )
+            );
+            if (bid.getViewed()) {
+                currentBidJson.put("viewed", messageResolver.message("recruiter-control-panel.bids.viewed", locale));
+            } else {
+                currentBidJson.put("viewed", "");
+            }
+            currentBidJson.put("status", messageResolver.bidStatus(bid.getStatus(), locale));
+            currentBidJson.put("bid", messageResolver.message("recruiter-control-panel.bids.view", locale));
+            currentBidJson.put(
+                    "bidUrl",
+                    urlResolver.buildFullUri(
+                            "/recruiter-show-bid-vacancy/",
                             bid.getId(),
                             locale
                     )

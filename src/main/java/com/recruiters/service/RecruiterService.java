@@ -411,6 +411,57 @@ public class RecruiterService {
     }
 
     /**
+     * Find ended deals without feedback left
+     * @param recruiterId    Recruiter Id
+     * @return List of deals
+     * @throws ServiceException if cannot obtain bids from
+     * repository or any other possible error
+     */
+    public List<Deal> findDealsForFeedback(final Long recruiterId)
+            throws ServiceException {
+        try {
+            return dealRepository.findDealsForRecruiterFeedback(recruiterId);
+        } catch (Exception e) {
+            log.error(SERVICE_EXCEPTION_MESSAGE, e);
+            throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
+        }
+    }
+
+    /**
+     * Find new deals
+     * @param recruiterId    Recruiter Id
+     * @return List of deals
+     * @throws ServiceException if cannot obtain bids from
+     * repository or any other possible error
+     */
+    public List<Deal> findNewDeals(final Long recruiterId)
+            throws ServiceException {
+        try {
+            return dealRepository.findNewDealsForRecruiter(recruiterId);
+        } catch (Exception e) {
+            log.error(SERVICE_EXCEPTION_MESSAGE, e);
+            throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
+        }
+    }
+
+    /**
+     * Find latest bids
+     * @param recruiterId    Recruiter Id
+     * @return List of bids
+     * @throws ServiceException if cannot obtain bids from
+     * repository or any other possible error
+     */
+    public List<Bid> findLastBids(final Long recruiterId)
+            throws ServiceException {
+        try {
+            return bidRepository.findLastBidsForRecruiter(recruiterId);
+        } catch (Exception e) {
+            log.error(SERVICE_EXCEPTION_MESSAGE, e);
+            throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
+        }
+    }
+
+    /**
      * Add new applicant to Deal, verifying deal belongs to recruiter
      * requested apply
      * @param applicant         Applicant instance

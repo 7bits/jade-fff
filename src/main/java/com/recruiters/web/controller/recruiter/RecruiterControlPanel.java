@@ -1,11 +1,10 @@
-package com.recruiters.web.controller.employer;
+package com.recruiters.web.controller.recruiter;
 
-import com.recruiters.model.Applicant;
 import com.recruiters.model.Bid;
 import com.recruiters.model.Deal;
-import com.recruiters.model.Employer;
+import com.recruiters.model.Recruiter;
 import com.recruiters.model.User;
-import com.recruiters.service.EmployerService;
+import com.recruiters.service.RecruiterService;
 import com.recruiters.service.exception.ServiceException;
 import com.recruiters.web.controller.utils.UserUtils;
 import com.recruiters.web.service.JsonService;
@@ -23,14 +22,14 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * Show control panel for Employer
+ * Show control panel for Recruiter
  */
 @Controller
-public class EmployerControlPanel {
+public class RecruiterControlPanel {
 
     /** Employer Service provides all Employer related methods */
     @Autowired
-    private EmployerService employerService = null;
+    private RecruiterService recruiterService = null;
     /** User utils for obtaining any session user information */
     @Autowired
     private UserUtils userUtils = null;
@@ -48,17 +47,17 @@ public class EmployerControlPanel {
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
-    @RequestMapping(value = "/employer-control-panel")
+    @RequestMapping(value = "/recruiter-control-panel")
     public ModelAndView showControlPanel(
             final HttpServletRequest request,
             final HttpServletResponse response
     ) throws Exception {
 
-        ModelAndView controlPanel = new ModelAndView("employer/employer-control-panel.jade");
+        ModelAndView controlPanel = new ModelAndView("recruiter/recruiter-control-panel.jade");
         try {
             User user = userUtils.getCurrentUser(request);
-            Employer employer = employerService.findEmployer(user.getEmployerId());
-            controlPanel.addObject("employer", employer);
+            Recruiter recruiter = recruiterService.findRecruiter(user.getRecruiterId());
+            controlPanel.addObject("recruiter", recruiter);
         } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             return null;
@@ -68,7 +67,7 @@ public class EmployerControlPanel {
     }
 
     /**
-     * Show deals employer to need leave feedback for
+     * Show deals recruiter to need leave feedback for
      * @param request     Http Request
      * @param response    Http Response
      * @return list of deals
@@ -76,7 +75,7 @@ public class EmployerControlPanel {
      * saving data due to technical or any other reasons
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown     */
-    @RequestMapping(value = "/employer-control-panel-feedback.json", method = RequestMethod.GET)
+    @RequestMapping(value = "/recruiter-control-panel-feedback.json", method = RequestMethod.GET)
     public List<Map<String,String>> showDealsForFeedback(
             final HttpServletRequest request,
             final HttpServletResponse response
@@ -84,17 +83,17 @@ public class EmployerControlPanel {
         List<Deal> deals;
         try {
             User user = userUtils.getCurrentUser(request);
-            deals = employerService.findDealsForFeedback(user.getEmployerId());
+            deals = recruiterService.findDealsForFeedback(user.getRecruiterId());
         } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             return null;
         }
         Locale locale = RequestContextUtils.getLocale(request);
-        return jsonService.employerDealsForFeedback(deals, locale);
+        return jsonService.recruiterDealsForFeedback(deals, locale);
     }
 
     /**
-     * Show new applicants employer have not seen
+     * Show new deals
      * @param request     Http Request
      * @param response    Http Response
      * @return list of deals
@@ -102,26 +101,25 @@ public class EmployerControlPanel {
      * saving data due to technical or any other reasons
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown     */
-    @RequestMapping(value = "/employer-control-panel-applicants.json", method = RequestMethod.GET)
-    public List<Map<String,String>> showNewApplicants(
+    @RequestMapping(value = "/recruiter-control-panel-deals.json", method = RequestMethod.GET)
+    public List<Map<String,String>> showNewDeals(
             final HttpServletRequest request,
             final HttpServletResponse response
     ) throws Exception {
-        List<Applicant> applicants;
+        List<Deal> deals;
         try {
             User user = userUtils.getCurrentUser(request);
-            applicants = employerService.findNewApplicants(user.getEmployerId());
+            deals = recruiterService.findNewDeals(user.getRecruiterId());
         } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             return null;
         }
         Locale locale = RequestContextUtils.getLocale(request);
-        return jsonService.employerNewApplicants(applicants, locale);
+        return jsonService.recruiterNewDeals(deals, locale);
     }
 
-
     /**
-     * Show new bids employer have not seen
+     * Show latest bids
      * @param request     Http Request
      * @param response    Http Response
      * @return list of bids
@@ -129,30 +127,29 @@ public class EmployerControlPanel {
      * saving data due to technical or any other reasons
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown     */
-    @RequestMapping(value = "/employer-control-panel-bids.json", method = RequestMethod.GET)
-    public List<Map<String,String>> showNewBids(
+    @RequestMapping(value = "/recruiter-control-panel-bids.json", method = RequestMethod.GET)
+    public List<Map<String,String>> showLastBids(
             final HttpServletRequest request,
             final HttpServletResponse response
     ) throws Exception {
         List<Bid> bids;
         try {
             User user = userUtils.getCurrentUser(request);
-            bids = employerService.findNewBids(user.getEmployerId());
+            bids = recruiterService.findLastBids(user.getRecruiterId());
         } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             return null;
         }
         Locale locale = RequestContextUtils.getLocale(request);
-        return jsonService.employerNewBids(bids, locale);
+        return jsonService.recruiterLastBids(bids, locale);
     }
 
-
-    public EmployerService getEmployerService() {
-        return employerService;
+    public RecruiterService getRecruiterService() {
+        return recruiterService;
     }
 
-    public void setEmployerService(final EmployerService employerService) {
-        this.employerService = employerService;
+    public void setRecruiterService(final RecruiterService recruiterService) {
+        this.recruiterService = recruiterService;
     }
 
     public UserUtils getUserUtils() {

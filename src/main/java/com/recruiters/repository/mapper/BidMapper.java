@@ -130,6 +130,29 @@ public interface BidMapper {
     })
     List<Bid> findNewBidsForEmployer(final Long employerId);
 
+    @Select("SELECT bid.id, bid.updated_date, bid.viewed, bid.status, " +
+            "vacancy.id AS vacancy_id, vacancy.title, " +
+            "employer.id AS employer_id, " +
+            "user.firstname, user.lastname " +
+            "FROM bid " +
+            "INNER JOIN vacancy ON vacancy.id=bid.vacancy_id " +
+            "INNER JOIN employer ON employer.id=vacancy.employer_id " +
+            "INNER JOIN user ON employer.user_id=user.id " +
+            "WHERE bid.recruiter_id=#{recruiterId} AND bid.updated_date>DATE_SUB(NOW(), INTERVAL 14 day) " +
+            "ORDER BY bid.updated_date DESC ")
+    @Results({
+            @Result(column = "id", property = "id"),
+            @Result(column = "updated_date", property = "lastModified"),
+            @Result(column = "viewed", property = "viewed"),
+            @Result(column = "status", property = "status"),
+            @Result(column = "vacancy_id", property = "vacancy.id"),
+            @Result(column = "title", property = "vacancy.title"),
+            @Result(column = "employer_id", property = "vacancy.employer.id"),
+            @Result(column = "firstname", property = "vacancy.employer.user.firstName"),
+            @Result(column = "lastname", property = "vacancy.employer.user.lastName")
+    })
+    List<Bid> findLastBidsForRecruiter(final Long recruiterId);
+
     @Insert("INSERT INTO bid (vacancy_id, recruiter_id, message, creation_date) " +
             "VALUES (#{vacancy.id}, #{recruiter.id}, #{message}, #{dateCreated})")
     @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")

@@ -107,6 +107,47 @@ public class DealRepository {
         }
     }
 
+
+    /**
+     * Find and return ended deals without recruiter feedback
+     * @param recruiterId    Id of recruiter
+     * @return List of Deal instances that match conditions
+     * @throws RepositoryException if input parameter is incorrect or there
+     * were any technical issues
+     */
+    public List<Deal> findDealsForRecruiterFeedback(final Long recruiterId)
+            throws  RepositoryException {
+        if (recruiterId == null) {
+            throw new RepositoryException("recruiterId is null");
+        }
+        try {
+
+            return dealMapper.findDealsForRecruiterFeedback(recruiterId);
+        } catch (Exception e) {
+            throw new RepositoryException("General database error: ", e);
+        }
+    }
+
+    /**
+     * Find and return ended deals without recruiter feedback
+     * @param recruiterId    Id of recruiter
+     * @return List of Deal instances that match conditions
+     * @throws RepositoryException if input parameter is incorrect or there
+     * were any technical issues
+     */
+    public List<Deal> findNewDealsForRecruiter(final Long recruiterId)
+            throws  RepositoryException {
+        if (recruiterId == null) {
+            throw new RepositoryException("recruiterId is null");
+        }
+        try {
+
+            return dealMapper.findNewDealsForRecruiter(recruiterId);
+        } catch (Exception e) {
+            throw new RepositoryException("General database error: ", e);
+        }
+    }
+
     /**
      * Create deal from bid, do not touch bid
      * @param bidId    Id of bid

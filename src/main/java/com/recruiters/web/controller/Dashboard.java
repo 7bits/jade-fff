@@ -32,7 +32,7 @@ public class Dashboard {
     ) {
         Locale locale = RequestContextUtils.getLocale(request);
         if (request.isUserInRole("ROLE_RECRUITER")) {
-            return urlResolver.buildRedirectUri("recruiter-active-deals", locale);
+            return urlResolver.buildRedirectUri("recruiter-control-panel", locale);
         }
         if (request.isUserInRole("ROLE_EMPLOYER")) {
             return urlResolver.buildRedirectUri("employer-control-panel", locale);

@@ -38,6 +38,9 @@ html
                     b.caret
                   ul(class="dropdown-menu", role="menu", aria-labelledby="menu")
                     li(role="presentation")
+                      a(href=domain.buildFullUri("/recruiter-control-panel", locale), role="menuitem", tabindex="-1").
+                        #{fmt.message("layout.recruiter.control_panel", locale)}
+                    li(role="presentation")
                       a(href=domain.buildFullUri("/recruiter-profile", locale), role="menuitem", tabindex="-1").
                         #{fmt.message("layout.recruiter.profile", locale)}
                     li(role="presentation")

@@ -98,6 +98,25 @@ public class BidRepository {
     }
 
     /**
+     * Find and return last bids for exact recruiter
+     * @param recruiterId    Id of recruiter
+     * @return List of latest bid instances, which belongs to exact recruiter
+     * @throws RepositoryException if input parameter is incorrect or there
+     * were any technical issues
+     */
+    public List<Bid> findLastBidsForRecruiter(final Long recruiterId) throws RepositoryException {
+        if (recruiterId == null) {
+            throw new RepositoryException("recruiterId is null");
+        }
+        try {
+
+            return bidMapper.findLastBidsForRecruiter(recruiterId);
+        } catch (Exception e) {
+            throw new RepositoryException("General database error: ", e);
+        }
+    }
+
+    /**
      * Create bid from certain vacancy, applying to it Recruiter
      * with custom message
      * @param recruiterId    Id of recruiter
