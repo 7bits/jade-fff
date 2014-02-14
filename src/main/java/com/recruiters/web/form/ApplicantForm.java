@@ -4,6 +4,8 @@ import com.recruiters.model.Applicant;
 import com.recruiters.model.Deal;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Date;
+
 /**
  * Applicant Form
  */
@@ -49,6 +51,7 @@ public class ApplicantForm {
         applicant.setLastName(this.getLastName());
         applicant.setDescription(this.getDescription());
         applicant.setDeal(new Deal(dealId));
+        applicant.setDateCreated(new Date());
 
         return applicant;
     }

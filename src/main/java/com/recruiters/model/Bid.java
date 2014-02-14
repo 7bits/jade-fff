@@ -15,12 +15,14 @@ public class Bid {
     private BidStatus status = null;
     private Long dealId = 0L;
     private Boolean viewed = false;
+    private Date dateCreated;
     private Date lastModified;
 
     public Bid() {
 
     }
 
+    /** Create Bid with Active status */
     public Bid(final Long id, final Vacancy vacancy, final Recruiter recruiter) {
         this.id = id;
         this.vacancy = vacancy;
@@ -28,12 +30,14 @@ public class Bid {
         this.status = BidStatus.ACTIVE;
     }
 
+    /** Create Bid with Active status and current creation date */
     public Bid(final Long id, final Vacancy vacancy, final Recruiter recruiter, final String message) {
         this.id = id;
         this.vacancy = vacancy;
         this.recruiter = recruiter;
         this.message = message;
         this.status = BidStatus.ACTIVE;
+        this.dateCreated = new Date();
     }
 
     public Long getId() {
@@ -98,5 +102,13 @@ public class Bid {
 
     public void setLastModified(final Date lastModified) {
         this.lastModified = lastModified;
+    }
+
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(final Date dateCreated) {
+        this.dateCreated = dateCreated;
     }
 }

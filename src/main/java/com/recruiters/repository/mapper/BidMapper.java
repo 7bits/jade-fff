@@ -129,8 +129,8 @@ public interface BidMapper {
     })
     List<Bid> findNewBidsForEmployer(final Long employerId);
 
-    @Insert("INSERT INTO bid (vacancy_id, recruiter_id, message) " +
-            "VALUES (#{vacancy.id}, #{recruiter.id}, #{message})")
+    @Insert("INSERT INTO bid (vacancy_id, recruiter_id, message, creation_date) " +
+            "VALUES (#{vacancy.id}, #{recruiter.id}, #{message}, #{dateCreated})")
     @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
     void create(final Bid bid);
 

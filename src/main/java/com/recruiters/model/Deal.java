@@ -20,6 +20,7 @@ public class Deal {
     private Long rejectedApplicantCount = 0L;
     private Long viewedApplicantCount = 0L;
     private Long unseenApplicantCount = 0L;
+    private Date dateCreated = null;
     private Date lastModified = null;
     private Bid bid;
     private Long bidCount;
@@ -158,5 +159,13 @@ public class Deal {
 
     public void setFeedback(final Feedback feedback) {
         this.feedback = feedback;
+    }
+
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(final Date dateCreated) {
+        this.dateCreated = dateCreated;
     }
 }

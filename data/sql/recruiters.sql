@@ -40,6 +40,7 @@ CREATE TABLE IF NOT EXISTS `applicant` (
   `test_answer_file` bigint(20) DEFAULT NULL,
   `status` varchar(50) NOT NULL DEFAULT 'IN_PROGRESS',
   `viewed` tinyint(1) NOT NULL DEFAULT '0',
+  `creation_date` timestamp NOT NULL DEFAULT '1970-01-01 00:00:01',
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `deal` (`deal_id`),
@@ -61,16 +62,16 @@ CREATE TABLE IF NOT EXISTS `applicant` (
 -- Dumping data for table `applicant`
 --
 
-INSERT INTO `applicant` (`id`, `deal_id`, `first_name`, `last_name`, `description`, `sex`, `age`, `resume_file`, `test_answer_file`, `status`, `viewed`, `updated_date`) VALUES
-(1, 1, 'Александр', 'Иванов', 'Программирую даже во сне', 'Мужской', 34, NULL, NULL, 'IN_PROGRESS', 1, '2014-01-22 04:17:39'),
-(2, 1, 'Павел', 'Никифоров', 'Круто программирует на всём', 'Мужской', 45, NULL, NULL, 'IN_PROGRESS', 1, '2014-01-22 04:17:40'),
-(3, 2, 'Михаил', 'Луценко', 'Чиню любые трубы: пластик', 'Мужской', 42, NULL, NULL, 'IN_PROGRESS', 0, '2014-01-22 04:13:37'),
-(4, 3, 'Афанасий', 'Афанасьев', 'фывавы', NULL, NULL, NULL, NULL, 'IN_PROGRESS', 0, '2014-01-22 04:15:41'),
-(5, 3, 'Михаил', 'Платонов', 'Аккак', NULL, NULL, NULL, NULL, 'IN_PROGRESS', 0, '2014-01-22 04:15:53'),
-(6, 1, 'Игорь', 'Вавилов', 'Папаапап', NULL, NULL, NULL, NULL, 'IN_PROGRESS', 0, '2014-01-22 04:16:14'),
-(7, 1, 'Олег', 'Кошевой', 'ываыва', NULL, NULL, NULL, NULL, 'REJECTED', 1, '2014-01-22 04:18:08'),
-(8, 1, 'Константин', 'Никольский', 'ыаыв', NULL, NULL, NULL, NULL, 'IN_PROGRESS', 0, '2014-01-22 04:16:36'),
-(9, 5, 'Иван', 'Поташов', 'Очень хороший коммерческий директор', NULL, NULL, NULL, NULL, 'APPROVED', 1, '2014-02-13 07:01:26');
+INSERT INTO `applicant` (`id`, `deal_id`, `first_name`, `last_name`, `description`, `sex`, `age`, `resume_file`, `test_answer_file`, `status`, `viewed`, `creation_date`, `updated_date`) VALUES
+(1, 1, 'Александр', 'Иванов', 'Программирую даже во сне', 'Мужской', 34, NULL, NULL, 'IN_PROGRESS', 1,  '2014-01-22 04:17:39', '2014-01-22 04:17:39'),
+(2, 1, 'Павел', 'Никифоров', 'Круто программирует на всём', 'Мужской', 45, NULL, NULL, 'IN_PROGRESS', 1, '2014-01-22 04:17:40', '2014-01-22 04:17:40'),
+(3, 2, 'Михаил', 'Луценко', 'Чиню любые трубы: пластик', 'Мужской', 42, NULL, NULL, 'IN_PROGRESS', 0, '2014-01-22 04:13:37', '2014-01-22 04:13:37'),
+(4, 3, 'Афанасий', 'Афанасьев', 'фывавы', NULL, NULL, NULL, NULL, 'IN_PROGRESS', 0, '2014-01-22 04:15:41', '2014-01-22 04:15:41'),
+(5, 3, 'Михаил', 'Платонов', 'Аккак', NULL, NULL, NULL, NULL, 'IN_PROGRESS', 0, '2014-01-22 04:15:53', '2014-01-22 04:15:53'),
+(6, 1, 'Игорь', 'Вавилов', 'Папаапап', NULL, NULL, NULL, NULL, 'IN_PROGRESS', 0, '2014-01-22 04:16:14', '2014-01-22 04:16:14'),
+(7, 1, 'Олег', 'Кошевой', 'ываыва', NULL, NULL, NULL, NULL, 'REJECTED', 1, '2014-01-21 02:18:08', '2014-01-22 04:18:08'),
+(8, 1, 'Константин', 'Никольский', 'ыаыв', NULL, NULL, NULL, NULL, 'IN_PROGRESS', 0, '2014-01-22 04:16:36', '2014-01-22 04:16:36'),
+(9, 5, 'Иван', 'Поташов', 'Очень хороший коммерческий директор', NULL, NULL, NULL, NULL, 'APPROVED', 1, '2014-02-12 07:01:26', '2014-02-13 07:01:26');
 
 -- --------------------------------------------------------
 
@@ -115,6 +116,7 @@ CREATE TABLE IF NOT EXISTS `bid` (
   `status` varchar(50) NOT NULL DEFAULT 'ACTIVE',
   `recruiter_archived` tinyint(1) NOT NULL DEFAULT '0',
   `employer_archived` tinyint(1) NOT NULL DEFAULT '0',
+  `creation_date` timestamp NOT NULL DEFAULT '1970-01-01 00:00:01',
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `viewed` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
@@ -134,19 +136,19 @@ CREATE TABLE IF NOT EXISTS `bid` (
 -- Dumping data for table `bid`
 --
 
-INSERT INTO `bid` (`id`, `vacancy_id`, `recruiter_id`, `message`, `status`, `recruiter_archived`, `employer_archived`, `updated_date`, `viewed`) VALUES
-(1, 1, 1, 'Условия такие условия, такие интересные условия', 'APPROVED', 0, 0, '2014-01-22 04:14:55', 1),
-(2, 1, 2, 'Какие то другие условия.', 'ACTIVE', 0, 0, '2014-01-22 04:13:37', 0),
-(3, 1, 3, 'Условия Условия Условия Условия Условия Условия Условия Условия " +                 "Условия Условия Условия Условия Условия Условия Условия Условия Условия Условия', 'ACTIVE', 0, 0, '2014-01-22 04:13:37', 0),
-(4, 2, 1, 'Кто не согласен с условиями тот не прав. Условия такие хорошие', 'ACTIVE', 0, 0, '2014-01-22 04:13:37', 0),
-(5, 2, 2, 'Грех не отказаться от условий под дулом пистолета', 'APPROVED', 0, 0, '2014-01-23 09:22:54', 1),
-(6, 4, 1, 'Блабла', 'ACTIVE', 0, 0, '2014-01-22 04:13:37', 1),
-(8, 3, 1, 'Клёвые условия, не пожалеете', 'APPROVED', 0, 0, '2014-01-23 09:22:18', 1),
-(9, 10, 1, 'У меня есть толковый коммерческий директор', 'APPROVED', 0, 0, '2014-02-06 09:26:10', 1),
-(10, 11, 1, 'Не подведу', 'ACTIVE', 0, 0, '2014-02-06 09:24:58', 0),
-(11, 13, 1, 'Подаю заявку', 'ACTIVE', 0, 0, '2014-02-06 09:25:11', 0),
-(12, 18, 1, 'Блаблабла', 'REJECTED', 0, 0, '2014-02-06 09:25:26', 1),
-(13, 8, 1, 'Условия', 'APPROVED', 0, 0, '2014-02-06 09:26:04', 1);
+INSERT INTO `bid` (`id`, `vacancy_id`, `recruiter_id`, `message`, `status`, `recruiter_archived`, `employer_archived`, `creation_date`, `updated_date`, `viewed`) VALUES
+(1, 1, 1, 'Условия такие условия, такие интересные условия', 'APPROVED', 0, 0, '2014-01-22 02:14:55', '2014-01-22 04:14:55', 1),
+(2, 1, 2, 'Какие то другие условия.', 'ACTIVE', 0, 0, '2014-01-22 04:13:37', '2014-01-22 04:13:37', 0),
+(3, 1, 3, 'Условия Условия Условия Условия Условия Условия Условия Условия " +                 "Условия Условия Условия Условия Условия Условия Условия Условия Условия Условия', 'ACTIVE', 0, 0, '2014-01-22 04:13:37', '2014-01-22 04:13:37', 0),
+(4, 2, 1, 'Кто не согласен с условиями тот не прав. Условия такие хорошие', 'ACTIVE', 0, 0, '2014-01-22 04:13:37', '2014-01-22 04:13:37', 0),
+(5, 2, 2, 'Грех не отказаться от условий под дулом пистолета', 'APPROVED', 0, 0, '2014-01-23 09:22:54', '2014-01-23 09:22:54', 1),
+(6, 4, 1, 'Блабла', 'ACTIVE', 0, 0, '2014-01-22 04:13:37', '2014-01-22 04:13:37', 1),
+(8, 3, 1, 'Клёвые условия, не пожалеете', 'APPROVED', 0, 0, '2014-01-23 09:22:18', '2014-01-23 09:22:18', 1),
+(9, 10, 1, 'У меня есть толковый коммерческий директор', 'APPROVED', 0, 0, '2014-02-06 09:26:10', '2014-02-06 09:26:10', 1),
+(10, 11, 1, 'Не подведу', 'ACTIVE', 0, 0, '2014-02-06 09:24:58', '2014-02-06 09:24:58', 0),
+(11, 13, 1, 'Подаю заявку', 'ACTIVE', 0, 0, '2014-02-06 09:25:11', '2014-02-06 09:25:11', 0),
+(12, 18, 1, 'Блаблабла', 'REJECTED', 0, 0, '2014-02-06 09:25:26', '2014-02-06 09:25:26', 1),
+(13, 8, 1, 'Условия', 'APPROVED', 0, 0, '2014-02-06 09:26:04', '2014-02-06 09:26:04', 1);
 
 -- --------------------------------------------------------
 
@@ -201,6 +203,7 @@ CREATE TABLE IF NOT EXISTS `deal` (
   `status` varchar(50) NOT NULL DEFAULT 'IN_PROGRESS',
   `recruiter_archived` tinyint(1) NOT NULL DEFAULT '0',
   `employer_archived` tinyint(1) NOT NULL DEFAULT '0',
+  `creation_date` timestamp NOT NULL DEFAULT '1970-01-01 00:00:01',
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `vacancy_id` (`vacancy_id`),
@@ -222,12 +225,12 @@ CREATE TABLE IF NOT EXISTS `deal` (
 -- Dumping data for table `deal`
 --
 
-INSERT INTO `deal` (`id`, `vacancy_id`, `recruiter_id`, `bid_id`, `status`, `recruiter_archived`, `employer_archived`, `updated_date`) VALUES
-(1, 3, 1, 8, 'IN_PROGRESS', 0, 0, '2014-01-22 04:13:37'),
-(2, 2, 2, 5, 'IN_PROGRESS', 0, 0, '2014-01-22 04:13:37'),
-(3, 1, 1, 1, 'IN_PROGRESS', 0, 0, '2014-01-22 04:14:55'),
-(4, 8, 1, 13, 'FIRED', 0, 0, '2014-02-13 06:55:52'),
-(5, 10, 1, 9, 'APPROVED', 0, 0, '2014-02-13 07:01:26');
+INSERT INTO `deal` (`id`, `vacancy_id`, `recruiter_id`, `bid_id`, `status`, `recruiter_archived`, `employer_archived`, `creation_date`, `updated_date`) VALUES
+(1, 3, 1, 8, 'IN_PROGRESS', 0, 0, '2014-01-22 04:13:37', '2014-01-22 04:13:37'),
+(2, 2, 2, 5, 'IN_PROGRESS', 0, 0, '2014-01-22 04:13:37', '2014-01-22 04:13:37'),
+(3, 1, 1, 1, 'IN_PROGRESS', 0, 0, '2014-01-22 04:14:55', '2014-01-22 04:14:55'),
+(4, 8, 1, 13, 'FIRED', 0, 0, '2014-02-13 06:55:52', '2014-02-14 06:55:52'),
+(5, 10, 1, 9, 'APPROVED', 0, 0, '2014-02-13 07:01:26', '2014-02-14 07:01:26');
 
 -- --------------------------------------------------------
 

@@ -19,6 +19,7 @@ public class Applicant {
     private Attachment testAnswerFile;
     private ApplicantStatus status = null;
     private Boolean viewed = false;
+    private Date dateCreated = null;
     private Date lastModified = null;
 
     public Applicant() {
@@ -141,5 +142,13 @@ public class Applicant {
 
     public void setLastModified(final Date lastModified) {
         this.lastModified = lastModified;
+    }
+
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(final Date dateCreated) {
+        this.dateCreated = dateCreated;
     }
 }

@@ -177,8 +177,8 @@ public interface DealMapper {
     List<Deal> findDealsForEmployerFeedback(final Long employerId);
 
 
-    @Insert("INSERT INTO deal (vacancy_id, recruiter_id, bid_id, status) " +
-            "SELECT v.id, b.recruiter_id, #{bidId}, \"IN_PROGRESS\" FROM vacancy v " +
+    @Insert("INSERT INTO deal (vacancy_id, recruiter_id, bid_id, status, creation_date) " +
+            "SELECT v.id, b.recruiter_id, #{bidId}, \"IN_PROGRESS\", NOW() FROM vacancy v " +
             "INNER JOIN bid b on v.id = b.vacancy_id " +
             "WHERE b.id = #{bidId}")
     @Options(useGeneratedKeys = true, keyProperty = "deal.id", keyColumn = "id")

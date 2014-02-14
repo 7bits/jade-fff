@@ -97,9 +97,9 @@ public interface ApplicantMapper {
     List<Applicant> findNewApplicantsForEmployer(final Long employerId);
 
     @Insert("INSERT INTO applicant (deal_id, first_name, last_name, description, " +
-            "sex, age, resume_file, test_answer_file) " +
+            "sex, age, resume_file, test_answer_file, creation_date) " +
             "VALUES (#{deal.id}, #{firstName}, #{lastName}, #{description}, " +
-            "#{sex}, #{age}, #{resumeFile.id}, #{testAnswerFile.id})")
+            "#{sex}, #{age}, #{resumeFile.id}, #{testAnswerFile.id}, #{dateCreated})")
     void create(final Applicant applicant);
 
     @Update("UPDATE applicant SET first_name=#{firstName}, " +

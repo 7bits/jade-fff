@@ -465,7 +465,7 @@ public class RecruiterService {
                     applicant.setResumeFile(fileNameForResume);
                 }
 
-                // Dealing with test anser file
+                // Dealing with test answer file
                 if (!testAnswerFile.isEmpty()) {
                     Integer extensionStart = testAnswerFile.getOriginalFilename().lastIndexOf(".");
                     String filename = applicant.getFirstName().substring(0, 1) +
