@@ -2,6 +2,8 @@ package com.recruiters.model;
 
 import com.recruiters.model.status.ApplicantStatus;
 
+import java.util.Date;
+
 /**
  * Applicant POJO
  */
@@ -17,6 +19,7 @@ public class Applicant {
     private Attachment testAnswerFile;
     private ApplicantStatus status = null;
     private Boolean viewed = false;
+    private Date lastModified = null;
 
     public Applicant() {
     }
@@ -130,5 +133,13 @@ public class Applicant {
 
     public void setViewed(final Boolean viewed) {
         this.viewed = viewed;
+    }
+
+    public Date getLastModified() {
+        return lastModified;
+    }
+
+    public void setLastModified(final Date lastModified) {
+        this.lastModified = lastModified;
     }
 }

@@ -464,13 +464,30 @@ public class EmployerService {
      * Find all deals employer need to leave feedback for
      * @param employerId    Employer Id
      * @return List of deals
-     * @throws ServiceException if cannot obtain vacancies from
+     * @throws ServiceException if cannot obtain deals from
      * repository or any other possible error
      */
     public List<Deal> findDealsForFeedback(final Long employerId)
             throws ServiceException {
         try {
             return dealRepository.findDealsForEmployerFeedback(employerId);
+        } catch (Exception e) {
+            log.error(SERVICE_EXCEPTION_MESSAGE, e);
+            throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
+        }
+    }
+
+    /**
+     * Find all new applicants employer have not seen
+     * @param employerId    Employer Id
+     * @return List of applicants
+     * @throws ServiceException if cannot obtain applicants from
+     * repository or any other possible error
+     */
+    public List<Applicant> findNewApplicants(final Long employerId)
+            throws ServiceException {
+        try {
+            return applicantRepository.findNewApplicantsForEmployer(employerId);
         } catch (Exception e) {
             log.error(SERVICE_EXCEPTION_MESSAGE, e);
             throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);

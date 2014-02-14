@@ -1,5 +1,6 @@
 package com.recruiters.web.controller.employer;
 
+import com.recruiters.model.Applicant;
 import com.recruiters.model.Deal;
 import com.recruiters.model.Employer;
 import com.recruiters.model.User;
@@ -65,7 +66,6 @@ public class EmployerControlPanel {
         return controlPanel;
     }
 
-
     /**
      * Show deals employer to need leave feedback for
      * @param request     Http Request
@@ -90,6 +90,32 @@ public class EmployerControlPanel {
         }
         Locale locale = RequestContextUtils.getLocale(request);
         return jsonService.dealsForFeedback(deals, locale);
+    }
+
+    /**
+     * Show new applicants employer have not seen
+     * @param request     Http Request
+     * @param response    Http Response
+     * @return list of deals
+     * Internal Server Error page if something is wrong with
+     * saving data due to technical or any other reasons
+     * @throws Exception in very rare circumstances: it should be runtime
+     * or servlet Exception to be thrown     */
+    @RequestMapping(value = "/employer-control-panel-applicants.json", method = RequestMethod.GET)
+    public List<Map<String,String>> showNewApplicants(
+            final HttpServletRequest request,
+            final HttpServletResponse response
+    ) throws Exception {
+        List<Applicant> applicants;
+        try {
+            User user = userUtils.getCurrentUser(request);
+            applicants = employerService.findNewApplicants(user.getEmployerId());
+        } catch (ServiceException e) {
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return null;
+        }
+        Locale locale = RequestContextUtils.getLocale(request);
+        return jsonService.employerNewApplicants(applicants, locale);
     }
 
     public EmployerService getEmployerService() {

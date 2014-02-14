@@ -6,6 +6,8 @@ import com.recruiters.repository.mapper.ApplicantMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * Repository implementing all methods related to
  * Applicant Entity manipulations with MyBatis
@@ -31,6 +33,27 @@ public class ApplicantRepository {
         try {
 
             return applicantMapper.findById(applicantId);
+        } catch (Exception e) {
+            throw new RepositoryException("General database error: ", e);
+        }
+    }
+
+    /**
+     * Find and return Applicants unseen but employer
+     * @param employerId    Id of employer
+     * @return list of matching applicants
+     * @throws RepositoryException if input parameter is incorrect or there
+     * were any technical issues
+     */
+    public List<Applicant> findNewApplicantsForEmployer(final Long employerId)
+            throws RepositoryException
+    {
+        if (employerId == null) {
+            throw new RepositoryException("employerId is null");
+        }
+        try {
+
+            return applicantMapper.findNewApplicantsForEmployer(employerId);
         } catch (Exception e) {
             throw new RepositoryException("General database error: ", e);
         }

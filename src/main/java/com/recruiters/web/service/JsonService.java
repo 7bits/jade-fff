@@ -1,5 +1,6 @@
 package com.recruiters.web.service;
 
+import com.recruiters.model.Applicant;
 import com.recruiters.model.ChatMessage;
 import com.recruiters.model.Deal;
 import com.recruiters.model.Vacancy;
@@ -174,7 +175,8 @@ public class JsonService {
 
     /**
      * Convert List of deals to Json ready list of maps for
-     * use in employer filtered list of deals view
+     * use in employer control panel to display deals
+     * that needs feedback to leave
      * @param deals    List of deals
      * @param locale       Request locale
      * @return list of maps
@@ -209,6 +211,57 @@ public class JsonService {
             currentDealJson.put(
                     "feedbackUrl",
                     urlResolver.buildFullUri("/employer-progress-vacancy-show/", deal.getId(), locale)
+            );
+
+            dealsJson.add(currentDealJson);
+        }
+
+        return dealsJson;
+    }
+
+
+    /**
+     * Convert List of applicants to Json ready list of maps for
+     * use in employer control panel to display new applicants
+     * @param applicants   List of applicants
+     * @param locale       Request locale
+     * @return list of maps
+     */
+    public List<Map<String,String>> employerNewApplicants(
+            final List<Applicant> applicants,
+            final Locale locale
+    ) {
+        List<Map<String,String>> dealsJson = new ArrayList<Map<String, String>>();
+        for (Applicant applicant: applicants) {
+            Map<String, String> currentDealJson = new HashMap<String, String>();
+            currentDealJson.put("vacancy", applicant.getDeal().getVacancy().getTitle());
+            currentDealJson.put(
+                    "vacancyUrl",
+                    urlResolver.buildFullUri(
+                            "/employer-progress-vacancy-show/",
+                            applicant.getDeal().getId(),
+                            locale
+                    )
+            );
+            currentDealJson.put("updated", messageResolver.date(applicant.getLastModified(), locale));
+            currentDealJson.put("recruiter", applicant.getDeal().getRecruiter().getUser().getFirstName() +
+                    " " + applicant.getDeal().getRecruiter().getUser().getLastName());
+            currentDealJson.put(
+                    "recruiterUrl",
+                    urlResolver.buildFullUri(
+                            "/employer-show-recruiter-profile/",
+                            applicant.getDeal().getRecruiter().getId(),
+                            locale
+                    )
+            );
+            currentDealJson.put("applicant", applicant.getFirstName() + " " + applicant.getLastName());
+            currentDealJson.put(
+                    "applicantUrl",
+                    urlResolver.buildFullUri(
+                            "/employer-applicant-show/",
+                            applicant.getId(),
+                            locale
+                    )
             );
 
             dealsJson.add(currentDealJson);

@@ -71,6 +71,31 @@ public interface ApplicantMapper {
     })
     List<Applicant> findApplicantsByDealId(final Long dealId);
 
+    @Select("SELECT applicant.id, applicant.first_name, applicant.last_name, applicant.updated_date, " +
+            "deal.id as deal_id, " +
+            "vacancy.id as vacancy_id, vacancy.title as vacancy_title, " +
+            "recruiter.id as recruiter_id, " +
+            "user.firstname as recruiter_first_name, user.lastname as recruiter_last_name " +
+            "FROM applicant " +
+            "INNER JOIN deal ON deal.id=applicant.deal_id " +
+            "INNER JOIN vacancy ON vacancy.id=deal.vacancy_id " +
+            "INNER JOIN recruiter  ON recruiter.id=deal.recruiter_id " +
+            "INNER JOIN user ON user.id = recruiter.user_id " +
+            "WHERE vacancy.employer_id=#{employerId} AND applicant.viewed=0")
+    @Results({
+            @Result(column = "id", property = "id"),
+            @Result(column = "first_name", property = "firstName"),
+            @Result(column = "last_name", property = "lastName"),
+            @Result(column = "updated_date", property = "lastModified"),
+            @Result(column = "deal_id", property = "deal.id"),
+            @Result(column = "vacancy_id", property = "deal.vacancy.id"),
+            @Result(column = "vacancy_title", property = "deal.vacancy.title"),
+            @Result(column = "recruiter_id", property = "deal.recruiter.id"),
+            @Result(column = "recruiter_first_name", property = "deal.recruiter.user.firstName"),
+            @Result(column = "recruiter_last_name", property = "deal.recruiter.user.lastName")
+    })
+    List<Applicant> findNewApplicantsForEmployer(final Long employerId);
+
     @Insert("INSERT INTO applicant (deal_id, first_name, last_name, description, " +
             "sex, age, resume_file, test_answer_file) " +
             "VALUES (#{deal.id}, #{firstName}, #{lastName}, #{description}, " +
