@@ -161,7 +161,7 @@ public interface DealMapper {
             "INNER JOIN recruiter ON recruiter.id=deal.recruiter_id " +
             "INNER JOIN user ON recruiter.user_id=user.id " +
             "LEFT JOIN feedback ON feedback.deal_id=deal.id " +
-            "WHERE vacancy.employer_id=1 AND deal.status != \"IN_PROGRESS\" " +
+            "WHERE vacancy.employer_id=#{employerId} AND deal.status != \"IN_PROGRESS\" " +
             "AND feedback.employer_feedback IS NULL")
     @Results({
             @Result(column = "id", property = "id"),
