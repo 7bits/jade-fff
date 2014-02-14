@@ -162,7 +162,8 @@ public interface DealMapper {
             "INNER JOIN user ON recruiter.user_id=user.id " +
             "LEFT JOIN feedback ON feedback.deal_id=deal.id " +
             "WHERE vacancy.employer_id=#{employerId} AND deal.status != \"IN_PROGRESS\" " +
-            "AND feedback.employer_feedback IS NULL")
+            "AND feedback.employer_feedback IS NULL " +
+            "ORDER BY deal.updated_date DESC ")
     @Results({
             @Result(column = "id", property = "id"),
             @Result(column = "status", property = "status"),

@@ -109,7 +109,7 @@ public interface BidMapper {
     })
     List<Bid> findBidsByVacancyId(final Long vacancyId);
 
-    @Select("SELECT bid.id, bid.updated_date, " +
+    @Select("SELECT bid.id, bid.creation_date, " +
             "vacancy.id AS vacancy_id, vacancy.title, " +
             "recruiter.id AS recruiter_id, " +
             "user.firstname, user.lastname " +
@@ -117,10 +117,11 @@ public interface BidMapper {
             "INNER JOIN vacancy ON vacancy.id=bid.vacancy_id " +
             "INNER JOIN recruiter  ON recruiter.id=bid.recruiter_id " +
             "INNER JOIN user ON recruiter.user_id=user.id " +
-            "WHERE vacancy.employer_id=#{employerId} AND bid.viewed=0 ")
+            "WHERE vacancy.employer_id=#{employerId} AND bid.viewed=0 " +
+            "ORDER BY bid.creation_date DESC ")
     @Results({
             @Result(column = "id", property = "id"),
-            @Result(column = "updated_date", property = "lastModified"),
+            @Result(column = "creation_date", property = "dateCreated"),
             @Result(column = "vacancy_id", property = "vacancy.id"),
             @Result(column = "title", property = "vacancy.title"),
             @Result(column = "recruiter_id", property = "recruiter.id"),

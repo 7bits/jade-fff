@@ -71,7 +71,7 @@ public interface ApplicantMapper {
     })
     List<Applicant> findApplicantsByDealId(final Long dealId);
 
-    @Select("SELECT applicant.id, applicant.first_name, applicant.last_name, applicant.updated_date, " +
+    @Select("SELECT applicant.id, applicant.first_name, applicant.last_name, applicant.creation_date, " +
             "deal.id as deal_id, " +
             "vacancy.id as vacancy_id, vacancy.title as vacancy_title, " +
             "recruiter.id as recruiter_id, " +
@@ -81,12 +81,13 @@ public interface ApplicantMapper {
             "INNER JOIN vacancy ON vacancy.id=deal.vacancy_id " +
             "INNER JOIN recruiter  ON recruiter.id=deal.recruiter_id " +
             "INNER JOIN user ON user.id = recruiter.user_id " +
-            "WHERE vacancy.employer_id=#{employerId} AND applicant.viewed=0")
+            "WHERE vacancy.employer_id=#{employerId} AND applicant.viewed=0 " +
+            "ORDER BY applicant.creation_date DESC ")
     @Results({
             @Result(column = "id", property = "id"),
             @Result(column = "first_name", property = "firstName"),
             @Result(column = "last_name", property = "lastName"),
-            @Result(column = "updated_date", property = "lastModified"),
+            @Result(column = "creation_date", property = "dateCreated"),
             @Result(column = "deal_id", property = "deal.id"),
             @Result(column = "vacancy_id", property = "deal.vacancy.id"),
             @Result(column = "vacancy_title", property = "deal.vacancy.title"),

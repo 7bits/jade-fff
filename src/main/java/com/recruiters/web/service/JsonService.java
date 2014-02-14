@@ -244,7 +244,7 @@ public class JsonService {
                             locale
                     )
             );
-            currentApplicantJson.put("updated", messageResolver.date(applicant.getLastModified(), locale));
+            currentApplicantJson.put("updated", messageResolver.date(applicant.getDateCreated(), locale));
             currentApplicantJson.put("recruiter", applicant.getDeal().getRecruiter().getUser().getFirstName() +
                     " " + applicant.getDeal().getRecruiter().getUser().getLastName());
             currentApplicantJson.put(
@@ -291,11 +291,11 @@ public class JsonService {
                     "vacancyUrl",
                     urlResolver.buildFullUri(
                             "/employer-show-recruiter-bids/",
-                            bid.getId(),
+                            bid.getVacancy().getId(),
                             locale
                     )
             );
-            currentBidJson.put("updated", messageResolver.date(bid.getLastModified(), locale));
+            currentBidJson.put("updated", messageResolver.date(bid.getDateCreated(), locale));
             currentBidJson.put("recruiter", bid.getRecruiter().getUser().getFirstName() +
                     " " + bid.getRecruiter().getUser().getLastName());
             currentBidJson.put(
