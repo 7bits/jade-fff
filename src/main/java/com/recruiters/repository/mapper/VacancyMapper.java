@@ -4,7 +4,7 @@ import com.recruiters.model.Vacancy;
 import com.recruiters.model.status.VacancyStatus;
 import com.recruiters.repository.mapper.provider.VacancyFilteredProvider;
 import com.recruiters.repository.specification.impl.vacancy.VacancyEmployerListSpecification;
-import com.recruiters.repository.specification.impl.vacancy.VacancyListSpecification;
+import com.recruiters.repository.specification.impl.vacancy.VacancyRecruiterListSpecification;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
@@ -86,7 +86,7 @@ public interface VacancyMapper {
             @Param("recruiterId") final Long recruiterId,
             @Param("date") final String date,
             @Param("searchLikeText") final String searchLikeText,
-            @Param("vacancyListSpecification") final VacancyListSpecification vacancyListSpecification
+            @Param("vacancyListSpecification") final VacancyRecruiterListSpecification vacancyRecruiterListSpecification
                                                     );
 
     @Select("SELECT vacancy.*, count(bid.id) as bid_count, " +
@@ -143,4 +143,18 @@ public interface VacancyMapper {
             "#{testFile.id}, #{status})")
     @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
     Long create(final Vacancy vacancy);
+
+
+    @Update("UPDATE vacancy " +
+            "SET employer_id = #{employer.id}, " +
+            "title = #{title}, " +
+            "description = #{description}, " +
+            "salary_from = #{salaryFrom}, " +
+            "salary_to = #{salaryTo}, " +
+            "creation_date = NOW(), " +
+            "expiration_date = #{expirationDate}, " +
+            "test_file = #{testFile.id}, " +
+            "status = #{status}" +
+            "WHERE id = #{id}")
+    Long update(final Vacancy vacancy);
 }

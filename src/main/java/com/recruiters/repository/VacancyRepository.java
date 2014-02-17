@@ -4,7 +4,7 @@ import com.recruiters.model.Vacancy;
 import com.recruiters.model.status.VacancyStatus;
 import com.recruiters.repository.mapper.VacancyMapper;
 import com.recruiters.repository.specification.impl.vacancy.VacancyEmployerListSpecification;
-import com.recruiters.repository.specification.impl.vacancy.VacancyListSpecification;
+import com.recruiters.repository.specification.impl.vacancy.VacancyRecruiterListSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -70,7 +70,7 @@ public class VacancyRepository {
      * @param recruiterId             Id of recruiter
      * @param date                    Date in "YYYY-MM-DD" format
      * @param searchText              Search text, can be empty, so will not be used
-     * @param vacancyListSpecification    Vacancy List specification
+     * @param vacancyRecruiterListSpecification    Vacancy List specification
      * @return List of vacancies with certain filter applied
      * @throws RepositoryException if input parameter is incorrect or there
      * were any technical issues
@@ -79,10 +79,10 @@ public class VacancyRepository {
             final Long recruiterId,
             final String date,
             final String searchText,
-            final VacancyListSpecification vacancyListSpecification
+            final VacancyRecruiterListSpecification vacancyRecruiterListSpecification
     ) throws RepositoryException {
-        if (recruiterId == null || vacancyListSpecification == null || date == null) {
-            throw new RepositoryException("recruiterId or vacancyListSpecification or date is null");
+        if (recruiterId == null || vacancyRecruiterListSpecification == null || date == null) {
+            throw new RepositoryException("recruiterId or vacancyRecruiterListSpecification or date is null");
         }
         try {
             // prepare LIKE parameter
@@ -93,7 +93,7 @@ public class VacancyRepository {
                 }
             }
             return vacancyMapper.findFilteredVacanciesForRecruiter(
-                    recruiterId, date, likeSearchText, vacancyListSpecification
+                    recruiterId, date, likeSearchText, vacancyRecruiterListSpecification
             );
         } catch (Exception e) {
             throw new RepositoryException("General database error: ", e);
@@ -191,6 +191,28 @@ public class VacancyRepository {
             throw new RepositoryException("General database error: ", e);
         }
     }
+
+    /**
+     * Update existing vacancy
+     * @param vacancy    Vacancy instance
+     * @return updated vacancy instance if there were no any technical issues
+     * @throws RepositoryException if input parameters are incorrect or there
+     * were any technical issues
+     */
+    public Vacancy update(final Vacancy vacancy)
+            throws RepositoryException {
+        if (vacancy == null) {
+            throw new RepositoryException("vacancy is null");
+        }
+        try {
+            vacancyMapper.update(vacancy);
+
+            return vacancy;
+        } catch (Exception e) {
+            throw new RepositoryException("General database error: ", e);
+        }
+    }
+
     public VacancyMapper getVacancyMapper() {
         return vacancyMapper;
     }

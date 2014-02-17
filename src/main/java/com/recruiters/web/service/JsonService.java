@@ -5,6 +5,7 @@ import com.recruiters.model.Bid;
 import com.recruiters.model.ChatMessage;
 import com.recruiters.model.Deal;
 import com.recruiters.model.Vacancy;
+import com.recruiters.model.status.VacancyStatus;
 import com.recruiters.web.helper.MessageResolver;
 import com.recruiters.web.helper.UrlResolver;
 import org.apache.commons.lang3.StringEscapeUtils;
@@ -498,14 +499,25 @@ public class JsonService {
                     "status",
                     messageResolver.vacancyStatus(vacancy.getStatus(), locale)
             );
-            currentVacancyJson.put(
-                    "url",
-                    urlResolver.buildFullUri("/employer-show-recruiter-bids/", vacancy.getId(), locale)
-            );
-            currentVacancyJson.put(
-                    "urlText",
-                    messageResolver.message("employer-recruiter-search.table.more", locale)
-            );
+            if (vacancy.getStatus().equals(VacancyStatus.UNPUBLISHED)) {
+                currentVacancyJson.put(
+                        "url",
+                        urlResolver.buildFullUri("/employer-vacancy-edit/", vacancy.getId(), locale)
+                );
+                currentVacancyJson.put(
+                        "urlText",
+                        messageResolver.message("employer-recruiter-search.table.edit", locale)
+                );
+            } else {
+                currentVacancyJson.put(
+                        "url",
+                        urlResolver.buildFullUri("/employer-show-recruiter-bids/", vacancy.getId(), locale)
+                );
+                currentVacancyJson.put(
+                        "urlText",
+                        messageResolver.message("employer-recruiter-search.table.more", locale)
+                );
+            }
             currentVacancyJson.put("unseenBidCount", vacancy.getUnseenBidCount().toString());
             currentVacancyJson.put("allBidCount", vacancy.getBidCount().toString());
             currentVacancyJson.put("rejectedBidCount", vacancy.getRejectedBidCount().toString());

@@ -765,7 +765,7 @@ public class EmployerService {
             final Vacancy vacancy,
             final MultipartFile testFile,
             final Locale locale
-    ) throws ServiceException {
+    ) throws ServiceException, NotAffiliatedException {
         try {
             // Dealing with tests file
             if (!testFile.isEmpty()) {
@@ -784,13 +784,21 @@ public class EmployerService {
             if (vacancy.getId().equals(0L)) {
                 return vacancyRepository.create(vacancy);
             } else {
-//                return vacancyRepository.update(vacancy);
-                return null;
+                Vacancy vacancyInRepo = vacancyRepository.findById(vacancy.getId());
+                if (vacancyInRepo.getStatus().equals(VacancyStatus.UNPUBLISHED) &&
+                        vacancyInRepo.getEmployer().getId().equals(vacancy.getEmployer().getId())) {
+
+                    return vacancyRepository.update(vacancy);
+                }
             }
         } catch (Exception e) {
             log.error(SERVICE_EXCEPTION_MESSAGE, e);
             throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
         }
+        String securityMessage = SECURITY_EXCEPTION_MESSAGE_PART1 + Vacancy.class.getSimpleName() +
+                SECURITY_EXCEPTION_MESSAGE_PART2;
+        log.error(securityMessage);
+        throw new NotAffiliatedException(securityMessage);
     }
 
     /**

@@ -4,7 +4,6 @@ import com.recruiters.repository.specification.ISpecification;
 import com.recruiters.repository.specification.impl.OrderByParam;
 import com.recruiters.repository.specification.impl.vacancy.UnpublishedVacancySpecification;
 import com.recruiters.repository.specification.impl.vacancy.VacancyEmployerListSpecification;
-import com.recruiters.repository.specification.impl.vacancy.VacancyListSpecification;
 import com.recruiters.repository.specification.impl.vacancy.VacancyNewBidsSpecification;
 import com.recruiters.repository.specification.impl.vacancy.VacancyOldBidsSpecification;
 

@@ -1,7 +1,7 @@
 package com.recruiters.repository.mapper.provider;
 
 import com.recruiters.repository.specification.impl.vacancy.VacancyEmployerListSpecification;
-import com.recruiters.repository.specification.impl.vacancy.VacancyListSpecification;
+import com.recruiters.repository.specification.impl.vacancy.VacancyRecruiterListSpecification;
 
 import java.util.Map;
 
@@ -17,9 +17,9 @@ public class VacancyFilteredProvider {
      */
     public static String selectVacancyFiltered(final Map<String, Object> params) {
         Object specification =  params.get("vacancyListSpecification");
-        if (specification instanceof VacancyListSpecification) {
-            VacancyListSpecification vacancyListSpecification = (VacancyListSpecification) specification;
-            return vacancyListSpecification.asSql();
+        if (specification instanceof VacancyRecruiterListSpecification) {
+            VacancyRecruiterListSpecification vacancyRecruiterListSpecification = (VacancyRecruiterListSpecification) specification;
+            return vacancyRecruiterListSpecification.asSql();
         }
         return "";
     }

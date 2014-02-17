@@ -5,7 +5,7 @@ import com.recruiters.repository.specification.ISpecification;
 import com.recruiters.repository.specification.impl.vacancy.BiddedVacancySpecification;
 import com.recruiters.repository.specification.impl.vacancy.ContractVacancySpecification;
 import com.recruiters.repository.specification.impl.vacancy.NewVacancySpecification;
-import com.recruiters.repository.specification.impl.vacancy.VacancyListSpecification;
+import com.recruiters.repository.specification.impl.vacancy.VacancyRecruiterListSpecification;
 import com.recruiters.repository.specification.impl.vacancy.VacancyTextSpecification;
 import com.recruiters.repository.specification.impl.OrderByParam;
 import com.recruiters.repository.specification.impl.vacancy.VacancyOrderByType;
@@ -31,7 +31,7 @@ public class RecruiterVacanciesFilter {
      * Specification builder
      * @return Vacancy Specification
      */
-    public VacancyListSpecification getListSpecifications() {
+    public VacancyRecruiterListSpecification getListSpecifications() {
         ISpecification vacancySpecification = new EmptySpecification();
 
         if (!hideVacancies) {
@@ -49,16 +49,16 @@ public class RecruiterVacanciesFilter {
         }
 
         if (sortColumn == null || sortAsc == null) {
-            return new VacancyListSpecification(vacancySpecification, null);
+            return new VacancyRecruiterListSpecification(vacancySpecification, null);
         }
 
         if (sortColumn.equals("title") || sortColumn.equals("description") || sortColumn.equals("creation_date")) {
-            return new VacancyListSpecification(vacancySpecification, new OrderByParam(sortColumn, sortAsc));
+            return new VacancyRecruiterListSpecification(vacancySpecification, new OrderByParam(sortColumn, sortAsc));
         }
         if (sortColumn.equals("type")) {
-            return new VacancyListSpecification(vacancySpecification, new VacancyOrderByType(sortAsc));
+            return new VacancyRecruiterListSpecification(vacancySpecification, new VacancyOrderByType(sortAsc));
         }
-        return new VacancyListSpecification(vacancySpecification, null);
+        return new VacancyRecruiterListSpecification(vacancySpecification, null);
     }
 
     public String getSearchText() {

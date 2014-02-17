@@ -8,13 +8,13 @@ import com.recruiters.repository.specification.ISpecification;
 /**
  * Specification for Vacancy List
  */
-public class VacancyListSpecification implements IListSpecification<Vacancy> {
+public class VacancyRecruiterListSpecification implements IListSpecification<Vacancy> {
     private ISpecification vacancySpecification;
     private IOrderSpecification listOrderSpecification;
     /** Default string size, used for string builder */
     private static final Integer DEFAULT_STRING_SIZE = 2048;
 
-    public VacancyListSpecification(
+    public VacancyRecruiterListSpecification(
             final ISpecification vacancySpecification,
             final IOrderSpecification listOrderSpecification
     ) {

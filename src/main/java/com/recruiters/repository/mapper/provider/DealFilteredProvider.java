@@ -1,7 +1,6 @@
 package com.recruiters.repository.mapper.provider;
 
 import com.recruiters.repository.specification.impl.deal.DealListSpecification;
-import com.recruiters.repository.specification.impl.vacancy.VacancyListSpecification;
 
 import java.util.Map;
 

@@ -31,10 +31,14 @@ public class VacancyFormValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "title", "NotEmpty.vacancyForm.title");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "description", "NotEmpty.vacancyForm.description");
         VacancyForm vacancyForm = (VacancyForm) object;
-        if (vacancyForm.getSalaryFrom() < 0L || vacancyForm.getSalaryTo() < 0L) {
+        if (vacancyForm.getSalaryFrom() != null && vacancyForm.getSalaryTo() !=  null) {
+            if (vacancyForm.getSalaryFrom() < 0L || vacancyForm.getSalaryTo() < 0L) {
+                errors.rejectValue("salaryFrom", "Positive.vacancyForm.salaryFrom");
+            } else if (vacancyForm.getSalaryFrom() > vacancyForm.getSalaryTo()) {
+                errors.rejectValue("salaryFrom", "LessThanTo.vacancyForm.salaryFrom");
+            }
+        } else {
             errors.rejectValue("salaryFrom", "Positive.vacancyForm.salaryFrom");
-        } else if (vacancyForm.getSalaryFrom() > vacancyForm.getSalaryTo()) {
-            errors.rejectValue("salaryFrom", "LessThanTo.vacancyForm.salaryFrom");
         }
 
     }

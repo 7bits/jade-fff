@@ -1,5 +1,6 @@
 package com.recruiters.web.form;
 
+import com.recruiters.model.Attachment;
 import com.recruiters.model.Employer;
 import com.recruiters.model.User;
 import com.recruiters.model.Vacancy;
@@ -20,9 +21,24 @@ public class VacancyForm {
     private Long salaryTo = 0L;
     private String expirationDate = null;
     private MultipartFile testFile = null;
+    private Long testFileId = null;
     private Boolean publish = false;
 
     public VacancyForm() {
+    }
+
+    public VacancyForm(final Vacancy vacancy) {
+        this.id = vacancy.getId();
+        this.title = vacancy.getTitle();
+        this.description = vacancy.getDescription();
+        this.salaryFrom = vacancy.getSalaryFrom();
+        this.salaryTo  = vacancy.getSalaryTo();
+        DateTimeUtils dateTimeUtils = new DateTimeUtils();
+        this.expirationDate = dateTimeUtils.dateUrlFormat(vacancy.getExpirationDate());
+        if (vacancy.getTestFile() != null) {
+            this.testFileId = vacancy.getTestFile().getId();
+        }
+        this.publish = !vacancy.getStatus().equals(VacancyStatus.UNPUBLISHED);
     }
 
     public Vacancy fillModel(final User user) {
@@ -36,6 +52,11 @@ public class VacancyForm {
         DateTimeUtils dateTimeUtils = new DateTimeUtils();
         vacancy.setExpirationDate(dateTimeUtils.urlDateParse(expirationDate));
         vacancy.setEmployer(new Employer(user.getEmployerId(), user));
+        if (testFileId != null) {
+            Attachment attachment = new Attachment();
+            attachment.setId(testFileId);
+            vacancy.setTestFile(attachment);
+        }
         if (publish) {
             vacancy.setStatus(VacancyStatus.ACTIVE);
         } else {
@@ -106,5 +127,13 @@ public class VacancyForm {
 
     public void setPublish(final Boolean publish) {
         this.publish = publish;
+    }
+
+    public Long getTestFileId() {
+        return testFileId;
+    }
+
+    public void setTestFileId(final Long testFileId) {
+        this.testFileId = testFileId;
     }
 }
