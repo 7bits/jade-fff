@@ -16,6 +16,6 @@ public class VacancyNewBidsSpecification extends VacancySpecification {
 
     @Override
     public String asSql() {
-        return " unseen_bids != 0 ";
+        return " unseen_bids != 0 AND status=\"ACTIVE\" ";
     }
 }

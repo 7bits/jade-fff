@@ -35,7 +35,7 @@ public class EmployerVacanciesFilter {
         }
 
         if (sortColumn.equals("title") ||
-                sortColumn.equals("creation_date") || sortColumn.equals("published") ||
+                sortColumn.equals("creation_date") || sortColumn.equals("status") ||
                 sortColumn.equals("max_updated_date") || sortColumn.equals("unseen_bids")) {
             return new VacancyEmployerListSpecification(vacancySpecification, new OrderByParam(sortColumn, sortAsc));
         }
