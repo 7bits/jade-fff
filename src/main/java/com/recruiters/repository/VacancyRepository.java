@@ -3,6 +3,7 @@ package com.recruiters.repository;
 import com.recruiters.model.Vacancy;
 import com.recruiters.model.status.VacancyStatus;
 import com.recruiters.repository.mapper.VacancyMapper;
+import com.recruiters.repository.specification.impl.vacancy.VacancyEmployerListSpecification;
 import com.recruiters.repository.specification.impl.vacancy.VacancyListSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -70,7 +71,7 @@ public class VacancyRepository {
      * @param date                    Date in "YYYY-MM-DD" format
      * @param searchText              Search text, can be empty, so will not be used
      * @param vacancyListSpecification    Vacancy List specification
-     * @return List of vacancies with no bids and deals from certain recruiter
+     * @return List of vacancies with certain filter applied
      * @throws RepositoryException if input parameter is incorrect or there
      * were any technical issues
      */
@@ -115,6 +116,33 @@ public class VacancyRepository {
         try {
 
             return vacancyMapper.findVacanciesByEmployerId(employerId);
+        } catch (Exception e) {
+            throw new RepositoryException("General database error: ", e);
+        }
+    }
+
+
+    /**
+     * Find and return List of Vacancies for Employer
+     * Depends on filter properties.
+     * @param employerId             Id of employer
+     * @param vacancyListSpecification    Vacancy List specification
+     * @return List of vacancies with certain filter applied
+     * @throws RepositoryException if input parameter is incorrect or there
+     * were any technical issues
+     */
+    public List<Vacancy> findFilteredVacanciesForEmployer(
+            final Long employerId,
+            final VacancyEmployerListSpecification vacancyListSpecification
+    ) throws RepositoryException {
+        if (employerId == null || vacancyListSpecification == null) {
+            throw new RepositoryException("recruiterId or vacancyListSpecification is null");
+        }
+        try {
+
+            return vacancyMapper.findFilteredVacanciesForEmployer(
+                    employerId, vacancyListSpecification
+            );
         } catch (Exception e) {
             throw new RepositoryException("General database error: ", e);
         }

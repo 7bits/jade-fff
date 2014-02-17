@@ -14,7 +14,7 @@ import com.recruiters.repository.specification.impl.vacancy.VacancyOrderByType;
 /**
  * Vacancy Search Filter Form
  */
-public class VacanciesFilter {
+public class RecruiterVacanciesFilter {
     private String searchText = "";
     private Boolean hideVacancies = false;
     private Boolean hideBids = false;
@@ -24,7 +24,7 @@ public class VacanciesFilter {
     private String sortColumn;
     private Boolean sortAsc;
 
-    public VacanciesFilter() {
+    public RecruiterVacanciesFilter() {
     }
 
     /**

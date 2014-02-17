@@ -89,8 +89,8 @@ $ ->
     modifyDates(nextDate)
 
 $ ->
-  $("#vacanciesFilter :input").on "change", ->
-    data = $("#vacanciesFilter").serialize()
+  $("#recruiterVacanciesFilter :input").on "change", ->
+    data = $("#recruiterVacanciesFilter").serialize()
     request = $.ajax(
       url: "recruiter-vacancies-filter-ajax.json"
       type: "POST"
@@ -104,7 +104,7 @@ $ ->
 
       while i < vacancyList.length
         obj = vacancyList[i]
-        addHtml += "<tr><td>" + obj.title + "</td><td>" + obj.description + "</td><td>" + obj.created + "</td><td>" + obj.status + "</td><td>" + "<a href='" + obj.url + "'>" + obj.urltext + "</a>" + "</td></tr>"
+        addHtml += "<tr><td>" + obj.title + "</td><td>" + obj.description + "</td><td>" + obj.created + "</td><td>" + obj.status + "</td><td>" + "<a href='" + obj.url + "'>" + obj.urlText + "</a>" + "</td></tr>"
         i++
       $("#table-sort").find("tbody").html addHtml
       return
@@ -128,10 +128,33 @@ $ ->
       while i < vacancyList.length
         obj = vacancyList[i]
         applicants = "<span class=\"green\">" + obj.unseenApplicantCount + "</span>/<span>" + obj.allApplicantCount + " (</span><span class=\"red\">" + obj.rejectedApplicantCount + "</span>/<span class=\"yellow\">" + obj.viewedApplicantCount + "</span>)"
-        addHtml += "<tr><td class='help' title='" + obj.description + "'>" + obj.title + "</td><td>" + obj.created  + "</td><td>" + obj.updated + "</td><td>" + obj.status + "</td><td>" + obj.bids + "</td><td class='help' title='" + obj.terms + "'><a href=\"" + obj.recruiterUrl + "\">" + obj.recruiter + "</a></td><td class='help' title='" + obj.applicantsTooltip + "'>" + applicants + "</td><td>" + "<a href='" + obj.url + "'>" + obj.urltext + "</a>" + "</td></tr>"
+        addHtml += "<tr><td class='help' title='" + obj.description + "'>" + obj.title + "</td><td>" + obj.created  + "</td><td>" + obj.updated + "</td><td>" + obj.status + "</td><td>" + obj.bids + "</td><td class='help' title='" + obj.terms + "'><a href=\"" + obj.recruiterUrl + "\">" + obj.recruiter + "</a></td><td class='help' title='" + obj.applicantsTooltip + "'>" + applicants + "</td><td>" + "<a href='" + obj.url + "'>" + obj.urlText + "</a>" + "</td></tr>"
         i++
       $("#table-sort").find("tbody").html addHtml
       return
 
     request.fail ->
 
+$ ->
+  $("#employerVacanciesFilter :input").on "change", ->
+    data = $("#employerVacanciesFilter").serialize()
+    request = $.ajax(
+      url: "employer-vacancies-filter-ajax.json"
+      type: "POST"
+      data: data
+      dataType: "json"
+    )
+    request.done (data) ->
+      addHtml = ""
+      vacancyList = data.entry.value
+      i = 0
+
+      while i < vacancyList.length
+        obj = vacancyList[i]
+        bids = "<span class=\"green\">" + obj.unseenBidCount + "</span>/<span>" + obj.allBidCount + " (</span><span class=\"red\">" + obj.rejectedBidCount + "</span>/<span class=\"yellow\">" + obj.viewedBidCount + "</span>)"
+        addHtml += "<tr><td class='help' title='" + obj.description + "'>" + obj.title + "</td><td>" + obj.created  + "</td><td>" + obj.updated + "</td><td>" + obj.status + "</td><td class='help' title='" + obj.bidsTooltip + "'>" + bids + "</td><td>" + "<a href='" + obj.url + "'>" + obj.urlText + "</a>" + "</td></tr>"
+        i++
+      $("#table-sort").find("tbody").html addHtml
+      return
+
+    request.fail ->

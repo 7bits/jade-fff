@@ -24,7 +24,7 @@ import com.recruiters.repository.VacancyRepository;
 import com.recruiters.service.exception.NotAffiliatedException;
 import com.recruiters.service.exception.NotFoundException;
 import com.recruiters.service.exception.ServiceException;
-import com.recruiters.web.form.VacanciesFilter;
+import com.recruiters.web.form.RecruiterVacanciesFilter;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -132,22 +132,21 @@ public class RecruiterService {
     /**
      * Find and return filtered vacancies list for certain recruiter
      * @param recruiterId        Id of recruiter
-     * @param vacanciesFilter    Vacancies Filter object
-     * @return List of filtered Vacancies which is available for bidding by
-     * this recruiter
+     * @param recruiterVacanciesFilter    Vacancies Filter object
+     * @return List of filtered Vacancies
      * @throws ServiceException if cannot obtain Vacancy instances from
      * repository or any other possible error
      */
     public List<Vacancy> findFilteredVacanciesForRecruiter(
             final Long recruiterId,
-            final VacanciesFilter vacanciesFilter
+            final RecruiterVacanciesFilter recruiterVacanciesFilter
     ) throws ServiceException {
         try {
             return vacancyRepository.findFilteredVacanciesForRecruiter(
                     recruiterId,
-                    vacanciesFilter.getDate(),
-                    vacanciesFilter.getSearchText(),
-                    vacanciesFilter.getListSpecifications()
+                    recruiterVacanciesFilter.getDate(),
+                    recruiterVacanciesFilter.getSearchText(),
+                    recruiterVacanciesFilter.getListSpecifications()
             );
         } catch (Exception e) {
             log.error(SERVICE_EXCEPTION_MESSAGE, e);

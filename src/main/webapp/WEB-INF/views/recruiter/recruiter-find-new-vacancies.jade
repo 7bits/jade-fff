@@ -5,12 +5,12 @@ block append head
 block append content
   .container
     h1=fmt.message("recruiter-find-new-vacancies.h1", locale)
-    form.form-sort(name="vacanciesFilter", id="vacanciesFilter", action="", method="get")
+    form.form-sort(name="recruiterVacanciesFilter", id="recruiterVacanciesFilter", action="", method="get")
       .row
         .col-md-3
           .input-group
             label(for="searchText")
-            input.inputtext(type="text", id="searchText", name="searchText", value=vacanciesFilter.searchText, placeholder=fmt.message("recruiter-find-new-vacancies.form.search", locale))
+            input.inputtext(type="text", id="searchText", name="searchText", value=recruiterVacanciesFilter.searchText, placeholder=fmt.message("recruiter-find-new-vacancies.form.search", locale))
             span.input-group-addon.autowidth
               span.glyphicon.glyphicon-search
         .col-md-6
@@ -19,11 +19,11 @@ block append content
               input(type="checkbox", name="showAll", value="1")
           .btn-group.btn-group-xs(data-toggle="buttons")
             label.btn.btn-default#hideVacancies=fmt.message("recruiter-find-new-vacancies.form.hide-vacancies", locale)
-              input(type="checkbox", name="hideVacancies", value="1", checked=vacanciesFilter.hideVacancies)
+              input(type="checkbox", name="hideVacancies", value="1", checked=recruiterVacanciesFilter.hideVacancies)
             label.btn.btn-default#hideBids=fmt.message("recruiter-find-new-vacancies.form.hide-bids", locale)
-              input(type="checkbox", name="hideBids", value="1", checked=vacanciesFilter.hideBids)
+              input(type="checkbox", name="hideBids", value="1", checked=recruiterVacanciesFilter.hideBids)
             label.btn.btn-default#hideDeals=fmt.message("recruiter-find-new-vacancies.form.hide-deals", locale)
-              input(type="checkbox", name="hideDeals", value="1", checked=vacanciesFilter.hideDeals)
+              input(type="checkbox", name="hideDeals", value="1", checked=recruiterVacanciesFilter.hideDeals)
       .row
         .col-md-1
           ul.pager
@@ -31,7 +31,7 @@ block append content
               a#prevDateLink(href="#") <
         .col-md-2
           .input-group.dateadjust
-            input.datepicker(type="text", size=10, name="date", data-date-format="yyyy-mm-dd", value=vacanciesFilter.date)
+            input.datepicker(type="text", size=10, name="date", data-date-format="yyyy-mm-dd", value=recruiterVacanciesFilter.date)
             span.input-group-addon.autowidth#dateicon
               span.glyphicon.glyphicon-calendar
             input(type="hidden", name="sortColumn", id="sortColumn")

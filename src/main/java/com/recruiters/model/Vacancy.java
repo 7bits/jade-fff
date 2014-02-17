@@ -20,8 +20,12 @@ public class Vacancy implements Serializable {
     private Attachment testFile;
     private VacancyStatus status = null;
     private Long bidCount = 0L;
+    private Long rejectedBidCount = 0L;
+    private Long viewedBidCount = 0L;
+    private Long unseenBidCount = 0L;
     private Long bidId = 0L;
     private Long dealId = 0L;
+    private Date lastModified = null;
 
     public Vacancy() {
     }
@@ -156,5 +160,37 @@ public class Vacancy implements Serializable {
 
     public void setDealId(final Long dealId) {
         this.dealId = dealId;
+    }
+
+    public Long getRejectedBidCount() {
+        return rejectedBidCount;
+    }
+
+    public void setRejectedBidCount(final Long rejectedBidCount) {
+        this.rejectedBidCount = rejectedBidCount;
+    }
+
+    public Long getViewedBidCount() {
+        return viewedBidCount;
+    }
+
+    public void setViewedBidCount(final Long viewedBidCount) {
+        this.viewedBidCount = viewedBidCount;
+    }
+
+    public Long getUnseenBidCount() {
+        return unseenBidCount;
+    }
+
+    public void setUnseenBidCount(final Long unseenBidCount) {
+        this.unseenBidCount = unseenBidCount;
+    }
+
+    public Date getLastModified() {
+        return lastModified;
+    }
+
+    public void setLastModified(final Date lastModified) {
+        this.lastModified = lastModified;
     }
 }

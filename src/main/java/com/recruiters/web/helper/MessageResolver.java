@@ -144,6 +144,31 @@ public class MessageResolver {
         }, locale);
     }
 
+
+    /**
+     * Building tooltip for bids
+     * @param unseenBidCount      Number of unseen bids
+     * @param allBidCount         Total number of bids
+     * @param rejectedBidCount    Number of rejected bids
+     * @param viewedBidCount      Number of bids already viewed by employer
+     * @param locale                    Locale to use
+     * @return localised tooltip
+     */
+    public String bidsTooltip(
+            final Long unseenBidCount,
+            final Long allBidCount,
+            final Long rejectedBidCount,
+            final Long viewedBidCount,
+            final Locale locale
+    ) {
+        return messageSource.getMessage("employer-recruiter-search.table.bids-tooltip", new Object[] {
+                unseenBidCount,
+                allBidCount,
+                rejectedBidCount,
+                viewedBidCount
+        }, locale);
+    }
+
     /**
      * Currency range formatter
      * @param from    From $

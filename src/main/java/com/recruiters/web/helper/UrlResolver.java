@@ -1,6 +1,5 @@
 package com.recruiters.web.helper;
 
-import com.recruiters.web.form.VacanciesFilter;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Locale;

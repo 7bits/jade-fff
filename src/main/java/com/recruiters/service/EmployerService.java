@@ -28,6 +28,7 @@ import com.recruiters.service.exception.NotAffiliatedException;
 import com.recruiters.service.exception.NotFoundException;
 import com.recruiters.service.exception.ServiceException;
 import com.recruiters.web.form.EmployerDealsFilter;
+import com.recruiters.web.form.EmployerVacanciesFilter;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -505,6 +506,30 @@ public class EmployerService {
             throws ServiceException {
         try {
             return bidRepository.findNewBidsForEmployer(employerId);
+        } catch (Exception e) {
+            log.error(SERVICE_EXCEPTION_MESSAGE, e);
+            throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
+        }
+    }
+
+
+    /**
+     * Find and return filtered vacancies list for certain employer
+     * @param employerId        Id of employer
+     * @param employerVacanciesFilter    Vacancies Filter object
+     * @return List of filtered Vacancies
+     * @throws ServiceException if cannot obtain Vacancy instances from
+     * repository or any other possible error
+     */
+    public List<Vacancy> findFilteredVacanciesForEmployer(
+            final Long employerId,
+            final EmployerVacanciesFilter employerVacanciesFilter
+    ) throws ServiceException {
+        try {
+            return vacancyRepository.findFilteredVacanciesForEmployer(
+                    employerId,
+                    employerVacanciesFilter.getListSpecifications()
+            );
         } catch (Exception e) {
             log.error(SERVICE_EXCEPTION_MESSAGE, e);
             throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);

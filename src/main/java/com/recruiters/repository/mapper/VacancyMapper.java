@@ -3,6 +3,7 @@ package com.recruiters.repository.mapper;
 import com.recruiters.model.Vacancy;
 import com.recruiters.model.status.VacancyStatus;
 import com.recruiters.repository.mapper.provider.VacancyFilteredProvider;
+import com.recruiters.repository.specification.impl.vacancy.VacancyEmployerListSpecification;
 import com.recruiters.repository.specification.impl.vacancy.VacancyListSpecification;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Options;
@@ -112,6 +113,24 @@ public interface VacancyMapper {
             @Result(column = "lastname", property = "employer.user.lastName")
     })
     List<Vacancy> findVacanciesByEmployerId(final Long employerId);
+
+
+    @SelectProvider(type = VacancyFilteredProvider.class, method = "selectVacancyEmployerFiltered")
+    @Results({
+            @Result(column = "id", property = "id"),
+            @Result(column = "title", property = "title"),
+            @Result(column = "description", property = "description"),
+            @Result(column = "creation_date", property = "creationDate"),
+            @Result(column = "max_updated_date", property = "lastModified"),
+            @Result(column = "status", property = "status"),
+            @Result(column = "all_bids", property = "bidCount"),
+            @Result(column = "unseen_bids", property = "unseenBidCount"),
+            @Result(column = "viewed_bids", property = "viewedBidCount"),
+            @Result(column = "rejected_bids", property = "rejectedBidCount")
+    })
+    List<Vacancy> findFilteredVacanciesForEmployer(
+            @Param("employerId") final Long employerId,
+            @Param("vacancyListSpecification") final VacancyEmployerListSpecification vacancyListSpecification);
 
     @Update("UPDATE vacancy SET status = #{status} WHERE id = #{vacancyId} ")
     void updateStatus(@Param(value = "vacancyId") final Long vacancyId, @Param(value = "status") final VacancyStatus status);

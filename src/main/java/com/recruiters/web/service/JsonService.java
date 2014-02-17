@@ -41,8 +41,8 @@ public class JsonService {
         List<Map<String,String>> vacanciesJson = new ArrayList<Map<String, String>>();
         for (Vacancy vacancy: vacancies) {
             Map<String, String> currentVacancyJson = new HashMap<String, String>();
-            currentVacancyJson.put("title", vacancy.getTitle());
-            currentVacancyJson.put("description", vacancy.getDescription());
+            currentVacancyJson.put("title", StringEscapeUtils.escapeHtml4(vacancy.getTitle()));
+            currentVacancyJson.put("description", StringEscapeUtils.escapeHtml4(vacancy.getDescription()));
             currentVacancyJson.put("created", messageResolver.date(vacancy.getCreationDate(), locale));
             if (vacancy.getDealId() != 0L) {
                 currentVacancyJson.put(
@@ -73,7 +73,7 @@ public class JsonService {
                 );
             }
             currentVacancyJson.put(
-                    "urltext",
+                    "urlText",
                     messageResolver.message("recruiter-find-new-vacancies.more", locale)
             );
             vacanciesJson.add(currentVacancyJson);
@@ -96,7 +96,7 @@ public class JsonService {
         List<Map<String,String>> dealsJson = new ArrayList<Map<String, String>>();
         for (Deal deal: deals) {
             Map<String, String> currentDealJson = new HashMap<String, String>();
-            currentDealJson.put("title", deal.getVacancy().getTitle());
+            currentDealJson.put("title", StringEscapeUtils.escapeHtml4(deal.getVacancy().getTitle()));
             currentDealJson.put(
                     "description",
                     StringEscapeUtils.escapeHtml4(deal.getVacancy().getDescription())
@@ -123,7 +123,7 @@ public class JsonService {
                     urlResolver.buildFullUri("/employer-progress-vacancy-show/", deal.getId(), locale)
             );
             currentDealJson.put(
-                    "urltext",
+                    "urlText",
                     messageResolver.message("employer-progress-vacancies-list.more", locale)
             );
             currentDealJson.put("unseenApplicantCount", deal.getUnseenApplicantCount().toString());
@@ -474,5 +474,54 @@ public class JsonService {
         }
 
         return bidsJson;
+    }
+
+
+    /**
+     * Convert List of Vacancies to Json ready list of maps for use in view
+     * @param vacancies    List of vacancies
+     * @param locale       Request locale
+     * @return list of maps
+     */
+    public List<Map<String,String>> employerVacanciesFilteredList(
+            final List<Vacancy> vacancies,
+            final Locale locale
+    ) {
+        List<Map<String,String>> vacanciesJson = new ArrayList<Map<String, String>>();
+        for (Vacancy vacancy: vacancies) {
+            Map<String, String> currentVacancyJson = new HashMap<String, String>();
+            currentVacancyJson.put("title", StringEscapeUtils.escapeHtml4(vacancy.getTitle()));
+            currentVacancyJson.put("description", StringEscapeUtils.escapeHtml4(vacancy.getDescription()));
+            currentVacancyJson.put("created", messageResolver.date(vacancy.getCreationDate(), locale));
+            currentVacancyJson.put("updated", messageResolver.date(vacancy.getLastModified(), locale));
+            currentVacancyJson.put(
+                    "status",
+                    messageResolver.vacancyStatus(vacancy.getStatus(), locale)
+            );
+            currentVacancyJson.put(
+                    "url",
+                    urlResolver.buildFullUri("/employer-show-recruiter-bids/", vacancy.getId(), locale)
+            );
+            currentVacancyJson.put(
+                    "urlText",
+                    messageResolver.message("employer-recruiter-search.table.more", locale)
+            );
+            currentVacancyJson.put("unseenBidCount", vacancy.getUnseenBidCount().toString());
+            currentVacancyJson.put("allBidCount", vacancy.getBidCount().toString());
+            currentVacancyJson.put("rejectedBidCount", vacancy.getRejectedBidCount().toString());
+            currentVacancyJson.put("viewedBidCount", vacancy.getViewedBidCount().toString());
+            currentVacancyJson.put(
+                    "bidsTooltip",
+                    messageResolver.bidsTooltip(
+                            vacancy.getUnseenBidCount(),
+                            vacancy.getBidCount(),
+                            vacancy.getRejectedBidCount(),
+                            vacancy.getViewedBidCount(), locale)
+            );
+
+            vacanciesJson.add(currentVacancyJson);
+        }
+
+        return vacanciesJson;
     }
 }

@@ -6,8 +6,7 @@ import com.recruiters.service.RecruiterService;
 import com.recruiters.service.exception.ServiceException;
 import com.recruiters.service.utils.DateTimeUtils;
 import com.recruiters.web.controller.utils.UserUtils;
-import com.recruiters.web.form.VacanciesFilter;
-import com.recruiters.web.helper.UrlResolver;
+import com.recruiters.web.form.RecruiterVacanciesFilter;
 import com.recruiters.web.service.JsonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,7 +36,7 @@ public class ShowVacancies {
     @Autowired
     private UserUtils userUtils = null;
     /** Session attribute name for Vacancies Filter */
-    private static final String SESSION_FILTER_NAME = VacanciesFilter.class.getName() + ".filter";
+    private static final String SESSION_FILTER_NAME = RecruiterVacanciesFilter.class.getName() + ".filter";
     /** Json converter service */
     @Autowired
     private JsonService jsonService;
@@ -47,7 +46,7 @@ public class ShowVacancies {
      * Shows "filtered vacancies" page
      * @param request           Http Request
      * @param response          Http Response
-     * @param vacanciesFilter   Vacancies Filter
+     * @param recruiterVacanciesFilter   Vacancies Filter
      * @return model and view with list of vacancies,
      * Internal Server Error page if something is wrong with obtaining data
      * due to technical or any other reasons
@@ -58,12 +57,12 @@ public class ShowVacancies {
     public ModelAndView showFilteredAvailableVacancies(
             final HttpServletRequest request,
             final HttpServletResponse response,
-            @ModelAttribute("VacanciesFilter") final VacanciesFilter vacanciesFilter
+            @ModelAttribute("RecruiterVacanciesFilter") final RecruiterVacanciesFilter recruiterVacanciesFilter
     ) throws Exception {
         ModelAndView filteredVacancies = new ModelAndView("recruiter/recruiter-find-new-vacancies.jade");
-        fillVacanciesFilter(vacanciesFilter, request);
-        addFilterToSession(vacanciesFilter, request);
-        filteredVacancies.addObject("vacanciesFilter", vacanciesFilter);
+        fillVacanciesFilter(recruiterVacanciesFilter, request);
+        addFilterToSession(recruiterVacanciesFilter, request);
+        filteredVacancies.addObject("recruiterVacanciesFilter", recruiterVacanciesFilter);
 
         return filteredVacancies;
     }
@@ -72,7 +71,7 @@ public class ShowVacancies {
      * Shows vacancies with filter applied by recruiter
      * @param request           Http Request
      * @param response          Http Response
-     * @param vacanciesFilter   Vacancies Filter
+     * @param recruiterVacanciesFilter   Vacancies Filter
      * @return json type list of vacancies,
      * Internal Server Error page if something is wrong with obtaining data
      * due to technical or any other reasons
@@ -83,14 +82,14 @@ public class ShowVacancies {
     public List<Map<String,String>> ajaxFilteredVacancies(
             final HttpServletRequest request,
             final HttpServletResponse response,
-            @ModelAttribute("VacanciesFilter") final VacanciesFilter vacanciesFilter
+            @ModelAttribute("RecruiterVacanciesFilter") final RecruiterVacanciesFilter recruiterVacanciesFilter
     ) throws Exception {
-        addFilterToSession(vacanciesFilter, request);
+        addFilterToSession(recruiterVacanciesFilter, request);
         try {
             User user = userUtils.getCurrentUser(request);
             List<Vacancy> vacancies = recruiterService.findFilteredVacanciesForRecruiter(
                     user.getRecruiterId(),
-                    vacanciesFilter
+                    recruiterVacanciesFilter
             );
             Locale locale = RequestContextUtils.getLocale(request);
             return jsonService.recruiterVacanciesFilteredList(vacancies, locale);
@@ -104,40 +103,40 @@ public class ShowVacancies {
     /**
      * Load default settings for Vacancies Filter or
      * get settings from session
-     * @param vacanciesFilter    Vacancies Filter
+     * @param recruiterVacanciesFilter    Vacancies Filter
      * @param request            Http Request
      */
     private void fillVacanciesFilter(
-            final VacanciesFilter vacanciesFilter,
+            final RecruiterVacanciesFilter recruiterVacanciesFilter,
             final HttpServletRequest request
     ) {
         Object o = request.getSession().getAttribute(SESSION_FILTER_NAME);
-        if (o instanceof VacanciesFilter) {
-            vacanciesFilter.setHideVacancies(((VacanciesFilter) o).getHideVacancies());
-            vacanciesFilter.setHideBids(((VacanciesFilter) o).getHideBids());
-            vacanciesFilter.setHideDeals(((VacanciesFilter) o).getHideDeals());
-            vacanciesFilter.setDate(((VacanciesFilter) o).getDate());
-            vacanciesFilter.setSearchText(((VacanciesFilter) o).getSearchText());
+        if (o instanceof RecruiterVacanciesFilter) {
+            recruiterVacanciesFilter.setHideVacancies(((RecruiterVacanciesFilter) o).getHideVacancies());
+            recruiterVacanciesFilter.setHideBids(((RecruiterVacanciesFilter) o).getHideBids());
+            recruiterVacanciesFilter.setHideDeals(((RecruiterVacanciesFilter) o).getHideDeals());
+            recruiterVacanciesFilter.setDate(((RecruiterVacanciesFilter) o).getDate());
+            recruiterVacanciesFilter.setSearchText(((RecruiterVacanciesFilter) o).getSearchText());
         } else {
             // Default settings
-            vacanciesFilter.setHideVacancies(false);
-            vacanciesFilter.setHideBids(false);
-            vacanciesFilter.setHideDeals(false);
+            recruiterVacanciesFilter.setHideVacancies(false);
+            recruiterVacanciesFilter.setHideBids(false);
+            recruiterVacanciesFilter.setHideDeals(false);
             DateTimeUtils dateTimeUtils = new DateTimeUtils();
-            vacanciesFilter.setDate(dateTimeUtils.dateUrlFormat(new Date()));
+            recruiterVacanciesFilter.setDate(dateTimeUtils.dateUrlFormat(new Date()));
         }
     }
 
     /**
      * Add Filter to Session Attributes
-     * @param vacanciesFilter    Vacancies Filter
+     * @param recruiterVacanciesFilter    Vacancies Filter
      * @param request            Http Request
      */
     private void addFilterToSession(
-            final VacanciesFilter vacanciesFilter,
+            final RecruiterVacanciesFilter recruiterVacanciesFilter,
             final HttpServletRequest request
     ) {
-        request.getSession().setAttribute(SESSION_FILTER_NAME,vacanciesFilter);
+        request.getSession().setAttribute(SESSION_FILTER_NAME, recruiterVacanciesFilter);
     }
 
     public RecruiterService getRecruiterService() {
