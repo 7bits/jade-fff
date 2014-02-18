@@ -5,21 +5,32 @@ block append head
 block append content
   .container
     h1=fmt.message("employer-show-recruiter-bids.h1", locale)
-    .row
-      .col-md-8
-        h2
-        ul.list-group
+    .col-md-8
+      table.table.table-striped
+        thead
+          tr
+            th=fmt.message("employer-show-recruiter-bids.table.recruiter", locale)
+            th=fmt.message("employer-show-recruiter-bids.table.created", locale)
+            th=fmt.message("employer-show-recruiter-bids.table.apply", locale)
+            th=fmt.message("employer-show-recruiter-bids.table.decline", locale)
+        tbody
           for bid in bids
-            li.list-group-item
-              a(href = domain.buildFullUri("/employer-show-recruiter-profile/", bid.recruiter.id, locale))
-                #{bid.recruiter.user.firstName} #{bid.recruiter.user.lastName}
-              a.btn.btn-link.pull-right(href = domain.buildFullUri("/employer-recruiter-show/", bid.id, locale)).
-                #{fmt.message("employer-show-recruiter-bids.more", locale)}
+            tr
+              td
+                a.help(href = domain.buildFullUri("/employer-show-recruiter-profile/", bid.recruiter.id, locale))
+                  #{bid.recruiter.user.firstName} #{bid.recruiter.user.lastName}
+              td #{fmt.date(bid.dateCreated, locale)}
+              td
+                a(href = "#")
+                  #{fmt.message("employer-show-recruiter-bids.table.apply", locale)}
+              td
+                a(href = "#")
+                  #{fmt.message("employer-show-recruiter-bids.table.decline", locale)}
 
-      .col-md-4
-        h2=fmt.message("employer-show-recruiter-bids.vacancy.h2", locale)
-        p #{vacancy.title}
-        p #{vacancy.description}
-        p=fmt.currencyRange(vacancy.salaryFrom, vacancy.salaryTo, locale)
-        if vacancy.testFile
-          a(href=domain.buildFullUri("/employer-download-attachment/", vacancy.testFile.id, locale))=fmt.message("employer-show-recruiter-bids..tests", locale)
+    .col-md-4
+      h2=fmt.message("employer-show-recruiter-bids.vacancy.h2", locale)
+      p #{vacancy.title}
+      p #{vacancy.description}
+      p=fmt.currencyRange(vacancy.salaryFrom, vacancy.salaryTo, locale)
+      if vacancy.testFile
+        a(href=domain.buildFullUri("/employer-download-attachment/", vacancy.testFile.id, locale))=fmt.message("employer-show-recruiter-bids..tests", locale)
