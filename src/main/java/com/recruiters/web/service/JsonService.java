@@ -536,4 +536,38 @@ public class JsonService {
 
         return vacanciesJson;
     }
+
+
+    /**
+     * Convert Bid to map for use in view
+     * @param bid          Bid
+     * @param locale       Request locale
+     * @return map with bid
+     */
+    public Map<String,String> employerShowBid(
+            final Bid bid,
+            final Locale locale
+    ) {
+        Map<String, String> bidJson = new HashMap<String, String>();
+        bidJson.put("headTitle", messageResolver.message("head.title", locale));
+        bidJson.put("title", StringEscapeUtils.escapeHtml4(bid.getVacancy().getTitle()));
+        bidJson.put("headDescription", messageResolver.message("head.description", locale));
+        bidJson.put("description", StringEscapeUtils.escapeHtml4(bid.getVacancy().getDescription()));
+        bidJson.put("headSalary", messageResolver.message("head.salary", locale));
+        bidJson.put("salary", messageResolver.currencyRange(
+                bid.getVacancy().getSalaryFrom(),
+                bid.getVacancy().getSalaryTo(),
+                locale
+        ));
+        bidJson.put("headCreated", messageResolver.message("head.created", locale));
+        bidJson.put("created", messageResolver.date(bid.getDateCreated(), locale));
+        bidJson.put("headMessage", messageResolver.message("head.message", locale));
+        bidJson.put("message", StringEscapeUtils.escapeHtml4(bid.getMessage()));
+        bidJson.put("headRecruiter", messageResolver.message("head.recruiter", locale));
+        bidJson.put("recruiter", bid.getRecruiter().getUser().getFirstName() + " " +
+                bid.getRecruiter().getUser().getLastName());
+
+
+        return bidJson;
+    }
 }

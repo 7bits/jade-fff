@@ -8,17 +8,18 @@ import com.recruiters.service.exception.NotFoundException;
 import com.recruiters.service.exception.ServiceException;
 import com.recruiters.web.controller.utils.UserUtils;
 import com.recruiters.web.helper.UrlResolver;
+import com.recruiters.web.service.JsonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * View bid information and do all bid actions for employer
@@ -35,6 +36,9 @@ public class EmployerBid {
     /** Url Builder */
     @Autowired
     private UrlResolver urlResolver;
+    /** Json converter service */
+    @Autowired
+    private JsonService jsonService;
 
     /**
      * Show all bid information for employer
@@ -73,6 +77,37 @@ public class EmployerBid {
 
         return showBid;
     }
+
+
+    /**
+     * Shows bid by id
+     * @param request           Http Request
+     * @param response          Http Response
+     * @param bidId             Bid id
+     * @return json type bid dscription
+     * Internal Server Error page if something is wrong with obtaining data
+     * due to technical or any other reasons
+     * @throws Exception in very rare circumstances: it should be runtime
+     * or servlet Exception to be thrown
+     */
+    @RequestMapping(value = "/employer-recruiter-show.json", method = RequestMethod.GET)
+    public Map<String,String> ajaxRecruiterShow(
+            final HttpServletRequest request,
+            final HttpServletResponse response,
+            @RequestParam(value="bidId", required = true) final Long bidId
+    ) throws Exception {
+        try {
+            User user = userUtils.getCurrentUser(request);
+            Bid bid = employerService.findBid(bidId, user.getEmployerId());
+            Locale locale = RequestContextUtils.getLocale(request);
+            return jsonService.employerShowBid(bid, locale);
+        } catch (ServiceException e) {
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return null;
+        }
+
+    }
+
 
     /**
      * Approve recruiter application
