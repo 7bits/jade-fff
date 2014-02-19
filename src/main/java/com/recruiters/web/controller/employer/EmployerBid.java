@@ -84,14 +84,14 @@ public class EmployerBid {
      * @param request           Http Request
      * @param response          Http Response
      * @param bidId             Bid id
-     * @return json type bid dscription
+     * @return json type bid description
      * Internal Server Error page if something is wrong with obtaining data
      * due to technical or any other reasons
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
     @RequestMapping(value = "/employer-recruiter-show.json", method = RequestMethod.GET)
-    public Map<String,String> ajaxRecruiterShow(
+    public Map<String, Map<String,String>> ajaxRecruiterShow(
             final HttpServletRequest request,
             final HttpServletResponse response,
             @RequestParam(value="bidId", required = true) final Long bidId

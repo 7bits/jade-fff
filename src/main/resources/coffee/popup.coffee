@@ -1,13 +1,14 @@
 $ ->
   $showBid = $("a.showBid")
   ajaxData = ""
+  ajaxTitle = ""
   $showBid.popover(
-    placement: "top"
+    placement: "bottom"
     html: true
     content: ""
+    template: '<div class="popover" onmouseover="refreshTimeout(this);"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
     trigger: "manual"
   ).hover ((event) ->
-    event.preventDefault()
     $link = $(event.target)
     $popover = $link.data("bs.popover")
     requestData = "bidId=" + $link.attr("data-id")
@@ -19,21 +20,34 @@ $ ->
       dataType: "json"
     )
     request.done (data) ->
-      bid = data.entry
-      ajaxData += "<dl class=\"dl-horizontal\"><dt>" + bid.headTitle + "</dt><dd>" + bid.title + "</dd><dt>" + bid.headDescription + "</dt><dd>" + bid.description + "</dd><dt>" + bid.headSalary + "</dt><dd>" + bid.salary + "</dd><dt>" + bid.headCreated + "</dt><dd>" + bid.created + "</dd><dt>" + bid.headMessage + "</dt><dd>" + bid.message + "</dd><dt>" + bid.headRecruiter + "</dt><dd>" + bid.recruiter + "</dd>" + "</dl>"
+      bid = data.entry.value
+      ajaxData = "<dl class=\"dl popup\"><dt>" + bid.headRecruiter + "</dt><dd><a href=\"" + bid.recruiterUrl + "\" target=\"blank\">" + bid.recruiter + "</a></dd><dt>" + bid.headCreated + "</dt><dd>" + bid.created + "</dd><dt>" + bid.headMessage + "</dt><dd>" + bid.message + "</dd>" + "</dl>"
+      ajaxTitle = bid.popupTitle;
       return
 
     request.fail ->
     $popover.options.content = ajaxData
+    $popover.options.title = ajaxTitle
     $popover.setContent()
     $popover.show()
     return
   ), (event) ->
     $popover = $(event.target).data("bs.popover")
-    $popover.options.content = ""
-    $popover.setContent()
-    $popover.hide()
-    ajaxData = ""
+    window.timeoutObj = setTimeout(->
+      $popover.hide()
+      return
+    , 350)
+#    $popover.options.content = ""
+#    $popover.setContent()
+#    $popover.hide()
+#    ajaxData = ""
     return
 
+  return
+exports = this
+window.timeoutObj = undefined
+window.refreshTimeout = (obj) ->
+  clearTimeout(window.timeoutObj);
+  $(obj).mouseleave ->
+    $(obj).hide()
   return

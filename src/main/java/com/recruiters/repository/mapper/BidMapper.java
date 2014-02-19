@@ -47,7 +47,7 @@ public interface BidMapper {
     })
     List<Bid> findBidsByRecruiterId(final Long recruiterId);
 
-    @Select("SELECT bid.id, bid.message, bid.status, " +
+    @Select("SELECT bid.id, bid.message, bid.status, bid.creation_date as bid_created, " +
             "vacancy.id as vacancy_id,  vacancy.employer_id, vacancy.title, " +
             "vacancy.description, vacancy.salary_from, vacancy.salary_to, " +
             "vacancy.creation_date, vacancy.expiration_date, vacancy.test_file, " +
@@ -64,6 +64,7 @@ public interface BidMapper {
             @Result(column = "id", property = "id"),
             @Result(column = "message", property = "message"),
             @Result(column = "status", property = "status"),
+            @Result(column = "bid_created", property = "dateCreated"),
             @Result(column = "vacancy_id", property = "vacancy.id"),
             @Result(column = "employer_id", property = "vacancy.employer.id"),
             @Result(column = "title", property = "vacancy.title"),

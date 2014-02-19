@@ -26,3 +26,9 @@
 .spacer {
     margin-top: 40px;
 }
+.popup {
+  height: 200px;
+  width: 256px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
