@@ -81,19 +81,6 @@ public class BusinessRulesService {
     }
 
     /**
-     * Test if employer could apply or decline recruiter bid
-     * @param bid    bid
-     * @return whether employer can modify recruiter state or not
-     */
-    public Boolean canModifyRecruiterBid(final Bid bid) {
-
-        Boolean bidIsActive = bid.getStatus() == BidStatus.ACTIVE;
-        Boolean thereAreNoDeal = bid.getDealId().equals(0L);
-        return (bidIsActive && thereAreNoDeal);
-    }
-
-
-    /**
      * Test if it's allowed to send messages
      * @param deal    Deal
      * @return true if you can send messages to deal
