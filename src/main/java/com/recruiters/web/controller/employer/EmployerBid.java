@@ -41,72 +41,33 @@ public class EmployerBid {
     private JsonService jsonService;
 
     /**
-     * Show all bid information for employer
-     * @param bidId       Id of bid
-     * @param request     Http Request
-     * @param response    Http Response
-     * @return model and view with bid details,
-     * Forbidden page if requested bid does not belong to this employer,
-     * Not Found page if there is no bid with such id,
+     * Shows bid by id
+     * @param request           Http Request
+     * @param response          Http Response
+     * @param bidId             Bid id
+     * @return json type bid description
      * Internal Server Error page if something is wrong with obtaining data
      * due to technical or any other reasons
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
-    @RequestMapping(value = "/employer-recruiter-show/{bidId}")
-    public ModelAndView employerShowRecruiterBid(
-            @PathVariable final Long bidId,
+    @RequestMapping(value = "/employer-recruiter-show.json", method = RequestMethod.GET)
+    public Map<String, Map<String,String>> ajaxRecruiterShow(
             final HttpServletRequest request,
-            final HttpServletResponse response
+            final HttpServletResponse response,
+            @RequestParam(value="bidId", required = true) final Long bidId
     ) throws Exception {
-        ModelAndView showBid = new ModelAndView("employer/employer-recruiter-show.jade");
         try {
             User user = userUtils.getCurrentUser(request);
             Bid bid = employerService.findBid(bidId, user.getEmployerId());
-            showBid.addObject("bid", bid);
-        } catch (NotAffiliatedException e) {
-            response.sendError(HttpServletResponse.SC_FORBIDDEN);
-            return null;
+            Locale locale = RequestContextUtils.getLocale(request);
+            return jsonService.employerShowBid(bid, locale);
         } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             return null;
-        } catch (NotFoundException e) {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND);
-            return null;
         }
 
-        return showBid;
     }
-
-//
-//    /**
-//     * Shows bid by id
-//     * @param request           Http Request
-//     * @param response          Http Response
-//     * @param bidId             Bid id
-//     * @return json type bid description
-//     * Internal Server Error page if something is wrong with obtaining data
-//     * due to technical or any other reasons
-//     * @throws Exception in very rare circumstances: it should be runtime
-//     * or servlet Exception to be thrown
-//     */
-//    @RequestMapping(value = "/employer-recruiter-show.json", method = RequestMethod.GET)
-//    public Map<String, Map<String,String>> ajaxRecruiterShow(
-//            final HttpServletRequest request,
-//            final HttpServletResponse response,
-//            @RequestParam(value="bidId", required = true) final Long bidId
-//    ) throws Exception {
-//        try {
-//            User user = userUtils.getCurrentUser(request);
-//            Bid bid = employerService.findBid(bidId, user.getEmployerId());
-//            Locale locale = RequestContextUtils.getLocale(request);
-//            return jsonService.employerShowBid(bid, locale);
-//        } catch (ServiceException e) {
-//            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-//            return null;
-//        }
-//
-//    }
 
 
     /**
