@@ -64,6 +64,7 @@ public interface ApplicantMapper {
             @Result(column = "resume_file", property = "resumeFile.id"),
             @Result(column = "test_answer_file", property = "testAnswerFile.id"),
             @Result(column = "status", property = "status"),
+            @Result(column = "creation_date", property = "dateCreated"),
             @Result(column = "deal_id", property = "deal.id"),
             @Result(column = "vacancy_id", property = "deal.vacancy.id"),
             @Result(column = "employer_id", property = "deal.vacancy.employer.id"),

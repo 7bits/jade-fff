@@ -8,17 +8,20 @@ import com.recruiters.service.exception.NotFoundException;
 import com.recruiters.service.exception.ServiceException;
 import com.recruiters.web.controller.utils.UserUtils;
 import com.recruiters.web.helper.UrlResolver;
+import com.recruiters.web.service.JsonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * Applicant view and actions for employer
@@ -35,13 +38,16 @@ public class EmployerApplicantView {
     /** Url Builder */
     @Autowired
     private UrlResolver urlResolver;
+    /** Json converter service */
+    @Autowired
+    private JsonService jsonService;
 
     /**
-     * Show applicant details
+     * Show applicant details in json format
      * @param applicantId    Id of applicant
      * @param request        Http request
      * @param response       Http response
-     * @return model and view with applicant details,
+     * @return json with applicant
      * Forbidden page if requested applicant is not related to any vacancy
      * of current employer,
      * Not Found page if there is no applicant with such id,
@@ -50,17 +56,18 @@ public class EmployerApplicantView {
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
-    @RequestMapping(value = "/employer-applicant-show/{applicantId}", method = RequestMethod.GET)
-    public ModelAndView applicantShow(
-            @PathVariable final Long applicantId,
+    @RequestMapping(value = "/employer-applicant-show.json", method = RequestMethod.GET)
+    public Map<String,Map<String,String>> applicantShow(
+            @RequestParam(value = "applicantId", required = true) final Long applicantId,
             final HttpServletRequest request,
             final HttpServletResponse response
     ) throws Exception {
-        ModelAndView showApplicant = new ModelAndView("employer/employer-applicant-show.jade");
         try {
             User user = userUtils.getCurrentUser(request);
             Applicant applicant = employerService.findApplicant(applicantId, user.getEmployerId());
-            showApplicant.addObject("applicant", applicant);
+            Locale locale = RequestContextUtils.getLocale(request);
+
+            return jsonService.employerShowApplicant(applicant, locale);
         } catch (NotAffiliatedException e) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
             return null;
@@ -71,8 +78,6 @@ public class EmployerApplicantView {
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
             return null;
         }
-
-        return showApplicant;
     }
 
     /**

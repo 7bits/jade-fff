@@ -68,16 +68,41 @@ block append content
     h2=fmt.message("employer-progress-vacancy-show.applicants.h2", locale)
     .row
       .col-md-6
-        ul.list-group
-          for applicant in deal.applicants
-            li.list-group-item
-              if test.isApplicantNew(applicant)
-                strong
-                  #{applicant.firstName} #{applicant.lastName}
-              else
-                #{applicant.firstName} #{applicant.lastName}
-              a.btn.btn-link.pull-right(href = domain.buildFullUri("/employer-applicant-show/", applicant.id, locale)).
-                #{fmt.message("employer-progress-vacancy-show.applicants.more", locale)}
+        table.table.table-striped.employerApplicantView
+          thead
+            tr
+              th=fmt.message("employer-progress-vacancy-show.table.applicant", locale)
+              th=fmt.message("employer-progress-vacancy-show.table.created", locale)
+              th
+              th
+          tbody
+            for applicant in deal.applicants
+              tr
+                td
+                  a.showApplicant.help(href = "#", data-id=applicant.id)
+                    if test.isApplicantNew(applicant)
+                      strong
+                        #{applicant.firstName} #{applicant.lastName}
+                    else
+                      #{applicant.firstName} #{applicant.lastName}
+
+                td #{fmt.date(applicant.dateCreated, locale)}
+                td
+                  .btn-group.btn-group-xs
+                    if test.canApplyApplicant(applicant, deal)
+                      button.btn.btn-success.applicantApply(data-id = applicant.id)
+                        #{fmt.message("employer-progress-vacancy-show.table.apply", locale)}
+                    if test.appliedApplicant(applicant)
+                      button.btn.btn-success.applicantApply(data-id = applicant.id, disabled)
+                        #{fmt.message("employer-progress-vacancy-show.table.applied", locale)}
+                td
+                  .btn-group.btn-group-xs
+                    if test.canDeclineApplicant(applicant, deal)
+                      button.btn.btn-danger.applicantDecline(data-id = applicant.id)
+                        #{fmt.message("employer-progress-vacancy-show.table.decline", locale)}
+                    if test.declinedApplicant(applicant)
+                      button.btn.btn-danger.applicantDecline(data-id = applicant.id, disabled)
+                        #{fmt.message("employer-progress-vacancy-show.table.declined", locale)}
 
     h2=fmt.message("employer-progress-vacancy-show.chat", locale)
     .row.h4

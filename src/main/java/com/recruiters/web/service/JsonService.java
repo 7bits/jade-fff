@@ -538,7 +538,7 @@ public class JsonService {
     }
 
     /**
-     * Convert Bid to map for use in view
+     * Convert Bid to map for use in ajax
      * @param bid          Bid
      * @param locale       Request locale
      * @return map with bid
@@ -566,7 +566,6 @@ public class JsonService {
         return mapJson;
     }
 
-
     /**
      * Approve Bid successful message in json format
      * @param locale       Request locale
@@ -590,5 +589,58 @@ public class JsonService {
     ) {
 
         return new Object[]{messageResolver.message("employer-show-recruiter-bids.table.declined", locale)};
+    }
+
+
+    /**
+     * Convert Applicant to map for use in ajax
+     * @param applicant          Applicant
+     * @param locale             Request locale
+     * @return map with Applicant
+     */
+    public Map<String, Map<String,String>> employerShowApplicant(
+            final Applicant applicant,
+            final Locale locale
+    ) {
+        Map<String, String> applicantJson = new HashMap<String, String>();
+        applicantJson.put("popupTitle", messageResolver.message("employer-applicant-show.title", locale));
+        applicantJson.put("headApplicant", messageResolver.message("employer-applicant-show.applicant", locale));
+        applicantJson.put("applicant", applicant.getFirstName() + " " + applicant.getLastName());
+        applicantJson.put("headCreated", messageResolver.message("employer-applicant-show.created", locale));
+        applicantJson.put("created", messageResolver.date(applicant.getDateCreated(), locale));
+        applicantJson.put("headGender", messageResolver.message("employer-applicant-show.gender", locale));
+        if (applicant.getSex() != null) {
+            applicantJson.put("gender", applicant.getSex());
+        } else {
+            applicantJson.put("gender", "");
+        }
+        applicantJson.put("headAge", messageResolver.message("employer-applicant-show.age", locale));
+        if (applicant.getAge() != null) {
+            applicantJson.put("age", applicant.getAge().toString());
+        } else {
+            applicantJson.put("age", "");
+        }
+        if (applicant.getResumeFile() != null) {
+            applicantJson.put("headResume", messageResolver.message("employer-applicant-show.resume", locale));
+            applicantJson.put("resume", messageResolver.message("employer-applicant-show.resume-download", locale));
+            applicantJson.put(
+                    "resumeUrl",
+                    urlResolver.buildFullUri("/employer-download-attachment/", applicant.getResumeFile().getId(), locale)
+            );
+        }
+        if (applicant.getTestAnswerFile() != null) {
+            applicantJson.put("headTestAnswer", messageResolver.message("employer-applicant-show.test-answer", locale));
+            applicantJson.put("testAnswer", messageResolver.message("employer-applicant-show.test-answer-download", locale));
+            applicantJson.put(
+                    "testAnswerUrl",
+                    urlResolver.buildFullUri("/employer-download-attachment/", applicant.getTestAnswerFile().getId(), locale)
+            );
+        }
+        applicantJson.put("headDescription", messageResolver.message("employer-applicant-show.description", locale));
+        applicantJson.put("description", StringEscapeUtils.escapeHtml4(applicant.getDescription()));
+        Map<String,Map<String,String>> mapJson = new HashMap<String, Map<String, String>>();
+        mapJson.put("applicant", applicantJson);
+
+        return mapJson;
     }
 }
