@@ -537,7 +537,6 @@ public class JsonService {
         return vacanciesJson;
     }
 
-
     /**
      * Convert Bid to map for use in view
      * @param bid          Bid
@@ -565,5 +564,31 @@ public class JsonService {
         Map<String,Map<String,String>> mapJson = new HashMap<String, Map<String, String>>();
         mapJson.put("bid", bidJson);
         return mapJson;
+    }
+
+
+    /**
+     * Approve Bid successful message in json format
+     * @param locale       Request locale
+     * @return message
+     */
+    public Object[] employerApproveBid(
+            final Locale locale
+    ) {
+
+        return new Object[]{messageResolver.message("employer-show-recruiter-bids.table.applied", locale)};
+    }
+
+
+    /**
+     * Decline Bid successful message in json format
+     * @param locale       Request locale
+     * @return message
+     */
+    public Object[] employerDeclineBid(
+            final Locale locale
+    ) {
+
+        return new Object[]{messageResolver.message("employer-show-recruiter-bids.table.declined", locale)};
     }
 }

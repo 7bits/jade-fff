@@ -78,35 +78,35 @@ public class EmployerBid {
         return showBid;
     }
 
-
-    /**
-     * Shows bid by id
-     * @param request           Http Request
-     * @param response          Http Response
-     * @param bidId             Bid id
-     * @return json type bid description
-     * Internal Server Error page if something is wrong with obtaining data
-     * due to technical or any other reasons
-     * @throws Exception in very rare circumstances: it should be runtime
-     * or servlet Exception to be thrown
-     */
-    @RequestMapping(value = "/employer-recruiter-show.json", method = RequestMethod.GET)
-    public Map<String, Map<String,String>> ajaxRecruiterShow(
-            final HttpServletRequest request,
-            final HttpServletResponse response,
-            @RequestParam(value="bidId", required = true) final Long bidId
-    ) throws Exception {
-        try {
-            User user = userUtils.getCurrentUser(request);
-            Bid bid = employerService.findBid(bidId, user.getEmployerId());
-            Locale locale = RequestContextUtils.getLocale(request);
-            return jsonService.employerShowBid(bid, locale);
-        } catch (ServiceException e) {
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            return null;
-        }
-
-    }
+//
+//    /**
+//     * Shows bid by id
+//     * @param request           Http Request
+//     * @param response          Http Response
+//     * @param bidId             Bid id
+//     * @return json type bid description
+//     * Internal Server Error page if something is wrong with obtaining data
+//     * due to technical or any other reasons
+//     * @throws Exception in very rare circumstances: it should be runtime
+//     * or servlet Exception to be thrown
+//     */
+//    @RequestMapping(value = "/employer-recruiter-show.json", method = RequestMethod.GET)
+//    public Map<String, Map<String,String>> ajaxRecruiterShow(
+//            final HttpServletRequest request,
+//            final HttpServletResponse response,
+//            @RequestParam(value="bidId", required = true) final Long bidId
+//    ) throws Exception {
+//        try {
+//            User user = userUtils.getCurrentUser(request);
+//            Bid bid = employerService.findBid(bidId, user.getEmployerId());
+//            Locale locale = RequestContextUtils.getLocale(request);
+//            return jsonService.employerShowBid(bid, locale);
+//        } catch (ServiceException e) {
+//            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+//            return null;
+//        }
+//
+//    }
 
 
     /**
@@ -114,16 +114,16 @@ public class EmployerBid {
      * @param bidId       Id of application bid
      * @param request     Http Request
      * @param response    Http Response
-     * @return redirect to "recruiter search" page if everything goes fine,
+     * @return json object with success message if anything goes fine,
      * Forbidden page if this bid does not belong to this employer,
      * Internal Server Error page if something is wrong with obtaining data
      * due to technical or any other reasons
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
-    @RequestMapping(value = "/employer-recruiter-approve/{bidId}", method = RequestMethod.GET)
-    public String approveRecruiterBid(
-            @PathVariable final Long bidId,
+    @RequestMapping(value = "/employer-recruiter-approve.json", method = RequestMethod.GET)
+    public Object[] approveRecruiterBid(
+            @RequestParam(value = "bidId", required = true) final Long bidId,
             final HttpServletRequest request,
             final HttpServletResponse response
     ) throws Exception {
@@ -139,7 +139,7 @@ public class EmployerBid {
         }
         Locale locale = RequestContextUtils.getLocale(request);
 
-        return  urlResolver.buildRedirectUri("employer-recruiter-search", locale);
+        return jsonService.employerApproveBid(locale);
     }
 
     /**
@@ -147,16 +147,16 @@ public class EmployerBid {
      * @param bidId       Id of application bid
      * @param request     Http Request
      * @param response    Http Response
-     * @return redirect to "recruiter search" page if everything goes fine,
+     * @return json object with success message if anything goes fine,
      * Forbidden page if this bid does not belong to this employer,
      * Internal Server Error page if something is wrong with obtaining data
      * due to technical or any other reasons
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
-    @RequestMapping(value = "/employer-recruiter-decline/{bidId}", method = RequestMethod.GET)
-    public String declineRecruiterBid(
-            @PathVariable final Long bidId,
+    @RequestMapping(value = "/employer-recruiter-decline.json", method = RequestMethod.GET)
+    public Object[] declineRecruiterBid(
+            @RequestParam(value = "bidId", required = true) final Long bidId,
             final HttpServletRequest request,
             final HttpServletResponse response
     ) throws Exception {
@@ -172,7 +172,7 @@ public class EmployerBid {
         }
         Locale locale = RequestContextUtils.getLocale(request);
 
-        return  urlResolver.buildRedirectUri("employer-recruiter-search", locale);
+        return jsonService.employerDeclineBid(locale);
     }
 
     public EmployerService getEmployerService() {

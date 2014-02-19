@@ -118,7 +118,7 @@ public class BusinessRulesService {
      * @param deal    Deal
      * @return true if recruiter left feedback
      */
-    public Boolean recruiterLeftFeedback(Deal deal) {
+    public Boolean recruiterLeftFeedback(final Deal deal) {
 
         return (deal.getFeedback().getRecruiterFeedback() != null);
     }
@@ -128,8 +128,49 @@ public class BusinessRulesService {
      * @param deal    Deal
      * @return true if employer left feedback
      */
-    public Boolean employerLeftFeedback(Deal deal) {
+    public Boolean employerLeftFeedback(final Deal deal) {
 
         return (deal.getFeedback().getEmployerFeedback() != null);
+    }
+
+    /**
+     * Test if employer can apply bid
+     * @param bid    Bid
+     * @return true if employer can apply bid
+     */
+    public Boolean canApplyBid(final Bid bid) {
+
+        return (bid.getStatus().equals(BidStatus.ACTIVE));
+    }
+
+    /**
+     * Test if employer applied bid
+     * @param bid    Bid
+     * @return true if employer applied bid
+     */
+    public Boolean appliedBid(final Bid bid) {
+
+        return (bid.getStatus().equals(BidStatus.APPROVED));
+    }
+
+    /**
+     * Test if employer can decline bid
+     * @param bid    Bid
+     * @return true if employer can decline bid
+     */
+    public Boolean canDeclineBid(final Bid bid) {
+
+        return (bid.getStatus().equals(BidStatus.ACTIVE));
+    }
+
+
+    /**
+     * Test if employer declined bid
+     * @param bid    Bid
+     * @return true if employer declined bid
+     */
+    public Boolean declinedBid(final Bid bid) {
+
+        return (bid.getStatus().equals(BidStatus.REJECTED));
     }
 }
