@@ -643,4 +643,30 @@ public class JsonService {
 
         return mapJson;
     }
+
+
+    /**
+     * Approve Applicant successful message in json format
+     * @param locale       Request locale
+     * @return message
+     */
+    public Object[] employerApplyApplicant(
+            final Locale locale
+    ) {
+
+        return new Object[]{messageResolver.message("employer-progress-vacancy-show.table.applied", locale)};
+    }
+
+
+    /**
+     * Decline Applicant successful message in json format
+     * @param locale       Request locale
+     * @return message
+     */
+    public Object[] employerDeclineApplicant(
+            final Locale locale
+    ) {
+
+        return new Object[]{messageResolver.message("employer-progress-vacancy-show.table.declined", locale)};
+    }
 }

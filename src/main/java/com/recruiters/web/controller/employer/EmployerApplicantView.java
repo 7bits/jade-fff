@@ -85,8 +85,7 @@ public class EmployerApplicantView {
      * @param applicantId    Id of applicant
      * @param request        Http request
      * @param response       Http response
-     * @return redirects to list of vacancies currently in work if the action
-     * was successful,
+     * @return json type successful message,
      * Forbidden page if this applicant is not related to any vacancy
      * of current employer,
      * Internal Server Error page if something is wrong with obtaining data
@@ -94,16 +93,14 @@ public class EmployerApplicantView {
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
-    @RequestMapping(value = "/employer-applicant-show/apply/{applicantId}", method = RequestMethod.GET)
-    public String applicantApply(
-            @PathVariable final Long applicantId,
+    @RequestMapping(value = "/employer-applicant-approve.json", method = RequestMethod.GET)
+    public Object[] applicantApply(
+            @RequestParam(value = "applicantId", required = true) final Long applicantId,
             final HttpServletRequest request,
             final HttpServletResponse response
     ) throws Exception {
-        Applicant applicant;
         try {
             User user = userUtils.getCurrentUser(request);
-            applicant = employerService.findApplicant(applicantId,user.getEmployerId());
             employerService.applyApplicant(applicantId, user.getEmployerId());
         } catch (NotAffiliatedException e) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
@@ -114,7 +111,7 @@ public class EmployerApplicantView {
         }
         Locale locale = RequestContextUtils.getLocale(request);
 
-        return  urlResolver.buildRedirectUri("/employer-progress-vacancy-show", applicant.getDeal().getId(), locale);
+        return jsonService.employerApplyApplicant(locale);
     }
 
 
@@ -123,8 +120,7 @@ public class EmployerApplicantView {
      * @param applicantId    Id of applicant
      * @param request        Http request
      * @param response       Http response
-     * @return redirects to list of vacancies currently in work if the action
-     * was successful,
+     * @return json type successful message,
      * Forbidden page if this applicant is not related to any vacancy
      * of current employer,
      * Internal Server Error page if something is wrong with obtaining data
@@ -132,31 +128,23 @@ public class EmployerApplicantView {
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
-    @RequestMapping(value = "/employer-applicant-show/decline/{applicantId}", method = RequestMethod.GET)
-    public String applicantDecline(
-            @PathVariable final Long applicantId,
+    @RequestMapping(value = "/employer-applicant-decline.json", method = RequestMethod.GET)
+    public Object[] applicantDecline(
+            @RequestParam(value = "applicantId", required = true) final Long applicantId,
             final HttpServletRequest request,
             final HttpServletResponse response
     ) throws Exception {
         try {
             User user = userUtils.getCurrentUser(request);
             employerService.declineApplicant(applicantId, user.getEmployerId());
-            Applicant applicant = employerService.findApplicant(applicantId, user.getEmployerId());
             Locale locale = RequestContextUtils.getLocale(request);
 
-            return urlResolver.buildRedirectUri(
-                    "employer-progress-vacancy-show",
-                    applicant.getDeal().getId(),
-                    locale
-            );
+            return jsonService.employerDeclineApplicant(locale);
         } catch (NotAffiliatedException e) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
             return null;
         } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            return null;
-        } catch (NotFoundException e) {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND);
             return null;
         }
     }
