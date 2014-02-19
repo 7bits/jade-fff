@@ -81,7 +81,7 @@ public interface BidMapper {
     })
     Bid findById(final Long bidId);
 
-    @Select("SELECT bid.id, bid.message, bid.status, bid.creation_date, " +
+    @Select("SELECT bid.id, bid.message, bid.status, bid.creation_date, bid.viewed, " +
             "vacancy.id as vacancy_id,  vacancy.employer_id, vacancy.title, " +
             "vacancy.description, vacancy.salary_from, vacancy.salary_to, " +
             "vacancy.creation_date, vacancy.expiration_date, " +
@@ -91,12 +91,14 @@ public interface BidMapper {
             "INNER JOIN vacancy ON vacancy.id=bid.vacancy_id " +
             "INNER JOIN recruiter  ON recruiter.id=bid.recruiter_id " +
             "INNER JOIN user ON recruiter.user_id=user.id " +
-            "WHERE bid.vacancy_id=#{vacancyId} ")
+            "WHERE bid.vacancy_id=#{vacancyId} " +
+            "ORDER BY bid.viewed")
     @Results({
             @Result(column = "id", property = "id"),
             @Result(column = "creation_date", property = "dateCreated"),
             @Result(column = "message", property = "message"),
             @Result(column = "status", property = "status"),
+            @Result(column = "viewed", property = "viewed"),
             @Result(column = "vacancy_id", property = "vacancy.id"),
             @Result(column = "employer_id", property = "vacancy.employer.id"),
             @Result(column = "title", property = "vacancy.title"),

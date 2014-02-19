@@ -100,6 +100,17 @@ public class BusinessRulesService {
         return (deal.getFeedback().getEmployerFeedback() != null);
     }
 
+
+    /**
+     * Test if exact bid is new (unseen by employer)
+     * @param bid    Bid
+     * @return true if bid was not viewed, otherwise false
+     */
+    public Boolean isBidNew(final Bid bid) {
+
+        return  (!bid.getViewed());
+    }
+
     /**
      * Test if employer can apply bid
      * @param bid    Bid

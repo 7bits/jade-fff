@@ -17,8 +17,14 @@ block append content
           for bid in bids
             tr
               td
-                a.showBid.help(href = domain.buildFullUri("/employer-show-recruiter-profile/", bid.recruiter.id, locale), data-id=bid.id)
-                  #{bid.recruiter.user.firstName} #{bid.recruiter.user.lastName}
+                a.showBid.help(href="#", data-id=bid.id)
+                  if test.isBidNew(bid)
+                    strong
+                      #{bid.recruiter.user.firstName} #{bid.recruiter.user.lastName}
+                  else
+                    #{bid.recruiter.user.firstName} #{bid.recruiter.user.lastName}
+
+
               td #{fmt.date(bid.dateCreated, locale)}
               td
                 .btn-group.btn-group-xs

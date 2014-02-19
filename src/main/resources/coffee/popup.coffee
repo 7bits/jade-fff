@@ -9,7 +9,10 @@ $ ->
     template: '<div class="popover" onmouseover="refreshTimeout(this);"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
     trigger: "manual"
   ).hover ((event) ->
-    $link = $(event.target)
+    if $(event.target).is("strong")
+      $link = $(event.target).parent()
+    else
+      $link = $(event.target)
     $popover = $link.data("bs.popover")
     requestData = "bidId=" + $link.attr("data-id")
     request = $.ajax(
@@ -23,6 +26,8 @@ $ ->
       bid = data.entry.value
       ajaxData = "<dl class=\"dl popup\"><dt>" + bid.headRecruiter + "</dt><dd><a href=\"" + bid.recruiterUrl + "\" target=\"blank\">" + bid.recruiter + "</a></dd><dt>" + bid.headCreated + "</dt><dd>" + bid.created + "</dd><dt>" + bid.headMessage + "</dt><dd>" + bid.message + "</dd>" + "</dl>"
       ajaxTitle = bid.popupTitle;
+      if ($link.children("strong").length != 0)
+        $link.html($link.find("strong").html())
       return
 
     request.fail ->
@@ -32,7 +37,11 @@ $ ->
     $popover.show()
     return
   ), (event) ->
-    $popover = $(event.target).data("bs.popover")
+    if $(event.target).is("strong")
+      $link = $(event.target).parent()
+    else
+      $link = $(event.target)
+    $popover = $link.data("bs.popover")
     window.timeoutObj = setTimeout(->
       $popover.hide()
       return
