@@ -158,3 +158,27 @@ $ ->
       return
 
     request.fail ->
+
+
+$ ->
+  $("#recruiterBidsFilter :input").on "change", ->
+    data = $("#recruiterBidsFilter").serialize()
+    request = $.ajax(
+      url: "recruiter-bids-filter-ajax.json"
+      type: "POST"
+      data: data
+      dataType: "json"
+    )
+    request.done (data) ->
+      addHtml = ""
+      bidList = data.entry.value
+      i = 0
+
+      while i < bidList.length
+        obj = bidList[i]
+        addHtml += "<tr><td class=\"help\"><a href=\"#\" data-id=\"" + obj.bidId + "\">" + obj.title + "</a></td><td>" + obj.description  + "</td><td>" + obj.created + "</td><td>" + obj.status + "</td><td><a href=\"" + obj.employerUrl + "\">" + obj.employer + "</a></td><td>" + obj.viewed + "</td></tr>"
+        i++
+      $("#table-sort").find("tbody").html addHtml
+      return
+
+    request.fail ->

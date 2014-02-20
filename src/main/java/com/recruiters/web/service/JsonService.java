@@ -669,4 +669,46 @@ public class JsonService {
 
         return new Object[]{messageResolver.message("employer-progress-vacancy-show.table.declined", locale)};
     }
+
+
+    /**
+     * Convert List of bids to Json ready list of maps for
+     * use on recruiter bids pages
+     * @param bids         List of bids
+     * @param locale       Request locale
+     * @return list of maps
+     */
+    public List<Map<String,String>> recruiterBidsFilteredList(
+            final List<Bid> bids,
+            final Locale locale
+    ) {
+        List<Map<String,String>> bidsJson = new ArrayList<Map<String, String>>();
+        for (Bid bid: bids) {
+            Map<String, String> currentBidJson = new HashMap<String, String>();
+            currentBidJson.put("title", StringEscapeUtils.escapeHtml4(bid.getVacancy().getTitle()));
+            currentBidJson.put("bidId", bid.getId().toString());
+            currentBidJson.put("description", StringEscapeUtils.escapeHtml4(bid.getVacancy().getDescription()));
+            currentBidJson.put("created", messageResolver.date(bid.getDateCreated(), locale));
+            currentBidJson.put("status", messageResolver.bidStatus(bid.getStatus(), locale));
+            currentBidJson.put("employer", bid.getVacancy().getEmployer().getUser().getFirstName() +
+                    " " + bid.getVacancy().getEmployer().getUser().getLastName());
+            currentBidJson.put(
+                    "employerUrl",
+                    urlResolver.buildFullUri(
+                            "/recruiter-show-employer-profile/",
+                            bid.getVacancy().getEmployer().getId(),
+                            locale
+                    )
+            );
+            if (bid.getViewed()) {
+                currentBidJson.put("viewed", messageResolver.message("recruiter-active-bids.table.viewed", locale));
+            } else {
+                currentBidJson.put("viewed", "");
+            }
+
+            bidsJson.add(currentBidJson);
+        }
+
+        return bidsJson;
+    }
 }

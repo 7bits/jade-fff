@@ -5,26 +5,27 @@ block append head
 block append content
   .container
     h1=fmt.message("recruiter-active-bids.h1", locale)
-    table.table.table-striped
+    form.form-sort(name="recruiterBidsFilter", id="recruiterBidsFilter", action="", method="get")
+      .row
+        .col-md-6
+          .btn-group.btn-group-xs(data-toggle="buttons")
+            label.btn.btn-default#showAll=fmt.message("recruiter-active-bids.form.show-all", locale)
+              input(type="checkbox", name="showAll", value="1")
+          .btn-group.btn-group-xs(data-toggle="buttons")
+            label.btn.btn-default#hideRejected=fmt.message("recruiter-active-bids.form.hide-rejected", locale)
+              input(type="checkbox", name="hideRejected", value="1", checked=recruiterBidsFilter.hideRejected)
+            label.btn.btn-default#hideApproved=fmt.message("recruiter-active-bids.form.hide-approved", locale)
+              input(type="checkbox", name="hideApproved", value="1", checked=recruiterBidsFilter.hideApproved)
+            input(type="hidden", name="sortColumn", id="sortColumn")
+            input(type="hidden", name="sortAsc", id="sortAsc")
+            input(type="hidden", name=csrf.getParameterName(), value=csrf.getToken())
+    table.table.table-striped#table-sort
       thead
         tr
-          th=fmt.message("recruiter-active-bids.table.name", locale)
-          th=fmt.message("recruiter-active-bids.table.description", locale)
-          th=fmt.message("recruiter-active-bids.table.status", locale)
-          th=fmt.message("recruiter-active-bids.table.viewed", locale)
-          th=fmt.message("recruiter-active-bids.table.date", locale)
-          th
+          th.sorting#stitle=fmt.message("recruiter-active-bids.table.title", locale)
+          th.sorting#sdescription=fmt.message("recruiter-active-bids.table.description", locale)
+          th.sorting#screation_date=fmt.message("recruiter-active-bids.table.created", locale)
+          th.sorting#sstatus=fmt.message("recruiter-active-bids.table.status", locale)
+          th.sorting#slastname=fmt.message("recruiter-active-bids.table.employer", locale)
+          th.sorting#sviewed=fmt.message("recruiter-active-bids.table.viewed", locale)
       tbody
-        for bid in bids
-          tr
-            td #{bid.vacancy.title}
-            td #{bid.vacancy.description}
-            td #{fmt.bidStatus(bid.status, locale)}
-            td
-              if bid.viewed
-                #{fmt.message("recruiter-active-bids.table.viewed", locale)}
-            td #{fmt.date(bid.vacancy.creationDate, locale)}
-            td
-              a.btn.btn-link(href=domain.buildFullUri("/recruiter-show-bid-vacancy", bid.id, locale))=fmt.message("recruiter-active-bids.more", locale)
-    a.btn.btn-success(href=domain.buildFullUri("/recruiter-clear-rejected-bids", locale))=fmt.message("recruiter-active-bids.clear.rejected", locale)
-    a.btn.btn-success(href=domain.buildFullUri("/recruiter-clear-approved-bids", locale))=fmt.message("recruiter-active-bids.clear.approved", locale)

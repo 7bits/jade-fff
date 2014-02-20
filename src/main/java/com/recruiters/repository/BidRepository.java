@@ -5,6 +5,7 @@ import com.recruiters.model.status.BidStatus;
 import com.recruiters.model.Recruiter;
 import com.recruiters.model.Vacancy;
 import com.recruiters.repository.mapper.BidMapper;
+import com.recruiters.repository.specification.impl.bid.BidListSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -60,18 +61,21 @@ public class BidRepository {
     }
 
     /**
-     * Find and return all  bids for certain recruiter
+     * Find and return filtered bids for certain recruiter
      * @param recruiterId    Id of recruiter
      * @return List of Bid instances, which belongs to exact recruiter
      * @throws RepositoryException if input parameter is incorrect or there
      * were any technical issues
      */
-    public List<Bid> findBidsByRecruiterId(final Long recruiterId) throws RepositoryException {
-        if (recruiterId == null) {
-            throw new RepositoryException("vacancyId is null");
+    public List<Bid> findBidsByRecruiterId(
+            final Long recruiterId,
+            final BidListSpecification bidListSpecification
+    ) throws RepositoryException {
+        if (recruiterId == null || bidListSpecification == null) {
+            throw new RepositoryException("vacancyId or bidListSpecification is null");
         }
         try {
-            return bidMapper.findBidsByRecruiterId(recruiterId);
+            return bidMapper.findBidsByRecruiterId(recruiterId, bidListSpecification);
         } catch (Exception e) {
             throw new RepositoryException("General database error: ", e);
         }

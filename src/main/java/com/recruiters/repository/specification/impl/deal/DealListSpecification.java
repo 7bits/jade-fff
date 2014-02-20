@@ -1,6 +1,6 @@
 package com.recruiters.repository.specification.impl.deal;
 
-import com.recruiters.model.Vacancy;
+import com.recruiters.model.Deal;
 import com.recruiters.repository.specification.IListSpecification;
 import com.recruiters.repository.specification.IOrderSpecification;
 import com.recruiters.repository.specification.ISpecification;
@@ -8,7 +8,7 @@ import com.recruiters.repository.specification.ISpecification;
 /**
  * Specification for Deal List
  */
-public class DealListSpecification implements IListSpecification<Vacancy> {
+public class DealListSpecification implements IListSpecification<Deal> {
     private ISpecification dealSpecification;
     private IOrderSpecification listOrderSpecification;
     /** Default string size, used for string builder */

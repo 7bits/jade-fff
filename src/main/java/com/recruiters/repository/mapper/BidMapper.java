@@ -2,12 +2,15 @@ package com.recruiters.repository.mapper;
 
 import com.recruiters.model.Bid;
 import com.recruiters.model.status.BidStatus;
+import com.recruiters.repository.mapper.provider.BidFilteredProvider;
+import com.recruiters.repository.specification.impl.bid.BidListSpecification;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectProvider;
 import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
@@ -17,35 +20,25 @@ import java.util.List;
  */
 public interface BidMapper {
 
-    @Select("SELECT bid.id, bid.message, bid.status, bid.viewed, " +
-            "vacancy.id as vacancy_id,  vacancy.employer_id, vacancy.title, " +
-            "vacancy.description, vacancy.salary_from, vacancy.salary_to, " +
-            "vacancy.creation_date, vacancy.expiration_date, " +
-            "recruiter.id as recruiter_id, " +
-            "user.firstname, user.lastname " +
-            "FROM bid " +
-            "INNER JOIN vacancy ON vacancy.id=bid.vacancy_id " +
-            "INNER JOIN recruiter  ON recruiter.id=bid.recruiter_id " +
-            "INNER JOIN user ON recruiter.user_id=user.id " +
-            "WHERE bid.recruiter_id=#{recruiterId} AND recruiter_archived=0")
+    @SelectProvider(type = BidFilteredProvider.class, method = "selectBidsFiltered")
     @Results({
             @Result(column = "id", property = "id"),
             @Result(column = "message", property = "message"),
             @Result(column = "status", property = "status"),
             @Result(column = "viewed", property = "viewed"),
             @Result(column = "vacancy_id", property = "vacancy.id"),
-            @Result(column = "employer_id", property = "vacancy.employer.id"),
             @Result(column = "title", property = "vacancy.title"),
             @Result(column = "description", property = "vacancy.description"),
-            @Result(column = "salary_from", property = "vacancy.salaryFrom"),
-            @Result(column = "salary_to", property = "vacancy.salaryTo"),
-            @Result(column = "creation_date", property = "vacancy.creationDate"),
-            @Result(column = "expiration_date", property = "vacancy.expirationDate"),
-            @Result(column = "recruiter_id", property = "recruiter.id"),
-            @Result(column = "firstname", property = "recruiter.user.firstName"),
-            @Result(column = "lastname", property = "recruiter.user.lastName")
+            @Result(column = "employer_id", property = "vacancy.employer.id"),
+            @Result(column = "firstname", property = "vacancy.employer.user.firstName"),
+            @Result(column = "lastname", property = "vacancy.employer.user.lastName"),
+            @Result(column = "creation_date", property = "dateCreated"),
+            @Result(column = "updated_date", property = "lastModified"),
+            @Result(column = "recruiter_id", property = "recruiter.id")
     })
-    List<Bid> findBidsByRecruiterId(final Long recruiterId);
+    List<Bid> findBidsByRecruiterId(@Param("recruiterId") final Long recruiterId,
+                                    @Param("bidListSpecification") final BidListSpecification bidListSpecification
+    );
 
     @Select("SELECT bid.id, bid.message, bid.status, bid.creation_date as bid_created, " +
             "vacancy.id as vacancy_id,  vacancy.employer_id, vacancy.title, " +

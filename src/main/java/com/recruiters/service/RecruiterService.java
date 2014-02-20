@@ -25,6 +25,7 @@ import com.recruiters.service.exception.NotAffiliatedException;
 import com.recruiters.service.exception.NotFoundException;
 import com.recruiters.service.exception.ServiceException;
 import com.recruiters.web.form.RecruiterVacanciesFilter;
+import com.recruiters.web.form.filter.RecruiterBidsFilter;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -220,16 +221,22 @@ public class RecruiterService {
     }
 
     /**
-     * Find and return list of all recruiter bids
+     * Find and return list of filtered recruiter bids
      * @param recruiterId    Id of recruiter
-     * @return List with all Bid instances made by recruiter
+     * @param bidsFilter     Filter to apply
+     * @return List with Bid instances made by recruiter
      * @throws ServiceException if cannot obtain Bids instances from
      * repository or any other possible error
      */
-    public List<Bid> findBidsForRecruiter(final Long recruiterId)
-            throws ServiceException {
+    public List<Bid> findBidsForRecruiter(
+            final Long recruiterId,
+            final RecruiterBidsFilter bidsFilter
+    ) throws ServiceException {
         try {
-            return bidRepository.findBidsByRecruiterId(recruiterId);
+            return bidRepository.findBidsByRecruiterId(
+                    recruiterId,
+                    bidsFilter.getListSpecifications()
+            );
         } catch (Exception e) {
             log.error(SERVICE_EXCEPTION_MESSAGE, e);
             throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
