@@ -38,6 +38,26 @@ public class BusinessRulesService {
     }
 
     /**
+     * Test if exact applicant in deal is editable
+     * @param applicant    Applicant
+     * @param deal         Deal
+     * @return true if it's allowed to edit applicant, otherwise false
+     */
+    public Boolean isApplicantEditable(final Applicant applicant, final Deal deal) {
+
+        Boolean isApplicantActive = false;
+        if (applicant.getStatus() == ApplicantStatus.IN_PROGRESS) {
+            isApplicantActive = true;
+        }
+        Boolean isDealActive = false;
+        if (deal.getStatus() == DealStatus.IN_PROGRESS) {
+            isDealActive = true;
+        }
+
+        return  (isApplicantActive && isDealActive);
+    }
+
+    /**
      * Test if it's allowed to add new applicants for exact deal
      * @param deal    Deal
      * @return true if you can add new applicants to this deal,
