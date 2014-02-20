@@ -176,7 +176,7 @@ $ ->
 
       while i < bidList.length
         obj = bidList[i]
-        addHtml += "<tr><td class=\"help\"><a href=\"#\" data-id=\"" + obj.bidId + "\">" + obj.title + "</a></td><td>" + obj.description  + "</td><td>" + obj.created + "</td><td>" + obj.status + "</td><td><a href=\"" + obj.employerUrl + "\">" + obj.employer + "</a></td><td>" + obj.viewed + "</td></tr>"
+        addHtml += "<tr><td><a href=\"#\" data-id=\"" + obj.bidId + "\" class=\"help showRecruiterBid\">" + obj.title + "</a></td><td>" + obj.description  + "</td><td>" + obj.created + "</td><td>" + obj.status + "</td><td><a href=\"" + obj.employerUrl + "\">" + obj.employer + "</a></td><td>" + obj.viewed + "</td></tr>"
         i++
       $("#table-sort").find("tbody").html addHtml
       return

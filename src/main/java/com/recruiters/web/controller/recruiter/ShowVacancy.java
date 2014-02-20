@@ -10,6 +10,7 @@ import com.recruiters.service.exception.NotFoundException;
 import com.recruiters.service.exception.ServiceException;
 import com.recruiters.web.controller.utils.UserUtils;
 import com.recruiters.web.helper.UrlResolver;
+import com.recruiters.web.service.JsonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +23,7 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Locale;
+import java.util.Map;
 
 
 /**
@@ -39,6 +41,9 @@ public class ShowVacancy {
     /** Url Builder */
     @Autowired
     private UrlResolver urlResolver;
+    /** Json converter service */
+    @Autowired
+    private JsonService jsonService;
 
     /**
      * Displays certain vacancy with method GET
@@ -109,27 +114,26 @@ public class ShowVacancy {
     }
 
     /**
-     * Displays certain vacancy with bid on it
-     * @param bidId        Bd id
+     * Shows bid in json format
+     * @param bidId        Bid id
      * @param request      Http Request
      * @param response     Http Response
-     * @return model and view with vacancy and bid status, Internal Server Error
+     * @return json formatted bid information, Internal Server Error
      * page if something is wrong with obtaining data due to technical or any
      * other reasons
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
-    @RequestMapping(value = "/recruiter-show-bid-vacancy/{bidId}", method = RequestMethod.GET)
-    public ModelAndView showBidVacancyById(
-            @PathVariable final Long bidId,
+    @RequestMapping(value = "/recruiter-bid-show.json", method = RequestMethod.GET)
+    public Map<String, Map<String,String>> showBidVacancyById(
+            @RequestParam(value = "bidId", required = true) final Long bidId,
             final HttpServletRequest request,
             final HttpServletResponse response
     ) throws Exception {
-        ModelAndView showBidVacancy = new ModelAndView("recruiter/recruiter-show-bid-vacancy.jade");
+        Bid bid;
         try {
             User user = userUtils.getCurrentUser(request);
-            Bid bid = recruiterService.findActiveBid(bidId, user.getRecruiterId());
-            showBidVacancy.addObject("bid", bid);
+            bid = recruiterService.findActiveBid(bidId, user.getRecruiterId());
         } catch (NotAffiliatedException e) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
             return null;
@@ -140,8 +144,9 @@ public class ShowVacancy {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             return null;
         }
+        Locale locale = RequestContextUtils.getLocale(request);
 
-        return showBidVacancy;
+        return jsonService.recruiterShowBid(bid, locale);
     }
 
     public RecruiterService getRecruiterService() {

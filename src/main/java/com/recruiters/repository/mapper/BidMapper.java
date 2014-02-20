@@ -40,7 +40,8 @@ public interface BidMapper {
                                     @Param("bidListSpecification") final BidListSpecification bidListSpecification
     );
 
-    @Select("SELECT bid.id, bid.message, bid.status, bid.creation_date as bid_created, " +
+    @Select("SELECT bid.id, bid.message, bid.status, " +
+            "bid.creation_date as bid_created, bid.updated_date as bid_updated, " +
             "vacancy.id as vacancy_id,  vacancy.employer_id, vacancy.title, " +
             "vacancy.description, vacancy.salary_from, vacancy.salary_to, " +
             "vacancy.creation_date, vacancy.expiration_date, vacancy.test_file, " +
@@ -58,6 +59,7 @@ public interface BidMapper {
             @Result(column = "message", property = "message"),
             @Result(column = "status", property = "status"),
             @Result(column = "bid_created", property = "dateCreated"),
+            @Result(column = "bid_updated", property = "lastModified"),
             @Result(column = "vacancy_id", property = "vacancy.id"),
             @Result(column = "employer_id", property = "vacancy.employer.id"),
             @Result(column = "title", property = "vacancy.title"),

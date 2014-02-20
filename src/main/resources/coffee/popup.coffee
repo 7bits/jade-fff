@@ -53,8 +53,6 @@ $ ->
     return
 
   $showApplicant = $("a.showApplicant")
-  ajaxData = ""
-  ajaxTitle = ""
   $showApplicant.popover(
     placement: "bottom"
     html: true
@@ -106,7 +104,53 @@ $ ->
     , 350)
     return
 
-  return
+
+  $showRecruiterBid = $("a.showRecruiterBid")
+  $showRecruiterBid.popover(
+    placement: "bottom"
+    html: true
+    content: ""
+    template: '<div class="popover" onmouseover="refreshTimeout(this);"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
+    trigger: "manual"
+  )
+  $(document).on
+    mouseenter: (event) ->
+      $link = $(event.target)
+      $popover = $link.data("bs.popover")
+      requestData = "bidId=" + $link.attr("data-id")
+      request = $.ajax(
+        url: "recruiter-bid-show.json"
+        type: "GET"
+        async: false
+        data: requestData
+        dataType: "json"
+      )
+      request.done (data) ->
+        bid = data.entry.value
+        ajaxData = "<dl class=\"dl popup\">"
+        if (bid.deal?)
+          ajaxData += "<dt>" + bid.headDeal + "</dt><dd><a href=\"" + bid.dealUrl + "\">" + bid.deal + "</a></dd>"
+        ajaxData += "<dt>" + bid.headVacancy + "</dt><dd>" + bid.vacancy + "</dd><dt>" + bid.headSalary + "</dt><dd>" + bid.salary + "</dd><dt>" + bid.headCreated + "</dt><dd>" + bid.created + "</dd><dt>" + bid.headUpdated + "</dt><dd>" + bid.updated + "</dd><dt>" + bid.headExpiration + "</dt><dd>" + bid.expiration + "</dd><dt>" + bid.headStatus + "</dt><dd>" + bid.status + "</dd<dt>" + bid.headDescription + "</dt><dd>" + bid.description + "</dd>"
+        ajaxTitle = bid.popupTitle
+        return
+
+      request.fail ->
+
+      $popover.options.content = ajaxData
+      $popover.options.title = ajaxTitle
+      $popover.setContent()
+      $popover.show()
+
+    mouseleave: (event) ->
+      $link = $(event.target)
+      $popover = $link.data("bs.popover")
+      window.timeoutObj = setTimeout(->
+        $popover.hide()
+        return
+      , 350)
+      return
+  , "a.showRecruiterBid"
+
 
 window.timeoutObj = undefined
 window.refreshTimeout = (obj) ->

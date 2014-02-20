@@ -711,4 +711,48 @@ public class JsonService {
 
         return bidsJson;
     }
+
+
+    /**
+     * Convert Bid to map for use in ajax requested by recruiter
+     * @param bid          Bid
+     * @param locale       Request locale
+     * @return map with bid
+     */
+    public Map<String, Map<String,String>> recruiterShowBid(
+            final Bid bid,
+            final Locale locale
+    ) {
+        Map<String, String> bidJson = new HashMap<String, String>();
+        bidJson.put("popupTitle", messageResolver.message("recruiter-show-bid.title", locale));
+        bidJson.put("headVacancy", messageResolver.message("recruiter-show-bid.vacancy", locale));
+        bidJson.put("vacancy", bid.getVacancy().getTitle());
+        bidJson.put("headSalary", messageResolver.message("recruiter-show-bid.salary", locale));
+        bidJson.put("salary", messageResolver.currencyRange(
+                bid.getVacancy().getSalaryFrom(),
+                bid.getVacancy().getSalaryTo(),
+                locale
+        ));
+        bidJson.put("headCreated", messageResolver.message("recruiter-show-bid.created", locale));
+        bidJson.put("created", messageResolver.date(bid.getDateCreated(), locale));
+        bidJson.put("headUpdated", messageResolver.message("recruiter-show-bid.updated", locale));
+        bidJson.put("updated", messageResolver.date(bid.getLastModified(), locale));
+        bidJson.put("headExpiration", messageResolver.message("recruiter-show-bid.expiration", locale));
+        bidJson.put("expiration", messageResolver.date(bid.getVacancy().getExpirationDate(), locale));
+        bidJson.put("headStatus", messageResolver.message("recruiter-show-bid.status", locale));
+        bidJson.put("status", messageResolver.bidStatus(bid.getStatus(), locale));
+
+        bidJson.put("headDeal", messageResolver.message("recruiter-show-bid.deal", locale));
+        bidJson.put("deal", messageResolver.message("recruiter-show-bid.to-deal", locale));
+        bidJson.put(
+                "dealUrl",
+                urlResolver.buildFullUri("/recruiter-show-in-progress-vacancy/", bid.getDealId(), locale)
+        );
+        bidJson.put("headDescription", messageResolver.message("employer-recruiter-show.bid.message", locale));
+        bidJson.put("description", StringEscapeUtils.escapeHtml4(bid.getVacancy().getDescription()));
+
+        Map<String,Map<String,String>> mapJson = new HashMap<String, Map<String, String>>();
+        mapJson.put("bid", bidJson);
+        return mapJson;
+    }
 }
