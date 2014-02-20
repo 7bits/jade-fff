@@ -741,14 +741,15 @@ public class JsonService {
         bidJson.put("expiration", messageResolver.date(bid.getVacancy().getExpirationDate(), locale));
         bidJson.put("headStatus", messageResolver.message("recruiter-show-bid.status", locale));
         bidJson.put("status", messageResolver.bidStatus(bid.getStatus(), locale));
-
-        bidJson.put("headDeal", messageResolver.message("recruiter-show-bid.deal", locale));
-        bidJson.put("deal", messageResolver.message("recruiter-show-bid.to-deal", locale));
-        bidJson.put(
-                "dealUrl",
-                urlResolver.buildFullUri("/recruiter-show-in-progress-vacancy/", bid.getDealId(), locale)
-        );
-        bidJson.put("headDescription", messageResolver.message("employer-recruiter-show.bid.message", locale));
+        if (!bid.getDealId().equals(0L)) {
+            bidJson.put("headDeal", messageResolver.message("recruiter-show-bid.deal", locale));
+            bidJson.put("deal", messageResolver.message("recruiter-show-bid.to-deal", locale));
+            bidJson.put(
+                    "dealUrl",
+                    urlResolver.buildFullUri("/recruiter-show-in-progress-vacancy/", bid.getDealId(), locale)
+            );
+        }
+        bidJson.put("headDescription", messageResolver.message("recruiter-show-bid.description", locale));
         bidJson.put("description", StringEscapeUtils.escapeHtml4(bid.getVacancy().getDescription()));
 
         Map<String,Map<String,String>> mapJson = new HashMap<String, Map<String, String>>();

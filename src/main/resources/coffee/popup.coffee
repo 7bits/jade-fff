@@ -105,17 +105,17 @@ $ ->
     return
 
 
-  $showRecruiterBid = $("a.showRecruiterBid")
-  $showRecruiterBid.popover(
-    placement: "bottom"
-    html: true
-    content: ""
-    template: '<div class="popover" onmouseover="refreshTimeout(this);"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
-    trigger: "manual"
-  )
+  showRecruiterBid = "a.showRecruiterBid"
   $(document).on
     mouseenter: (event) ->
       $link = $(event.target)
+      $link.popover(
+        placement: "bottom"
+        html: true
+        content: ""
+        template: '<div class="popover" onmouseover="refreshTimeout(this);"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
+        trigger: "manual"
+      )
       $popover = $link.data("bs.popover")
       requestData = "bidId=" + $link.attr("data-id")
       request = $.ajax(
@@ -130,7 +130,7 @@ $ ->
         ajaxData = "<dl class=\"dl popup\">"
         if (bid.deal?)
           ajaxData += "<dt>" + bid.headDeal + "</dt><dd><a href=\"" + bid.dealUrl + "\">" + bid.deal + "</a></dd>"
-        ajaxData += "<dt>" + bid.headVacancy + "</dt><dd>" + bid.vacancy + "</dd><dt>" + bid.headSalary + "</dt><dd>" + bid.salary + "</dd><dt>" + bid.headCreated + "</dt><dd>" + bid.created + "</dd><dt>" + bid.headUpdated + "</dt><dd>" + bid.updated + "</dd><dt>" + bid.headExpiration + "</dt><dd>" + bid.expiration + "</dd><dt>" + bid.headStatus + "</dt><dd>" + bid.status + "</dd<dt>" + bid.headDescription + "</dt><dd>" + bid.description + "</dd>"
+        ajaxData += "<dt>" + bid.headVacancy + "</dt><dd>" + bid.vacancy + "</dd><dt>" + bid.headSalary + "</dt><dd>" + bid.salary + "</dd><dt>" + bid.headCreated + "</dt><dd>" + bid.created + "</dd><dt>" + bid.headUpdated + "</dt><dd>" + bid.updated + "</dd><dt>" + bid.headExpiration + "</dt><dd>" + bid.expiration + "</dd><dt>" + bid.headStatus + "</dt><dd>" + bid.status + "</dd><dt>" + bid.headDescription + "</dt><dd>" + bid.description + "</dd>"
         ajaxTitle = bid.popupTitle
         return
 
@@ -149,7 +149,7 @@ $ ->
         return
       , 350)
       return
-  , "a.showRecruiterBid"
+  , showRecruiterBid
 
 
 window.timeoutObj = undefined

@@ -52,7 +52,7 @@ public interface BidMapper {
             "INNER JOIN vacancy ON vacancy.id=bid.vacancy_id " +
             "INNER JOIN recruiter  ON recruiter.id=bid.recruiter_id " +
             "INNER JOIN user ON recruiter.user_id=user.id " +
-            "LEFT JOIN deal ON deal.vacancy_id=bid.vacancy_id " +
+            "LEFT JOIN deal ON deal.vacancy_id=bid.vacancy_id AND deal.recruiter_id = bid.recruiter_id " +
             "WHERE bid.id=#{bidId}")
     @Results({
             @Result(column = "id", property = "id"),
