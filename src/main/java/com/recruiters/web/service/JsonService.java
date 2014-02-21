@@ -520,6 +520,8 @@ public class JsonService {
     ) {
         Map<String, String> bidJson = new HashMap<String, String>();
         bidJson.put("popupTitle", messageResolver.message("employer-recruiter-show.bid.title", locale));
+        bidJson.put("headStatus", messageResolver.message("employer-recruiter-show.bid.status", locale));
+        bidJson.put("status", messageResolver.bidStatus(bid.getStatus(), locale));
         bidJson.put("headCreated", messageResolver.message("employer-recruiter-show.bid.created", locale));
         bidJson.put("created", messageResolver.date(bid.getDateCreated(), locale));
         bidJson.put("headMessage", messageResolver.message("employer-recruiter-show.bid.message", locale));
