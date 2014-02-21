@@ -145,10 +145,12 @@ public class RecruiterBids {
         if (o instanceof RecruiterBidsFilter) {
             bidsFilter.setHideApproved(((RecruiterBidsFilter) o).getHideApproved());
             bidsFilter.setHideRejected(((RecruiterBidsFilter) o).getHideRejected());
+            bidsFilter.setHideWithdrawn(((RecruiterBidsFilter) o).getHideWithdrawn());
         } else {
             // Default settings
             bidsFilter.setHideRejected(false);
             bidsFilter.setHideApproved(false);
+            bidsFilter.setHideWithdrawn(false);
         }
     }
 

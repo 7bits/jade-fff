@@ -16,6 +16,8 @@ block append content
               input(type="checkbox", name="hideRejected", value="1", checked=recruiterBidsFilter.hideRejected)
             label.btn.btn-default#hideApproved=fmt.message("recruiter-active-bids.form.hide-approved", locale)
               input(type="checkbox", name="hideApproved", value="1", checked=recruiterBidsFilter.hideApproved)
+            label.btn.btn-default#hideWithdrawn=fmt.message("recruiter-active-bids.form.hide-withdrawn", locale)
+              input(type="checkbox", name="hideWithdrawn", value="1", checked=recruiterBidsFilter.hideWithdrawn)
             input(type="hidden", name="sortColumn", id="sortColumn")
             input(type="hidden", name="sortAsc", id="sortAsc")
             input(type="hidden", name=csrf.getParameterName(), value=csrf.getToken())

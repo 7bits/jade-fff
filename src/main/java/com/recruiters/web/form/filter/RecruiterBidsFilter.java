@@ -6,6 +6,7 @@ import com.recruiters.repository.specification.impl.bid.ActiveBidSpecification;
 import com.recruiters.repository.specification.impl.bid.ApprovedBidSpecification;
 import com.recruiters.repository.specification.impl.bid.BidListSpecification;
 import com.recruiters.repository.specification.impl.bid.RejectedBidSpecification;
+import com.recruiters.repository.specification.impl.bid.WithdrawnBidSpecification;
 
 /**
  * Filter for "My bids" recruiter page
@@ -13,6 +14,7 @@ import com.recruiters.repository.specification.impl.bid.RejectedBidSpecification
 public class RecruiterBidsFilter {
     private Boolean hideRejected = false;
     private Boolean hideApproved = false;
+    private Boolean hideWithdrawn = false;
     private String sortColumn;
     private Boolean sortAsc;
 
@@ -27,6 +29,9 @@ public class RecruiterBidsFilter {
         }
         if (!hideApproved) {
             bidSpecification = bidSpecification.or(new ApprovedBidSpecification());
+        }
+        if (!hideWithdrawn) {
+            bidSpecification = bidSpecification.or(new WithdrawnBidSpecification());
         }
 
         if (sortColumn == null || sortAsc == null) {
@@ -56,6 +61,14 @@ public class RecruiterBidsFilter {
 
     public void setHideApproved(final Boolean hideApproved) {
         this.hideApproved = hideApproved;
+    }
+
+    public Boolean getHideWithdrawn() {
+        return hideWithdrawn;
+    }
+
+    public void setHideWithdrawn(final Boolean hideWithdrawn) {
+        this.hideWithdrawn = hideWithdrawn;
     }
 
     public String getSortColumn() {
