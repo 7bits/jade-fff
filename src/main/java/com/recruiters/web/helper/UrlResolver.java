@@ -6,7 +6,9 @@ import java.util.Locale;
 
 
 /**
- *  Url helper for templates
+ *  All url and uri related methods
+ *  using to get urls and uris across whole application
+ *  Uris and urls are made including locale
  */
 public class UrlResolver {
 

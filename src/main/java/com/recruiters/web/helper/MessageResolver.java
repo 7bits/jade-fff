@@ -14,8 +14,8 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
- * Message Resolver for all localisation formatting purposes
- * for use inside templates
+ * Message Resolver is used for all localization
+ * and localized formatting purposes
  */
 public class MessageResolver {
     @Autowired

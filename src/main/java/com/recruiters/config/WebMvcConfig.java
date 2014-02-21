@@ -109,7 +109,8 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     }
 
     /**
-     * Create Bean for  Multi-part Resolver
+     * Create Bean for Multi-part Resolver
+     * (needed for upload handling in forms)
      * @return Multi-part resolver
      */
     @Bean
@@ -119,6 +120,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
     /**
      * Create Bean for Message Resolver
+     * (used for messages localization)
      * @return Message Resolver
      */
     @Bean
@@ -128,7 +130,8 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
 
     /**
-     * Create and configure bean for Url Resolver, used to generate all uris
+     * Create and configure bean for Url Resolver,
+     * used to generate all uris
      * and urls across whole application
      * @return Url resolver singleton
      */
@@ -153,6 +156,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
     /**
      * Setup content negotiation view resolver
+     * All view resolvers are added to negotiation resolver here
      */
     @Bean
     public ViewResolver contentNegotiatingViewResolver(ContentNegotiationManager manager)
@@ -175,17 +179,17 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     }
 
     /**
-     * Template Loader setting
-     * @return template loader
+     * Setup view resolver for Jade templates
+     * Using custom view resolver, because Jade is bad
+     * @return jade view resolver
      */
     @Bean
-    public SpringTemplateLoader templateLoader() {
-        SpringTemplateLoader templateLoader = new SpringTemplateLoader();
-        templateLoader.setBasePath("/WEB-INF/views/");
-        templateLoader.setEncoding("UTF-8");
-        templateLoader.setSuffix(".jade");
+    public ViewResolver jadeViewResolver() {
+        CustomJadeViewResolver jadeViewResolver = new CustomJadeViewResolver();
+        jadeViewResolver.setConfiguration(jadeConfiguration());
+        jadeViewResolver.setOrder(0);
 
-        return templateLoader;
+        return jadeViewResolver;
     }
 
     /**
@@ -202,17 +206,17 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     }
 
     /**
-     * Setup view resolver for Jade templates
-     * Using custom view resolver, because Jade is bad
-     * @return jade view resolver
+     * Template Loader setting
+     * @return template loader
      */
     @Bean
-    public ViewResolver jadeViewResolver() {
-        CustomJadeViewResolver jadeViewResolver = new CustomJadeViewResolver();
-        jadeViewResolver.setConfiguration(jadeConfiguration());
-        jadeViewResolver.setOrder(0);
+    public SpringTemplateLoader templateLoader() {
+        SpringTemplateLoader templateLoader = new SpringTemplateLoader();
+        templateLoader.setBasePath("/WEB-INF/views/");
+        templateLoader.setEncoding("UTF-8");
+        templateLoader.setSuffix(".jade");
 
-        return jadeViewResolver;
+        return templateLoader;
     }
 
     /**

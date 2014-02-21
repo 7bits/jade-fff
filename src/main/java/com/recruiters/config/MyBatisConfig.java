@@ -18,7 +18,7 @@ import javax.inject.Inject;
 
 
 /**
- * MyBatis Configuration
+ * MyBatis Configuration (Database)
  */
 @Configuration
 @PropertySource("classpath:jdbc.properties")
