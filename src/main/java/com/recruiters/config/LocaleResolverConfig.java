@@ -20,6 +20,12 @@ import java.util.StringTokenizer;
 @Configuration
 @PropertySource("classpath:language.properties")
 public class LocaleResolverConfig {
+    /** Property key for default locale */
+    private static final String PROPERTY_DEFAULT_LOCALE = "recruiter-language.default";
+    /** Property key for languages */
+    private static final String PROPERTY_LANGUAGES = "recruiter-language.languages";
+    /** Property keys for countries start with */
+    private static final String PROPERTY_COUNTRIES_START_WITH = "recruiter-language.countries";
 
     @Inject
     private org.springframework.core.env.Environment environment;
@@ -31,11 +37,11 @@ public class LocaleResolverConfig {
      */
     @Bean
     public LocaleResolver localeResolver() {
-        String defaultLocale = environment.getProperty("recruiter-language.default");
-        String[] languages = environment.getProperty("recruiter-language.languages").split(",");
+        String defaultLocale = environment.getProperty(PROPERTY_DEFAULT_LOCALE);
+        String[] languages = environment.getProperty(PROPERTY_LANGUAGES).split(",");
         Map<String, Set<String>> countryLanguages = new HashMap<String, Set<String>>();
         for (String language : languages) {
-            String propertyCode = "recruiter-language.languages" + "." + language;
+            String propertyCode = PROPERTY_COUNTRIES_START_WITH + "." + language;
             StringTokenizer st = new StringTokenizer(
                     environment.getProperty(propertyCode),
                     ","
