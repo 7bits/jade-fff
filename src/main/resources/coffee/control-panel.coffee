@@ -43,7 +43,7 @@ $ ->
         i = 0
         while i < applicantList.length
           obj = applicantList[i]
-          addHtml += "<tr><td><a href=\"" + obj.vacancyUrl + "\">" + obj.vacancy + "</a></td><td><a href=\"" + obj.recruiterUrl + "\">" + obj.recruiter + "</td><td>" + obj.updated  + "</td><td><a href=\"" + obj.applicantUrl + "\">" + obj.applicant + "</td></tr>"
+          addHtml += "<tr><td><a href=\"#\" data-id=\"" + obj.applicantId + "\" class=\"help showApplicant\"><strong>" + obj.applicant + "</strong></a></td><td><a href=\"" + obj.vacancyUrl + "\">" + obj.vacancy + "</a></td><td><a href=\"" + obj.recruiterUrl + "\">" + obj.recruiter + "</td><td>" + obj.updated  + "</td></tr>"
           i++
         table.find("tbody").html addHtml
         setTimeout (->
@@ -73,7 +73,7 @@ $ ->
         i = 0
         while i < bidList.length
           obj = bidList[i]
-          addHtml += "<tr><td><a href=\"" + obj.vacancyUrl + "\">" + obj.vacancy + "</a></td><td><a href=\"" + obj.recruiterUrl + "\">" + obj.recruiter + "</td><td>" + obj.updated  + "</td><td><a href=\"" + obj.bidUrl + "\">" + obj.bid + "</td></tr>"
+          addHtml += "<tr><td><a href=\"#\" data-id=\"" + obj.bidId + "\" class=\"help showEmployerBid\"><strong>" + obj.recruiter + "</strong></a></td><td><a href=\"" + obj.vacancyUrl + "\">" + obj.vacancy + "</a></td><td>" + obj.description + "</td><td>" + obj.updated  + "</td></tr>"
           i++
         table.find("tbody").html addHtml
         setTimeout (->

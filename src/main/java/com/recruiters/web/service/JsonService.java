@@ -253,14 +253,7 @@ public class JsonService {
                     )
             );
             currentApplicantJson.put("applicant", applicant.getFirstName() + " " + applicant.getLastName());
-            currentApplicantJson.put(
-                    "applicantUrl",
-                    urlResolver.buildFullUri(
-                            "/employer-applicant-show/",
-                            applicant.getId(),
-                            locale
-                    )
-            );
+            currentApplicantJson.put("applicantId", applicant.getId().toString());
 
             applicantsJson.add(currentApplicantJson);
         }
@@ -283,7 +276,8 @@ public class JsonService {
         List<Map<String,String>> bidsJson = new ArrayList<Map<String, String>>();
         for (Bid bid: bids) {
             Map<String, String> currentBidJson = new HashMap<String, String>();
-            currentBidJson.put("vacancy", bid.getVacancy().getTitle());
+            currentBidJson.put("vacancy", StringEscapeUtils.escapeHtml4(bid.getVacancy().getTitle()));
+            currentBidJson.put("description", StringEscapeUtils.escapeHtml4(bid.getVacancy().getDescription()));
             currentBidJson.put(
                     "vacancyUrl",
                     urlResolver.buildFullUri(
@@ -295,20 +289,12 @@ public class JsonService {
             currentBidJson.put("updated", messageResolver.date(bid.getDateCreated(), locale));
             currentBidJson.put("recruiter", bid.getRecruiter().getUser().getFirstName() +
                     " " + bid.getRecruiter().getUser().getLastName());
+            currentBidJson.put("bidId", bid.getId().toString());
             currentBidJson.put(
                     "recruiterUrl",
                     urlResolver.buildFullUri(
                             "/employer-show-recruiter-profile/",
                             bid.getRecruiter().getId(),
-                            locale
-                    )
-            );
-            currentBidJson.put("bid", messageResolver.message("employer-control-panel.bids.view", locale));
-            currentBidJson.put(
-                    "bidUrl",
-                    urlResolver.buildFullUri(
-                            "/employer-recruiter-show/",
-                            bid.getId(),
                             locale
                     )
             );

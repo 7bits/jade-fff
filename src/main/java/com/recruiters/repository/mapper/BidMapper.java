@@ -109,7 +109,7 @@ public interface BidMapper {
     List<Bid> findBidsByVacancyId(final Long vacancyId);
 
     @Select("SELECT bid.id, bid.creation_date, " +
-            "vacancy.id AS vacancy_id, vacancy.title, " +
+            "vacancy.id AS vacancy_id, vacancy.title, vacancy.description, " +
             "recruiter.id AS recruiter_id, " +
             "user.firstname, user.lastname " +
             "FROM bid " +
@@ -123,6 +123,7 @@ public interface BidMapper {
             @Result(column = "creation_date", property = "dateCreated"),
             @Result(column = "vacancy_id", property = "vacancy.id"),
             @Result(column = "title", property = "vacancy.title"),
+            @Result(column = "description", property = "vacancy.description"),
             @Result(column = "recruiter_id", property = "recruiter.id"),
             @Result(column = "firstname", property = "recruiter.user.firstName"),
             @Result(column = "lastname", property = "recruiter.user.lastName")

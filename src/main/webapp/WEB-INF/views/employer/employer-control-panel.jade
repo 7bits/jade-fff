@@ -21,21 +21,27 @@ block append content
         table.table.table-striped#employer-applicants
           thead
             tr
+              th=fmt.message("employer-control-panel.applicants.applicant", locale)
               th=fmt.message("employer-control-panel.applicants.vacancy", locale)
               th=fmt.message("employer-control-panel.applicants.recruiter", locale)
               th=fmt.message("employer-control-panel.applicants.date", locale)
-              th=fmt.message("employer-control-panel.applicants.applicant", locale)
           tbody
+        a.btn.btn-link.pull-right(href=domain.buildFullUri("/employer-progress-vacancies-list", locale))
+          strong
+            #{fmt.message("employer-control-panel.my-deals", locale)}
         .spacer
         h2.text-center=fmt.message("employer-control-panel.bids.h2", locale)
         table.table.table-striped#employer-bids
           thead
             tr
-              th=fmt.message("employer-control-panel.bids.vacancy", locale)
               th=fmt.message("employer-control-panel.bids.recruiter", locale)
+              th=fmt.message("employer-control-panel.bids.vacancy", locale)
+              th=fmt.message("employer-control-panel.bids.description", locale)
               th=fmt.message("employer-control-panel.bids.date", locale)
-              th
           tbody
+        a.btn.btn-link.pull-right(href=domain.buildFullUri("/employer-recruiter-search", locale))
+          strong
+            #{fmt.message("employer-control-panel.my-vacancies", locale)}
       .col-md-3
         h2=fmt.message("employer-control-panel.about.h2", locale)
         p #{employer.user.firstName} #{employer.user.lastName}
