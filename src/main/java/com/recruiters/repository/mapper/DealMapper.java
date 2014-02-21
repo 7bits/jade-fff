@@ -3,7 +3,8 @@ package com.recruiters.repository.mapper;
 import com.recruiters.model.Deal;
 import com.recruiters.model.status.DealStatus;
 import com.recruiters.repository.mapper.provider.DealFilteredProvider;
-import com.recruiters.repository.specification.impl.deal.DealListSpecification;
+import com.recruiters.repository.specification.impl.deal.EmployerDealListSpecification;
+import com.recruiters.repository.specification.impl.deal.RecruiterDealListSpecification;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Many;
 import org.apache.ibatis.annotations.Options;
@@ -69,39 +70,7 @@ public interface DealMapper {
     })
     Deal findById(@Param(value = "dealId") final Long dealId);
 
-    @Select("SELECT deal.id, deal.status, " +
-            "vacancy.id as vacancy_id,  vacancy.employer_id, vacancy.title, " +
-            "vacancy.description, vacancy.salary_from, vacancy.salary_to, " +
-            "vacancy.creation_date, " +
-            "recruiter.id as recruiter_id, " +
-            "user.firstname, user.lastname, " +
-            "(SELECT COUNT(applicant.id) FROM applicant " +
-            "WHERE deal_id=deal.id) as all_applicants, " +
-            "(SELECT COUNT(applicant.id) FROM applicant " +
-            "WHERE deal_id=deal.id AND viewed=1) as viewed_applicants, " +
-            "(SELECT COUNT(applicant.id) FROM applicant " +
-            "WHERE deal_id=deal.id AND viewed=0) as unseen_applicants, " +
-            "(SELECT COUNT(applicant.id) FROM applicant " +
-            "WHERE deal_id=deal.id AND status=\"REJECTED\") as rejected_applicants, " +
-            "max_updated.max_updated_date " +
-            "FROM deal " +
-            "INNER JOIN vacancy ON vacancy.id=deal.vacancy_id " +
-            "INNER JOIN recruiter  ON recruiter.id=deal.recruiter_id " +
-            "INNER JOIN user ON recruiter.user_id=user.id " +
-            "INNER JOIN (SELECT id, MAX(updated_date) as max_updated_date FROM " +
-            "(SELECT id,updated_date FROM deal WHERE recruiter_id=#{recruiterId} " +
-            "UNION ALL " +
-            "SELECT deal.id, vacancy.updated_date FROM vacancy " +
-            "INNER JOIN deal ON deal.vacancy_id=vacancy.id " +
-            "WHERE deal.recruiter_id=#{recruiterId} " +
-            "UNION ALL " +
-            "SELECT deal.id, MAX(applicant.updated_date)  FROM applicant " +
-            "INNER JOIN deal ON applicant.deal_id=deal.id " +
-            "WHERE deal.recruiter_id=#{recruiterId})as updated_dates GROUP BY id) as max_updated " +
-            "ON max_updated.id=deal.id " +
-            "WHERE recruiter.id=#{recruiterId} AND " +
-            "deal.status IN(\"IN_PROGRESS\", \"FIRED\", \"APPROVED\") AND " +
-            "deal.recruiter_archived = 0")
+    @SelectProvider(type = DealFilteredProvider.class, method = "selectRecruiterDealsFiltered")
     @Results({
             @Result(column = "id", property = "id"),
             @Result(column = "status", property = "status"),
@@ -111,7 +80,7 @@ public interface DealMapper {
             @Result(column = "description", property = "vacancy.description"),
             @Result(column = "salary_from", property = "vacancy.salaryFrom"),
             @Result(column = "salary_to", property = "vacancy.salaryTo"),
-            @Result(column = "creation_date", property = "vacancy.creationDate"),
+            @Result(column = "creation_date", property = "dateCreated"),
             @Result(column = "recruiter_id", property = "recruiter.id"),
             @Result(column = "firstname", property = "recruiter.user.firstName"),
             @Result(column = "lastname", property = "recruiter.user.lastName"),
@@ -121,9 +90,12 @@ public interface DealMapper {
             @Result(column = "rejected_applicants", property = "rejectedApplicantCount"),
             @Result(column = "max_updated_date", property = "lastModified")
     })
-    List<Deal> findActiveDealsByRecruiterId(final Long recruiterId);
+    List<Deal> findFilteredDealsByRecruiterId(
+            @Param("recruiterId") final Long recruiterId,
+            @Param("dealListSpecification") final RecruiterDealListSpecification dealListSpecification
+    );
 
-    @SelectProvider(type = DealFilteredProvider.class, method = "selectDealsFiltered")
+    @SelectProvider(type = DealFilteredProvider.class, method = "selectEmployerDealsFiltered")
     @Results({
             @Result(column = "id", property = "id"),
             @Result(column = "status", property = "status"),
@@ -148,7 +120,7 @@ public interface DealMapper {
 })
     List<Deal> findFilteredDealsByEmployerId(
             @Param("employerId") final Long employerId,
-            @Param("dealListSpecification") final DealListSpecification dealListSpecification
+            @Param("dealListSpecification") final EmployerDealListSpecification dealListSpecification
     );
 
 

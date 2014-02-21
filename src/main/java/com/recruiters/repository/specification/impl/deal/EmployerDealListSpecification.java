@@ -6,15 +6,15 @@ import com.recruiters.repository.specification.IOrderSpecification;
 import com.recruiters.repository.specification.ISpecification;
 
 /**
- * Specification for Deal List
+ * Specification for Deal List for Employer
  */
-public class DealListSpecification implements IListSpecification<Deal> {
+public class EmployerDealListSpecification implements IListSpecification<Deal> {
     private ISpecification dealSpecification;
     private IOrderSpecification listOrderSpecification;
     /** Default string size, used for string builder */
     private static final Integer DEFAULT_STRING_SIZE = 2048;
 
-    public DealListSpecification(
+    public EmployerDealListSpecification(
             final ISpecification vacancySpecification,
             final IOrderSpecification listOrderSpecification
     ) {

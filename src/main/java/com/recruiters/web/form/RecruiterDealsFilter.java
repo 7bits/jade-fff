@@ -4,26 +4,26 @@ import com.recruiters.repository.specification.ISpecification;
 import com.recruiters.repository.specification.impl.OrderByParam;
 import com.recruiters.repository.specification.impl.deal.ActiveDealSpecification;
 import com.recruiters.repository.specification.impl.deal.ApprovedDealSpecification;
-import com.recruiters.repository.specification.impl.deal.EmployerDealListSpecification;
 import com.recruiters.repository.specification.impl.deal.FiredDealSpecification;
+import com.recruiters.repository.specification.impl.deal.RecruiterDealListSpecification;
 
 /**
- * Filter for "My vacancies with recruiters" employer page
+ * Filter for "My vacancies in work" recruiter page
  */
-public class EmployerDealsFilter {
+public class RecruiterDealsFilter {
     private Boolean hideFired = false;
     private Boolean hideApproved = false;
     private String sortColumn;
     private Boolean sortAsc;
 
-    public EmployerDealsFilter() {
+    public RecruiterDealsFilter() {
     }
 
     public Boolean getHideFired() {
         return hideFired;
     }
 
-    public EmployerDealListSpecification getListSpecifications() {
+    public RecruiterDealListSpecification getListSpecifications() {
         ISpecification dealSpecification = new ActiveDealSpecification();
 
         if (!hideFired) {
@@ -34,16 +34,16 @@ public class EmployerDealsFilter {
         }
 
         if (sortColumn == null || sortAsc == null) {
-            return new EmployerDealListSpecification(dealSpecification, null);
+            return new RecruiterDealListSpecification(dealSpecification, null);
         }
 
         if (sortColumn.equals("title") ||
                 sortColumn.equals("creation_date") || sortColumn.equals("lastname") ||
-                sortColumn.equals("status") || sortColumn.equals("bids") ||
+                sortColumn.equals("status") || sortColumn.equals("description") ||
                 sortColumn.equals("max_updated_date") || sortColumn.equals("unseen_applicants")) {
-            return new EmployerDealListSpecification(dealSpecification, new OrderByParam(sortColumn, sortAsc));
+            return new RecruiterDealListSpecification(dealSpecification, new OrderByParam(sortColumn, sortAsc));
         }
-        return new EmployerDealListSpecification(dealSpecification, null);
+        return new RecruiterDealListSpecification(dealSpecification, null);
     }
 
     public void setHideFired(final Boolean hideFired) {

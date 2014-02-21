@@ -5,9 +5,12 @@ import com.recruiters.model.User;
 import com.recruiters.service.RecruiterService;
 import com.recruiters.service.exception.ServiceException;
 import com.recruiters.web.controller.utils.UserUtils;
+import com.recruiters.web.form.RecruiterDealsFilter;
 import com.recruiters.web.helper.UrlResolver;
+import com.recruiters.web.service.JsonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -17,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * Shows deals for recruiter with all corresponding actions
@@ -33,6 +37,11 @@ public class RecruiterDeals {
     /** Url Builder */
     @Autowired
     private UrlResolver urlResolver;
+    /** Session attribute name for Deals Filter */
+    private static final String SESSION_FILTER_NAME = RecruiterDealsFilter.class.getName() + ".filter";
+    /** Json converter service */
+    @Autowired
+    private JsonService jsonService = null;
 
     /**
      * Displays all active deals for current recruiter
@@ -47,74 +56,83 @@ public class RecruiterDeals {
     @RequestMapping(value = "/recruiter-active-deals", method = RequestMethod.GET)
     public ModelAndView showMyVacancies(
             final HttpServletRequest request,
-            final HttpServletResponse response
+            final HttpServletResponse response,
+            @ModelAttribute("RecruiterDealsFilter") final RecruiterDealsFilter dealsFilter
     ) throws  Exception {
-        ModelAndView activeDeals = new ModelAndView("recruiter/recruiter-active-deals.jade");
-        try {
-            User user = userUtils.getCurrentUser(request);
-            List<Deal> deals = recruiterService.findActiveDealsForRecruiter(user.getRecruiterId());
-            activeDeals.addObject("deals", deals);
-        } catch (ServiceException e) {
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            return null;
-        }
+        ModelAndView model = new ModelAndView("recruiter/recruiter-active-deals.jade");
+        fillDealsFilter(dealsFilter, request);
+        addFilterToSession(dealsFilter, request);
+        model.addObject("recruiterDealsFilter", dealsFilter);
 
-        return activeDeals;
+        return model;
     }
 
     /**
-     * Clear fire deals for current recruiter
-     * @param request        Http Request
-     * @param response       Http Response
-     * @return redirect to list of all active deals for current recruiter,
-     * Internal Server Error page if something is wrong with performing
-     * command due to technical or any other reasons
+     * Shows deals with filter applied by recruiter
+     * @param request           Http Request
+     * @param response          Http Response
+     * @param dealsFilter        Deals Filter
+     * @return json type list of deals,
+     * Internal Server Error page if something is wrong with obtaining data
+     * due to technical or any other reasons
      * @throws Exception in very rare circumstances: it should be runtime
      * or servlet Exception to be thrown
      */
-    @RequestMapping(value = "/recruiter-clear-fired-deals", method = RequestMethod.GET)
-    public String clearFiredDeals(
+    @RequestMapping(value = "/recruiter-deals-filter-ajax.json", method = RequestMethod.POST)
+    public List<Map<String,String>> ajaxFilteredDeals(
             final HttpServletRequest request,
-            final HttpServletResponse response
-    ) throws  Exception {
+            final HttpServletResponse response,
+            @ModelAttribute("RecruiterDealsFilter") final RecruiterDealsFilter dealsFilter
+    ) throws Exception {
+        addFilterToSession(dealsFilter, request);
         try {
             User user = userUtils.getCurrentUser(request);
-            recruiterService.clearFiredDealsForRecruiter(user.getRecruiterId());
+            List<Deal> deals = recruiterService.findFilteredDealsForRecruiter(
+                    user.getRecruiterId(),
+                    dealsFilter
+            );
+            Locale locale = RequestContextUtils.getLocale(request);
+
+            return jsonService.recruiterDealsFilteredList(deals, locale);
         } catch (ServiceException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             return null;
         }
-        Locale locale = RequestContextUtils.getLocale(request);
-
-        return  urlResolver.buildRedirectUri("recruiter-active-deals", locale);
     }
 
     /**
-     * Clear approved deals for current recruiter
+     * Load default settings for Deals Filter or
+     * get settings from session
+     * @param dealsFilter    Deals Filter
      * @param request        Http Request
-     * @param response       Http Response
-     * @return redirect to list of all active deals for current recruiter,
-     * Internal Server Error page if something is wrong with performing
-     * command due to technical or any other reasons
-     * @throws Exception in very rare circumstances: it should be runtime
-     * or servlet Exception to be thrown
      */
-    @RequestMapping(value = "/recruiter-clear-approved-deals", method = RequestMethod.GET)
-    public String clearApprovedDeals(
-            final HttpServletRequest request,
-            final HttpServletResponse response
-    ) throws  Exception {
-        try {
-            User user = userUtils.getCurrentUser(request);
-            recruiterService.clearApprovedDealsForRecruiter(user.getRecruiterId());
-        } catch (ServiceException e) {
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            return null;
+    private void fillDealsFilter(
+            final RecruiterDealsFilter dealsFilter,
+            final HttpServletRequest request
+    ) {
+        Object o = request.getSession().getAttribute(SESSION_FILTER_NAME);
+        if (o instanceof RecruiterDealsFilter) {
+            dealsFilter.setHideApproved(((RecruiterDealsFilter) o).getHideApproved());
+            dealsFilter.setHideFired(((RecruiterDealsFilter) o).getHideFired());
+        } else {
+            // Default settings
+            dealsFilter.setHideFired(false);
+            dealsFilter.setHideApproved(false);
         }
-        Locale locale = RequestContextUtils.getLocale(request);
-
-        return  urlResolver.buildRedirectUri("recruiter-active-deals", locale);
     }
+
+    /**
+     * Add Filter to Session Attributes
+     * @param dealsFilter     Deals Filter
+     * @param request         Http Request
+     */
+    private void addFilterToSession(
+            final RecruiterDealsFilter dealsFilter,
+            final HttpServletRequest request
+    ) {
+        request.getSession().setAttribute(SESSION_FILTER_NAME, dealsFilter);
+    }
+
 
     public RecruiterService getRecruiterService() {
         return recruiterService;

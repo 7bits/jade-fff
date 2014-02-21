@@ -5,32 +5,27 @@ block append head
 block append content
   .container
     h1=fmt.message("recruiter-active-deals.h1", locale)
-    table.table.table-striped
+    form.form-sort(name="recruiterDealsFilter", id="recruiterDealsFilter", action="", method="get")
+      .row
+        .col-md-6
+          .btn-group.btn-group-xs(data-toggle="buttons")
+            label.btn.btn-default#showAll=fmt.message("recruiter-active-deals.form.show-all", locale)
+              input(type="checkbox", name="showAll", value="1")
+          .btn-group.btn-group-xs(data-toggle="buttons")
+            label.btn.btn-default#hideFired=fmt.message("recruiter-active-deals.form.hide-fired", locale)
+              input(type="checkbox", name="hideFired", value="1", checked=recruiterDealsFilter.hideFired)
+            label.btn.btn-default#hideApproved=fmt.message("recruiter-active-deals.form.hide-approved", locale)
+              input(type="checkbox", name="hideApproved", value="1", checked=recruiterDealsFilter.hideApproved)
+            input(type="hidden", name="sortColumn", id="sortColumn")
+            input(type="hidden", name="sortAsc", id="sortAsc")
+            input(type="hidden", name=csrf.getParameterName(), value=csrf.getToken())
+    table.table.table-striped#table-sort
       thead
         tr
-          th=fmt.message("recruiter-active-deals.table.name", locale)
-          th=fmt.message("recruiter-active-deals.table.description", locale)
-          th=fmt.message("recruiter-active-deals.table.applicants", locale)
-          th=fmt.message("recruiter-active-deals.table.status", locale)
-          th=fmt.message("recruiter-active-deals.table.date", locale)
-          th=fmt.message("recruiter-active-deals.table.dateModified", locale)
-          th
+          th.sorting#stitle=fmt.message("recruiter-active-deals.table.name", locale)
+          th.sorting#sdescription=fmt.message("recruiter-active-deals.table.description", locale)
+          th.sorting#sunseen_applicants=fmt.message("recruiter-active-deals.table.applicants", locale)
+          th.sorting#sstatus=fmt.message("recruiter-active-deals.table.status", locale)
+          th.sorting#screation_date=fmt.message("recruiter-active-deals.table.date", locale)
+          th.sorting#smax_updated_date=fmt.message("recruiter-active-deals.table.dateModified", locale)
       tbody
-        for deal in deals
-          tr
-            td #{deal.vacancy.title}
-            td #{deal.vacancy.description}
-            td.help(title=fmt.applicantsTooltip(deal.unseenApplicantCount, deal.allApplicantCount, deal.rejectedApplicantCount, deal.viewedApplicantCount, locale))
-              span.green=deal.unseenApplicantCount
-              span / #{deal.allApplicantCount} [
-              span.red=deal.rejectedApplicantCount
-              span /
-              span.yellow=deal.viewedApplicantCount
-              span ]
-            td #{fmt.dealStatus(deal.status, locale)}
-            td(title=deal.vacancy.creationDate) #{fmt.date(deal.vacancy.creationDate, locale)}
-            td(title=deal.lastModified) #{fmt.date(deal.lastModified, locale)}
-            td
-              a.btn.btn-link(href=domain.buildFullUri("recruiter-show-in-progress-vacancy", deal.id, locale))=fmt.message("recruiter-active-deals.more", locale)
-    a.btn.btn-success(href=domain.buildFullUri("/recruiter-clear-fired-deals", locale))=fmt.message("recruiter-active-deals.clear.fired", locale)
-    a.btn.btn-success(href=domain.buildFullUri("/recruiter-clear-approved-deals", locale))=fmt.message("recruiter-active-deals.clear.approved", locale)

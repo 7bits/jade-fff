@@ -3,8 +3,8 @@ package com.recruiters.repository;
 import com.recruiters.model.Deal;
 import com.recruiters.model.status.DealStatus;
 import com.recruiters.repository.mapper.DealMapper;
-import com.recruiters.repository.specification.IListSpecification;
-import com.recruiters.repository.specification.impl.deal.DealListSpecification;
+import com.recruiters.repository.specification.impl.deal.EmployerDealListSpecification;
+import com.recruiters.repository.specification.impl.deal.RecruiterDealListSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -22,21 +22,23 @@ public class DealRepository {
     private DealMapper dealMapper = null;
 
     /**
-     * Find and return all active deals for certain recruiter
-     * @param recruiterId    Id of recruiter
-     * @return List of Deal instances, which belongs to exact recruiter and
-     * have "IN PROGRESS" Status
+     * Find and return filtered deals for certain recruiter
+     * @param recruiterId              Id of recruiter
+     * @param dealListSpecification    Recruiter deal list specification
+     * @return List of Deal instances, which belongs to exact recruiter with filter applied
      * @throws RepositoryException if input parameter is incorrect or there
      * were any technical issues
      */
-    public List<Deal> findActiveDealsByRecruiterId(final Long recruiterId)
+    public List<Deal> findFilteredDealsByRecruiterId(
+            final Long recruiterId,
+            final RecruiterDealListSpecification dealListSpecification)
             throws  RepositoryException {
-        if (recruiterId == null) {
-            throw new RepositoryException("recruiterId is null");
+        if (recruiterId == null || dealListSpecification == null) {
+            throw new RepositoryException("recruiterId or dealListSpecification is null");
         }
         try {
 
-            return dealMapper.findActiveDealsByRecruiterId(recruiterId);
+            return dealMapper.findFilteredDealsByRecruiterId(recruiterId, dealListSpecification);
         } catch (Exception e) {
             throw new RepositoryException("General database error: ", e);
         }
@@ -45,7 +47,7 @@ public class DealRepository {
     /**
      * Find and return filtered deals for certain employer
      * @param employerId    Id of employer
-     * @param dealListSpecification Specification for list of
+     * @param employerDealListSpecification Specification for list of
      * @return List of Deal instances, which belongs to exact employer and
      * match specification
      * @throws RepositoryException if input parameter is incorrect or there
@@ -53,14 +55,14 @@ public class DealRepository {
      */
     public List<Deal> findFilteredDealsByEmployerId(
             final Long employerId,
-            final DealListSpecification dealListSpecification
+            final EmployerDealListSpecification employerDealListSpecification
     ) throws RepositoryException {
-        if (employerId == null || dealListSpecification == null) {
+        if (employerId == null || employerDealListSpecification == null) {
             throw new RepositoryException("employerId or listSpecification is null");
         }
         try {
 
-            return dealMapper.findFilteredDealsByEmployerId(employerId, dealListSpecification);
+            return dealMapper.findFilteredDealsByEmployerId(employerId, employerDealListSpecification);
         } catch (Exception e) {
             throw new RepositoryException("General database error: ", e);
         }

@@ -24,6 +24,7 @@ import com.recruiters.repository.VacancyRepository;
 import com.recruiters.service.exception.NotAffiliatedException;
 import com.recruiters.service.exception.NotFoundException;
 import com.recruiters.service.exception.ServiceException;
+import com.recruiters.web.form.RecruiterDealsFilter;
 import com.recruiters.web.form.RecruiterVacanciesFilter;
 import com.recruiters.web.form.filter.RecruiterBidsFilter;
 import org.apache.log4j.Logger;
@@ -244,16 +245,23 @@ public class RecruiterService {
     }
 
     /**
-     * Find and return list with all deals for recruiter
+     * Find and return list with filtered deals for recruiter
      * @param recruiterId    Id of recruiter
-     * @return list with all active deals for certain recruiter
+     * @param dealsFilter    Deals filter
+     * @return list with filtered deals for certain recruiter
      * @throws ServiceException if cannot obtain Deals from repository
      * or any other possible error
      */
-    public List<Deal> findActiveDealsForRecruiter(final Long recruiterId)
+    public List<Deal> findFilteredDealsForRecruiter(
+            final Long recruiterId,
+            final RecruiterDealsFilter dealsFilter
+    )
             throws ServiceException {
         try {
-            return dealRepository.findActiveDealsByRecruiterId(recruiterId);
+            return dealRepository.findFilteredDealsByRecruiterId(
+                    recruiterId,
+                    dealsFilter.getListSpecifications()
+            );
         } catch (Exception e) {
             log.error(SERVICE_EXCEPTION_MESSAGE, e);
             throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);

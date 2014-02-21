@@ -34,7 +34,7 @@ public class RecruiterBids {
     /** Recruiter Service provides all Recruiter related methods */
     @Autowired
     private RecruiterService recruiterService = null;
-    /** Session attribute name for Deals Filter */
+    /** Session attribute name for Bids Filter */
     private static final String SESSION_FILTER_NAME = RecruiterBidsFilter.class.getName() + ".filter";
     /** Json converter service */
     @Autowired
@@ -96,7 +96,6 @@ public class RecruiterBids {
         }
     }
 
-
     /**
      * Load default settings for Bids Filter or
      * get settings from session
@@ -129,7 +128,6 @@ public class RecruiterBids {
     ) {
         request.getSession().setAttribute(SESSION_FILTER_NAME, bidsFilter);
     }
-
 
     public RecruiterService getRecruiterService() {
         return recruiterService;

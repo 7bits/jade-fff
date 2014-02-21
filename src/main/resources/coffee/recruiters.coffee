@@ -182,3 +182,27 @@ $ ->
       return
 
     request.fail ->
+
+$ ->
+  $("#recruiterDealsFilter :input").on "change", ->
+    data = $("#recruiterDealsFilter").serialize()
+    request = $.ajax(
+      url: "recruiter-deals-filter-ajax.json"
+      type: "POST"
+      data: data
+      dataType: "json"
+    )
+    request.done (data) ->
+      addHtml = ""
+      dealsList = data.entry.value
+      i = 0
+
+      while i < dealsList.length
+        obj = dealsList[i]
+        applicants = "<span class=\"green\">" + obj.unseenApplicantCount + "</span>/<span>" + obj.allApplicantCount + " (</span><span class=\"red\">" + obj.rejectedApplicantCount + "</span>/<span class=\"yellow\">" + obj.viewedApplicantCount + "</span>)"
+        addHtml += "<tr><td><a href=\"" + obj.dealUrl + "\">" + obj.title + "</a></td><td>" + obj.description  + "</td><td class=\"help\" title=\"" + obj.applicantsTooltip + "\">" + applicants + "</td><td>" + obj.status + "</td><td>" + obj.created + "</td><td>" + obj.updated + "</td></tr>"
+        i++
+      $("#table-sort").find("tbody").html addHtml
+      return
+
+    request.fail ->

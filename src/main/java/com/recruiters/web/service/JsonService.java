@@ -756,4 +756,68 @@ public class JsonService {
         mapJson.put("bid", bidJson);
         return mapJson;
     }
+
+    /**
+     * Convert List of deals to Json ready list of maps for
+     * use on recruiters "My deals" page
+     * @param deals    List of deals
+     * @param locale       Request locale
+     * @return list of maps
+     */
+    public List<Map<String, String>> recruiterDealsFilteredList(
+            final List<Deal> deals,
+            final Locale locale
+    ) {
+//        for deal in deals
+//                tr
+//        td #{deal.vacancy.title}
+//        td #{deal.vacancy.description}
+//        td.help(title=fmt.applicantsTooltip(deal.unseenApplicantCount, deal.allApplicantCount, deal.rejectedApplicantCount, deal.viewedApplicantCount, locale))
+//        span.green=deal.unseenApplicantCount
+//        span / #{deal.allApplicantCount} [
+//        span.red=deal.rejectedApplicantCount
+//        span /
+//                span.yellow=deal.viewedApplicantCount
+//        span ]
+//        td #{fmt.dealStatus(deal.status, locale)}
+//        td(title=deal.vacancy.creationDate) #{fmt.date(deal.vacancy.creationDate, locale)}
+//        td(title=deal.lastModified) #{fmt.date(deal.lastModified, locale)}
+//        td
+//        a.btn.btn-link(href=domain.buildFullUri("recruiter-show-in-progress-vacancy", deal.id, locale))=fmt.message("recruiter-active-deals.more", locale)
+        List<Map<String,String>> dealsJson = new ArrayList<Map<String, String>>();
+        for (Deal deal: deals) {
+            Map<String, String> currentDealJson = new HashMap<String, String>();
+            currentDealJson.put("title", StringEscapeUtils.escapeHtml4(deal.getVacancy().getTitle()));
+            currentDealJson.put(
+                    "description",
+                    StringEscapeUtils.escapeHtml4(deal.getVacancy().getDescription())
+            );
+            currentDealJson.put("created", messageResolver.date(deal.getDateCreated(), locale));
+            currentDealJson.put("updated", messageResolver.date(deal.getLastModified(), locale));
+            currentDealJson.put(
+                    "status",
+                    messageResolver.dealStatus(deal.getStatus(), locale)
+            );
+            currentDealJson.put(
+                    "dealUrl",
+                    urlResolver.buildFullUri("/recruiter-show-in-progress-vacancy/", deal.getId(), locale)
+            );
+            currentDealJson.put("unseenApplicantCount", deal.getUnseenApplicantCount().toString());
+            currentDealJson.put("allApplicantCount", deal.getAllApplicantCount().toString());
+            currentDealJson.put("rejectedApplicantCount", deal.getRejectedApplicantCount().toString());
+            currentDealJson.put("viewedApplicantCount", deal.getViewedApplicantCount().toString());
+            currentDealJson.put(
+                    "applicantsTooltip",
+                    messageResolver.applicantsTooltip(
+                            deal.getUnseenApplicantCount(),
+                            deal.getAllApplicantCount(),
+                            deal.getRejectedApplicantCount(),
+                            deal.getViewedApplicantCount(), locale)
+            );
+
+            dealsJson.add(currentDealJson);
+        }
+
+        return dealsJson;
+    }
 }
