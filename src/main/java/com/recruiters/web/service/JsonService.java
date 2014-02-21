@@ -435,16 +435,7 @@ public class JsonService {
         List<Map<String,String>> bidsJson = new ArrayList<Map<String, String>>();
         for (Bid bid: bids) {
             Map<String, String> currentBidJson = new HashMap<String, String>();
-            currentBidJson.put("vacancy", bid.getVacancy().getTitle());
-            currentBidJson.put(
-                    "vacancyUrl",
-                    urlResolver.buildFullUri(
-                            "/recruiter-show-bid-vacancy/",
-                            bid.getVacancy().getId(),
-                            locale
-                    )
-            );
-            currentBidJson.put("updated", messageResolver.date(bid.getDateCreated(), locale));
+            currentBidJson.put("created", messageResolver.date(bid.getDateCreated(), locale));
             currentBidJson.put("employer", bid.getVacancy().getEmployer().getUser().getFirstName() + " " +
                     bid.getVacancy().getEmployer().getUser().getLastName());
             currentBidJson.put(
@@ -461,16 +452,8 @@ public class JsonService {
                 currentBidJson.put("viewed", "");
             }
             currentBidJson.put("status", messageResolver.bidStatus(bid.getStatus(), locale));
-            currentBidJson.put("bid", messageResolver.message("recruiter-control-panel.bids.view", locale));
-            currentBidJson.put(
-                    "bidUrl",
-                    urlResolver.buildFullUri(
-                            "/recruiter-show-bid-vacancy/",
-                            bid.getId(),
-                            locale
-                    )
-            );
-
+            currentBidJson.put("bid", StringEscapeUtils.escapeHtml4(bid.getVacancy().getTitle()));
+            currentBidJson.put("bidId", bid.getId().toString());
             bidsJson.add(currentBidJson);
         }
 

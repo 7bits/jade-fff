@@ -107,6 +107,8 @@ $ ->
 
   showRecruiterBid = "a.showRecruiterBid"
   $(document).on
+    click: (event) ->
+      event.preventDefault()
     mouseenter: (event) ->
       $link = $(event.target)
       $link.popover(

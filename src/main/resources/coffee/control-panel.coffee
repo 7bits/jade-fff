@@ -160,7 +160,7 @@ $ ->
         i = 0
         while i < bidList.length
           obj = bidList[i]
-          addHtml += "<tr><td><a href=\"" + obj.vacancyUrl + "\">" + obj.vacancy + "</a></td><td><a href=\"" + obj.employerUrl + "\">" + obj.employer + "</td><td>" + obj.updated  + "</td><td>" + obj.viewed  + "</td><td>" + obj.status  + "</td><td><a href=\"" + obj.bidUrl + "\">" + obj.bid + "</td></tr>"
+          addHtml += "<tr><td><a href=\"#\" data-id=\"" + obj.bidId + "\" class=\"showRecruiterBid\">" + obj.bid + "</a></td><td><a href=\"" + obj.employerUrl + "\">" + obj.employer + "</td><td>" + obj.created  + "</td><td>" + obj.viewed  + "</td><td>" + obj.status  + "</td></tr>"
           i++
         table.find("tbody").html addHtml
         setTimeout (->

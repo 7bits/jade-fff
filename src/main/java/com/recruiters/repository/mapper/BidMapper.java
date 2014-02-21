@@ -129,7 +129,7 @@ public interface BidMapper {
     })
     List<Bid> findNewBidsForEmployer(final Long employerId);
 
-    @Select("SELECT bid.id, bid.updated_date, bid.viewed, bid.status, " +
+    @Select("SELECT bid.id, bid.creation_date, bid.updated_date, bid.viewed, bid.status, " +
             "vacancy.id AS vacancy_id, vacancy.title, " +
             "employer.id AS employer_id, " +
             "user.firstname, user.lastname " +
@@ -141,6 +141,7 @@ public interface BidMapper {
             "ORDER BY bid.updated_date DESC ")
     @Results({
             @Result(column = "id", property = "id"),
+            @Result(column = "creation_date", property = "dateCreated"),
             @Result(column = "updated_date", property = "lastModified"),
             @Result(column = "viewed", property = "viewed"),
             @Result(column = "status", property = "status"),

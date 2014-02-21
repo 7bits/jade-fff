@@ -26,6 +26,9 @@ block append content
               th=fmt.message("recruiter-control-panel.deals.date", locale)
               th
           tbody
+        a.btn.btn-link.pull-right(href=domain.buildFullUri("/recruiter-active-deals", locale))
+          strong
+            #{fmt.message("recruiter-control-panel.my-deals", locale)}
         .spacer
         h2.text-center=fmt.message("recruiter-control-panel.bids.h2", locale)
         table.table.table-striped#recruiter-bids
@@ -36,8 +39,10 @@ block append content
               th=fmt.message("recruiter-control-panel.bids.date", locale)
               th=fmt.message("recruiter-control-panel.bids.viewed", locale)
               th=fmt.message("recruiter-control-panel.bids.status", locale)
-              th
           tbody
+        a.btn.btn-link.pull-right(href=domain.buildFullUri("/recruiter-active-bids", locale))
+          strong
+            #{fmt.message("recruiter-control-panel.my-bids", locale)}
       .col-md-3
         h2=fmt.message("recruiter-control-panel.about.h2", locale)
         p #{recruiter.user.firstName} #{recruiter.user.lastName}
