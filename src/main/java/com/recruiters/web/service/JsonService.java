@@ -73,10 +73,6 @@ public class JsonService {
                         urlResolver.buildFullUri("/recruiter-show-vacancy/", vacancy.getId(), locale)
                 );
             }
-            currentVacancyJson.put(
-                    "urlText",
-                    messageResolver.message("recruiter-find-new-vacancies.more", locale)
-            );
             vacanciesJson.add(currentVacancyJson);
         }
 
