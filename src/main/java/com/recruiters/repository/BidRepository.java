@@ -4,6 +4,7 @@ import com.recruiters.model.Bid;
 import com.recruiters.model.status.BidStatus;
 import com.recruiters.model.Recruiter;
 import com.recruiters.model.Vacancy;
+import com.recruiters.repository.exception.RepositoryException;
 import com.recruiters.repository.mapper.BidMapper;
 import com.recruiters.repository.specification.impl.bid.BidListSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class BidRepository {
      * Find and return bid by its id
      * @param bidId    Id of bid
      * @return Bid POJO instance
-     * @throws RepositoryException if input parameter is incorrect or there
+     * @throws com.recruiters.repository.exception.RepositoryException if input parameter is incorrect or there
      * were any technical issues
      */
     public Bid findById(final Long bidId) throws RepositoryException {

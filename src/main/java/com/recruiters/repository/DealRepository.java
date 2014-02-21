@@ -2,6 +2,7 @@ package com.recruiters.repository;
 
 import com.recruiters.model.Deal;
 import com.recruiters.model.status.DealStatus;
+import com.recruiters.repository.exception.RepositoryException;
 import com.recruiters.repository.mapper.DealMapper;
 import com.recruiters.repository.specification.impl.deal.EmployerDealListSpecification;
 import com.recruiters.repository.specification.impl.deal.RecruiterDealListSpecification;
@@ -26,13 +27,13 @@ public class DealRepository {
      * @param recruiterId              Id of recruiter
      * @param dealListSpecification    Recruiter deal list specification
      * @return List of Deal instances, which belongs to exact recruiter with filter applied
-     * @throws RepositoryException if input parameter is incorrect or there
+     * @throws com.recruiters.repository.exception.RepositoryException if input parameter is incorrect or there
      * were any technical issues
      */
     public List<Deal> findFilteredDealsByRecruiterId(
             final Long recruiterId,
             final RecruiterDealListSpecification dealListSpecification)
-            throws  RepositoryException {
+            throws RepositoryException {
         if (recruiterId == null || dealListSpecification == null) {
             throw new RepositoryException("recruiterId or dealListSpecification is null");
         }

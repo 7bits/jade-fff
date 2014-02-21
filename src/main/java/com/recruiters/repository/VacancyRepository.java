@@ -2,6 +2,7 @@ package com.recruiters.repository;
 
 import com.recruiters.model.Vacancy;
 import com.recruiters.model.status.VacancyStatus;
+import com.recruiters.repository.exception.RepositoryException;
 import com.recruiters.repository.mapper.VacancyMapper;
 import com.recruiters.repository.specification.impl.vacancy.VacancyEmployerListSpecification;
 import com.recruiters.repository.specification.impl.vacancy.VacancyRecruiterListSpecification;
@@ -25,7 +26,7 @@ public class VacancyRepository {
      * Find and return Vacancy instance by its id
      * @param vacancyId    Id of vacancy
      * @return Vacancy instance
-     * @throws RepositoryException if input parameter is incorrect or there
+     * @throws com.recruiters.repository.exception.RepositoryException if input parameter is incorrect or there
      * were any technical issues
      */
     public Vacancy findById(final Long vacancyId) throws RepositoryException {

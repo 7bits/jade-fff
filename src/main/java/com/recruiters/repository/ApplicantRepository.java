@@ -2,6 +2,7 @@ package com.recruiters.repository;
 
 import com.recruiters.model.Applicant;
 import com.recruiters.model.status.ApplicantStatus;
+import com.recruiters.repository.exception.RepositoryException;
 import com.recruiters.repository.mapper.ApplicantMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -23,7 +24,7 @@ public class ApplicantRepository {
      * Find and return Applicant by its id
      * @param applicantId    Id of Applicant
      * @return Applicant POJO instance
-     * @throws RepositoryException if input parameter is incorrect or there
+     * @throws com.recruiters.repository.exception.RepositoryException if input parameter is incorrect or there
      * were any technical issues
      */
     public Applicant findById(final Long applicantId) throws RepositoryException {

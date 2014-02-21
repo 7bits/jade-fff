@@ -1,14 +1,13 @@
 package com.recruiters.repository;
 
 import com.recruiters.model.User;
+import com.recruiters.repository.exception.RepositoryException;
 import com.recruiters.repository.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * Repository implementing all methods related to
@@ -25,7 +24,7 @@ public class UserRepository implements UserDetailsService {
      * Find User and return User POJO instance by username
      * @param username    User username
      * @return User POJO instance
-     * @throws RepositoryException if input parameter is incorrect or there
+     * @throws com.recruiters.repository.exception.RepositoryException if input parameter is incorrect or there
      * were any technical issues
      */
     public User findByUsername(final String username) throws RepositoryException {

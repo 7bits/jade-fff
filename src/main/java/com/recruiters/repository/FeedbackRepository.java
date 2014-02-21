@@ -1,11 +1,10 @@
 package com.recruiters.repository;
 
 import com.recruiters.model.Feedback;
+import com.recruiters.repository.exception.RepositoryException;
 import com.recruiters.repository.mapper.FeedbackMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 /**
  * Repository implementing all methods related to
@@ -22,7 +21,7 @@ public class FeedbackRepository {
      * Return feedback related to exact deal
      * @param dealId    Deal id
      * @return feedback
-     * @throws RepositoryException if input parameters are incorrect or there
+     * @throws com.recruiters.repository.exception.RepositoryException if input parameters are incorrect or there
      * were any technical issues
      */
     public Feedback findByDealId(final Long dealId)

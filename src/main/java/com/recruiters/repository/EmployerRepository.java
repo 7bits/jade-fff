@@ -1,6 +1,7 @@
 package com.recruiters.repository;
 
 import com.recruiters.model.Employer;
+import com.recruiters.repository.exception.RepositoryException;
 import com.recruiters.repository.mapper.EmployerMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -20,7 +21,7 @@ public class EmployerRepository {
      * Find and return employer instance by its id
      * @param employerId    Id of recruiter
      * @return Employer instance
-     * @throws RepositoryException if input parameter is incorrect or there
+     * @throws com.recruiters.repository.exception.RepositoryException if input parameter is incorrect or there
      * were any technical issues
      */
     public Employer findById(final Long employerId) throws RepositoryException {

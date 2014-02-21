@@ -3,6 +3,7 @@ package com.recruiters.repository;
 import com.recruiters.model.Attachment;
 import com.recruiters.model.Employer;
 import com.recruiters.model.Recruiter;
+import com.recruiters.repository.exception.RepositoryException;
 import com.recruiters.repository.mapper.AttachmentMapper;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;

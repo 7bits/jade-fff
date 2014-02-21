@@ -1,6 +1,7 @@
 package com.recruiters.repository;
 
 import com.recruiters.model.Recruiter;
+import com.recruiters.repository.exception.RepositoryException;
 import com.recruiters.repository.mapper.RecruiterMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -20,7 +21,7 @@ public class RecruiterRepository {
      * Find and return recruiter instance by its id
      * @param recruiterId    Id of recruiter
      * @return Recruiter instance
-     * @throws RepositoryException if input parameters is incorrect or there
+     * @throws com.recruiters.repository.exception.RepositoryException if input parameters is incorrect or there
      * were any technical issues
      */
     public Recruiter findById(final Long recruiterId) throws RepositoryException {

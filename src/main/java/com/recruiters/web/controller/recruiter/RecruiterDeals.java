@@ -5,7 +5,7 @@ import com.recruiters.model.User;
 import com.recruiters.service.RecruiterService;
 import com.recruiters.service.exception.ServiceException;
 import com.recruiters.web.controller.utils.UserUtils;
-import com.recruiters.web.form.RecruiterDealsFilter;
+import com.recruiters.web.form.filter.RecruiterDealsFilter;
 import com.recruiters.web.helper.UrlResolver;
 import com.recruiters.web.service.JsonService;
 import org.springframework.beans.factory.annotation.Autowired;

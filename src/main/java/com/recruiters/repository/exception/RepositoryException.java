@@ -1,4 +1,4 @@
-package com.recruiters.repository;
+package com.recruiters.repository.exception;
 
 /**
  * General purpose exception for Repository Layer

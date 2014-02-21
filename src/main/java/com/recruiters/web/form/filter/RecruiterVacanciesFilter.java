@@ -1,4 +1,4 @@
-package com.recruiters.web.form;
+package com.recruiters.web.form.filter;
 
 import com.recruiters.repository.specification.impl.EmptySpecification;
 import com.recruiters.repository.specification.ISpecification;

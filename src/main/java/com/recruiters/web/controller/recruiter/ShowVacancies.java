@@ -6,7 +6,7 @@ import com.recruiters.service.RecruiterService;
 import com.recruiters.service.exception.ServiceException;
 import com.recruiters.service.utils.DateTimeUtils;
 import com.recruiters.web.controller.utils.UserUtils;
-import com.recruiters.web.form.RecruiterVacanciesFilter;
+import com.recruiters.web.form.filter.RecruiterVacanciesFilter;
 import com.recruiters.web.service.JsonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

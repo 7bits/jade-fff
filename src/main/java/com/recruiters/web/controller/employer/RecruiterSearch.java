@@ -4,9 +4,8 @@ import com.recruiters.model.User;
 import com.recruiters.model.Vacancy;
 import com.recruiters.service.*;
 import com.recruiters.service.exception.ServiceException;
-import com.recruiters.service.utils.DateTimeUtils;
 import com.recruiters.web.controller.utils.UserUtils;
-import com.recruiters.web.form.EmployerVacanciesFilter;
+import com.recruiters.web.form.filter.EmployerVacanciesFilter;
 import com.recruiters.web.service.JsonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,7 +17,6 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;

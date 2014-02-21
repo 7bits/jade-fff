@@ -1,6 +1,7 @@
 package com.recruiters.repository;
 
 import com.recruiters.model.ChatMessage;
+import com.recruiters.repository.exception.RepositoryException;
 import com.recruiters.repository.mapper.ChatMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -23,7 +24,7 @@ public class ChatRepository {
      * @param dealId    Deal id
      * @param messageId Message id
      * @return list of new messages
-     * @throws RepositoryException if input parameters are incorrect or there
+     * @throws com.recruiters.repository.exception.RepositoryException if input parameters are incorrect or there
      * were any technical issues
      */
     public List<ChatMessage> findByDealIdSinceId(final Long dealId, final Long messageId)
