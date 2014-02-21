@@ -106,7 +106,7 @@ public interface ApplicantMapper {
 
     @Update("UPDATE applicant SET first_name=#{firstName}, " +
             "last_name=#{lastName}, description=#{description}, " +
-            "sex=#{sex}, age=#{age}, " +
+            "sex=#{sex}, age=#{age}, viewed=0, " +
             "resume_file=#{resumeFile.id}, test_answer_file=#{testAnswerFile.id} " +
             "WHERE id=#{id}")
     void update(final Applicant applicant);
