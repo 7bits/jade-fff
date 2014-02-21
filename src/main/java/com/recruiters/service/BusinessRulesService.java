@@ -207,7 +207,6 @@ public class BusinessRulesService {
                 deal.getStatus().equals(DealStatus.IN_PROGRESS));
     }
 
-
     /**
      * Test if employer declined applicant
      * @param applicant    Applicant
@@ -216,5 +215,25 @@ public class BusinessRulesService {
     public Boolean declinedApplicant(final Applicant applicant) {
 
         return (applicant.getStatus().equals(ApplicantStatus.REJECTED));
+    }
+
+    /**
+     * Test if recruiter can withdraw bid
+     * @param bid    Bid
+     * @return true if recruiter can withdraw bid
+     */
+    public Boolean canWithdrawBid(final Bid bid) {
+
+        return (bid.getStatus().equals(BidStatus.ACTIVE));
+    }
+
+    /**
+     * Test if this bid is withdrawn bid
+     * @param bid    Bid
+     * @return true if bid is withdrawn
+     */
+    public Boolean withdrawnBid(final Bid bid) {
+
+        return (bid.getStatus().equals(BidStatus.WITHDRAWN));
     }
 }

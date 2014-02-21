@@ -6,6 +6,7 @@ import com.recruiters.model.ChatMessage;
 import com.recruiters.model.Deal;
 import com.recruiters.model.Vacancy;
 import com.recruiters.model.status.VacancyStatus;
+import com.recruiters.service.BusinessRulesService;
 import com.recruiters.web.helper.MessageResolver;
 import com.recruiters.web.helper.UrlResolver;
 import org.apache.commons.lang3.StringEscapeUtils;
@@ -25,9 +26,14 @@ import java.util.Map;
 @Component
 public class JsonService {
     @Autowired
+    /** Message resolver needed to obtain localized versions of messages */
     private MessageResolver messageResolver;
     @Autowired
+    /** Url resolver needed to obtain localized versions of urls */
     private UrlResolver urlResolver;
+    @Autowired
+    /** Business rules service is needed to test business conditions */
+    private BusinessRulesService businessRulesService;
 
     /**
      * Convert List of Vacancies to Json ready list of maps for use in view
@@ -609,7 +615,6 @@ public class JsonService {
         return mapJson;
     }
 
-
     /**
      * Approve Applicant successful message in json format
      * @param locale       Request locale
@@ -622,7 +627,6 @@ public class JsonService {
         return new Object[]{messageResolver.message("employer-progress-vacancy-show.table.applied", locale)};
     }
 
-
     /**
      * Decline Applicant successful message in json format
      * @param locale       Request locale
@@ -634,7 +638,6 @@ public class JsonService {
 
         return new Object[]{messageResolver.message("employer-progress-vacancy-show.table.declined", locale)};
     }
-
 
     /**
      * Convert List of bids to Json ready list of maps for
@@ -670,7 +673,12 @@ public class JsonService {
             } else {
                 currentBidJson.put("viewed", "");
             }
-
+            if (businessRulesService.canWithdrawBid(bid)) {
+                currentBidJson.put("withdraw", messageResolver.message("recruiter-active-bids.table.withdraw", locale));
+            }
+            if(businessRulesService.withdrawnBid(bid)) {
+                currentBidJson.put("withdrawn", messageResolver.message("recruiter-active-bids.table.withdrawn", locale));
+            }
             bidsJson.add(currentBidJson);
         }
 
@@ -784,5 +792,17 @@ public class JsonService {
         }
 
         return dealsJson;
+    }
+
+    /**
+     * Withdraw bid successful message in json format
+     * @param locale       Request locale
+     * @return message
+     */
+    public Object[] recruiterWithdrawBid(
+            final Locale locale
+    ) {
+
+        return new Object[]{messageResolver.message("recruiter-active-bids.table.withdrawn", locale)};
     }
 }

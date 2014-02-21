@@ -10,7 +10,9 @@ public enum BidStatus {
     /** Status - rejected */
     REJECTED (1, "Rejected"),
     /** Status - approved */
-    APPROVED (2, "Approved");
+    APPROVED (2, "Approved"),
+    /** Status - approved */
+    WITHDRAWN (3, "Withdrawn");
 
 
     private final int order;

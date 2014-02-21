@@ -83,3 +83,24 @@ $ ->
       return
 
     request.fail ->
+
+  withdrawBidButtons = "button.bidWithdraw"
+  $(document).on
+    click: (event) ->
+      event.preventDefault()
+      $button = $(event.target)
+      requestData = "bidId=" + $button.attr("data-id")
+      request = $.ajax(
+        url: "recruiter-bid-withdraw.json"
+        type: "GET"
+        data: requestData
+        dataType: "json"
+      )
+      request.done (data) ->
+        newLabel = data.entry.value
+        $button.html(newLabel)
+        $button.prop("disabled", true)
+        return
+
+      request.fail ->
+  , withdrawBidButtons

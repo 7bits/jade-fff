@@ -7,6 +7,7 @@ import com.recruiters.model.ChatMessage;
 import com.recruiters.model.Deal;
 import com.recruiters.model.Employer;
 import com.recruiters.model.Feedback;
+import com.recruiters.model.status.BidStatus;
 import com.recruiters.model.status.DealStatus;
 import com.recruiters.model.Recruiter;
 import com.recruiters.model.User;
@@ -757,6 +758,35 @@ public class RecruiterService {
         throw new NotAffiliatedException(securityMessage);
     }
 
+    /**
+     * Withdraw Bid
+     * @param bidId             Id of Bid
+     * @param recruiterId       Id of recruiter
+     * @return true if success, otherwise false
+     * @throws NotAffiliatedException if bid not belongs to
+     * recruiter requested method or cannot be withdrawn
+     * @throws ServiceException if Repository cannot process request
+     * or any other possible error
+     */
+    public Long withdrawBid(final Long bidId, final Long recruiterId)
+            throws NotAffiliatedException, ServiceException {
+        Bid bid;
+        try {
+            bid = bidRepository.findById(bidId);
+            if (bid.getRecruiter().getId().equals(recruiterId) &&
+                    bid.getStatus().equals(BidStatus.ACTIVE)) {
+
+                return bidRepository.updateStatus(bidId, BidStatus.WITHDRAWN);
+            }
+        } catch (Exception e) {
+            log.error(SERVICE_EXCEPTION_MESSAGE, e);
+            throw new ServiceException(SERVICE_EXCEPTION_MESSAGE, e);
+        }
+        String securityMessage = SECURITY_EXCEPTION_MESSAGE_PART1 + Bid.class.getSimpleName() +
+                SECURITY_EXCEPTION_MESSAGE_PART2;
+        log.error(securityMessage);
+        throw new NotAffiliatedException(securityMessage);
+    }
 
     public AttachmentRepository getAttachmentRepository() {
         return attachmentRepository;
