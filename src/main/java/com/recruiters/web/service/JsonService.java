@@ -54,7 +54,7 @@ public class JsonService {
             if (vacancy.getDealId() != 0L) {
                 currentVacancyJson.put(
                         "status",
-                        messageResolver.message("recruiter-vacancies-search.table.deal", locale)
+                        messageResolver.message("recruiter-vacancies-search.vacancy.deal", locale)
                 );
                 currentVacancyJson.put(
                         "url",
@@ -63,7 +63,7 @@ public class JsonService {
             } else if (vacancy.getBidId() != 0L) {
                 currentVacancyJson.put(
                         "status",
-                        messageResolver.message("recruiter-vacancies-search.table.bid", locale)
+                        messageResolver.message("recruiter-vacancies-search.vacancy.bid", locale)
                 );
                 currentVacancyJson.put(
                         "url",
@@ -72,7 +72,7 @@ public class JsonService {
             } else {
                 currentVacancyJson.put(
                         "status",
-                        messageResolver.message("recruiter-vacancies-search.table.vacancy", locale)
+                        messageResolver.message("recruiter-vacancies-search.vacancy.vacancy", locale)
                 );
                 currentVacancyJson.put(
                         "url",

@@ -10,25 +10,25 @@ block append content
         .col-md-3
           .input-group
             label(for="searchText")
-            input.inputtext(type="text", id="searchText", name="searchText", value=recruiterVacanciesFilter.searchText, placeholder=fmt.message("recruiter-vacancies-search.form.search", locale))
+            input.inputtext(type="text", id="searchText", name="searchText", value=recruiterVacanciesFilter.searchText, placeholder=fmt.message("recruiter-vacancies-search.filter.search", locale))
             span.input-group-addon.autowidth
               span.glyphicon.glyphicon-search
         .col-md-6
           .btn-group.btn-group-xs(data-toggle="buttons")
-            label.btn.btn-default#showAll=fmt.message("recruiter-vacancies-search.form.show-all", locale)
+            label.btn.btn-default#showAll=fmt.message("recruiter-vacancies-search.filter.show-all", locale)
               input(type="checkbox", name="showAll", value="1")
           .btn-group.btn-group-xs(data-toggle="buttons")
-            label.btn.btn-default#hideVacancies=fmt.message("recruiter-vacancies-search.form.hide-vacancies", locale)
+            label.btn.btn-default#hideVacancies=fmt.message("recruiter-vacancies-search.filter.hide-vacancies", locale)
               input(type="checkbox", name="hideVacancies", value="1", checked=recruiterVacanciesFilter.hideVacancies)
-            label.btn.btn-default#hideBids=fmt.message("recruiter-vacancies-search.form.hide-bids", locale)
+            label.btn.btn-default#hideBids=fmt.message("recruiter-vacancies-search.filter.hide-bids", locale)
               input(type="checkbox", name="hideBids", value="1", checked=recruiterVacanciesFilter.hideBids)
-            label.btn.btn-default#hideDeals=fmt.message("recruiter-vacancies-search.form.hide-deals", locale)
+            label.btn.btn-default#hideDeals=fmt.message("recruiter-vacancies-search.filter.hide-deals", locale)
               input(type="checkbox", name="hideDeals", value="1", checked=recruiterVacanciesFilter.hideDeals)
       .row
         .col-md-1
           ul.pager
             li.next
-              a#prevDateLink(href="#") <
+              a#prevDateLink(href="#") #{fmt.message("recruiter-vacancies-search.filter.prev-date", locale)}
         .col-md-2
           .input-group.dateadjust
             input.datepicker(type="text", size=10, name="date", data-date-format="yyyy-mm-dd", value=recruiterVacanciesFilter.date)
@@ -40,12 +40,12 @@ block append content
         .col-md-1
           ul.pager
             li.previous
-              a#nextDateLink(href="#") >
+              a#nextDateLink(href="#") #{fmt.message("recruiter-vacancies-search.filter.next-date", locale)}
     table.table.table-striped#table-sort
       thead
         tr
-          th.sorting#stitle=fmt.message("recruiter-vacancies-search.table.name", locale)
-          th.sorting#sdescription=fmt.message("recruiter-vacancies-search.table.description", locale)
-          th.sorting#screation_date=fmt.message("recruiter-vacancies-search.table.date", locale)
-          th.sorting#stype=fmt.message("recruiter-vacancies-search.table.bidOrDeal", locale)
+          th.sorting#stitle=fmt.message("recruiter-vacancies-search.vacancy.title", locale)
+          th.sorting#sdescription=fmt.message("recruiter-vacancies-search.vacancy.description", locale)
+          th.sorting#screation_date=fmt.message("recruiter-vacancies-search.vacancy.date", locale)
+          th.sorting#stype=fmt.message("recruiter-vacancies-search.vacancy.activity", locale)
       tbody
