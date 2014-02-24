@@ -9,8 +9,8 @@ block append content
       table.table.table-striped.employerBidView
         thead
           tr
-            th=fmt.message("employer-vacancy-bids.table.recruiter", locale)
-            th=fmt.message("employer-vacancy-bids.table.created", locale)
+            th=fmt.message("employer-vacancy-bids.bid.recruiter", locale)
+            th=fmt.message("employer-vacancy-bids.bid.date-created", locale)
             th
             th
         tbody
@@ -30,18 +30,18 @@ block append content
                 .btn-group.btn-group-xs
                   if test.canApplyBid(bid)
                     button.btn.btn-success.bidApply(data-id = bid.id)
-                      #{fmt.message("employer-vacancy-bids.table.apply", locale)}
+                      #{fmt.message("employer-vacancy-bids.bid.approve", locale)}
                   if test.appliedBid(bid)
                     button.btn.btn-success.bidApply(data-id = bid.id, disabled)
-                      #{fmt.message("employer-vacancy-bids.table.applied", locale)}
+                      #{fmt.message("employer-vacancy-bids.bid.approved", locale)}
               td
                 .btn-group.btn-group-xs
                   if test.canDeclineBid(bid)
                     button.btn.btn-danger.bidDecline(data-id = bid.id)
-                      #{fmt.message("employer-vacancy-bids.table.decline", locale)}
+                      #{fmt.message("employer-vacancy-bids.bid.decline", locale)}
                   if test.declinedBid(bid)
                     button.btn.btn-danger.bidDecline(data-id = bid.id, disabled)
-                      #{fmt.message("employer-vacancy-bids.table.declined", locale)}
+                      #{fmt.message("employer-vacancy-bids.bid.declined", locale)}
 
     .col-md-4
       h2=fmt.message("employer-vacancy-bids.vacancy.heading", locale)
@@ -49,4 +49,4 @@ block append content
       p #{vacancy.description}
       p=fmt.currencyRange(vacancy.salaryFrom, vacancy.salaryTo, locale)
       if vacancy.testFile
-        a(href=domain.buildFullUri("/employer-download-attachment/", vacancy.testFile.id, locale))=fmt.message("employer-vacancy-bids..tests", locale)
+        a(href=domain.buildFullUri("/employer-download-attachment/", vacancy.testFile.id, locale))=fmt.message("employer-vacancy-bids..vacancy.tests", locale)
