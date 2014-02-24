@@ -1,9 +1,9 @@
 extends ../layout
 
 block append head
-  title=fmt.message("error.500", locale)
+  title=fmt.message("error-404.title", locale)
 block append content
   .container
     .navbar-header
       a.navbar-brand(href=domain.buildFullUri("", locale)).
-        #{fmt.message("error.500", locale)}
+        #{fmt.message("error-404.h1", locale)}

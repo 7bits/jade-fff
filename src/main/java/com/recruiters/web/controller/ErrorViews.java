@@ -20,7 +20,7 @@ public class ErrorViews {
     @RequestMapping(value = "403")
     public ModelAndView errorForbidden() {
 
-        return new ModelAndView("errors/403.jade");
+        return new ModelAndView("errors/error-403.jade");
     }
 
     /**
@@ -30,7 +30,7 @@ public class ErrorViews {
     @RequestMapping(value = "404")
     public ModelAndView errorNotFound() {
 
-        return new ModelAndView("errors/404.jade");
+        return new ModelAndView("errors/error-404.jade");
     }
 
     /**
@@ -40,6 +40,6 @@ public class ErrorViews {
     @RequestMapping(value = "500")
     public ModelAndView errorServerException() {
 
-        return new ModelAndView("errors/500.jade");
+        return new ModelAndView("errors/error-500.jade");
     }
 }
