@@ -519,14 +519,14 @@ public class JsonService {
             final Locale locale
     ) {
         Map<String, String> bidJson = new HashMap<String, String>();
-        bidJson.put("popupTitle", messageResolver.message("employer-recruiter-show.bid.title", locale));
-        bidJson.put("headStatus", messageResolver.message("employer-recruiter-show.bid.status", locale));
+        bidJson.put("popupTitle", messageResolver.message("employer-bid-popup.title", locale));
+        bidJson.put("headStatus", messageResolver.message("employer-bid-popup.status", locale));
         bidJson.put("status", messageResolver.bidStatus(bid.getStatus(), locale));
-        bidJson.put("headCreated", messageResolver.message("employer-recruiter-show.bid.created", locale));
+        bidJson.put("headCreated", messageResolver.message("employer-bid-popup.date-created", locale));
         bidJson.put("created", messageResolver.date(bid.getDateCreated(), locale));
-        bidJson.put("headMessage", messageResolver.message("employer-recruiter-show.bid.message", locale));
+        bidJson.put("headMessage", messageResolver.message("employer-bid-popup.message", locale));
         bidJson.put("message", StringEscapeUtils.escapeHtml4(bid.getMessage()));
-        bidJson.put("headRecruiter", messageResolver.message("employer-recruiter-show.bid.recruiter", locale));
+        bidJson.put("headRecruiter", messageResolver.message("employer-bid-popup.recruiter", locale));
         bidJson.put("recruiter", bid.getRecruiter().getUser().getFirstName() + " " +
                 bid.getRecruiter().getUser().getLastName());
         bidJson.put(
@@ -576,40 +576,40 @@ public class JsonService {
             final Locale locale
     ) {
         Map<String, String> applicantJson = new HashMap<String, String>();
-        applicantJson.put("popupTitle", messageResolver.message("employer-applicant-show.title", locale));
-        applicantJson.put("headApplicant", messageResolver.message("employer-applicant-show.applicant", locale));
+        applicantJson.put("popupTitle", messageResolver.message("employer-applicant-popup.title", locale));
+        applicantJson.put("headApplicant", messageResolver.message("employer-applicant-popup.applicant", locale));
         applicantJson.put("applicant", applicant.getFirstName() + " " + applicant.getLastName());
-        applicantJson.put("headCreated", messageResolver.message("employer-applicant-show.created", locale));
+        applicantJson.put("headCreated", messageResolver.message("employer-applicant-popup.date-created", locale));
         applicantJson.put("created", messageResolver.date(applicant.getDateCreated(), locale));
-        applicantJson.put("headGender", messageResolver.message("employer-applicant-show.gender", locale));
+        applicantJson.put("headGender", messageResolver.message("employer-applicant-popup.gender", locale));
         if (applicant.getSex() != null) {
             applicantJson.put("gender", applicant.getSex());
         } else {
             applicantJson.put("gender", "");
         }
-        applicantJson.put("headAge", messageResolver.message("employer-applicant-show.age", locale));
+        applicantJson.put("headAge", messageResolver.message("employer-applicant-popup.age", locale));
         if (applicant.getAge() != null) {
             applicantJson.put("age", applicant.getAge().toString());
         } else {
             applicantJson.put("age", "");
         }
         if (applicant.getResumeFile() != null) {
-            applicantJson.put("headResume", messageResolver.message("employer-applicant-show.resume", locale));
-            applicantJson.put("resume", messageResolver.message("employer-applicant-show.resume-download", locale));
+            applicantJson.put("headResume", messageResolver.message("employer-applicant-popup.resume", locale));
+            applicantJson.put("resume", messageResolver.message("employer-applicant-popup.resume-download", locale));
             applicantJson.put(
                     "resumeUrl",
                     urlResolver.buildFullUri("/employer-download-attachment/", applicant.getResumeFile().getId(), locale)
             );
         }
         if (applicant.getTestAnswerFile() != null) {
-            applicantJson.put("headTestAnswer", messageResolver.message("employer-applicant-show.test-answer", locale));
-            applicantJson.put("testAnswer", messageResolver.message("employer-applicant-show.test-answer-download", locale));
+            applicantJson.put("headTestAnswer", messageResolver.message("employer-applicant-popup.test-answer", locale));
+            applicantJson.put("testAnswer", messageResolver.message("employer-applicant-popup.test-answer-download", locale));
             applicantJson.put(
                     "testAnswerUrl",
                     urlResolver.buildFullUri("/employer-download-attachment/", applicant.getTestAnswerFile().getId(), locale)
             );
         }
-        applicantJson.put("headDescription", messageResolver.message("employer-applicant-show.description", locale));
+        applicantJson.put("headDescription", messageResolver.message("employer-applicant-popup.description", locale));
         applicantJson.put("description", StringEscapeUtils.escapeHtml4(applicant.getDescription()));
         Map<String,Map<String,String>> mapJson = new HashMap<String, Map<String, String>>();
         mapJson.put("applicant", applicantJson);
@@ -699,32 +699,32 @@ public class JsonService {
             final Locale locale
     ) {
         Map<String, String> bidJson = new HashMap<String, String>();
-        bidJson.put("popupTitle", messageResolver.message("recruiter-show-bid.title", locale));
-        bidJson.put("headVacancy", messageResolver.message("recruiter-show-bid.vacancy", locale));
+        bidJson.put("popupTitle", messageResolver.message("recruiter-bid-popup.title", locale));
+        bidJson.put("headVacancy", messageResolver.message("recruiter-bid-popup.vacancy", locale));
         bidJson.put("vacancy", bid.getVacancy().getTitle());
-        bidJson.put("headSalary", messageResolver.message("recruiter-show-bid.salary", locale));
+        bidJson.put("headSalary", messageResolver.message("recruiter-bid-popup.salary", locale));
         bidJson.put("salary", messageResolver.currencyRange(
                 bid.getVacancy().getSalaryFrom(),
                 bid.getVacancy().getSalaryTo(),
                 locale
         ));
-        bidJson.put("headCreated", messageResolver.message("recruiter-show-bid.created", locale));
+        bidJson.put("headCreated", messageResolver.message("recruiter-bid-popup.date-created", locale));
         bidJson.put("created", messageResolver.date(bid.getDateCreated(), locale));
-        bidJson.put("headUpdated", messageResolver.message("recruiter-show-bid.updated", locale));
+        bidJson.put("headUpdated", messageResolver.message("recruiter-bid-popup.date-updated", locale));
         bidJson.put("updated", messageResolver.date(bid.getLastModified(), locale));
-        bidJson.put("headExpiration", messageResolver.message("recruiter-show-bid.expiration", locale));
+        bidJson.put("headExpiration", messageResolver.message("recruiter-bid-popup.date-expiration", locale));
         bidJson.put("expiration", messageResolver.date(bid.getVacancy().getExpirationDate(), locale));
-        bidJson.put("headStatus", messageResolver.message("recruiter-show-bid.status", locale));
+        bidJson.put("headStatus", messageResolver.message("recruiter-bid-popup.status", locale));
         bidJson.put("status", messageResolver.bidStatus(bid.getStatus(), locale));
         if (!bid.getDealId().equals(0L)) {
-            bidJson.put("headDeal", messageResolver.message("recruiter-show-bid.deal", locale));
-            bidJson.put("deal", messageResolver.message("recruiter-show-bid.to-deal", locale));
+            bidJson.put("headDeal", messageResolver.message("recruiter-bid-popup.deal", locale));
+            bidJson.put("deal", messageResolver.message("recruiter-bid-popup.to-deal", locale));
             bidJson.put(
                     "dealUrl",
                     urlResolver.buildFullUri("/recruiter-show-in-progress-vacancy/", bid.getDealId(), locale)
             );
         }
-        bidJson.put("headDescription", messageResolver.message("recruiter-show-bid.description", locale));
+        bidJson.put("headDescription", messageResolver.message("recruiter-bid-popup.description", locale));
         bidJson.put("description", StringEscapeUtils.escapeHtml4(bid.getVacancy().getDescription()));
 
         Map<String,Map<String,String>> mapJson = new HashMap<String, Map<String, String>>();
