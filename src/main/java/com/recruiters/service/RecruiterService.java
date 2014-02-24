@@ -537,7 +537,7 @@ public class RecruiterService {
                     Integer extensionStart = testAnswerFile.getOriginalFilename().lastIndexOf(".");
                     String filename = applicant.getFirstName().substring(0, 1) +
                             "." + applicant.getLastName() +
-                            messageSource.getMessage("file.testAnswers.suffix", null, locale) +
+                            messageSource.getMessage("file.test-answers.suffix", null, locale) +
                             testAnswerFile.getOriginalFilename().substring(extensionStart);
                     Attachment fileNameForTestAnswers = this.getAttachmentRepository().save(
                             testAnswerFile,
