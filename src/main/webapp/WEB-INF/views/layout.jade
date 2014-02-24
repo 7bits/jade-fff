@@ -41,19 +41,19 @@ html
                   ul(class="dropdown-menu", role="menu", aria-labelledby="menu")
                     li(role="presentation")
                       a(href=domain.buildFullUri("/recruiter-control-panel", locale), role="menuitem", tabindex="-1").
-                        #{fmt.message("layout.recruiter.control_panel", locale)}
+                        #{fmt.message("layout.recruiter-dashboard", locale)}
                     li(role="presentation")
                       a(href=domain.buildFullUri("/recruiter-active-deals", locale), role="menuitem", tabindex="-1").
-                        #{fmt.message("layout.recruiter.vacancies_in_progress", locale)}
+                        #{fmt.message("layout.recruiter-deals", locale)}
                     li(role="presentation")
                       a(href=domain.buildFullUri("/recruiter-active-bids", locale), role="menuitem", tabindex="-1").
-                        #{fmt.message("layout.recruiter.my_applications", locale)}
+                        #{fmt.message("layout.recruiter-bids", locale)}
                     li(role="presentation")
                       a(href=domain.buildFullUri("/recruiter-find-new-vacancies", locale), role="menuitem", tabindex="-1").
-                        #{fmt.message("layout.recruiter.vacancy_search", locale)}
+                        #{fmt.message("layout.recruiter-vacancies-search", locale)}
                     li(role="presentation")
                       a(href=domain.buildFullUri("/recruiter-profile", locale), role="menuitem", tabindex="-1").
-                        #{fmt.message("layout.recruiter.profile", locale)}
+                        #{fmt.message("layout.recruiter-profile", locale)}
                     li(role="presentation", class="divider")
                     li(role="presentation")
                       form(action=domain.buildFullUri("/j_spring_security_logout", locale), method="post")
@@ -69,16 +69,16 @@ html
                   ul(class="dropdown-menu", role="menu", aria-labelledby="menu")
                     li(role="presentation")
                       a(href=domain.buildFullUri("/employer-control-panel", locale), role="menuitem", tabindex="-1").
-                        #{fmt.message("layout.employer.control_panel", locale)}
+                        #{fmt.message("layout.employer-dashboard", locale)}
                     li(role="presentation")
                       a(href=domain.buildFullUri("/employer-recruiter-search", locale), role="menuitem", tabindex="-1").
-                        #{fmt.message("layout.employer.recruiter_choose", locale)}
+                        #{fmt.message("layout.employer-vacancies", locale)}
                     li(role="presentation")
                       a(href=domain.buildFullUri("/employer-progress-vacancies-list", locale), role="menuitem", tabindex="-1").
-                        #{fmt.message("layout.employer.recruiter_vacancies", locale)}
+                        #{fmt.message("layout.employer-deals", locale)}
                     li(role="presentation")
                       a(href=domain.buildFullUri("/employer-profile", locale), role="menuitem", tabindex="-1").
-                        #{fmt.message("layout.employer.profile", locale)}
+                        #{fmt.message("layout.employer-profile", locale)}
                     li(role="presentation", class="divider")
                     li(role="presentation")
                       form(action=domain.buildFullUri("/j_spring_security_logout", locale), method="post")
