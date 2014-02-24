@@ -127,7 +127,7 @@ public class JsonService {
             );
             currentDealJson.put(
                     "urlText",
-                    messageResolver.message("employer-deals.more", locale)
+                    messageResolver.message("employer-deals.deal", locale)
             );
             currentDealJson.put("unseenApplicantCount", deal.getUnseenApplicantCount().toString());
             currentDealJson.put("allApplicantCount", deal.getAllApplicantCount().toString());
