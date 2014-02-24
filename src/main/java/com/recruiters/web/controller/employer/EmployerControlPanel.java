@@ -54,7 +54,7 @@ public class EmployerControlPanel {
             final HttpServletResponse response
     ) throws Exception {
 
-        ModelAndView controlPanel = new ModelAndView("employer/employer-control-panel.jade");
+        ModelAndView controlPanel = new ModelAndView("employer/employer-dashboard.jade");
         try {
             User user = userUtils.getCurrentUser(request);
             Employer employer = employerService.findEmployer(user.getEmployerId());

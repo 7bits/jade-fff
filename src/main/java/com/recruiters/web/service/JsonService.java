@@ -210,7 +210,7 @@ public class JsonService {
             );
             currentDealJson.put(
                     "feedback",
-                    messageResolver.message("employer-control-panel.feedback.leave", locale)
+                    messageResolver.message("employer-dashboard.feedback.leave", locale)
             );
             currentDealJson.put(
                     "feedbackUrl",

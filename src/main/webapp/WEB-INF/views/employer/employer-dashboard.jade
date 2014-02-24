@@ -1,0 +1,50 @@
+extends ../layout
+
+block append head
+  title=fmt.message("employer-dashboard.title", locale)
+block append content
+  .container
+    h1.text-center=fmt.message("employer-dashboard.h1", locale)
+    .row
+      .col-md-9
+        h2.text-center=fmt.message("employer-dashboard.feedback.h2", locale)
+        table.table.table-striped#employer-feedback
+          thead
+            tr
+              th=fmt.message("employer-dashboard.feedback.vacancy", locale)
+              th=fmt.message("employer-dashboard.feedback.recruiter", locale)
+              th=fmt.message("employer-dashboard.feedback.status", locale)
+              th=fmt.message("employer-dashboard.feedback.date", locale)
+          tbody
+        .spacer
+        h2.text-center=fmt.message("employer-dashboard.applicants.h2", locale)
+        table.table.table-striped#employer-applicants
+          thead
+            tr
+              th=fmt.message("employer-dashboard.applicants.applicant", locale)
+              th=fmt.message("employer-dashboard.applicants.vacancy", locale)
+              th=fmt.message("employer-dashboard.applicants.recruiter", locale)
+              th=fmt.message("employer-dashboard.applicants.date", locale)
+          tbody
+        a.btn.btn-link.pull-right(href=domain.buildFullUri("/employer-progress-vacancies-list", locale))
+          strong
+            #{fmt.message("employer-dashboard.my-deals", locale)}
+        .spacer
+        h2.text-center=fmt.message("employer-dashboard.bids.h2", locale)
+        table.table.table-striped#employer-bids
+          thead
+            tr
+              th=fmt.message("employer-dashboard.bids.recruiter", locale)
+              th=fmt.message("employer-dashboard.bids.vacancy", locale)
+              th=fmt.message("employer-dashboard.bids.description", locale)
+              th=fmt.message("employer-dashboard.bids.date", locale)
+          tbody
+        a.btn.btn-link.pull-right(href=domain.buildFullUri("/employer-recruiter-search", locale))
+          strong
+            #{fmt.message("employer-dashboard.my-vacancies", locale)}
+      .col-md-3
+        h2=fmt.message("employer-dashboard.about.h2", locale)
+        p #{employer.user.firstName} #{employer.user.lastName}
+        img(src=domain.getResourceUrl('/stylesheets/images/empty_avatar.jpg'))
+        p #{employer.user.description}
+        a.btn.btn-link(href=domain.buildFullUri("/employer-profile", locale))=fmt.message("employer-dashboard.about.profile", locale)
