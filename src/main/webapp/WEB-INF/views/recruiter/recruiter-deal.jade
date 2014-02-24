@@ -36,22 +36,22 @@ block append content
       .col-md-8
         h2
         dl.dl-horizontal
-          dt=fmt.message("recruiter-deal.dt.title", locale)
+          dt=fmt.message("recruiter-deal.vacancy.title", locale)
           dd #{deal.vacancy.title}
-          dt=fmt.message("recruiter-deal.dt.description", locale)
+          dt=fmt.message("recruiter-deal.vacancy.description", locale)
           dd #{deal.vacancy.description}
-          dt=fmt.message("recruiter-deal.dt.salary", locale)
+          dt=fmt.message("recruiter-deal.vacancy.salary", locale)
           dd=fmt.currencyRange(deal.vacancy.salaryFrom, deal.vacancy.salaryTo, locale)
-          dt=fmt.message("recruiter-deal.dt.creationDate", locale)
+          dt=fmt.message("recruiter-deal.vacancy.date-created", locale)
           dd #{fmt.date(deal.vacancy.creationDate, locale)}
-          dt=fmt.message("recruiter-deal.dt.expirationDate", locale)
+          dt=fmt.message("recruiter-deal.vacancy.date-expiration", locale)
           dd #{fmt.date(deal.vacancy.expirationDate, locale)}
-          dt=fmt.message("recruiter-deal.dt.status", locale)
+          dt=fmt.message("recruiter-deal.vacancy.status", locale)
           dd #{fmt.dealStatus(deal.status, locale)}
           if deal.vacancy.testFile
-            dt=fmt.message("recruiter-deal.dt.tests", locale)
+            dt=fmt.message("recruiter-deal.vacancy.tests", locale)
             dd
-              a(href=domain.buildFullUri("/recruiter-download-attachment/", deal.vacancy.testFile.id, locale))=fmt.message("recruiter-deal.dd.tests", locale)
+              a(href=domain.buildFullUri("/recruiter-download-attachment/", deal.vacancy.testFile.id, locale))=fmt.message("recruiter-deal.vacancy.tests-download", locale)
 
       .col-md-4
         h2=fmt.message("recruiter-deal.employer.heading", locale)
@@ -64,10 +64,10 @@ block append content
     table.table.table-striped
       thead
         tr
-          th=fmt.message("recruiter-deal.applicants.firstName", locale)
-          th=fmt.message("recruiter-deal.applicants.lastName", locale)
+          th=fmt.message("recruiter-deal.applicants.first-name", locale)
+          th=fmt.message("recruiter-deal.applicants.last-name", locale)
           th=fmt.message("recruiter-deal.applicants.status", locale)
-          th=fmt.message("recruiter-deal.applicants.creationDate", locale)
+          th=fmt.message("recruiter-deal.applicants.date-created", locale)
           th=fmt.message("recruiter-deal.applicants.viewed", locale)
           th
       if deal.applicants
