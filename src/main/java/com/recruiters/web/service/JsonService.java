@@ -477,7 +477,7 @@ public class JsonService {
                 );
                 currentVacancyJson.put(
                         "urlText",
-                        messageResolver.message("employer-vacancies.table.edit", locale)
+                        messageResolver.message("employer-vacancies.vacancy.edit", locale)
                 );
             } else {
                 currentVacancyJson.put(
@@ -486,7 +486,7 @@ public class JsonService {
                 );
                 currentVacancyJson.put(
                         "urlText",
-                        messageResolver.message("employer-vacancies.table.more", locale)
+                        messageResolver.message("employer-vacancies.vacancy.more", locale)
                 );
             }
             currentVacancyJson.put("unseenBidCount", vacancy.getUnseenBidCount().toString());
