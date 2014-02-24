@@ -4,11 +4,11 @@ block append head
   title=fmt.message("recruiter-deal.title", locale)
 block append content
   .container
-    h1=fmt.message("recruiter-deal.h1", locale)
+    h1=fmt.message("recruiter-deal.heading", locale)
     if test.isFeedbackStage(deal)
       .row
         .col-md-8
-          h2=fmt.message("recruiter-deal.feedback.h2", locale)
+          h2=fmt.message("recruiter-deal.feedback.heading", locale)
           if test.recruiterLeftFeedback(deal)
             dl.dl-horizontal
               dt=fmt.message("recruiter-deal.feedback.left", locale)
@@ -54,21 +54,21 @@ block append content
               a(href=domain.buildFullUri("/recruiter-download-attachment/", deal.vacancy.testFile.id, locale))=fmt.message("recruiter-deal.dd.tests", locale)
 
       .col-md-4
-        h2=fmt.message("recruiter-deal.employer", locale)
+        h2=fmt.message("recruiter-deal.employer.heading", locale)
         p
           a(href = domain.buildFullUri("/recruiter-show-employer-profile/", deal.vacancy.employer.id, locale))
             #{deal.vacancy.employer.user.firstName} #{deal.vacancy.employer.user.lastName}
 
 
-    h2=fmt.message("recruiter-deal.h2", locale)
+    h2=fmt.message("recruiter-deal.applicants.heading", locale)
     table.table.table-striped
       thead
         tr
-          th=fmt.message("recruiter-deal.table.firstName", locale)
-          th=fmt.message("recruiter-deal.table.lastName", locale)
-          th=fmt.message("recruiter-deal.table.status", locale)
-          th=fmt.message("recruiter-deal.table.creationDate", locale)
-          th=fmt.message("recruiter-deal.table.viewed", locale)
+          th=fmt.message("recruiter-deal.applicants.firstName", locale)
+          th=fmt.message("recruiter-deal.applicants.lastName", locale)
+          th=fmt.message("recruiter-deal.applicants.status", locale)
+          th=fmt.message("recruiter-deal.applicants.creationDate", locale)
+          th=fmt.message("recruiter-deal.applicants.viewed", locale)
           th
       if deal.applicants
         for applicant in deal.applicants
@@ -79,13 +79,13 @@ block append content
             td #{fmt.date(deal.vacancy.creationDate, locale)}
             td
               if applicant.viewed
-                #{fmt.message("recruiter-deal.table.viewed", locale)}
+                #{fmt.message("recruiter-deal.applicants.viewed", locale)}
             td
               if test.isApplicantEditable(applicant, deal)
-                a.btn.btn-link.pull-right(href= domain.buildFullUri("/recruiter-edit-applicant/", applicant.id, locale))=fmt.message("recruiter-deal.table.change", locale)
+                a.btn.btn-link.pull-right(href= domain.buildFullUri("/recruiter-edit-applicant/", applicant.id, locale))=fmt.message("recruiter-deal.applicants.change", locale)
     if test.canAddApplicant(deal)
-      a.btn.btn-success(href= domain.buildFullUri("/recruiter-add-applicant/", deal.id, locale))=fmt.message("recruiter-deal.add", locale)
-    h2=fmt.message("recruiter-deal.chat", locale)
+      a.btn.btn-success(href= domain.buildFullUri("/recruiter-add-applicant/", deal.id, locale))=fmt.message("recruiter-deal.applicants.add", locale)
+    h2=fmt.message("recruiter-deal.chat.heading", locale)
     .row.h4
       .col-md-2=fmt.message("recruiter-deal.chat.from", locale)
       .col-md-2=fmt.message("recruiter-deal.chat.time", locale)

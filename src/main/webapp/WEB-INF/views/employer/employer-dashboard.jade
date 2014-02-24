@@ -4,10 +4,10 @@ block append head
   title=fmt.message("employer-dashboard.title", locale)
 block append content
   .container
-    h1.text-center=fmt.message("employer-dashboard.h1", locale)
+    h1.text-center=fmt.message("employer-dashboard.heading", locale)
     .row
       .col-md-9
-        h2.text-center=fmt.message("employer-dashboard.feedback.h2", locale)
+        h2.text-center=fmt.message("employer-dashboard.feedback.heading", locale)
         table.table.table-striped#employer-feedback
           thead
             tr
@@ -17,7 +17,7 @@ block append content
               th=fmt.message("employer-dashboard.feedback.date", locale)
           tbody
         .spacer
-        h2.text-center=fmt.message("employer-dashboard.applicants.h2", locale)
+        h2.text-center=fmt.message("employer-dashboard.applicants.heading", locale)
         table.table.table-striped#employer-applicants
           thead
             tr
@@ -30,7 +30,7 @@ block append content
           strong
             #{fmt.message("employer-dashboard.my-deals", locale)}
         .spacer
-        h2.text-center=fmt.message("employer-dashboard.bids.h2", locale)
+        h2.text-center=fmt.message("employer-dashboard.bids.heading", locale)
         table.table.table-striped#employer-bids
           thead
             tr
@@ -43,7 +43,7 @@ block append content
           strong
             #{fmt.message("employer-dashboard.my-vacancies", locale)}
       .col-md-3
-        h2=fmt.message("employer-dashboard.about.h2", locale)
+        h2=fmt.message("employer-dashboard.about.heading", locale)
         p #{employer.user.firstName} #{employer.user.lastName}
         img(src=domain.getResourceUrl('/stylesheets/images/empty_avatar.jpg'))
         p #{employer.user.description}

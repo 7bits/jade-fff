@@ -4,7 +4,7 @@ block append head
   title=fmt.message("employer-vacancies.title", locale)
 block append content
   .container
-    h1=fmt.message("employer-vacancies.h1", locale)
+    h1=fmt.message("employer-vacancies.heading", locale)
     form.form-sort(name="employerVacanciesFilter", id="employerVacanciesFilter", action="", method="get")
       .row
         .col-md-6

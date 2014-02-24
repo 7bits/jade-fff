@@ -4,7 +4,7 @@ block append head
   title=fmt.message("employer-vacancy-bids.title", locale)
 block append content
   .container
-    h1=fmt.message("employer-vacancy-bids.h1", locale)
+    h1=fmt.message("employer-vacancy-bids.heading", locale)
     .col-md-8
       table.table.table-striped.employerBidView
         thead
@@ -44,7 +44,7 @@ block append content
                       #{fmt.message("employer-vacancy-bids.table.declined", locale)}
 
     .col-md-4
-      h2=fmt.message("employer-vacancy-bids.vacancy.h2", locale)
+      h2=fmt.message("employer-vacancy-bids.vacancy.heading", locale)
       p #{vacancy.title}
       p #{vacancy.description}
       p=fmt.currencyRange(vacancy.salaryFrom, vacancy.salaryTo, locale)

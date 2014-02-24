@@ -6,7 +6,7 @@ block append head
 block append content
   .container
     form.form-signin(role="form", action=domain.buildFullUri("/j_spring_security_check", locale), method="post")
-      h2.form-signin-heading=fmt.message("login.enter", locale)
+      h2.form-signin-heading=fmt.message("login.heading", locale)
       input.form-control(type="text", name="j_username", placeholder=fmt.message("login.username", locale), required="", autofocus="")
       input.form-control(type="password", name="j_password", placeholder=fmt.message("login.password", locale), required="")
       input(type="hidden", name=csrf.getParameterName(), value=csrf.getToken())

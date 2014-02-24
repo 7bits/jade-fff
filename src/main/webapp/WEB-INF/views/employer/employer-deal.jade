@@ -4,11 +4,11 @@ block append head
   title=fmt.message("employer-deal.title", locale)
 block append content
   .container
-    h1=fmt.message("employer-deal.h1", locale)
+    h1=fmt.message("employer-deal.heading", locale)
     if test.isFeedbackStage(deal)
       .row
         .col-md-8
-          h2=fmt.message("employer-deal.feedback.h2", locale)
+          h2=fmt.message("employer-deal.feedback.heading", locale)
           if test.employerLeftFeedback(deal)
             dl.dl-horizontal
               dt=fmt.message("employer-deal.feedback.left", locale)
@@ -46,7 +46,7 @@ block append content
           dt=fmt.message("employer-deal.dt.expiration", locale)
           dd #{fmt.date(deal.vacancy.expirationDate, locale)}
       .col-md-4
-        h2.text-center=fmt.message("employer-deal.recruiter.h2", locale)
+        h2.text-center=fmt.message("employer-deal.recruiter.heading", locale)
         .tools
           dl.dl-horizontal
             dt=fmt.message("employer-deal.recruiter.dt.name", locale)
@@ -65,7 +65,7 @@ block append content
                   input(type="hidden", name=csrf.getParameterName(), value=csrf.getToken())
                   input(type="hidden", name="id", value=deal.id)
                   input.btn.btn-danger(type="submit", name="submit", value=fmt.message("employer-deal.recruiter.decline", locale))
-    h2=fmt.message("employer-deal.applicants.h2", locale)
+    h2=fmt.message("employer-deal.applicants.heading", locale)
     .row
       .col-md-6
         table.table.table-striped.employerApplicantView
@@ -104,7 +104,7 @@ block append content
                       button.btn.btn-danger.applicantDecline(data-id = applicant.id, disabled)
                         #{fmt.message("employer-deal.table.declined", locale)}
 
-    h2=fmt.message("employer-deal.chat", locale)
+    h2=fmt.message("employer-deal.chat.heading", locale)
     .row.h4
       .col-md-2=fmt.message("employer-deal.chat.from", locale)
       .col-md-2=fmt.message("employer-deal.chat.time", locale)
