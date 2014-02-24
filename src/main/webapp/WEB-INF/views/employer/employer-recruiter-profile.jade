@@ -11,18 +11,18 @@ block append content
       .col-md-8
         h2
         dl.dl-horizontal
-          dt=fmt.message("employer-recruiter-profile.dt.name", locale)
+          dt=fmt.message("employer-recruiter-profile.recruiter.name", locale)
           dd #{recruiter.user.firstName} #{recruiter.user.lastName}
-          dt=fmt.message("employer-recruiter-profile.dt.description", locale)
+          dt=fmt.message("employer-recruiter-profile.recruiter.description", locale)
           dd #{recruiter.user.description}
-    h2.text-center=fmt.message("employer-recruiter-profile.feedback.h2", locale)
+    h2.text-center=fmt.message("employer-recruiter-profile.feedback.heading", locale)
     table.table.table-striped
       thead
         tr
-          th=fmt.message("employer-recruiter-profile.table.vacancy", locale)
-          th=fmt.message("employer-recruiter-profile.table.employer", locale)
-          th=fmt.message("employer-recruiter-profile.table.feedback-time", locale)
-          th=fmt.message("employer-recruiter-profile.table.feedback", locale)
+          th=fmt.message("employer-recruiter-profile.feedback.vacancy", locale)
+          th=fmt.message("employer-recruiter-profile.feedback.employer", locale)
+          th=fmt.message("employer-recruiter-profile.feedback.feedback-time", locale)
+          th=fmt.message("employer-recruiter-profile.feedback.feedback", locale)
       tbody
         for feedback in recruiter.feedbacks
           tr
