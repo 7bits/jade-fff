@@ -53,7 +53,7 @@ public class RecruiterControlPanel {
             final HttpServletResponse response
     ) throws Exception {
 
-        ModelAndView controlPanel = new ModelAndView("recruiter/recruiter-control-panel.jade");
+        ModelAndView controlPanel = new ModelAndView("recruiter/recruiter-dashboard.jade");
         try {
             User user = userUtils.getCurrentUser(request);
             Recruiter recruiter = recruiterService.findRecruiter(user.getRecruiterId());

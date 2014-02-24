@@ -1,0 +1,51 @@
+extends ../layout
+
+block append head
+  title=fmt.message("recruiter-dashboard.title", locale)
+block append content
+  .container
+    h1.text-center=fmt.message("recruiter-dashboard.h1", locale)
+    .row
+      .col-md-9
+        h2.text-center=fmt.message("recruiter-dashboard.feedback.h2", locale)
+        table.table.table-striped#recruiter-feedback
+          thead
+            tr
+              th=fmt.message("recruiter-dashboard.feedback.vacancy", locale)
+              th=fmt.message("recruiter-dashboard.feedback.employer", locale)
+              th=fmt.message("recruiter-dashboard.feedback.status", locale)
+              th=fmt.message("recruiter-dashboard.feedback.date", locale)
+          tbody
+        .spacer
+        h2.text-center=fmt.message("recruiter-dashboard.deals.h2", locale)
+        table.table.table-striped#recruiter-deals
+          thead
+            tr
+              th=fmt.message("recruiter-dashboard.deals.vacancy", locale)
+              th=fmt.message("recruiter-dashboard.deals.employer", locale)
+              th=fmt.message("recruiter-dashboard.deals.date", locale)
+              th
+          tbody
+        a.btn.btn-link.pull-right(href=domain.buildFullUri("/recruiter-active-deals", locale))
+          strong
+            #{fmt.message("recruiter-dashboard.my-deals", locale)}
+        .spacer
+        h2.text-center=fmt.message("recruiter-dashboard.bids.h2", locale)
+        table.table.table-striped#recruiter-bids
+          thead
+            tr
+              th=fmt.message("recruiter-dashboard.bids.vacancy", locale)
+              th=fmt.message("recruiter-dashboard.bids.employer", locale)
+              th=fmt.message("recruiter-dashboard.bids.date", locale)
+              th=fmt.message("recruiter-dashboard.bids.viewed", locale)
+              th=fmt.message("recruiter-dashboard.bids.status", locale)
+          tbody
+        a.btn.btn-link.pull-right(href=domain.buildFullUri("/recruiter-active-bids", locale))
+          strong
+            #{fmt.message("recruiter-dashboard.my-bids", locale)}
+      .col-md-3
+        h2=fmt.message("recruiter-dashboard.about.h2", locale)
+        p #{recruiter.user.firstName} #{recruiter.user.lastName}
+        img(src=domain.getResourceUrl('/stylesheets/images/empty_avatar.jpg'))
+        p #{recruiter.user.description}
+        a.btn.btn-link(href=domain.buildFullUri("/recruiter-profile", locale))=fmt.message("recruiter-dashboard.about.profile", locale)

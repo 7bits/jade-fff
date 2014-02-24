@@ -1,0 +1,34 @@
+extends ../layout
+
+block append head
+  title=fmt.message("recruiter-bids.title", locale)
+block append content
+  .container
+    h1=fmt.message("recruiter-bids.h1", locale)
+    form.form-sort(name="recruiterBidsFilter", id="recruiterBidsFilter", action="", method="get")
+      .row
+        .col-md-6
+          .btn-group.btn-group-xs(data-toggle="buttons")
+            label.btn.btn-default#showAll=fmt.message("recruiter-bids.form.show-all", locale)
+              input(type="checkbox", name="showAll", value="1")
+          .btn-group.btn-group-xs(data-toggle="buttons")
+            label.btn.btn-default#hideRejected=fmt.message("recruiter-bids.form.hide-rejected", locale)
+              input(type="checkbox", name="hideRejected", value="1", checked=recruiterBidsFilter.hideRejected)
+            label.btn.btn-default#hideApproved=fmt.message("recruiter-bids.form.hide-approved", locale)
+              input(type="checkbox", name="hideApproved", value="1", checked=recruiterBidsFilter.hideApproved)
+            label.btn.btn-default#hideWithdrawn=fmt.message("recruiter-bids.form.hide-withdrawn", locale)
+              input(type="checkbox", name="hideWithdrawn", value="1", checked=recruiterBidsFilter.hideWithdrawn)
+            input(type="hidden", name="sortColumn", id="sortColumn")
+            input(type="hidden", name="sortAsc", id="sortAsc")
+            input(type="hidden", name=csrf.getParameterName(), value=csrf.getToken())
+    table.table.table-striped#table-sort
+      thead
+        tr
+          th.sorting#stitle=fmt.message("recruiter-bids.table.title", locale)
+          th.sorting#sdescription=fmt.message("recruiter-bids.table.description", locale)
+          th.sorting#screation_date=fmt.message("recruiter-bids.table.created", locale)
+          th.sorting#sstatus=fmt.message("recruiter-bids.table.status", locale)
+          th.sorting#slastname=fmt.message("recruiter-bids.table.employer", locale)
+          th.sorting#sviewed=fmt.message("recruiter-bids.table.viewed", locale)
+          th=fmt.message("recruiter-bids.table.withdraw", locale)
+      tbody

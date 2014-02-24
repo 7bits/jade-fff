@@ -46,7 +46,7 @@ public class RecruiterShowEmployerProfile {
             final HttpServletResponse response
     ) throws Exception {
 
-        ModelAndView employerProfile = new ModelAndView("recruiter/recruiter-show-employer-profile.jade");
+        ModelAndView employerProfile = new ModelAndView("recruiter/recruiter-employer-profile.jade");
         try {
             Employer employer = recruiterService.findEmployerForProfile(employerId);
             employerProfile.addObject("employer", employer);

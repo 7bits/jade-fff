@@ -62,7 +62,7 @@ public class ShowVacancy {
             final HttpServletRequest request,
             final HttpServletResponse response
     ) throws Exception {
-        ModelAndView showVacancy = new ModelAndView("recruiter/recruiter-show-vacancy.jade");
+        ModelAndView showVacancy = new ModelAndView("recruiter/recruiter-vacancy.jade");
         try {
             User user = userUtils.getCurrentUser(request);
             Vacancy vacancy = recruiterService.findVacancy(vacancyId, user.getRecruiterId());

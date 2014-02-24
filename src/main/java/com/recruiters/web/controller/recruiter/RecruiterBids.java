@@ -57,7 +57,7 @@ public class RecruiterBids {
             final HttpServletRequest request,
             @ModelAttribute("RecruiterBidsFilter") final RecruiterBidsFilter bidsFilter
     )throws Exception {
-        ModelAndView recruiterBids = new ModelAndView("recruiter/recruiter-active-bids.jade");
+        ModelAndView recruiterBids = new ModelAndView("recruiter/recruiter-bids.jade");
         fillBidsFilter(bidsFilter, request);
         addFilterToSession(bidsFilter, request);
         recruiterBids.addObject("recruiterBidsFilter", bidsFilter);

@@ -54,7 +54,7 @@ public class JsonService {
             if (vacancy.getDealId() != 0L) {
                 currentVacancyJson.put(
                         "status",
-                        messageResolver.message("recruiter-find-new-vacancies.table.deal", locale)
+                        messageResolver.message("recruiter-vacancies-find.table.deal", locale)
                 );
                 currentVacancyJson.put(
                         "url",
@@ -63,7 +63,7 @@ public class JsonService {
             } else if (vacancy.getBidId() != 0L) {
                 currentVacancyJson.put(
                         "status",
-                        messageResolver.message("recruiter-find-new-vacancies.table.bid", locale)
+                        messageResolver.message("recruiter-vacancies-find.table.bid", locale)
                 );
                 currentVacancyJson.put(
                         "url",
@@ -72,7 +72,7 @@ public class JsonService {
             } else {
                 currentVacancyJson.put(
                         "status",
-                        messageResolver.message("recruiter-find-new-vacancies.table.vacancy", locale)
+                        messageResolver.message("recruiter-vacancies-find.table.vacancy", locale)
                 );
                 currentVacancyJson.put(
                         "url",
@@ -349,7 +349,7 @@ public class JsonService {
             );
             currentDealJson.put(
                     "feedback",
-                    messageResolver.message("recruiter-control-panel.feedback.leave", locale)
+                    messageResolver.message("recruiter-dashboard.feedback.leave", locale)
             );
             currentDealJson.put(
                     "feedbackUrl",
@@ -395,7 +395,7 @@ public class JsonService {
             );
             currentDealJson.put(
                     "deal",
-                    messageResolver.message("recruiter-control-panel.deals.view", locale)
+                    messageResolver.message("recruiter-dashboard.deals.view", locale)
             );
             currentDealJson.put(
                     "dealUrl",
@@ -435,7 +435,7 @@ public class JsonService {
                     )
             );
             if (bid.getViewed()) {
-                currentBidJson.put("viewed", messageResolver.message("recruiter-control-panel.bids.viewed", locale));
+                currentBidJson.put("viewed", messageResolver.message("recruiter-dashboard.bids.viewed", locale));
             } else {
                 currentBidJson.put("viewed", "");
             }
@@ -671,15 +671,15 @@ public class JsonService {
                     )
             );
             if (bid.getViewed()) {
-                currentBidJson.put("viewed", messageResolver.message("recruiter-active-bids.table.viewed", locale));
+                currentBidJson.put("viewed", messageResolver.message("recruiter-bids.table.viewed", locale));
             } else {
                 currentBidJson.put("viewed", "");
             }
             if (businessRulesService.canWithdrawBid(bid)) {
-                currentBidJson.put("withdraw", messageResolver.message("recruiter-active-bids.table.withdraw", locale));
+                currentBidJson.put("withdraw", messageResolver.message("recruiter-bids.table.withdraw", locale));
             }
             if(businessRulesService.withdrawnBid(bid)) {
-                currentBidJson.put("withdrawn", messageResolver.message("recruiter-active-bids.table.withdrawn", locale));
+                currentBidJson.put("withdrawn", messageResolver.message("recruiter-bids.table.withdrawn", locale));
             }
             bidsJson.add(currentBidJson);
         }
@@ -743,22 +743,6 @@ public class JsonService {
             final List<Deal> deals,
             final Locale locale
     ) {
-//        for deal in deals
-//                tr
-//        td #{deal.vacancy.title}
-//        td #{deal.vacancy.description}
-//        td.help(title=fmt.applicantsTooltip(deal.unseenApplicantCount, deal.allApplicantCount, deal.rejectedApplicantCount, deal.viewedApplicantCount, locale))
-//        span.green=deal.unseenApplicantCount
-//        span / #{deal.allApplicantCount} [
-//        span.red=deal.rejectedApplicantCount
-//        span /
-//                span.yellow=deal.viewedApplicantCount
-//        span ]
-//        td #{fmt.dealStatus(deal.status, locale)}
-//        td(title=deal.vacancy.creationDate) #{fmt.date(deal.vacancy.creationDate, locale)}
-//        td(title=deal.lastModified) #{fmt.date(deal.lastModified, locale)}
-//        td
-//        a.btn.btn-link(href=domain.buildFullUri("recruiter-show-in-progress-vacancy", deal.id, locale))=fmt.message("recruiter-active-deals.more", locale)
         List<Map<String,String>> dealsJson = new ArrayList<Map<String, String>>();
         for (Deal deal: deals) {
             Map<String, String> currentDealJson = new HashMap<String, String>();
@@ -805,6 +789,6 @@ public class JsonService {
             final Locale locale
     ) {
 
-        return new Object[]{messageResolver.message("recruiter-active-bids.table.withdrawn", locale)};
+        return new Object[]{messageResolver.message("recruiter-bids.table.withdrawn", locale)};
     }
 }

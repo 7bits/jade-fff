@@ -55,7 +55,7 @@ public class ShowInProgressVacancy {
             final HttpServletRequest request,
             final HttpServletResponse response
     ) throws Exception {
-        ModelAndView vacancyInProgress = new ModelAndView("recruiter/recruiter-show-in-progress-vacancy.jade");
+        ModelAndView vacancyInProgress = new ModelAndView("recruiter/recruiter-deal.jade");
         try {
             User user = userUtils.getCurrentUser(request);
             Deal deal = recruiterService.findDealForRecruiter(dealId, user.getRecruiterId());

@@ -59,7 +59,7 @@ public class RecruiterDeals {
             final HttpServletResponse response,
             @ModelAttribute("RecruiterDealsFilter") final RecruiterDealsFilter dealsFilter
     ) throws  Exception {
-        ModelAndView model = new ModelAndView("recruiter/recruiter-active-deals.jade");
+        ModelAndView model = new ModelAndView("recruiter/recruiter-deals.jade");
         fillDealsFilter(dealsFilter, request);
         addFilterToSession(dealsFilter, request);
         model.addObject("recruiterDealsFilter", dealsFilter);

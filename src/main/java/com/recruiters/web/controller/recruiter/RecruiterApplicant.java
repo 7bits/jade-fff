@@ -56,7 +56,7 @@ public class RecruiterApplicant {
             @PathVariable final Long dealId
     ) {
 
-        ModelAndView addApplicant = new ModelAndView("recruiter/recruiter-add-applicant.jade");
+        ModelAndView addApplicant = new ModelAndView("recruiter/recruiter-applicant-create.jade");
         ApplicantForm applicantForm = new ApplicantForm();
         applicantForm.setDealId(dealId);
         addApplicant.addObject("applicantForm", applicantForm);
@@ -87,7 +87,7 @@ public class RecruiterApplicant {
     ) throws Exception {
         Locale locale = RequestContextUtils.getLocale(request);
         if (bindingResult.hasErrors()) {
-            ModelAndView model = new ModelAndView("recruiter/recruiter-add-applicant.jade");
+            ModelAndView model = new ModelAndView("recruiter/recruiter-applicant-create.jade");
             model.addObject("applicantForm", applicantForm);
 
             return model;
@@ -135,7 +135,7 @@ public class RecruiterApplicant {
             final HttpServletRequest request,
             final HttpServletResponse response
     ) throws Exception {
-        ModelAndView editApplicant = new ModelAndView("recruiter/recruiter-edit-applicant.jade");
+        ModelAndView editApplicant = new ModelAndView("recruiter/recruiter-applicant-edit.jade");
         try {
             User user = userUtils.getCurrentUser(request);
             Applicant applicant = recruiterService.findApplicant(applicantId, user.getRecruiterId());
@@ -178,7 +178,7 @@ public class RecruiterApplicant {
     ) throws Exception {
         Locale locale = RequestContextUtils.getLocale(request);
         if (bindingResult.hasErrors()) {
-            ModelAndView model = new ModelAndView("recruiter/recruiter-edit-applicant.jade");
+            ModelAndView model = new ModelAndView("recruiter/recruiter-applicant-edit.jade");
             model.addObject("applicantForm", applicantForm);
             return model;
         }

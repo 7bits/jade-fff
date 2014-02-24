@@ -1,0 +1,33 @@
+extends ../layout
+
+block append head
+  title=fmt.message("recruiter-employer-profile.title", locale)
+block append content
+  .container
+    h1.text-center=fmt.message("recruiter-employer-profile.h1", locale)
+    .row
+      .col-md-4
+        img(src=domain.getResourceUrl('/stylesheets/images/empty_avatar.jpg'))
+      .col-md-8
+        h2
+        dl.dl-horizontal
+          dt=fmt.message("recruiter-employer-profile.dt.name", locale)
+          dd #{employer.user.firstName} #{employer.user.lastName}
+          dt=fmt.message("recruiter-employer-profile.dt.description", locale)
+          dd #{employer.user.description}
+    h2.text-center=fmt.message("recruiter-employer-profile.feedback.h2", locale)
+    table.table.table-striped
+      thead
+        tr
+          th=fmt.message("recruiter-employer-profile.table.vacancy", locale)
+          th=fmt.message("recruiter-employer-profile.table.recruiter", locale)
+          th=fmt.message("recruiter-employer-profile.table.feedback-time", locale)
+          th=fmt.message("recruiter-employer-profile.table.feedback", locale)
+      tbody
+        for feedback in employer.feedbacks
+          tr
+            td #{feedback.deal.vacancy.title}
+            td #{feedback.recruiter.user.firstName} #{feedback.recruiter.user.lastName}
+            td #{fmt.date(feedback.recruiterTime, locale)}
+            td #{feedback.recruiterFeedback}
+

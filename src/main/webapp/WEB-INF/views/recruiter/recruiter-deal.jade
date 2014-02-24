@@ -1,0 +1,105 @@
+extends ../layout
+
+block append head
+  title=fmt.message("recruiter-deal.title", locale)
+block append content
+  .container
+    h1=fmt.message("recruiter-deal.h1", locale)
+    if test.isFeedbackStage(deal)
+      .row
+        .col-md-8
+          h2=fmt.message("recruiter-deal.feedback.h2", locale)
+          if test.recruiterLeftFeedback(deal)
+            dl.dl-horizontal
+              dt=fmt.message("recruiter-deal.feedback.left", locale)
+              dd #{deal.feedback.recruiterFeedback}
+              dt=fmt.message("recruiter-deal.feedback.time", locale)
+              dd #{fmt.date(deal.feedback.recruiterTime, locale)}
+              if test.employerLeftFeedback(deal)
+                dt=fmt.message("recruiter-deal.feedback.employer-left", locale)
+                dd #{deal.feedback.employerFeedback}
+                dt=fmt.message("recruiter-deal.feedback.time", locale)
+                dd #{fmt.date(deal.feedback.employerTime, locale)}
+          else
+            h3=fmt.message("recruiter-deal.feedback.leave", locale)
+            form(name="", action=domain.buildFullUri("/recruiter-deal-leave-feedback", locale), method="post")
+              .row
+                .col-md-8
+                  textarea(class="form-control", name="feedback", placeholder=fmt.message("recruiter-deal.feedback.placeholder", locale), rows="4")
+              .btn-row
+                .col-md-6
+                  input(type="hidden", name=csrf.getParameterName(), value=csrf.getToken())
+                  input(type="hidden", name="id", value=deal.id)
+                  input.btn.btn-success(type="submit", name="submit", value=fmt.message("recruiter-deal.feedback.ok", locale))
+
+    .row.spacer
+      .col-md-8
+        h2
+        dl.dl-horizontal
+          dt=fmt.message("recruiter-deal.dt.title", locale)
+          dd #{deal.vacancy.title}
+          dt=fmt.message("recruiter-deal.dt.description", locale)
+          dd #{deal.vacancy.description}
+          dt=fmt.message("recruiter-deal.dt.salary", locale)
+          dd=fmt.currencyRange(deal.vacancy.salaryFrom, deal.vacancy.salaryTo, locale)
+          dt=fmt.message("recruiter-deal.dt.creationDate", locale)
+          dd #{fmt.date(deal.vacancy.creationDate, locale)}
+          dt=fmt.message("recruiter-deal.dt.expirationDate", locale)
+          dd #{fmt.date(deal.vacancy.expirationDate, locale)}
+          dt=fmt.message("recruiter-deal.dt.status", locale)
+          dd #{fmt.dealStatus(deal.status, locale)}
+          if deal.vacancy.testFile
+            dt=fmt.message("recruiter-deal.dt.tests", locale)
+            dd
+              a(href=domain.buildFullUri("/recruiter-download-attachment/", deal.vacancy.testFile.id, locale))=fmt.message("recruiter-deal.dd.tests", locale)
+
+      .col-md-4
+        h2=fmt.message("recruiter-deal.employer", locale)
+        p
+          a(href = domain.buildFullUri("/recruiter-show-employer-profile/", deal.vacancy.employer.id, locale))
+            #{deal.vacancy.employer.user.firstName} #{deal.vacancy.employer.user.lastName}
+
+
+    h2=fmt.message("recruiter-deal.h2", locale)
+    table.table.table-striped
+      thead
+        tr
+          th=fmt.message("recruiter-deal.table.firstName", locale)
+          th=fmt.message("recruiter-deal.table.lastName", locale)
+          th=fmt.message("recruiter-deal.table.status", locale)
+          th=fmt.message("recruiter-deal.table.creationDate", locale)
+          th=fmt.message("recruiter-deal.table.viewed", locale)
+          th
+      if deal.applicants
+        for applicant in deal.applicants
+          tr
+            td #{applicant.firstName}
+            td #{applicant.lastName}
+            td #{fmt.applicantStatus(applicant.status, locale)}
+            td #{fmt.date(deal.vacancy.creationDate, locale)}
+            td
+              if applicant.viewed
+                #{fmt.message("recruiter-deal.table.viewed", locale)}
+            td
+              if test.isApplicantEditable(applicant, deal)
+                a.btn.btn-link.pull-right(href= domain.buildFullUri("/recruiter-edit-applicant/", applicant.id, locale))=fmt.message("recruiter-deal.table.change", locale)
+    if test.canAddApplicant(deal)
+      a.btn.btn-success(href= domain.buildFullUri("/recruiter-add-applicant/", deal.id, locale))=fmt.message("recruiter-deal.add", locale)
+    h2=fmt.message("recruiter-deal.chat", locale)
+    .row.h4
+      .col-md-2=fmt.message("recruiter-deal.chat.from", locale)
+      .col-md-2=fmt.message("recruiter-deal.chat.time", locale)
+      .col-md-6=fmt.message("recruiter-deal.chat.message", locale)
+    #chat
+    form#messagesend
+      if test.canSendMessage(deal)
+        .row
+          .col-md-6
+            textarea(class="form-control", name="message", placeholder=fmt.message("recruiter-deal.chat.enter-message", locale), rows="4")
+        .btn-row
+          input.btn.btn-success(type="submit", name="submit", value=fmt.message("recruiter-deal.chat.send", locale))
+      input(type="hidden", name=csrf.getParameterName(), value=csrf.getToken())
+      input(type="hidden", name="id", value=deal.id)
+      input(type="hidden", name="role", value="recruiter")
+
+
