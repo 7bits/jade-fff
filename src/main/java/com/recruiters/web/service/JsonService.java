@@ -626,7 +626,7 @@ public class JsonService {
             final Locale locale
     ) {
 
-        return new Object[]{messageResolver.message("employer-deal.table.applied", locale)};
+        return new Object[]{messageResolver.message("employer-deal.applicants.approved", locale)};
     }
 
     /**
@@ -638,7 +638,7 @@ public class JsonService {
             final Locale locale
     ) {
 
-        return new Object[]{messageResolver.message("employer-deal.table.declined", locale)};
+        return new Object[]{messageResolver.message("employer-deal.applicants.declined", locale)};
     }
 
     /**

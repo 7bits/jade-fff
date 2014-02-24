@@ -35,27 +35,27 @@ block append content
     .row.spacer
       .col-md-8
         dl.dl-horizontal
-          dt=fmt.message("employer-deal.dt.name", locale)
+          dt=fmt.message("employer-deal.vacancy.title", locale)
           dd #{deal.vacancy.title}
-          dt=fmt.message("employer-deal.dt.description", locale)
+          dt=fmt.message("employer-deal.vacancy.description", locale)
           dd #{deal.vacancy.description}
-          dt=fmt.message("employer-deal.dt.salary", locale)
+          dt=fmt.message("employer-deal.vacancy.salary", locale)
           dd=fmt.currencyRange(deal.vacancy.salaryFrom, deal.vacancy.salaryTo, locale)
-          dt=fmt.message("employer-deal.dt.creation", locale)
+          dt=fmt.message("employer-deal.vacancy.date-created", locale)
           dd #{fmt.date(deal.vacancy.creationDate, locale)}
-          dt=fmt.message("employer-deal.dt.expiration", locale)
+          dt=fmt.message("employer-deal.vacancy.date-expiration", locale)
           dd #{fmt.date(deal.vacancy.expirationDate, locale)}
       .col-md-4
         h2.text-center=fmt.message("employer-deal.recruiter.heading", locale)
         .tools
           dl.dl-horizontal
-            dt=fmt.message("employer-deal.recruiter.dt.name", locale)
+            dt=fmt.message("employer-deal.recruiter.name", locale)
             dd
               a(href = domain.buildFullUri("/employer-show-recruiter-profile/", deal.recruiter.id, locale))
                 #{deal.recruiter.user.firstName} #{deal.recruiter.user.lastName}
-            dt=fmt.message("employer-deal.recruiter.dt.terms", locale)
+            dt=fmt.message("employer-deal.recruiter.terms", locale)
             dd #{deal.bid.message}
-            dt=fmt.message("employer-deal.recruiter.dt.status", locale)
+            dt=fmt.message("employer-deal.recruiter.status", locale)
             dd #{fmt.dealStatus(deal.status, locale)}
           if test.canFireRecruiter(deal)
             form(name="", action=domain.buildFullUri("/employer-fire-recruiter", locale), method="post")
@@ -71,8 +71,8 @@ block append content
         table.table.table-striped.employerApplicantView
           thead
             tr
-              th=fmt.message("employer-deal.table.applicant", locale)
-              th=fmt.message("employer-deal.table.created", locale)
+              th=fmt.message("employer-deal.applicants.title", locale)
+              th=fmt.message("employer-deal.applicants.date-created", locale)
               th
               th
           tbody
@@ -91,18 +91,18 @@ block append content
                   .btn-group.btn-group-xs
                     if test.canApplyApplicant(applicant, deal)
                       button.btn.btn-success.applicantApply(data-id = applicant.id)
-                        #{fmt.message("employer-deal.table.apply", locale)}
+                        #{fmt.message("employer-deal.applicants.approve", locale)}
                     if test.appliedApplicant(applicant)
                       button.btn.btn-success.applicantApply(data-id = applicant.id, disabled)
-                        #{fmt.message("employer-deal.table.applied", locale)}
+                        #{fmt.message("employer-deal.applicants.approved", locale)}
                 td
                   .btn-group.btn-group-xs
                     if test.canDeclineApplicant(applicant, deal)
                       button.btn.btn-danger.applicantDecline(data-id = applicant.id)
-                        #{fmt.message("employer-deal.table.decline", locale)}
+                        #{fmt.message("employer-deal.applicants.decline", locale)}
                     if test.declinedApplicant(applicant)
                       button.btn.btn-danger.applicantDecline(data-id = applicant.id, disabled)
-                        #{fmt.message("employer-deal.table.declined", locale)}
+                        #{fmt.message("employer-deal.applicants.declined", locale)}
 
     h2=fmt.message("employer-deal.chat.heading", locale)
     .row.h4
@@ -115,6 +115,7 @@ block append content
       if test.canSendMessage(deal)
         .row
           .col-md-6
+            label(for="message")=fmt.message("employer-deal.chat.enter-message", locale)
             textarea(class="form-control", name="message", placeholder=fmt.message("employer-deal.chat.enter-message", locale), rows="4")
         .btn-row
           input.btn.btn-success(type="submit", name="submit", value=fmt.message("employer-deal.chat.send", locale))
