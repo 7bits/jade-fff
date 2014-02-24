@@ -161,7 +161,7 @@ public class MessageResolver {
             final Long viewedBidCount,
             final Locale locale
     ) {
-        return messageSource.getMessage("employer-recruiter-search.table.bids-tooltip", new Object[] {
+        return messageSource.getMessage("employer-vacancies.bids-tooltip", new Object[] {
                 unseenBidCount,
                 allBidCount,
                 rejectedBidCount,

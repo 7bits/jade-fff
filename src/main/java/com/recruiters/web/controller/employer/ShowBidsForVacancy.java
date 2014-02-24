@@ -49,7 +49,7 @@ public class ShowBidsForVacancy {
             final HttpServletResponse response
     ) throws Exception {
 
-        ModelAndView recruiterBids = new ModelAndView("employer/employer-show-recruiter-bids.jade");
+        ModelAndView recruiterBids = new ModelAndView("employer/employer-vacancy-bids.jade");
         try {
             User user = userUtils.getCurrentUser(request);
             List<Bid> bids = employerService.findBidsForVacancy(vacancyId, user.getEmployerId());

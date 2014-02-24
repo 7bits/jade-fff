@@ -127,7 +127,7 @@ public class JsonService {
             );
             currentDealJson.put(
                     "urlText",
-                    messageResolver.message("employer-progress-vacancies-list.more", locale)
+                    messageResolver.message("employer-deals.more", locale)
             );
             currentDealJson.put("unseenApplicantCount", deal.getUnseenApplicantCount().toString());
             currentDealJson.put("allApplicantCount", deal.getAllApplicantCount().toString());
@@ -477,7 +477,7 @@ public class JsonService {
                 );
                 currentVacancyJson.put(
                         "urlText",
-                        messageResolver.message("employer-recruiter-search.table.edit", locale)
+                        messageResolver.message("employer-vacancies.table.edit", locale)
                 );
             } else {
                 currentVacancyJson.put(
@@ -486,7 +486,7 @@ public class JsonService {
                 );
                 currentVacancyJson.put(
                         "urlText",
-                        messageResolver.message("employer-recruiter-search.table.more", locale)
+                        messageResolver.message("employer-vacancies.table.more", locale)
                 );
             }
             currentVacancyJson.put("unseenBidCount", vacancy.getUnseenBidCount().toString());
@@ -548,7 +548,7 @@ public class JsonService {
             final Locale locale
     ) {
 
-        return new Object[]{messageResolver.message("employer-show-recruiter-bids.table.applied", locale)};
+        return new Object[]{messageResolver.message("employer-vacancy-bids.table.applied", locale)};
     }
 
 
@@ -561,7 +561,7 @@ public class JsonService {
             final Locale locale
     ) {
 
-        return new Object[]{messageResolver.message("employer-show-recruiter-bids.table.declined", locale)};
+        return new Object[]{messageResolver.message("employer-vacancy-bids.table.declined", locale)};
     }
 
 
@@ -626,7 +626,7 @@ public class JsonService {
             final Locale locale
     ) {
 
-        return new Object[]{messageResolver.message("employer-progress-vacancy-show.table.applied", locale)};
+        return new Object[]{messageResolver.message("employer-deal.table.applied", locale)};
     }
 
     /**
@@ -638,7 +638,7 @@ public class JsonService {
             final Locale locale
     ) {
 
-        return new Object[]{messageResolver.message("employer-progress-vacancy-show.table.declined", locale)};
+        return new Object[]{messageResolver.message("employer-deal.table.declined", locale)};
     }
 
     /**

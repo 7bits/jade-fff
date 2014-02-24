@@ -56,7 +56,7 @@ public class EmployerDeal {
             final HttpServletRequest request,
             final HttpServletResponse response
     ) throws Exception {
-        ModelAndView vacancyProgress =  new ModelAndView("employer/employer-progress-vacancy-show.jade");
+        ModelAndView vacancyProgress =  new ModelAndView("employer/employer-deal.jade");
         try {
             User user = userUtils.getCurrentUser(request);
             Deal deal = employerService.findDeal(dealId, user.getEmployerId());

@@ -1,0 +1,34 @@
+extends ../layout
+
+block append head
+  title=fmt.message("employer-deals.title", locale)
+block append content
+  .container
+    h1=fmt.message("employer-deals.h1", locale)
+    form.form-sort(name="employerDealsFilter", id="employerDealsFilter", action="", method="get")
+      .row
+        .col-md-6
+          .btn-group.btn-group-xs(data-toggle="buttons")
+            label.btn.btn-default#showAll=fmt.message("employer-deals.form.show-all", locale)
+              input(type="checkbox", name="showAll", value="1")
+          .btn-group.btn-group-xs(data-toggle="buttons")
+            label.btn.btn-default#hideFired=fmt.message("employer-deals.form.hide-fired", locale)
+              input(type="checkbox", name="hideFired", value="1", checked=employerDealsFilter.hideFired)
+            label.btn.btn-default#hideApproved=fmt.message("employer-deals.form.hide-approved", locale)
+              input(type="checkbox", name="hideApproved", value="1", checked=employerDealsFilter.hideApproved)
+            input(type="hidden", name="sortColumn", id="sortColumn")
+            input(type="hidden", name="sortAsc", id="sortAsc")
+            input(type="hidden", name=csrf.getParameterName(), value=csrf.getToken())
+
+    table.table.table-striped#table-sort
+      thead
+        tr
+          th.sorting#stitle=fmt.message("employer-deals.table.title", locale)
+          th.sorting#screation_date=fmt.message("employer-deals.table.creation", locale)
+          th.sorting#smax_updated_date=fmt.message("employer-deals.table.updated", locale)
+          th.sorting#sstatus=fmt.message("employer-deals.table.status", locale)
+          th.sorting#sbids=fmt.message("employer-deals.table.bids", locale)
+          th.sorting#slastname=fmt.message("employer-deals.table.recruiter", locale)
+          th.sorting#sunseen_applicants=fmt.message("employer-deals.table.applicants", locale)
+          th
+      tbody

@@ -1,16 +1,16 @@
 extends ../layout
 
 block append head
-  title=fmt.message("employer-show-recruiter-bids.title", locale)
+  title=fmt.message("employer-vacancy-bids.title", locale)
 block append content
   .container
-    h1=fmt.message("employer-show-recruiter-bids.h1", locale)
+    h1=fmt.message("employer-vacancy-bids.h1", locale)
     .col-md-8
       table.table.table-striped.employerBidView
         thead
           tr
-            th=fmt.message("employer-show-recruiter-bids.table.recruiter", locale)
-            th=fmt.message("employer-show-recruiter-bids.table.created", locale)
+            th=fmt.message("employer-vacancy-bids.table.recruiter", locale)
+            th=fmt.message("employer-vacancy-bids.table.created", locale)
             th
             th
         tbody
@@ -30,23 +30,23 @@ block append content
                 .btn-group.btn-group-xs
                   if test.canApplyBid(bid)
                     button.btn.btn-success.bidApply(data-id = bid.id)
-                      #{fmt.message("employer-show-recruiter-bids.table.apply", locale)}
+                      #{fmt.message("employer-vacancy-bids.table.apply", locale)}
                   if test.appliedBid(bid)
                     button.btn.btn-success.bidApply(data-id = bid.id, disabled)
-                      #{fmt.message("employer-show-recruiter-bids.table.applied", locale)}
+                      #{fmt.message("employer-vacancy-bids.table.applied", locale)}
               td
                 .btn-group.btn-group-xs
                   if test.canDeclineBid(bid)
                     button.btn.btn-danger.bidDecline(data-id = bid.id)
-                      #{fmt.message("employer-show-recruiter-bids.table.decline", locale)}
+                      #{fmt.message("employer-vacancy-bids.table.decline", locale)}
                   if test.declinedBid(bid)
                     button.btn.btn-danger.bidDecline(data-id = bid.id, disabled)
-                      #{fmt.message("employer-show-recruiter-bids.table.declined", locale)}
+                      #{fmt.message("employer-vacancy-bids.table.declined", locale)}
 
     .col-md-4
-      h2=fmt.message("employer-show-recruiter-bids.vacancy.h2", locale)
+      h2=fmt.message("employer-vacancy-bids.vacancy.h2", locale)
       p #{vacancy.title}
       p #{vacancy.description}
       p=fmt.currencyRange(vacancy.salaryFrom, vacancy.salaryTo, locale)
       if vacancy.testFile
-        a(href=domain.buildFullUri("/employer-download-attachment/", vacancy.testFile.id, locale))=fmt.message("employer-show-recruiter-bids..tests", locale)
+        a(href=domain.buildFullUri("/employer-download-attachment/", vacancy.testFile.id, locale))=fmt.message("employer-vacancy-bids..tests", locale)

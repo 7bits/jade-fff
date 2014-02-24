@@ -54,7 +54,7 @@ public class RecruiterSearch {
             final HttpServletResponse response,
             @ModelAttribute("EmployerVacanciesFilter") final EmployerVacanciesFilter employerVacanciesFilter
     ) throws Exception {
-        ModelAndView filteredVacancies = new ModelAndView("employer/employer-recruiter-search");
+        ModelAndView filteredVacancies = new ModelAndView("employer/employer-vacancies.jade");
         fillVacanciesFilter(employerVacanciesFilter, request);
         addFilterToSession(employerVacanciesFilter, request);
         filteredVacancies.addObject("employerVacanciesFilter", employerVacanciesFilter);

@@ -55,7 +55,7 @@ public class RecruiterVacancies {
             @ModelAttribute("EmployerDealsFilter") final EmployerDealsFilter dealsFilter
     ) throws Exception {
 
-        ModelAndView myDeals = new ModelAndView("employer/employer-progress-vacancies-list.jade");
+        ModelAndView myDeals = new ModelAndView("employer/employer-deals.jade");
         fillDealsFilter(dealsFilter, request);
         addFilterToSession(dealsFilter, request);
         myDeals.addObject("employerDealsFilter", dealsFilter);

@@ -54,7 +54,7 @@ public class EmployerVacancy {
      */
     @RequestMapping(value = "/employer-vacancy-create", method = RequestMethod.GET)
     public ModelAndView newVacancy() {
-        ModelAndView createVacancy = new ModelAndView("employer/vacancy-create.jade");
+        ModelAndView createVacancy = new ModelAndView("employer/employer-vacancy-create.jade");
         VacancyForm vacancyForm = new VacancyForm();
         createVacancy.addObject("vacancyForm", vacancyForm);
 
@@ -82,7 +82,7 @@ public class EmployerVacancy {
             final BindingResult bindingResult
     ) throws Exception {
         if (bindingResult.hasErrors()) {
-            ModelAndView model = new ModelAndView("employer/vacancy-create.jade");
+            ModelAndView model = new ModelAndView("employer/employer-vacancy-create.jade");
             model.addObject("vacancyForm", vacancyForm);
 
             return model;
@@ -121,7 +121,7 @@ public class EmployerVacancy {
             final HttpServletResponse response,
             @PathVariable final Long vacancyId
     ) throws Exception {
-        ModelAndView editVacancy = new ModelAndView("employer/vacancy-edit.jade");
+        ModelAndView editVacancy = new ModelAndView("employer/employer-vacancy-edit.jade");
         try {
             User user = userUtils.getCurrentUser(request);
             Vacancy vacancy = employerService.findVacancy(vacancyId, user.getEmployerId());
@@ -162,7 +162,7 @@ public class EmployerVacancy {
             final BindingResult bindingResult
     ) throws Exception {
         if (bindingResult.hasErrors()) {
-            ModelAndView model = new ModelAndView("employer/vacancy-edit.jade");
+            ModelAndView model = new ModelAndView("employer/employer-vacancy-edit.jade");
             model.addObject("vacancyForm", vacancyForm);
 
             return model;

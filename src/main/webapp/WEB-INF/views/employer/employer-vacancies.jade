@@ -1,0 +1,33 @@
+extends ../layout
+
+block append head
+  title=fmt.message("employer-vacancies.title", locale)
+block append content
+  .container
+    h1=fmt.message("employer-vacancies.h1", locale)
+    form.form-sort(name="employerVacanciesFilter", id="employerVacanciesFilter", action="", method="get")
+      .row
+        .col-md-6
+          .btn-group.btn-group-xs(data-toggle="buttons")
+            label.btn.btn-default#showAll=fmt.message("employer-vacancies.form.show-all", locale)
+              input(type="checkbox", name="showAll", value="1")
+          .btn-group.btn-group-xs(data-toggle="buttons")
+            label.btn.btn-default#hideUnpublished=fmt.message("employer-vacancies.form.hide-unpublished", locale)
+              input(type="checkbox", name="hideUnpublished", value="1", checked=employerVacanciesFilter.hideUnpublished)
+            label.btn.btn-default#hideOldBids=fmt.message("employer-vacancies.form.hide-old-bids", locale)
+              input(type="checkbox", name="hideOldBids", value="1", checked=employerVacanciesFilter.hideOldBids)
+            input(type="hidden", name="sortColumn", id="sortColumn")
+            input(type="hidden", name="sortAsc", id="sortAsc")
+            input(type="hidden", name=csrf.getParameterName(), value=csrf.getToken())
+
+    table.table.table-striped#table-sort
+      thead
+        tr
+          th.sorting#stitle=fmt.message("employer-vacancies.table.title", locale)
+          th.sorting#screation_date=fmt.message("employer-vacancies.table.creation", locale)
+          th.sorting#smax_updated_date=fmt.message("employer-vacancies.table.updated", locale)
+          th.sorting#sstatus=fmt.message("employer-vacancies.table.status", locale)
+          th.sorting#sunseen_bids=fmt.message("employer-vacancies.table.bids", locale)
+          th
+      tbody
+    a.btn.btn-link(href=domain.buildFullUri("employer-vacancy-create", locale))=fmt.message("employer-vacancies.create-vacancy", locale)
