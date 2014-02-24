@@ -136,7 +136,7 @@ public class MessageResolver {
             final Long viewedApplicantCount,
             final Locale locale
     ) {
-        return messageSource.getMessage("recruiter-deals.table.applicants.tooltip", new Object[] {
+        return messageSource.getMessage("recruiter-deals.deal.applicants-tooltip", new Object[] {
                 unseenApplicantCount,
                 allApplicantCount,
                 rejectedApplicantCount,

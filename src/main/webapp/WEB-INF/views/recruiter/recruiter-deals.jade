@@ -9,12 +9,12 @@ block append content
       .row
         .col-md-6
           .btn-group.btn-group-xs(data-toggle="buttons")
-            label.btn.btn-default#showAll=fmt.message("recruiter-deals.form.show-all", locale)
+            label.btn.btn-default#showAll=fmt.message("recruiter-deals.filter.show-all", locale)
               input(type="checkbox", name="showAll", value="1")
           .btn-group.btn-group-xs(data-toggle="buttons")
-            label.btn.btn-default#hideFired=fmt.message("recruiter-deals.form.hide-fired", locale)
+            label.btn.btn-default#hideFired=fmt.message("recruiter-deals.filter.hide-fired", locale)
               input(type="checkbox", name="hideFired", value="1", checked=recruiterDealsFilter.hideFired)
-            label.btn.btn-default#hideApproved=fmt.message("recruiter-deals.form.hide-approved", locale)
+            label.btn.btn-default#hideApproved=fmt.message("recruiter-deals.filter.hide-approved", locale)
               input(type="checkbox", name="hideApproved", value="1", checked=recruiterDealsFilter.hideApproved)
             input(type="hidden", name="sortColumn", id="sortColumn")
             input(type="hidden", name="sortAsc", id="sortAsc")
@@ -22,10 +22,10 @@ block append content
     table.table.table-striped#table-sort
       thead
         tr
-          th.sorting#stitle=fmt.message("recruiter-deals.table.name", locale)
-          th.sorting#sdescription=fmt.message("recruiter-deals.table.description", locale)
-          th.sorting#sunseen_applicants=fmt.message("recruiter-deals.table.applicants", locale)
-          th.sorting#sstatus=fmt.message("recruiter-deals.table.status", locale)
-          th.sorting#screation_date=fmt.message("recruiter-deals.table.date", locale)
-          th.sorting#smax_updated_date=fmt.message("recruiter-deals.table.dateModified", locale)
+          th.sorting#stitle=fmt.message("recruiter-deals.deal.title", locale)
+          th.sorting#sdescription=fmt.message("recruiter-deals.deal.description", locale)
+          th.sorting#sunseen_applicants=fmt.message("recruiter-deals.deal.applicants", locale)
+          th.sorting#sstatus=fmt.message("recruiter-deals.deal.status", locale)
+          th.sorting#screation_date=fmt.message("recruiter-deals.deal.date-created", locale)
+          th.sorting#smax_updated_date=fmt.message("recruiter-deals.deal.date-modified", locale)
       tbody
