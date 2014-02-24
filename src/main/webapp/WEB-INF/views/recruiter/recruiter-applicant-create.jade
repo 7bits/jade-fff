@@ -9,24 +9,24 @@ block append content
       .row
         .col-md-6
           .form-group
-            label(for="firstName")
-            input(type="text", class="form-control", id="firstName", name="firstName", value=applicantForm.firstName, placeholder=fmt.message("recruiter-applicant-create.firstName", locale))
+            label(for="firstName")=fmt.message("recruiter-applicant-create.first-name", locale)
+            input(type="text", class="form-control", id="firstName", name="firstName", value=applicantForm.firstName, placeholder=fmt.message("recruiter-applicant-create.first-name", locale))
             #{errors.firstName}
           .form-group
-            label(for="lastName")
-            input(type="text", class="form-control", id="lastName", name="lastName", value=applicantForm.lastName, placeholder=fmt.message("recruiter-applicant-create.lastName", locale))
+            label(for="lastName")=fmt.message("recruiter-applicant-create.last-name", locale)
+            input(type="text", class="form-control", id="lastName", name="lastName", value=applicantForm.lastName, placeholder=fmt.message("recruiter-applicant-create.last-name", locale))
             #{errors.lastName}
           .form-group
-            label(for="description")
+            label(for="description")=fmt.message("recruiter-applicant-create.description", locale)
             textarea(class="form-control", id="description", name="description", placeholder=fmt.message("recruiter-applicant-create.description", locale))#{applicantForm.description}
             #{errors.description}
           .form-group
-            label(for="resumeFile")=fmt.message("recruiter-applicant-create.resumeFile", locale)
-            input(type="file", id="resumeFile", name="resumeFile", value=applicantForm.resumeFile, placeholder=fmt.message("recruiter-applicant-create.resumeFile", locale))
+            label(for="resumeFile")=fmt.message("recruiter-applicant-create.resume-file", locale)
+            input(type="file", id="resumeFile", name="resumeFile", value=applicantForm.resumeFile, placeholder=fmt.message("recruiter-applicant-create.resume-file", locale))
             #{errors.resumeFile}
           .form-group
-            label(for="testAnswerFile")=fmt.message("recruiter-applicant-create.testAnswerFile", locale)
-            input(type="file", id="testAnswerFile", name="testAnswerFile", value=applicantForm.testAnswerFile, placeholder=fmt.message("recruiter-applicant-create.testAnswerFile", locale))
+            label(for="testAnswerFile")=fmt.message("recruiter-applicant-create.test-answer-file", locale)
+            input(type="file", id="testAnswerFile", name="testAnswerFile", value=applicantForm.testAnswerFile, placeholder=fmt.message("recruiter-applicant-create.test-answer-file", locale))
             #{errors.testAnswerFile}
           .form-group
             input(type="hidden", id="dealId", name="dealId", value=applicantForm.dealId)

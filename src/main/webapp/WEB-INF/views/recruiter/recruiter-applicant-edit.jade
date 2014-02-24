@@ -9,28 +9,28 @@ block append content
       .row
         .col-md-6
           .form-group
-            label(for="firstName")
-            input(type="text", class="form-control", id="firstName", name="firstName", placeholder=fmt.message("recruiter-applicant-edit.firstName", locale), value=applicantForm.firstName)
+            label(for="firstName")=fmt.message("recruiter-applicant-edit.first-name", locale)
+            input(type="text", class="form-control", id="firstName", name="firstName", placeholder=fmt.message("recruiter-applicant-edit.first-name", locale), value=applicantForm.firstName)
             #{errors.firstName}
           .form-group
-            label(for="lastName")
-            input(type="text", class="form-control", id="lastName", name="lastName", placeholder=fmt.message("recruiter-applicant-edit.lastName", locale), value=applicantForm.lastName)
+            label(for="lastName")=fmt.message("recruiter-applicant-edit.last-name", locale)
+            input(type="text", class="form-control", id="lastName", name="lastName", placeholder=fmt.message("recruiter-applicant-edit.last-name", locale), value=applicantForm.lastName)
             #{errors.lastName}
           .form-group
-            label(for="description")
+            label(for="description")=fmt.message("recruiter-applicant-edit.description", locale)
             textarea(class="form-control", id="description", name="description", placeholder=fmt.message("recruiter-applicant-edit.description", locale))#{applicantForm.description}
             #{errors.description}
           .form-group
-            label(for="resumeFile")=fmt.message("recruiter-applicant-edit.resumeFile", locale)
+            label(for="resumeFile")=fmt.message("recruiter-applicant-edit.resume-file", locale)
             if applicantForm.resumeFileId
-              a.btn.btn-link(href=domain.buildFullUri("/recruiter-download-attachment/", applicantForm.resumeFileId, locale))=fmt.message("recruiter-applicant-edit.resumeExists", locale)
-            input(type="file", id="resumeFile", name="resumeFile", placeholder=fmt.message("recruiter-applicant-edit.resumeFile", locale), value=applicantForm.resumeFile)
+              a.btn.btn-link(href=domain.buildFullUri("/recruiter-download-attachment/", applicantForm.resumeFileId, locale))=fmt.message("recruiter-applicant-edit.resume-exists", locale)
+            input(type="file", id="resumeFile", name="resumeFile", placeholder=fmt.message("recruiter-applicant-edit.resume-file", locale), value=applicantForm.resumeFile)
             #{errors.resumeFile}
           .form-group
-            label(for="testAnswerFile")=fmt.message("recruiter-applicant-edit.testAnswerFile", locale)
+            label(for="testAnswerFile")=fmt.message("recruiter-applicant-edit.test-answer-file", locale)
             if applicantForm.testAnswerFileId
-              a.btn.btn-link(href=domain.buildFullUri("/recruiter-download-attachment/", applicantForm.testAnswerFileId, locale))=fmt.message("recruiter-applicant-edit.testAnswerExists", locale)
-            input(type="file", id="testAnswerFile", name="testAnswerFile", placeholder=fmt.message("recruiter-applicant-edit.testAnswerFile", locale), value=applicantForm.testAnswerFile)
+              a.btn.btn-link(href=domain.buildFullUri("/recruiter-download-attachment/", applicantForm.testAnswerFileId, locale))=fmt.message("recruiter-applicant-edit.test-answer-exists", locale)
+            input(type="file", id="testAnswerFile", name="testAnswerFile", placeholder=fmt.message("recruiter-applicant-edit.test-answer-file", locale), value=applicantForm.testAnswerFile)
             #{errors.testAnswerFile}
           .form-group
             input(type="hidden", id="dealId", name="dealId", value=applicantForm.dealId)
