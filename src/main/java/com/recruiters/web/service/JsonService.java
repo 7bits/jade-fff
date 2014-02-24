@@ -671,15 +671,15 @@ public class JsonService {
                     )
             );
             if (bid.getViewed()) {
-                currentBidJson.put("viewed", messageResolver.message("recruiter-bids.table.viewed", locale));
+                currentBidJson.put("viewed", messageResolver.message("recruiter-bids.bid.viewed", locale));
             } else {
                 currentBidJson.put("viewed", "");
             }
             if (businessRulesService.canWithdrawBid(bid)) {
-                currentBidJson.put("withdraw", messageResolver.message("recruiter-bids.table.withdraw", locale));
+                currentBidJson.put("withdraw", messageResolver.message("recruiter-bids.bid.withdraw", locale));
             }
             if(businessRulesService.withdrawnBid(bid)) {
-                currentBidJson.put("withdrawn", messageResolver.message("recruiter-bids.table.withdrawn", locale));
+                currentBidJson.put("withdrawn", messageResolver.message("recruiter-bids.bid.withdrawn", locale));
             }
             bidsJson.add(currentBidJson);
         }
@@ -789,6 +789,6 @@ public class JsonService {
             final Locale locale
     ) {
 
-        return new Object[]{messageResolver.message("recruiter-bids.table.withdrawn", locale)};
+        return new Object[]{messageResolver.message("recruiter-bids.bid.withdrawn", locale)};
     }
 }
