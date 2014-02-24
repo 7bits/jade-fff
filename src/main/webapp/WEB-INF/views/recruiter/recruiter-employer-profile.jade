@@ -11,9 +11,9 @@ block append content
       .col-md-8
         h2
         dl.dl-horizontal
-          dt=fmt.message("recruiter-employer-profile.dt.name", locale)
+          dt=fmt.message("recruiter-employer-profile.employer.name", locale)
           dd #{employer.user.firstName} #{employer.user.lastName}
-          dt=fmt.message("recruiter-employer-profile.dt.description", locale)
+          dt=fmt.message("recruiter-employer-profile.employer.description", locale)
           dd #{employer.user.description}
     h2.text-center=fmt.message("recruiter-employer-profile.feedback.heading", locale)
     table.table.table-striped
