@@ -3,7 +3,8 @@ html
   head
     meta(charset="utf-8")
     block head
-      script(src="http://code.jquery.com/jquery-2.0.3.js")
+      meta(http-equiv="X-UA-Compatible", content="IE=edge")
+      script(src="http://code.jquery.com/jquery-1.11.0.min.js")
       script(src=domain.getResourceUrl('/js/lib/bootstrap.js'))
       script(src=domain.getResourceUrl('/js/lib/bootstrap-confirmation.js'))
       script(src=domain.getResourceUrl('/js/lib/bootstrap-datepicker.js'))
@@ -14,7 +15,9 @@ html
       script(src=domain.getResourceUrl('/js/control-panel.js'))
       script(src=domain.getResourceUrl('/js/popup.js'))
       script(src=domain.getResourceUrl('/js/apply-decline.js'))
-      link(href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css", rel='stylesheet', type='text/css')
+      //- Switch to local bootstrap for IE8 support
+        link(href=domain.getResourceUrl('/stylesheets/lib/bootstrap.min.css'), rel='stylesheet', type='text/css')
+      link(href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css", rel='stylesheet', type='text/css')
       link(href=domain.getResourceUrl('/stylesheets/lib/bootstrap-theme.min.css'), rel='stylesheet', type='text/css')
       link(href=domain.getResourceUrl('/stylesheets/lib/datepicker.css'), rel='stylesheet', type='text/css')
       link(href=domain.getResourceUrl('/stylesheets/lib/font-awesome.min.css'), rel='stylesheet', type='text/css')
@@ -23,6 +26,9 @@ html
       link(href=domain.getResourceUrl('/stylesheets/table.css'), rel='stylesheet', type='text/css')
       link(href=domain.getResourceUrl('/stylesheets/buttons.css'), rel='stylesheet', type='text/css')
       link(href=domain.getResourceUrl('/stylesheets/recruiters.css'), rel='stylesheet', type='text/css')
+      //if lt IE 9
+        script(src=domain.getResourceUrl('/js/lib/html5shiv.js'))
+        script(src=domain.getResourceUrl('/js/lib/respond.min.js'))
   body
     block content
       .navbar.navbar-default(role="navigation")
