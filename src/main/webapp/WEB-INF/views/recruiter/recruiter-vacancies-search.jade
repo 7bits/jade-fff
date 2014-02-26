@@ -44,8 +44,8 @@ block append content
     table.table.table-striped#table-sort
       thead
         tr
-          th.sorting#stitle=fmt.message("recruiter-vacancies-search.vacancy.title", locale)
-          th.sorting#sdescription=fmt.message("recruiter-vacancies-search.vacancy.description", locale)
-          th.sorting#screation_date=fmt.message("recruiter-vacancies-search.vacancy.date", locale)
-          th.sorting#stype=fmt.message("recruiter-vacancies-search.vacancy.activity", locale)
+          th.sorting(data-id="title")=fmt.message("recruiter-vacancies-search.vacancy.title", locale)
+          th.sorting(data-id="description")=fmt.message("recruiter-vacancies-search.vacancy.description", locale)
+          th.sorting(data-id="creation_date")=fmt.message("recruiter-vacancies-search.vacancy.date", locale)
+          th.sorting(data-id="type")=fmt.message("recruiter-vacancies-search.vacancy.activity", locale)
       tbody

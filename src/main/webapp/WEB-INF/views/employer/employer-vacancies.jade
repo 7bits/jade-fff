@@ -23,11 +23,11 @@ block append content
     table.table.table-striped#table-sort
       thead
         tr
-          th.sorting#stitle=fmt.message("employer-vacancies.vacancy.title", locale)
-          th.sorting#screation_date=fmt.message("employer-vacancies.vacancy.date-created", locale)
-          th.sorting#smax_updated_date=fmt.message("employer-vacancies.vacancy.date-updated", locale)
-          th.sorting#sstatus=fmt.message("employer-vacancies.vacancy.status", locale)
-          th.sorting#sunseen_bids=fmt.message("employer-vacancies.vacancy.bids", locale)
+          th.sorting(data-id="title")=fmt.message("employer-vacancies.vacancy.title", locale)
+          th.sorting(data-id="creation_date")=fmt.message("employer-vacancies.vacancy.date-created", locale)
+          th.sorting(data-id="max_updated_date")=fmt.message("employer-vacancies.vacancy.date-updated", locale)
+          th.sorting(data-id="status")=fmt.message("employer-vacancies.vacancy.status", locale)
+          th.sorting(data-id="unseen_bids")=fmt.message("employer-vacancies.vacancy.bids", locale)
           th
       tbody
     a.btn.btn-link(href=domain.buildFullUri("employer-vacancy-create", locale))=fmt.message("employer-vacancies.create-vacancy", locale)

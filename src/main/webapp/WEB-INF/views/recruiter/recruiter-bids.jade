@@ -24,11 +24,11 @@ block append content
     table.table.table-striped#table-sort
       thead
         tr
-          th.sorting#stitle=fmt.message("recruiter-bids.bid.title", locale)
-          th.sorting#sdescription=fmt.message("recruiter-bids.bid.description", locale)
-          th.sorting#screation_date=fmt.message("recruiter-bids.bid.created", locale)
-          th.sorting#sstatus=fmt.message("recruiter-bids.bid.status", locale)
-          th.sorting#slastname=fmt.message("recruiter-bids.bid.employer", locale)
-          th.sorting#sviewed=fmt.message("recruiter-bids.bid.viewed", locale)
+          th.sorting(data-id="title")=fmt.message("recruiter-bids.bid.title", locale)
+          th.sorting(data-id="description")=fmt.message("recruiter-bids.bid.description", locale)
+          th.sorting(data-id="creation_date")=fmt.message("recruiter-bids.bid.created", locale)
+          th.sorting(data-id="status")=fmt.message("recruiter-bids.bid.status", locale)
+          th.sorting(data-id="lastname")=fmt.message("recruiter-bids.bid.employer", locale)
+          th.sorting(data-id="viewed")=fmt.message("recruiter-bids.bid.viewed", locale)
           th=fmt.message("recruiter-bids.bid.withdraw", locale)
       tbody

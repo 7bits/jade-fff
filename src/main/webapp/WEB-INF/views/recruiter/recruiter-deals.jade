@@ -22,10 +22,10 @@ block append content
     table.table.table-striped#table-sort
       thead
         tr
-          th.sorting#stitle=fmt.message("recruiter-deals.deal.title", locale)
-          th.sorting#sdescription=fmt.message("recruiter-deals.deal.description", locale)
-          th.sorting#sunseen_applicants=fmt.message("recruiter-deals.deal.applicants", locale)
-          th.sorting#sstatus=fmt.message("recruiter-deals.deal.status", locale)
-          th.sorting#screation_date=fmt.message("recruiter-deals.deal.date-created", locale)
-          th.sorting#smax_updated_date=fmt.message("recruiter-deals.deal.date-updated", locale)
+          th.sorting(data-id="title")=fmt.message("recruiter-deals.deal.title", locale)
+          th.sorting(data-id="description")=fmt.message("recruiter-deals.deal.description", locale)
+          th.sorting(data-id="unseen_applicants")=fmt.message("recruiter-deals.deal.applicants", locale)
+          th.sorting(data-id="status")=fmt.message("recruiter-deals.deal.status", locale)
+          th.sorting(data-id="creation_date")=fmt.message("recruiter-deals.deal.date-created", locale)
+          th.sorting(data-id="max_updated_date")=fmt.message("recruiter-deals.deal.date-updated", locale)
       tbody

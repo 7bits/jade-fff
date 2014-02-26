@@ -1,7 +1,6 @@
 $ ->
   bidTable = "table.employerBidView"
   $applyBidButtons = $(bidTable + " " + "button.bidApply")
-  $declineBidButtons = $(bidTable + " " + "button.bidDecline")
   $applyBidButtons. on "click", (event) ->
     event.preventDefault()
     $button = $(event.target)
@@ -21,6 +20,7 @@ $ ->
 
     request.fail ->
 
+  $declineBidButtons = $(bidTable + " " + "button.bidDecline")
   $declineBidButtons. on "click", (event) ->
     event.preventDefault()
     $button = $(event.target)
@@ -43,7 +43,6 @@ $ ->
 
   applicantTable = "table.employerApplicantView"
   $applyApplicantButtons = $(applicantTable + " " + "button.applicantApply")
-  $declineApplicantButtons = $(applicantTable + " " + "button.applicantDecline")
   $applyApplicantButtons. on "click", (event) ->
     event.preventDefault()
     $button = $(event.target)
@@ -64,6 +63,7 @@ $ ->
 
     request.fail ->
 
+  $declineApplicantButtons = $(applicantTable + " " + "button.applicantDecline")
   $declineApplicantButtons. on "click", (event) ->
     event.preventDefault()
     $button = $(event.target)
@@ -85,22 +85,20 @@ $ ->
     request.fail ->
 
   withdrawBidButtons = "button.bidWithdraw"
-  $(document).on
-    click: (event) ->
-      event.preventDefault()
-      $button = $(event.target)
-      requestData = "bidId=" + $button.attr("data-id")
-      request = $.ajax(
-        url: "recruiter-bid-withdraw.json"
-        type: "GET"
-        data: requestData
-        dataType: "json"
-      )
-      request.done (data) ->
-        newLabel = data.entry.value
-        $button.html(newLabel)
-        $button.prop("disabled", true)
-        return
+  $(document).on 'click', withdrawBidButtons, (event) ->
+    event.preventDefault()
+    $button = $(event.target)
+    requestData = "bidId=" + $button.attr("data-id")
+    request = $.ajax(
+      url: "recruiter-bid-withdraw.json"
+      type: "GET"
+      data: requestData
+      dataType: "json"
+    )
+    request.done (data) ->
+      newLabel = data.entry.value
+      $button.html(newLabel)
+      $button.prop("disabled", true)
+      return
 
-      request.fail ->
-  , withdrawBidButtons
+    request.fail ->

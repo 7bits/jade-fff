@@ -1,8 +1,51 @@
-prevDate = new Date()
-nextDate = new Date()
-showAll = "form.form-sort label#showAll"
-hideButtons = "form.form-sort label[id^=hide]"
 $ ->
+  prevDate = new Date()
+  nextDate = new Date()
+  showAll = "form.form-sort label#showAll"
+  hideButtons = "form.form-sort label[id^=hide]"
+
+  showAllCheck = (button) ->
+    showAllState = true
+    if not $(hideButtons).hasClass("active") and button isnt ""
+      showAllState = false
+    else
+      $(hideButtons).each ->
+        currentActive = $(this).hasClass("active")
+        currentId = $(this).attr("id")
+        showAllState = false  if currentActive and (currentId isnt button)
+        return
+
+    $(showAll).addClass "active"  if showAllState
+    return
+
+  modifyDates = (inputDate) ->
+    curDate = new Date(inputDate)
+    nextDate = new Date(curDate.getTime())
+    prevDate = new Date(curDate.getTime())
+    prevDate.setDate prevDate.getDate() - 1
+    nextDate.setDate nextDate.getDate() + 1
+
+  dp = $(".datepicker")
+  $("#dateicon").on "click", ->
+    dp.datepicker "show"
+    return
+  dp.datepicker().on "changeDate", (ev) ->
+    dp.val(ev.target.value).trigger "change"
+    dp.datepicker "hide"
+    modifyDates ev.date.valueOf()
+    return
+
+  $(showAll).on "click", ->
+    $(hideButtons).removeClass("active")
+    $(hideButtons).find("input").prop("checked", false)
+
+  $(hideButtons).on "click", (e) ->
+    hideButton = $(e.target).attr("id")
+    $(showAll).removeClass "active"
+    $(showAll).find("input").prop "checked", false
+    showAllCheck hideButton
+    return
+
   firstVisit = ->
     $(showAll).find("input").trigger "change"
     $(hideButtons).each ->
@@ -15,80 +58,17 @@ $ ->
     return
 
   setTimeout firstVisit, 100
-  return
 
-showAllCheck = (button) ->
-  showAllState = true
-  if not $(hideButtons).hasClass("active") and button isnt ""
-    showAllState = false
-  else
-    $(hideButtons).each ->
-      currentActive = $(this).hasClass("active")
-      currentId = $(this).attr("id")
-      showAllState = false  if currentActive and (currentId isnt button)
-      return
-
-  $(showAll).addClass "active"  if showAllState
-  return
-
-modifyDates = (inputDate) ->
-  curDate = new Date(inputDate)
-  nextDate = new Date(curDate.getTime())
-  prevDate = new Date(curDate.getTime())
-  prevDate.setDate prevDate.getDate() - 1
-  nextDate.setDate nextDate.getDate() + 1
-
-dateToString = (inputDate) ->
-  day = undefined
-  month = undefined
-  year = undefined
-  year = inputDate.getFullYear()
-  month = inputDate.getMonth() + 1
-  day = inputDate.getDate()
-  stringDate = year + "-"
-  stringDate += "0"  if month < 10
-  stringDate += month + "-"
-  stringDate += "0"  if day < 10
-  stringDate += day
-  stringDate
-
-$ ->
-  dp = $(".datepicker")
-  $("#dateicon").on "click", ->
-    dp.datepicker "show"
-    return
-  dp.datepicker().on "changeDate", (ev) ->
-    dp.val(ev.target.value).trigger "change"
-    dp.datepicker "hide"
-    modifyDates ev.date.valueOf()
-    return
-
-$ ->
-  $(showAll).on "click", ->
-    $(hideButtons).removeClass("active")
-    $(hideButtons).find("input").prop("checked", false)
-
-$ ->
-  $(hideButtons).on "click", (e) ->
-    hideButton = $(e.target).attr("id")
-    $(showAll).removeClass "active"
-    $(showAll).find("input").prop "checked", false
-    showAllCheck hideButton
-    return
-
-$ ->
   $("#prevDateLink").on "click", (event) ->
     event.preventDefault()
-    $(".datepicker").datepicker("update", dateToString(prevDate))
+    $(".datepicker").datepicker("update", prevDate)
     modifyDates(prevDate)
 
-$ ->
   $("#nextDateLink").on "click", (event) ->
     event.preventDefault()
-    $(".datepicker").datepicker("update", dateToString(nextDate))
+    $(".datepicker").datepicker("update", nextDate)
     modifyDates(nextDate)
 
-$ ->
   $("#recruiterVacanciesFilter :input").on "change", ->
     data = $("#recruiterVacanciesFilter").serialize()
     request = $.ajax(
@@ -111,7 +91,6 @@ $ ->
 
     request.fail ->
 
-$ ->
   $("#employerDealsFilter :input").on "change", ->
     data = $("#employerDealsFilter").serialize()
     request = $.ajax(
@@ -135,7 +114,6 @@ $ ->
 
     request.fail ->
 
-$ ->
   $("#employerVacanciesFilter :input").on "change", ->
     data = $("#employerVacanciesFilter").serialize()
     request = $.ajax(
@@ -160,7 +138,6 @@ $ ->
     request.fail ->
 
 
-$ ->
   $("#recruiterBidsFilter :input").on "change", ->
     data = $("#recruiterBidsFilter").serialize()
     request = $.ajax(
@@ -177,9 +154,9 @@ $ ->
       while i < bidList.length
         obj = bidList[i]
         addHtml += "<tr><td><a href=\"#\" data-id=\"" + obj.bidId + "\" class=\"help showRecruiterBid\">" + obj.title + "</a></td><td>" + obj.description  + "</td><td>" + obj.created + "</td><td>" + obj.status + "</td><td><a href=\"" + obj.employerUrl + "\">" + obj.employer + "</a></td><td>" + obj.viewed + "</td><td><div class=\"btn-group btn-group-xs\">"
-        if (obj.withdraw?)
+        if obj.withdraw?
           addHtml += "<button class=\"btn btn-success bidWithdraw\" data-id=\"" + obj.bidId + "\">" + obj.withdraw + "</button>"
-        if (obj.withdrawn?)
+        if obj.withdrawn?
           addHtml += "<button class=\"btn btn-success bidWithdraw\" data-id=\"" + obj.bidId + "\" disabled>" + obj.withdrawn + "</button>"
         addHtml += "</div></td></tr>"
         i++
@@ -188,7 +165,6 @@ $ ->
 
     request.fail ->
 
-$ ->
   $("#recruiterDealsFilter :input").on "change", ->
     data = $("#recruiterDealsFilter").serialize()
     request = $.ajax(

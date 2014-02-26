@@ -25,15 +25,15 @@ $ ->
       activeColumn.removeClass "sorting"
       activeColumn.addClass "sorting_desc"
 
-  $("#table-sort th[id^=s]").on "click",(e) ->
-    sortAttr = $(e.target).attr("id").substr(1)
-    if sortColumn is sortAttr and sortAsc is 1
-      updateFilter sortAttr, 0
-      updateTable()
-    else
-      updateFilter sortAttr, 1
-      updateTable()
-    return
+  $("#table-sort th").on "click",(e) ->
+    sortAttr = $(e.target).attr("data-id")
+    if sortAttr?
+      if sortColumn is sortAttr and sortAsc is 1
+        updateFilter sortAttr, 0
+        updateTable()
+      else
+        updateFilter sortAttr, 1
+        updateTable()
 
   return
 

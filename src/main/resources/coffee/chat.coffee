@@ -22,7 +22,7 @@ $ ->
     form = $("form#messagesend")
     role = form.find("input[name='role']").val()
     dealId = form.find("input[name='id']").val()
-    if typeof dealId isnt "undefined"
+    if dealId
       data = "dealId=" + dealId
       data += "&messageId=" + lastMessageId  if lastMessageId isnt null
       request = $.ajax(
