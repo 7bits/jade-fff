@@ -8,17 +8,30 @@ block append content
     .row
       .col-md-9
         h2.text-center=fmt.message("recruiter-dashboard.feedback.heading", locale)
-        table.table.table-striped#recruiter-feedback
+        table.table.table-striped(data-ng-controller="RecruiterFeedback")
           thead
             tr
               th=fmt.message("recruiter-dashboard.feedback.vacancy", locale)
               th=fmt.message("recruiter-dashboard.feedback.employer", locale)
               th=fmt.message("recruiter-dashboard.feedback.status", locale)
               th=fmt.message("recruiter-dashboard.feedback.date", locale)
+              th
           tbody
+            tr(data-ng-repeat="deal in deals")
+              td
+                a(href="{{deal.vacancyUrl}}")
+                  {{deal.vacancy}}
+              td
+                a(href="{{deal.employerUrl}}")
+                  {{deal.employer}}
+              td {{deal.status}}
+              td {{deal.updated}}
+              td
+                a(href="{{deal.feedbackUrl}}")
+                  {{deal.feedback}}
         .spacer
         h2.text-center=fmt.message("recruiter-dashboard.deals.heading", locale)
-        table.table.table-striped#recruiter-deals
+        table.table.table-striped(data-ng-controller="RecruiterDeals")
           thead
             tr
               th=fmt.message("recruiter-dashboard.deals.vacancy", locale)
@@ -26,12 +39,23 @@ block append content
               th=fmt.message("recruiter-dashboard.deals.date", locale)
               th
           tbody
+            tr(data-ng-repeat="deal in deals")
+              td
+                a(href="{{deal.vacancyUrl}}")
+                  {{deal.vacancy}}
+              td
+                a(href="{{deal.employerUrl}}")
+                  {{deal.employer}}
+              td {{deal.created}}
+              td
+                a(href="{{deal.dealUrl}}")
+                  {{deal.deal}}
         a.btn.btn-link.pull-right(href=domain.buildFullUri("/recruiter-active-deals", locale))
           strong
             #{fmt.message("recruiter-dashboard.my-deals", locale)}
         .spacer
         h2.text-center=fmt.message("recruiter-dashboard.bids.heading", locale)
-        table.table.table-striped#recruiter-bids
+        table.table.table-striped(data-ng-controller="RecruiterBids")
           thead
             tr
               th=fmt.message("recruiter-dashboard.bids.vacancy", locale)
@@ -40,6 +64,18 @@ block append content
               th=fmt.message("recruiter-dashboard.bids.viewed", locale)
               th=fmt.message("recruiter-dashboard.bids.status", locale)
           tbody
+            tr(data-ng-repeat="bid in bids")
+              td
+                a(href="#", class="help", recruiter-bid="{{bid.bidId}}", ng-switch="bid.viewed")
+                  span(ng-switch-when={{!null}})
+                    strong {{bid.vacancy}}
+                  span(ng-switch-default) {{bid.vacancy}}
+              td
+                a(href="{{bid.employerUrl}}")
+                  {{bid.employer}}
+              td {{bid.created}}
+              td {{bid.viewed}}
+              td {{bid.status}}
         a.btn.btn-link.pull-right(href=domain.buildFullUri("/recruiter-active-bids", locale))
           strong
             #{fmt.message("recruiter-dashboard.my-bids", locale)}

@@ -8,17 +8,30 @@ block append content
     .row
       .col-md-9
         h2.text-center=fmt.message("employer-dashboard.feedback.heading", locale)
-        table.table.table-striped#employer-feedback
+        table.table.table-striped(data-ng-controller="EmployerFeedback")
           thead
             tr
               th=fmt.message("employer-dashboard.feedback.vacancy", locale)
               th=fmt.message("employer-dashboard.feedback.recruiter", locale)
               th=fmt.message("employer-dashboard.feedback.status", locale)
               th=fmt.message("employer-dashboard.feedback.date", locale)
+              th
           tbody
+            tr(data-ng-repeat="deal in deals")
+              td
+                a(href="{{deal.vacancyUrl}}")
+                  {{deal.vacancy}}
+              td
+                a(href="{{deal.recruiterUrl}}")
+                  {{deal.recruiter}}
+              td {{deal.status}}
+              td {{deal.updated}}
+              td
+                a(href="{{deal.feedbackUrl}}")
+                  {{deal.feedback}}
         .spacer
         h2.text-center=fmt.message("employer-dashboard.applicants.heading", locale)
-        table.table.table-striped#employer-applicants
+        table.table.table-striped(data-ng-controller="EmployerApplicants")
           thead
             tr
               th=fmt.message("employer-dashboard.applicants.applicant", locale)
@@ -26,12 +39,24 @@ block append content
               th=fmt.message("employer-dashboard.applicants.recruiter", locale)
               th=fmt.message("employer-dashboard.applicants.date", locale)
           tbody
+            tr(data-ng-repeat="applicant in applicants")
+              td
+                a(href="#", class="help", employer-applicant="{{applicant.applicantId}}")
+                  strong
+                    {{applicant.applicant}}
+              td
+                a(href="{{applicant.vacancyUrl}}")
+                  {{applicant.vacancy}}
+              td
+                a(href="{{applicant.recruiterUrl}}")
+                  {{applicant.recruiter}}
+              td {{applicant.updated}}
         a.btn.btn-link.pull-right(href=domain.buildFullUri("/employer-progress-vacancies-list", locale))
           strong
             #{fmt.message("employer-dashboard.my-deals", locale)}
         .spacer
         h2.text-center=fmt.message("employer-dashboard.bids.heading", locale)
-        table.table.table-striped#employer-bids
+        table.table.table-striped(data-ng-controller="EmployerBids")
           thead
             tr
               th=fmt.message("employer-dashboard.bids.recruiter", locale)
@@ -39,6 +64,16 @@ block append content
               th=fmt.message("employer-dashboard.bids.description", locale)
               th=fmt.message("employer-dashboard.bids.date", locale)
           tbody
+            tr(data-ng-repeat="bid in bids")
+              td
+                a(href="#", class="help", employer-bid="{{bid.bidId}}")
+                  strong
+                    {{bid.recruiter}}
+              td
+                a(href="{{bid.vacancyUrl}}")
+                  {{bid.vacancy}}
+              td {{bid.description}}
+              td {{bid.updated}}
         a.btn.btn-link.pull-right(href=domain.buildFullUri("/employer-recruiter-search", locale))
           strong
             #{fmt.message("employer-dashboard.my-vacancies", locale)}

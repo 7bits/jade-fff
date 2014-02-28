@@ -17,7 +17,7 @@ block append content
           for bid in bids
             tr
               td
-                a.showEmployerBid.help(href="#", data-id=bid.id)
+                a.help(href="#", employer-bid=bid.id)
                   if test.isBidNew(bid)
                     strong
                       #{bid.recruiter.user.firstName} #{bid.recruiter.user.lastName}
