@@ -440,7 +440,7 @@ public class JsonService {
                 currentBidJson.put("viewed", "");
             }
             currentBidJson.put("status", messageResolver.bidStatus(bid.getStatus(), locale));
-            currentBidJson.put("vacancy", StringEscapeUtils.escapeHtml4(bid.getVacancy().getTitle()));
+            currentBidJson.put("bid", StringEscapeUtils.escapeHtml4(bid.getVacancy().getTitle()));
             currentBidJson.put("bidId", bid.getId().toString());
             bidsJson.add(currentBidJson);
         }

@@ -79,7 +79,7 @@ block append content
             for applicant in deal.applicants
               tr
                 td
-                  a.help(href = "#", employer-applicant=applicant.id)
+                  a.showApplicant.help(href = "#", data-id=applicant.id)
                     if test.isApplicantNew(applicant)
                       strong
                         #{applicant.firstName} #{applicant.lastName}

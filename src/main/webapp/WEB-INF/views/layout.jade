@@ -1,22 +1,19 @@
 !!! 5
-html(data-ng-app="recruiters")
+html
   head
     meta(charset="utf-8")
     block head
       meta(http-equiv="X-UA-Compatible", content="IE=edge")
-      base(href=domain.buildFullUri("", locale))
       script(src="http://code.jquery.com/jquery-1.11.0.min.js")
-      script(src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular.min.js")
       script(src=domain.getResourceUrl('/js/lib/bootstrap.js'))
       script(src=domain.getResourceUrl('/js/lib/bootstrap-confirmation.js'))
       script(src=domain.getResourceUrl('/js/lib/bootstrap-datepicker.js'))
-      script(src=domain.getResourceUrl('/js/angular-app.js'))
-      script(src=domain.getResourceUrl('/js/controllers/dashboardControllers.js'))
-      script(src=domain.getResourceUrl('/js/directives/actionDirectives.js'))
-      script(src=domain.getResourceUrl('/js/directives/popupDirectives.js'))
+      script(src=domain.getResourceUrl('/js/confirmation.js'))
       script(src=domain.getResourceUrl('/js/recruiters.js'))
       script(src=domain.getResourceUrl('/js/chat.js'))
       script(src=domain.getResourceUrl('/js/table-sorting.js'))
+      script(src=domain.getResourceUrl('/js/control-panel.js'))
+      script(src=domain.getResourceUrl('/js/popup.js'))
       script(src=domain.getResourceUrl('/js/apply-decline.js'))
       //- Switch to local bootstrap for IE8 support
         link(href=domain.getResourceUrl('/stylesheets/lib/bootstrap.min.css'), rel='stylesheet', type='text/css')
