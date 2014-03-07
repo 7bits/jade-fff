@@ -1,6 +1,7 @@
 recruiters = angular.module('recruiters', [
     'recruiters.controllers',
-    'recruiters.directives'
+    'recruiters.directives',
+    'ngTable'
 ]);
 
 recruitersDirectives = angular.module('recruiters.directives', []);

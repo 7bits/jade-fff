@@ -3,32 +3,60 @@ extends ../layout
 block append head
   title=fmt.message("recruiter-bids.title", locale)
 block append content
-  .container
+  .container(ng-controller="RecruiterBidsCtrl")
     h1=fmt.message("recruiter-bids.heading", locale)
     form.form-sort(name="recruiterBidsFilter", id="recruiterBidsFilter", action="", method="get")
       .row
         .col-md-6
-          .btn-group.btn-group-xs(data-toggle="buttons")
-            label.btn.btn-default#showAll=fmt.message("recruiter-bids.filter.show-all", locale)
-              input(type="checkbox", name="showAll", value="1")
-          .btn-group.btn-group-xs(data-toggle="buttons")
-            label.btn.btn-default#hideRejected=fmt.message("recruiter-bids.filter.hide-rejected", locale)
-              input(type="checkbox", name="hideRejected", value="1", checked=recruiterBidsFilter.hideRejected)
-            label.btn.btn-default#hideApproved=fmt.message("recruiter-bids.filter.hide-approved", locale)
-              input(type="checkbox", name="hideApproved", value="1", checked=recruiterBidsFilter.hideApproved)
-            label.btn.btn-default#hideWithdrawn=fmt.message("recruiter-bids.filter.hide-withdrawn", locale)
-              input(type="checkbox", name="hideWithdrawn", value="1", checked=recruiterBidsFilter.hideWithdrawn)
-            input(type="hidden", name="sortColumn", id="sortColumn")
-            input(type="hidden", name="sortAsc", id="sortAsc")
-            input(type="hidden", name=csrf.getParameterName(), value=csrf.getToken())
-    table.table.table-striped#table-sort
+          .btn-group.btn-group-xs
+            div(button-show-all=fmt.message("recruiter-bids.filter.show-all", locale))
+              //label.btn.btn-default#showAll
+                input(type="checkbox", name="showAll", value="1")
+          .btn-group.btn-group-xs
+            div(button-hide=fmt.message("recruiter-bids.filter.hide-rejected", locale), name="hideRejected", init-value="#{recruiterBidsFilter.hideRejected}")
+            div(button-hide=fmt.message("recruiter-bids.filter.hide-approved", locale), name="hideApproved", init-value="#{recruiterBidsFilter.hideApproved}")
+            div(button-hide=fmt.message("recruiter-bids.filter.hide-withdrawn", locale), name="hideWithdrawn", init-value="#{recruiterBidsFilter.hideWithdrawn}")
+              //label.btn.btn-default#hideRejected=fmt.message("recruiter-bids.filter.hide-rejected", locale)
+                input(type="checkbox", name="hideRejected", value="1", ng-model="formData.hideRejected", ng-init="formData.hideRejected = " + recruiterBidsFilter.hideRejected)
+              //label.btn.btn-default#hideApproved=fmt.message("recruiter-bids.filter.hide-approved", locale)
+                input(type="checkbox", name="hideApproved", value="1", ng-model="formData.hideApproved", ng-init="formData.hideApproved = " + recruiterBidsFilter.hideApproved)
+              //label.btn.btn-default#hideWithdrawn=fmt.message("recruiter-bids.filter.hide-withdrawn", locale)
+                input(type="checkbox", name="hideWithdrawn", value="1", ng-model="formData.hideWithdrawn", ng-init="formData.hideWithdrawn = " + recruiterBidsFilter.hideWithdrawn)
+            input(type="hidden", name="sortColumn", id="sortColumn", ng-model="formData.sortColumn")
+            input(type="hidden", name="sortAsc", id="sortAsc", ng-model="formData.sortAsc")
+            input(type="hidden", name=csrf.getParameterName(), ng-init="formData." + csrf.getParameterName() + " = '" + csrf.getToken() + "'", ng-model="formData.csrfToken")
+    table.table.table-striped(ng-table="tableParams", ng-controller="RecruiterBidsTableCtrl")
       thead
         tr
-          th.sorting(data-id="title")=fmt.message("recruiter-bids.bid.title", locale)
-          th.sorting(data-id="description")=fmt.message("recruiter-bids.bid.description", locale)
-          th.sorting(data-id="creation_date")=fmt.message("recruiter-bids.bid.created", locale)
-          th.sorting(data-id="status")=fmt.message("recruiter-bids.bid.status", locale)
-          th.sorting(data-id="lastname")=fmt.message("recruiter-bids.bid.employer", locale)
-          th.sorting(data-id="viewed")=fmt.message("recruiter-bids.bid.viewed", locale)
-          th=fmt.message("recruiter-bids.bid.withdraw", locale)
+          th.sortable(ng-class="{'sort-asc': tableParams.isSortBy('title', 'asc'), 'sort-desc': tableParams.isSortBy('title', 'desc')}", ng-click="tableParams.sorting({'title' : tableParams.isSortBy('title', 'asc') ? 'desc' : 'asc'})", rowspan="2")
+            div=fmt.message("recruiter-bids.bid.title", locale)
+          th.sortable(ng-class="{'sort-asc': tableParams.isSortBy('description', 'asc'), 'sort-desc': tableParams.isSortBy('description', 'desc')}", ng-click="tableParams.sorting({'description' : tableParams.isSortBy('description', 'asc') ? 'desc' : 'asc'})", rowspan="2")
+            div=fmt.message("recruiter-bids.bid.description", locale)
+          th.sortable(ng-class="{'sort-asc': tableParams.isSortBy('created', 'asc'), 'sort-desc': tableParams.isSortBy('created', 'desc')}", ng-click="tableParams.sorting({'created' : tableParams.isSortBy('created', 'asc') ? 'desc' : 'asc'})", rowspan="2")
+            div=fmt.message("recruiter-bids.bid.created", locale)
+          th.sortable(ng-class="{'sort-asc': tableParams.isSortBy('status', 'asc'), 'sort-desc': tableParams.isSortBy('status', 'desc')}", ng-click="tableParams.sorting({'status' : tableParams.isSortBy('status', 'asc') ? 'desc' : 'asc'})", rowspan="2")
+            div=fmt.message("recruiter-bids.bid.status", locale)
+          th.sortable(ng-class="{'sort-asc': tableParams.isSortBy('employer', 'asc'), 'sort-desc': tableParams.isSortBy('employer', 'desc')}", ng-click="tableParams.sorting({'employer' : tableParams.isSortBy('employer', 'asc') ? 'desc' : 'asc'})", rowspan="2")
+            div=fmt.message("recruiter-bids.bid.employer", locale)
+          th.sortable(ng-class="{'sort-asc': tableParams.isSortBy('viewed', 'asc'), 'sort-desc': tableParams.isSortBy('viewed', 'desc')}", ng-click="tableParams.sorting({'viewed' : tableParams.isSortBy('viewed', 'asc') ? 'desc' : 'asc'})", rowspan="2")
+            div=fmt.message("recruiter-bids.bid.viewed", locale)
+          th
+            div=fmt.message("recruiter-bids.bid.withdraw", locale)
       tbody
+        tr(ng-repeat="bid in $data")
+          td
+            a(href="#", recruiter-bid="{{bid.bidId}}", class="help")
+              {{bid.title}}
+          td {{bid.description}}
+          td {{bid.created}}
+          td {{bid.status}}
+          td
+            a(href="{{bid.employerUrl}}")
+              {{bid.employer}}
+          td {{bid.viewed}}
+          td
+            .btn-group.btn-group-xs
+              button.btn.btn-success.bidWithdraw(data-id="{{bid.bidId}}", ng-if="bid.withdraw") {{bid.withdraw}}
+              button.btn.btn-success.bidWithdraw(data-id="{{bid.bidId}}", ng-if="bid.withdrawn", disabled) {{bid.withdrawn}}
+
+

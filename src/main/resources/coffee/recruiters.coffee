@@ -40,7 +40,13 @@ $ ->
     $(hideButtons).find("input").prop("checked", false)
 
   $(hideButtons).on "click", (e) ->
-    hideButton = $(e.target).attr("id")
+    hideButton = "form.form-sort label#" + $(e.target).attr("id")
+    buttonInput = $(hideButton).find("input")
+    buttonStatus = buttonInput.prop "checked"
+    if buttonStatus
+      buttonInput.prop "checked", false
+    else
+      buttonInput.prop "checked", true
     $(showAll).removeClass "active"
     $(showAll).find("input").prop "checked", false
     showAllCheck hideButton
@@ -138,32 +144,32 @@ $ ->
     request.fail ->
 
 
-  $("#recruiterBidsFilter :input").on "change", ->
-    data = $("#recruiterBidsFilter").serialize()
-    request = $.ajax(
-      url: "recruiter-bids-filter-ajax.json"
-      type: "POST"
-      data: data
-      dataType: "json"
-    )
-    request.done (data) ->
-      addHtml = ""
-      bidList = data.entry.value
-      i = 0
-
-      while i < bidList.length
-        obj = bidList[i]
-        addHtml += "<tr><td><a href=\"#\" data-id=\"" + obj.bidId + "\" class=\"help\" recruiter-bid=\"" + obj.bidId + "\">" + obj.title + "</a></td><td>" + obj.description  + "</td><td>" + obj.created + "</td><td>" + obj.status + "</td><td><a href=\"" + obj.employerUrl + "\">" + obj.employer + "</a></td><td>" + obj.viewed + "</td><td><div class=\"btn-group btn-group-xs\">"
-        if obj.withdraw?
-          addHtml += "<button class=\"btn btn-success bidWithdraw\" data-id=\"" + obj.bidId + "\">" + obj.withdraw + "</button>"
-        if obj.withdrawn?
-          addHtml += "<button class=\"btn btn-success bidWithdraw\" data-id=\"" + obj.bidId + "\" disabled>" + obj.withdrawn + "</button>"
-        addHtml += "</div></td></tr>"
-        i++
-      $("#table-sort").find("tbody").html addHtml
-      return
-
-    request.fail ->
+#  $("#recruiterBidsFilter :input").on "change", ->
+#    data = $("#recruiterBidsFilter").serialize()
+#    request = $.ajax(
+#      url: "recruiter-bids-filter-ajax.json"
+#      type: "POST"
+#      data: data
+#      dataType: "json"
+#    )
+#    request.done (data) ->
+#      addHtml = ""
+#      bidList = data.entry.value
+#      i = 0
+#
+#      while i < bidList.length
+#        obj = bidList[i]
+#        addHtml += "<tr><td><a href=\"#\" data-id=\"" + obj.bidId + "\" class=\"help\" recruiter-bid=\"" + obj.bidId + "\">" + obj.title + "</a></td><td>" + obj.description  + "</td><td>" + obj.created + "</td><td>" + obj.status + "</td><td><a href=\"" + obj.employerUrl + "\">" + obj.employer + "</a></td><td>" + obj.viewed + "</td><td><div class=\"btn-group btn-group-xs\">"
+#        if obj.withdraw?
+#          addHtml += "<button class=\"btn btn-success bidWithdraw\" data-id=\"" + obj.bidId + "\">" + obj.withdraw + "</button>"
+#        if obj.withdrawn?
+#          addHtml += "<button class=\"btn btn-success bidWithdraw\" data-id=\"" + obj.bidId + "\" disabled>" + obj.withdrawn + "</button>"
+#        addHtml += "</div></td></tr>"
+#        i++
+#      $("#table-sort").find("tbody").html addHtml
+#      return
+#
+#    request.fail ->
 
   $("#recruiterDealsFilter :input").on "change", ->
     data = $("#recruiterDealsFilter").serialize()
