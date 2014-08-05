@@ -1,0 +1,15 @@
+extends layout
+
+block append head
+  link(href=domain.getResourceUrl('/stylesheets/form.css'), rel='stylesheet', type='text/css')
+  title=fmt.message("login.title", locale)
+block append content
+  .container
+    #header
+      h3 Atmosphere Chat. Default transport is WebSocket, fallback is long-polling
+    #detect
+      h3 Detecting what the browser and server are supporting
+    #content
+    .controls
+      span#status Connecting...
+      input(type="text", id="input", disabled="disabled")

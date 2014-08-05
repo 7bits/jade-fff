@@ -2,6 +2,7 @@ package com.recruiters.config;
 
 import com.recruiters.web.helper.MessageResolver;
 import com.recruiters.web.helper.UrlResolver;
+import com.recruiters.web.utils.AtmosphereResolver;
 import com.recruiters.web.utils.AttributeLocaleResolver;
 import com.recruiters.web.utils.CustomJadeViewResolver;
 import com.recruiters.web.utils.HandlerInterceptor;
@@ -19,6 +20,7 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
 import org.springframework.web.accept.ContentNegotiationManager;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.LocaleResolver;
@@ -105,7 +107,20 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     public RequestMappingHandlerAdapter requestMappingHandlerAdapter() {
         RequestMappingHandlerAdapter requestMappingHandlerAdapter = new RequestMappingHandlerAdapter();
         requestMappingHandlerAdapter.setIgnoreDefaultModelOnRedirect(true);
+        List<HandlerMethodArgumentResolver> argumentResolvers = new ArrayList<>();
+        argumentResolvers.add(atmosphereResolver());
+        requestMappingHandlerAdapter.setCustomArgumentResolvers(argumentResolvers);
         return requestMappingHandlerAdapter;
+    }
+
+    /**
+     * Atmosphere arguments resolver
+     * (websockets implementation)
+     * @return atmosphere arguments resolver
+     */
+    @Bean
+    public AtmosphereResolver atmosphereResolver() {
+        return new AtmosphereResolver();
     }
 
     /**
